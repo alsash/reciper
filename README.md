@@ -1,5 +1,7 @@
 # RecipeR
+
 The home of your recipes
+
 Android app
 
 #
