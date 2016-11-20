@@ -1,5 +1,6 @@
-# Calc 'n' Cook
-The home of your recipes. Calculate and cook. Android app.
+# RecipeR
+The home of your recipes
+Android app
 
 #
 
