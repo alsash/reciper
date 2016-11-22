@@ -3,6 +3,7 @@
 The home of your recipes
 
 Android app
+Version 0.0
 
 #
 
