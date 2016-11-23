@@ -4,10 +4,11 @@ The home of your recipes
 
 Android app
 
-
 Version 0.0
 
-#
+## Business Requirements
+https://docs.google.com/document/d/1SRaZSnVj3xSZcLDVMyrSxaifcN7szbjqq8mmcieVgQQ/edit?usp=drive_web
+
 
 #### Copyright 2016 Alsash
 
