@@ -7,7 +7,7 @@ Android app
 Version 0.0
 
 ## Business Requirements
-[v.1.0. View document](https://1drv.ms/w/s!AhP4u5llSjGngaVHbO4tdMrkC894tQ)
+[View document](/../../master/BR.md#business-requirements)
 
 ### Copyright 2016 Alsash
 
