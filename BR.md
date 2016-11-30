@@ -3,8 +3,8 @@
 *Version 1.1*
 
 History
-*  Version 1.0. November 20 2016
-*  Version 1.1. November 30 2016
+*  Version 1.0. November 20 2016. Rus
+*  Version 1.1. November 30 2016. Rus
 
 ---
 
