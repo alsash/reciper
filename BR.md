@@ -1,12 +1,12 @@
 Business requirements
 =====================
 
-*Version 1.2*
+*Version 1.0*
 
 History
-*  Version 1.0. November 20 2016. Rus
-*  Version 1.1. November 30 2016. Rus
-*  Version 1.2. Decempber 4 2016. Rus
+*  Version 0.1. November 20 2016. Rus
+*  Version 0.2. November 30 2016. Rus
+*  Version 1.0. Decempber 4 2016. Rus
 
 # Боковая панель навигации
 
