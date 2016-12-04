@@ -5,7 +5,7 @@ The home of your recipes.
 Android application, Version 1.0
 
 ## Business Requirements
-[View document](/../../blob/master/BR.md#business-requirements)
+Version 1.2. [View document](/../../blob/master/BR.md#business-requirements)
 
 ## License
 
