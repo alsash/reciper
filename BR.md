@@ -6,7 +6,7 @@ Business requirements
 History
 *  Version 0.1. November 20 2016. Rus
 *  Version 0.2. November 30 2016. Rus
-*  Version 1.0. Decempber 4 2016. Rus
+*  Version 1.0. December  4 2016. Rus
 
 # Боковая панель навигации
 
