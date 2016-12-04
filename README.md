@@ -1,10 +1,8 @@
 # RecipeR
 
-The home of your recipes
+The home of your recipes. 
 
-Android app
-
-Version 0.0
+Android application, Version 1.0
 
 ## Business Requirements
 [View document](/../../blob/master/BR.md#business-requirements)
