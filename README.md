@@ -11,4 +11,4 @@ Version 1.0 [View document](/../../blob/master/BR.md#business-requirements)
 
 © 2016 Alsash
 
-Licensed under the [Apache License](/../../blob/master/LICENSE), Version 2.0
+Licensed under the [Apache License Version 2.0](/../../blob/master/LICENSE)
