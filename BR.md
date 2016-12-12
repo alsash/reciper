@@ -1,4 +1,5 @@
-# Business requirements
+Business requirements
+=====================
 
 *Version 1.0*
 
