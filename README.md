@@ -11,7 +11,9 @@ Version 1.0
 
 ## Business Requirements
 
-Version 1.0 [View document](/../../blob/master/BR.md#business-requirements)
+Version 1.0
+
+[View document](/../../blob/master/BR.md#business-requirements)
 
 ## License
 
