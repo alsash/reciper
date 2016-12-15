@@ -11,7 +11,7 @@
     tools:context="com.alsash.reciper.StartActivity">
 
     <ImageView
-        android:id="@+id/fullscreen_content"
+        android:id="@+id/app_icon"
         android:layout_width="180dp"
         android:layout_height="180dp"
         android:gravity="center"
@@ -26,33 +26,5 @@
         android:text="@string/app_name"
         android:textSize="48sp"
         android:textStyle="bold|italic" />
-
-    <!-- This FrameLayout insets its children based on system windows using
-         android:fitsSystemWindows. -->
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fitsSystemWindows="true">
-
-        <LinearLayout
-            android:id="@+id/fullscreen_content_controls"
-            style="?metaButtonBarStyle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|center_horizontal"
-            android:background="@color/colorBlackOverlay"
-            android:orientation="horizontal"
-            tools:ignore="UselessParent">
-
-            <Button
-                android:id="@+id/dummy_button"
-                style="?metaButtonBarButtonStyle"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="string/dummy_button" />
-
-        </LinearLayout>
-    </FrameLayout>
 
 </LinearLayout>
