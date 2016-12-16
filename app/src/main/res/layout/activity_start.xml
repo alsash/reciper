@@ -27,6 +27,7 @@
         android:textSize="48sp"
         android:textStyle="bold|italic" />
 
+    <!--Hide ButtonBar
     <LinearLayout
         android:id="@+id/fullscreen_content_controls"
         style="?metaButtonBarStyle"
@@ -35,8 +36,8 @@
         android:layout_gravity="bottom|center_horizontal"
         android:background="@color/colorBlackOverlay"
         android:orientation="horizontal"
-        android:visibility="gone"> <!--Hide ButtonBar-->
+        android:visibility="gone">
 
-    </LinearLayout>
+    </LinearLayout>-->
 
 </LinearLayout>

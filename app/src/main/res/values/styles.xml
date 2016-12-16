@@ -18,4 +18,13 @@
         <item name="android:background">@color/colorBlackOverlay</item>
     </style>
 
+
+    <style name="AppTheme.Fullscreen">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowBackground">@null</item>
+    </style>
+
 </resources>
