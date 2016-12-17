@@ -5,10 +5,8 @@
 
     <item>
         <bitmap
-            android:layout_width="300dp"
-            android:layout_height="300dp"
             android:gravity="center"
-            android:src="@drawable/splash_logo_text" />
+            android:src="@drawable/splash_image" />
     </item>
 
 </layer-list>
