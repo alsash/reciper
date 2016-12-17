@@ -3,6 +3,5 @@
     <color name="primary">#FF5722</color>
     <color name="primary_dark">#E64A19</color>
     <color name="accent">#64FFDA</color>
-    <color name="black_overlay">#66000000</color>
     <color name="white">#FFFFFFFF</color>
 </resources>

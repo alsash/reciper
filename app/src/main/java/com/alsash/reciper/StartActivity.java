@@ -10,8 +10,8 @@ public class StartActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_start);
-/*        if (getSupportActionBar() != null) getSupportActionBar().hide();
+/*       setContentView(R.layout.activity_start);
+       if (getSupportActionBar() != null) getSupportActionBar().hide();
         findViewById(R.id.activity_start_image)
                 .setSystemUiVisibility(View.SYSTEM_UI_FLAG_LOW_PROFILE
                         | View.SYSTEM_UI_FLAG_FULLSCREEN
