@@ -9,7 +9,4 @@
             android:src="@mipmap/ic_launcher" />
     </item>
 
-    <item
-        android:drawable="@drawable/app_name_vector"
-        android:gravity="bottom|center_horizontal" />
 </layer-list>
