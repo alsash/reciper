@@ -9,4 +9,10 @@
             android:src="@drawable/ic_app" />
     </item>
 
+    <item android:bottom="24dp">
+        <bitmap
+            android:gravity="bottom|center_horizontal"
+            android:src="@drawable/ic_app_name" />
+    </item>
+
 </layer-list>
