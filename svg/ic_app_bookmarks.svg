@@ -5,8 +5,8 @@
     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
     xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd" height="1200" id="svg2"
     version="1.1" viewBox="0 0 1200 1200" width="1200" xmlns="http://www.w3.org/2000/svg"
-    inkscape:export-filename="/home/aldolyna/Android/Projects/reciper/svg/ic_app.png"
-    inkscape:export-xdpi="90" inkscape:export-ydpi="90" inkscape:version="0.91 r13725"
+    inkscape:export-filename="/home/aldolyna/Android/Projects/reciper/app/src/main/res/drawable-xxxhdpi/ic_app.png"
+    inkscape:export-xdpi="57.599998" inkscape:export-ydpi="57.599998" inkscape:version="0.91 r13725"
     sodipodi:docname="ic_app_bookmarks.svg">
   <defs id="defs4">
     <filter style="color-interpolation-filters:sRGB;" id="filter6559" inkscape:label="Drop Shadow">
@@ -140,7 +140,7 @@
   </defs>
   <sodipodi:namedview bordercolor="#666666" borderopacity="1.0" id="base" pagecolor="#ffffff"
       showgrid="false" units="px" width="1000px" inkscape:current-layer="layer1"
-      inkscape:cx="684.11346" inkscape:cy="611.07008" inkscape:document-units="px"
+      inkscape:cx="478.86592" inkscape:cy="737.71525" inkscape:document-units="px"
       inkscape:pageopacity="0.0" inkscape:pageshadow="2" inkscape:window-height="1056"
       inkscape:window-maximized="1" inkscape:window-width="1855" inkscape:window-x="65"
       inkscape:window-y="24" inkscape:zoom="0.70710678" />
@@ -155,7 +155,7 @@
   </metadata>
   <g id="layer1" transform="translate(0,147.6378)" inkscape:groupmode="layer"
       inkscape:label="Layer 1">
-    <g style="filter:url(#filter3432)" id="g3425">
+    <g style="filter:url(#filter3432)" id="g3425" transform="translate(24,0)">
       <path style="fill:#f2f2f2;fill-opacity:1"
           d="m 912,77.3622 0,165 188,0 -47.8125,-82.5 47.8125,-82.5 -188,0 z" id="rect3372"
           inkscape:connector-curvature="0" />
@@ -171,7 +171,7 @@
           d="m 912,637.3622 0,165 188,0 -47.8125,-82.5 47.8125,-82.5 -188,0 z" id="rect3372-18-7"
           inkscape:connector-curvature="0" />
     </g>
-    <g style="filter:url(#filter4017)" id="g3434" transform="translate(-65,-100.00005)">
+    <g style="filter:url(#filter4017)" id="g3434" transform="translate(-55,-100.00002)">
       <path style="fill:#e6e6e6;fill-opacity:1"
           d="M 655.5,252.3622 A 150.9589,149.99999 0 0 0 509.46543,365.10829 124.5411,123.75 0 0 0 504.54048,364.8622 124.5411,123.75 0 0 0 380,488.6122 124.5411,123.75 0 0 0 474.49377,608.5497 c -1.28717,92.67378 6.94378,190.84975 24.72064,212.92969 16.5766,20.58914 86.431,30.88281 156.28559,30.88281 l 0,-600 z"
           id="path3881" inkscape:connector-curvature="0" />
