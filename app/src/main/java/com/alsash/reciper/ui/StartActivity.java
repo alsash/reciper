@@ -1,4 +1,4 @@
-package com.alsash.reciper;
+package com.alsash.reciper.ui;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;

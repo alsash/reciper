@@ -5,11 +5,7 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
-import android.support.design.widget.TabLayout;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
-import android.support.v4.view.PagerAdapter;
-import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -19,10 +15,8 @@ import android.view.View;
 
 import com.alsash.reciper.R;
 
-public abstract class DrawerTabActivity extends AppCompatActivity
+public abstract class DrawerListActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-
-    protected abstract PagerAdapter getPagerAdapter(FragmentManager fm);
 
     protected abstract void setupFab(FloatingActionButton fab);
 
@@ -54,12 +48,7 @@ public abstract class DrawerTabActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.drawer_nav);
         navigationView.setNavigationItemSelectedListener(this);
 
-        // Set up the ViewPager with the implemented PagerAdapter.
-        ViewPager viewPager = (ViewPager) findViewById(R.id.tab_container);
-        viewPager.setAdapter(getPagerAdapter(getSupportFragmentManager()));
 
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
-        tabLayout.setupWithViewPager(viewPager);
     }
 
     @Override

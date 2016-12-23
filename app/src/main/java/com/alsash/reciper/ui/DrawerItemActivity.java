@@ -19,7 +19,7 @@ import android.view.View;
 
 import com.alsash.reciper.R;
 
-public abstract class DrawerTabActivity extends AppCompatActivity
+public abstract class DrawerItemActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     protected abstract PagerAdapter getPagerAdapter(FragmentManager fm);
