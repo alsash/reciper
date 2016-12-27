@@ -7,20 +7,21 @@ import android.support.v4.app.Fragment;
 
 import com.alsash.reciper.R;
 
-public abstract class DrawerListActivity extends DrawerBaseActivity {
+public abstract class DrawerFrameActivity extends DrawerBaseActivity {
 
-    protected abstract Fragment getListFragment(@Nullable Intent activityIntent);
+    protected abstract Fragment getFrameFragment(@Nullable Intent activityIntent);
 
     @Override
     protected int getDrawerLayout() {
-        return R.layout.activity_drawer_list;
+        return R.layout.activity_drawer_frame;
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.item_container, getListFragment(getIntent()))
+                .replace(R.id.frame_container, getFrameFragment(getIntent()))
                 .commit();
     }
 }
