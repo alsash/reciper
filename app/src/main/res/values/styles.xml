@@ -17,7 +17,7 @@
 
     <style name="StartTheme" parent="AppTheme.NoActionBar">
         <item name="android:windowFullscreen">true</item>
-        <item name="android:windowBackground">@drawable/ll_splash_background</item>
+        <item name="android:windowBackground">@drawable/bg_splash_background</item>
     </style>
 
 </resources>

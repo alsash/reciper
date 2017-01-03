@@ -2,4 +2,7 @@
     <string name="app_name">Recipes</string>
     <string name="drawer_open">Open navigation drawer</string>
     <string name="drawer_close">Close navigation drawer</string>
+    <string name="header_date_top_description">Date of creation of the first recipe</string>
+    <string name="header_date_end_description">Date of creation of the last recipe</string>
+    <string name="header_recipe_num_description">Number of recipes</string>
 </resources>
