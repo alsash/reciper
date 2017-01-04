@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group
+        android:id="@+id/drawer_group_recipe"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/drawer_recipes"
+            android:icon="@drawable/ic_recipe"
+            android:title="@string/drawer_menu_recipes" />
+
+        <item
+            android:id="@+id/drawer_foods"
+            android:icon="@drawable/ic_food"
+            android:title="@string/drawer_menu_foods" />
+    </group>
+
+    <group
+        android:id="@+id/drawer_group_cart"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/drawer_cart"
+            android:icon="@drawable/ic_shopping"
+            android:title="@string/drawer_menu_cart" />
+    </group>
+
+    <group
+        android:id="@+id/drawer_group_editor"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/drawer_labels"
+            android:icon="@drawable/ic_label_alt"
+            android:title="@string/drawer_menu_labels" />
+        <item
+            android:id="@+id/drawer_categories"
+            android:icon="@drawable/ic_category"
+            android:title="@string/drawer_menu_categories" />
+    </group>
+
+    <group
+        android:id="@+id/drawer_group_settings"
+        android:checkableBehavior="none">
+        <item
+            android:id="@+id/drawer_settings"
+            android:icon="@drawable/ic_settings"
+            android:title="@string/drawer_menu_settings" />
+    </group>
+</menu>

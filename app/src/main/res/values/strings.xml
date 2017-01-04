@@ -2,7 +2,17 @@
     <string name="app_name">Recipes</string>
     <string name="drawer_open">Open navigation drawer</string>
     <string name="drawer_close">Close navigation drawer</string>
-    <string name="header_date_top_description">Date of creation of the first recipe</string>
-    <string name="header_date_end_description">Date of creation of the last recipe</string>
-    <string name="header_recipe_num_description">Number of recipes</string>
+    <string name="drawer_account_image_description">Your account\'s image</string>
+    <string name="drawer_account_settings_description">Edit accounts</string>
+    <string name="drawer_account_add">Add an account</string>
+    <string name="drawer_date_top_description">Creation date of the first recipe</string>
+    <string name="drawer_date_end_description">Creation date of the last recipe</string>
+    <string name="drawer_recipe_num_description">Number of recipes</string>
+    <string name="drawer_menu_recipes">Recipes</string>
+    <string name="drawer_menu_foods">Ingredients</string>
+    <string name="drawer_menu_cart">Cart</string>
+    <string name="drawer_menu_labels">Labels</string>
+    <string name="drawer_menu_categories">Categories</string>
+    <string name="drawer_menu_settings">Settings</string>
+
 </resources>
