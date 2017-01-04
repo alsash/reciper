@@ -39,7 +39,7 @@
 
     <group
         android:id="@+id/drawer_group_settings"
-        android:checkableBehavior="none">
+        android:checkableBehavior="single">
         <item
             android:id="@+id/drawer_settings"
             android:icon="@drawable/ic_settings"

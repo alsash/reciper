@@ -13,6 +13,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 
 import com.alsash.reciper.R;
 
@@ -51,8 +52,21 @@ public abstract class DrawerBaseActivity extends AppCompatActivity
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.drawer_nav);
+        final NavigationView navigationView = (NavigationView) findViewById(R.id.drawer_nav);
         navigationView.setNavigationItemSelectedListener(this);
+        navigationView.getHeaderView(0).findViewById(R.id.drawer_account_details)
+                .setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (navigationView.getHeaderCount() == 0) {
+                            ((ImageView) v).setImageResource(R.drawable.ic_chevron_up);
+                            navigationView.inflateHeaderView(R.layout.drawer_statistic);
+                        } else {
+                            ((ImageView) v).setImageResource(R.drawable.ic_chevron_down);
+                            navigationView.removeHeaderView(navigationView.getHeaderView(1));
+                        }
+                    }
+                });
     }
 
     @Override
