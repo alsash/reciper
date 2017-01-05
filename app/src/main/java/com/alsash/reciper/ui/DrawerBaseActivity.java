@@ -13,7 +13,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ImageView;
+import android.widget.ImageButton;
 
 import com.alsash.reciper.R;
 
@@ -54,19 +54,21 @@ public abstract class DrawerBaseActivity extends AppCompatActivity
 
         final NavigationView navigationView = (NavigationView) findViewById(R.id.drawer_nav);
         navigationView.setNavigationItemSelectedListener(this);
-        navigationView.getHeaderView(0).findViewById(R.id.drawer_account_details)
-                .setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if (navigationView.getHeaderCount() == 0) {
-                            ((ImageView) v).setImageResource(R.drawable.ic_chevron_up);
-                            navigationView.inflateHeaderView(R.layout.drawer_statistic);
-                        } else {
-                            ((ImageView) v).setImageResource(R.drawable.ic_chevron_down);
-                            navigationView.removeHeaderView(navigationView.getHeaderView(1));
-                        }
-                    }
-                });
+        View headerView = navigationView.getHeaderView(0);
+        final ImageButton button = (ImageButton) headerView.findViewById(R.id.drawer_account_details);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int headers = navigationView.getHeaderCount();
+                if (headers == 1) {
+                    button.animate().rotation(180F).start();
+                    navigationView.inflateHeaderView(R.layout.drawer_statistic);
+                } else {
+                    button.animate().rotation(0F).start();
+                    navigationView.removeHeaderView(navigationView.getHeaderView(1));
+                }
+            }
+        });
     }
 
     @Override
