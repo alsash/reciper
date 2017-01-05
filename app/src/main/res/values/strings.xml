@@ -3,7 +3,7 @@
     <string name="drawer_open">Open navigation drawer</string>
     <string name="drawer_close">Close navigation drawer</string>
     <string name="drawer_account_image_description">Your account\'s image</string>
-    <string name="drawer_account_settings_description">Edit accounts</string>
+    <string name="drawer_account_details_description">Account details</string>
     <string name="drawer_account_add">Add an account</string>
     <string name="drawer_date_top_description">Creation date</string>
     <string name="drawer_date_end_description">Change date</string>

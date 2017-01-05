@@ -7,7 +7,6 @@
     android:background="@drawable/bg_drawer_header"
     android:theme="@style/ThemeOverlay.AppCompat.Light">
 
-    <!-- Account -->
     <ImageView
         android:id="@+id/drawer_account_image"
         android:layout_width="80dp"
@@ -54,7 +53,7 @@
         android:layout_marginRight="8dp"
         android:alpha="0.5"
         android:background="@android:color/transparent"
-        android:contentDescription="@string/drawer_account_settings_description"
+        android:contentDescription="@string/drawer_account_details_description"
         android:padding="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent"
