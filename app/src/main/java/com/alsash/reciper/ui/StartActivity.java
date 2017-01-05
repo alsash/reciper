@@ -34,7 +34,7 @@ public class StartActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        handler.postDelayed(runRecipeListActivity, 5000);
+        handler.postDelayed(runRecipeListActivity, 3000);
     }
 
     @Override

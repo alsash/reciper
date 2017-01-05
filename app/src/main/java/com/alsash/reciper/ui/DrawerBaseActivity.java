@@ -56,7 +56,7 @@ public abstract class DrawerBaseActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
         View headerView = navigationView.getHeaderView(0);
         final ImageButton button = (ImageButton) headerView.findViewById(R.id.drawer_account_details);
-        button.setOnClickListener(new View.OnClickListener() {
+        headerView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 int headers = navigationView.getHeaderCount();
