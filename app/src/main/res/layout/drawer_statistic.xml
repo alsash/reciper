@@ -128,4 +128,12 @@
         app:layout_constraintRight_toRightOf="@+id/drawer_recipe_num_text"
         app:layout_constraintTop_toBottomOf="@+id/drawer_recipe_num_text" />
 
+    <View
+        android:layout_width="368dp"
+        android:layout_height="1dp"
+        android:layout_margin="4dp"
+        android:background="#90909090"
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:layout_editor_absoluteX="8dp" />
+
 </android.support.constraint.ConstraintLayout>

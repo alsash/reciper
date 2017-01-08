@@ -56,13 +56,14 @@ public abstract class DrawerBaseActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
         View headerView = navigationView.getHeaderView(0);
         final ImageButton button = (ImageButton) headerView.findViewById(R.id.drawer_account_details);
-        headerView.setOnClickListener(new View.OnClickListener() {
+        button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 int headers = navigationView.getHeaderCount();
                 if (headers == 1) {
                     button.animate().rotation(180F).start();
                     navigationView.inflateHeaderView(R.layout.drawer_statistic);
+                    navigationView.getHeaderView(1).animate().translationY(100F);
                 } else {
                     button.animate().rotation(0F).start();
                     navigationView.removeHeaderView(navigationView.getHeaderView(1));
