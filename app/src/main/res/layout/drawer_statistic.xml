@@ -28,11 +28,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
+        android:text="00.00.0000"
         android:textAppearance="@style/TextAppearance.AppCompat.Body2"
         app:layout_constraintLeft_toLeftOf="@+id/drawer_date_top_icon"
         app:layout_constraintRight_toRightOf="@+id/drawer_date_top_icon"
         app:layout_constraintTop_toBottomOf="@+id/drawer_date_top_icon"
-        tools:text="14.01.2015" />
+        tools:ignore="HardcodedText" />
 
     <TextView
         android:id="@+id/drawer_date_top_description"
@@ -68,11 +69,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
+        android:text="00.00.0000"
         android:textAppearance="@style/TextAppearance.AppCompat.Body2"
         app:layout_constraintLeft_toLeftOf="@+id/drawer_date_end_icon"
         app:layout_constraintRight_toRightOf="@+id/drawer_date_end_icon"
         app:layout_constraintTop_toBottomOf="@+id/drawer_date_end_icon"
-        tools:text="14.01.2016" />
+        tools:ignore="HardcodedText" />
 
     <TextView
         android:id="@+id/drawer_date_end_description"
@@ -109,11 +111,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
+        android:text="0"
         android:textAppearance="@style/TextAppearance.AppCompat.Body2"
         app:layout_constraintLeft_toLeftOf="@+id/drawer_recipe_num_icon"
         app:layout_constraintRight_toRightOf="@+id/drawer_recipe_num_icon"
         app:layout_constraintTop_toBottomOf="@+id/drawer_recipe_num_icon"
-        tools:text="532" />
+        tools:ignore="HardcodedText" />
 
     <TextView
         android:id="@+id/drawer_recipe_num_description"
@@ -129,11 +132,11 @@
         app:layout_constraintTop_toBottomOf="@+id/drawer_recipe_num_text" />
 
     <View
-        android:layout_width="368dp"
+        android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_margin="4dp"
-        android:background="#90909090"
-        app:layout_constraintBottom_toBottomOf="parent"
-        tools:layout_editor_absoluteX="8dp" />
+        android:alpha="0.1"
+        android:background="@color/black"
+        app:layout_constraintBottom_toBottomOf="parent" />
 
 </android.support.constraint.ConstraintLayout>
