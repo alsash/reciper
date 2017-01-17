@@ -21,7 +21,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@+id/drawer_date_end_icon"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_date_top" />
+        app:srcCompat="@drawable/ic_content_date_top" />
 
     <TextView
         android:id="@+id/drawer_date_top_text"
@@ -62,7 +62,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_date_end" />
+        app:srcCompat="@drawable/ic_content_date_end" />
 
     <TextView
         android:id="@+id/drawer_date_end_text"
@@ -104,7 +104,7 @@
         app:layout_constraintLeft_toRightOf="@+id/drawer_date_end_icon"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_recipe" />
+        app:srcCompat="@drawable/ic_nav_recipe" />
 
     <TextView
         android:id="@+id/drawer_recipe_num_text"

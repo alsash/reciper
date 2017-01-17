@@ -5,13 +5,13 @@
         android:id="@+id/drawer_group_recipe"
         android:checkableBehavior="single">
         <item
-            android:id="@+id/drawer_recipes"
-            android:icon="@drawable/ic_recipe"
+            android:id="@+id/drawer_recipe_list"
+            android:icon="@drawable/ic_nav_recipe"
             android:title="@string/drawer_menu_recipes" />
 
         <item
-            android:id="@+id/drawer_foods"
-            android:icon="@drawable/ic_food"
+            android:id="@+id/drawer_food"
+            android:icon="@drawable/ic_nav_food"
             android:title="@string/drawer_menu_foods" />
     </group>
 
@@ -20,7 +20,7 @@
         android:checkableBehavior="single">
         <item
             android:id="@+id/drawer_cart"
-            android:icon="@drawable/ic_shopping"
+            android:icon="@drawable/ic_nav_cart"
             android:title="@string/drawer_menu_cart" />
     </group>
 
@@ -28,12 +28,12 @@
         android:id="@+id/drawer_group_editor"
         android:checkableBehavior="single">
         <item
-            android:id="@+id/drawer_labels"
-            android:icon="@drawable/ic_label_alt"
+            android:id="@+id/drawer_label"
+            android:icon="@drawable/ic_nav_label"
             android:title="@string/drawer_menu_labels" />
         <item
-            android:id="@+id/drawer_categories"
-            android:icon="@drawable/ic_category"
+            android:id="@+id/drawer_category"
+            android:icon="@drawable/ic_nav_category"
             android:title="@string/drawer_menu_categories" />
     </group>
 
@@ -42,7 +42,7 @@
         android:checkableBehavior="single">
         <item
             android:id="@+id/drawer_settings"
-            android:icon="@drawable/ic_settings"
+            android:icon="@drawable/ic_nav_settings"
             android:title="@string/drawer_menu_settings" />
     </group>
 </menu>

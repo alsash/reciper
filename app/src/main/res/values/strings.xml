@@ -14,5 +14,26 @@
     <string name="drawer_menu_labels">Labels</string>
     <string name="drawer_menu_categories">Categories</string>
     <string name="drawer_menu_settings">Settings</string>
-
+    <string name="action_search">Search</string>
+    <string name="action_clear">Clear</string>
+    <string name="list_group">Group by</string>
+    <string name="list_group_all">All (no group)</string>
+    <string name="list_group_bookmark">Bookmark</string>
+    <string name="list_group_label">Label</string>
+    <string name="list_group_category">Category</string>
+    <string name="list_group_energy">Energy</string>
+    <string name="list_group_nutrition">Nutrition</string>
+    <string name="list_group_time">Time</string>
+    <string name="list_group_food">Food</string>
+    <string name="list_sort">Sort by</string>
+    <string name="list_sort_alphabet">Alphabet</string>
+    <string name="list_sort_account">Account</string>
+    <string name="list_sort_date_top">Creation date</string>
+    <string name="list_sort_date_end">Change date</string>
+    <string name="list_sort_rating">Rating</string>
+    <string name="list_filter">Filter</string>
+    <string name="list_view">View</string>
+    <string name="list_view_full">Full</string>
+    <string name="list_view_short">Short</string>
+    <string name="list_reset">Reset to default</string>
 </resources>
