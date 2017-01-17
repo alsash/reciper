@@ -58,9 +58,25 @@
         app:showAsAction="ifRoom">
         <menu>
             <item
-                android:id="@+id/sort_alphabet"
-                android:icon="@drawable/ic_list_sort_alphabet"
-                android:title="@string/list_sort_alphabet" />
+                android:id="@+id/sort_name"
+                android:icon="@drawable/ic_list_sort_name"
+                android:title="@string/list_sort_name" />
+            <item
+                android:id="@+id/sort_account"
+                android:icon="@drawable/ic_list_sort_account"
+                android:title="@string/list_sort_account" />
+            <item
+                android:id="@+id/sort_date_top"
+                android:icon="@drawable/ic_content_date_top"
+                android:title="@string/list_sort_date_top" />
+            <item
+                android:id="@+id/sort_date_end"
+                android:icon="@drawable/ic_content_date_end"
+                android:title="@string/list_sort_date_end" />
+            <item
+                android:id="@+id/sort_rating"
+                android:icon="@drawable/ic_list_sort_rating"
+                android:title="@string/list_sort_rating" />
             <item
                 android:id="@+id/sort_clear"
                 android:icon="@drawable/ic_action_cancel"
@@ -78,6 +94,65 @@
                 android:id="@+id/filter_clear"
                 android:icon="@drawable/ic_action_cancel"
                 android:title="@string/action_clear" />
+
+            <group
+                android:id="@+id/filter_group_group"
+                android:checkableBehavior="all">
+                <item
+                    android:id="@+id/filter_bookmark"
+                    android:icon="@drawable/ic_content_bookmark"
+                    android:title="@string/list_group_bookmark" />
+                <item
+                    android:id="@+id/filter_label"
+                    android:icon="@drawable/ic_nav_label"
+                    android:title="@string/list_group_label" />
+                <item
+                    android:id="@+id/filter_category"
+                    android:icon="@drawable/ic_nav_category"
+                    android:title="@string/list_group_category" />
+                <item
+                    android:id="@+id/filter_energy"
+                    android:icon="@drawable/ic_food_energy"
+                    android:title="@string/list_group_energy" />
+                <item
+                    android:id="@+id/filter_nutrition"
+                    android:icon="@drawable/ic_food_nutrition"
+                    android:title="@string/list_group_nutrition" />
+                <item
+                    android:id="@+id/filter_time"
+                    android:icon="@drawable/ic_content_time"
+                    android:title="@string/list_group_time" />
+                <item
+                    android:id="@+id/filter_food"
+                    android:icon="@drawable/ic_food_group"
+                    android:title="@string/list_group_food" />
+            </group>
+
+            <group
+                android:id="@+id/filter_group_sort"
+                android:checkableBehavior="all">
+                <item
+                    android:id="@+id/filter_name"
+                    android:icon="@drawable/ic_list_sort_name"
+                    android:title="@string/list_sort_name" />
+                <item
+                    android:id="@+id/filter_account"
+                    android:icon="@drawable/ic_list_sort_account"
+                    android:title="@string/list_sort_account" />
+                <item
+                    android:id="@+id/filter_date_top"
+                    android:icon="@drawable/ic_content_date_top"
+                    android:title="@string/list_sort_date_top" />
+                <item
+                    android:id="@+id/filter_date_end"
+                    android:icon="@drawable/ic_content_date_end"
+                    android:title="@string/list_sort_date_end" />
+                <item
+                    android:id="@+id/filter_rating"
+                    android:icon="@drawable/ic_list_sort_rating"
+                    android:title="@string/list_sort_rating" />
+            </group>
+
         </menu>
     </item>
 
@@ -99,8 +174,14 @@
     </item>
 
     <item
+        android:id="@+id/search_clear"
+        android:icon="@drawable/ic_action_search_clear"
+        android:title="@string/action_search_clear" />
+
+    <item
         android:id="@+id/reset"
         android:icon="@drawable/ic_action_reset"
-        android:title="@string/list_reset" />
+        android:title="@string/list_reset"
+        app:showAsAction="never" />
 
 </menu>
