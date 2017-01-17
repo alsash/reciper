@@ -3,11 +3,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/search"
+        android:id="@+id/action_search"
         android:actionViewClass="android.support.v7.widget.SearchView"
         android:icon="@drawable/ic_action_search"
         android:title="@string/action_search"
-        app:showAsAction="always" />
+        app:showAsAction="ifRoom|collapseActionView" />
 
     <item
         android:id="@+id/group"
