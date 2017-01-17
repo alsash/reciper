@@ -13,7 +13,7 @@
         android:id="@+id/group"
         android:icon="@drawable/ic_list_group"
         android:title="@string/list_group"
-        app:showAsAction="always">
+        app:showAsAction="ifRoom">
         <menu>
             <item
                 android:id="@+id/group_all"
@@ -55,7 +55,7 @@
         android:id="@+id/sort"
         android:icon="@drawable/ic_list_sort"
         android:title="@string/list_sort"
-        app:showAsAction="always">
+        app:showAsAction="ifRoom">
         <menu>
             <item
                 android:id="@+id/sort_name"
@@ -88,7 +88,7 @@
         android:id="@+id/filter"
         android:icon="@drawable/ic_list_filter"
         android:title="@string/list_filter"
-        app:showAsAction="always">
+        app:showAsAction="ifRoom">
         <menu>
             <item
                 android:id="@+id/filter_clear"
@@ -152,7 +152,7 @@
         android:id="@+id/view"
         android:icon="@drawable/ic_list_view"
         android:title="@string/list_view"
-        app:showAsAction="always">
+        app:showAsAction="ifRoom">
         <menu>
             <item
                 android:id="@+id/view_full"
@@ -168,12 +168,13 @@
     <item
         android:id="@+id/search_clear"
         android:icon="@drawable/ic_action_search_clear"
-        android:title="@string/action_search_clear" />
+        android:title="@string/action_search_clear"
+        app:showAsAction="ifRoom" />
 
     <item
         android:id="@+id/reset"
         android:icon="@drawable/ic_action_reset"
         android:title="@string/list_reset"
-        app:showAsAction="never" />
+        app:showAsAction="ifRoom" />
 
 </menu>
