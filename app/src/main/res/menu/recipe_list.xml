@@ -124,7 +124,7 @@
                 android:title="@string/list_group_time" />
             <item
                 android:id="@+id/filter_food"
-                android:icon="@drawable/ic_food_component"
+                android:icon="@drawable/ic_food"
                 android:title="@string/list_group_food" />
 
             <item
