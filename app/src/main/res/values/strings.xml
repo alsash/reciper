@@ -25,7 +25,7 @@
     <string name="list_group_energy">Energy</string>
     <string name="list_group_nutrition">Nutrition</string>
     <string name="list_group_time">Time</string>
-    <string name="list_group_food">Food</string>
+    <string name="list_group_food">Ingredient</string>
     <string name="list_sort">Sort by</string>
     <string name="list_sort_name">Name</string>
     <string name="list_sort_account">Account</string>

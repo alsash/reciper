@@ -72,7 +72,7 @@ public class RecipeListFragment extends Fragment {
             case R.id.group_all:
             case R.id.group_bookmark:
             case R.id.group_category:
-            case R.id.group_ingredient:
+            case R.id.group_food:
             case R.id.group_label:
                 groupRecipeList(id);
                 return true;
@@ -128,7 +128,7 @@ public class RecipeListFragment extends Fragment {
             case R.id.group_all:
             case R.id.group_bookmark:
             case R.id.group_category:
-            case R.id.group_ingredient:
+            case R.id.group_food:
             case R.id.group_label:
         }
     }
