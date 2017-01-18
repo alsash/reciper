@@ -1,8 +1,11 @@
 package com.alsash.reciper.ui;
 
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -45,7 +48,10 @@ public class RecipeListFragment extends Fragment {
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
+
         inflater.inflate(R.menu.recipe_list, menu);
+        tintMenuItem(menu, R.color.icon_dark);
+
         final SearchView searchView = (SearchView)
                 MenuItemCompat.getActionView(menu.findItem(R.id.action_search));
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -115,12 +121,18 @@ public class RecipeListFragment extends Fragment {
         }
     }
 
-    private void resetRecipeListOptions() {
-
-    }
-
-    private void clearSearchPrevious() {
-
+    private void tintMenuItem(Menu menu, int colorRes) {
+        for (int i = 0; i < menu.size(); i++) {
+            MenuItem item = menu.getItem(i);
+            Drawable icon = item.getIcon();
+            if (icon != null) {
+                icon.mutate();
+                DrawableCompat.setTint(icon, ContextCompat.getColor(getActivity(), colorRes));
+            }
+            if (item.hasSubMenu()) {
+                tintMenuItem(item.getSubMenu(), R.color.icon_light);
+            }
+        }
     }
 
     private void groupRecipeList(int groupMenuId) {
@@ -146,6 +158,14 @@ public class RecipeListFragment extends Fragment {
     }
 
     private void filterRecipeList(int filterMenuId) {
+
+    }
+
+    private void resetRecipeListOptions() {
+
+    }
+
+    private void clearSearchPrevious() {
 
     }
 }

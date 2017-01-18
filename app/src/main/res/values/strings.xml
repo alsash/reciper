@@ -17,6 +17,7 @@
     <string name="action_search">Search</string>
     <string name="action_search_clear">Clear search</string>
     <string name="action_clear">Clear</string>
+    <string name="action_reset">Reset to default</string>
     <string name="list_group">Group by</string>
     <string name="list_group_all">All (no group)</string>
     <string name="list_group_bookmark">Bookmark</string>
@@ -36,5 +37,4 @@
     <string name="list_view">View</string>
     <string name="list_view_full">Full</string>
     <string name="list_view_short">Short</string>
-    <string name="list_reset">Reset list</string>
 </resources>
