@@ -48,6 +48,17 @@ public class RecipeListFragment extends Fragment {
         inflater.inflate(R.menu.recipe_list, menu);
         final SearchView searchView = (SearchView)
                 MenuItemCompat.getActionView(menu.findItem(R.id.action_search));
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
     }
 
     @Override
@@ -62,7 +73,7 @@ public class RecipeListFragment extends Fragment {
             case R.id.group_bookmark:
             case R.id.group_category:
             case R.id.group_energy:
-            case R.id.group_food:
+            case R.id.group_ingredient:
             case R.id.group_label:
             case R.id.group_nutrition:
             case R.id.group_time:
@@ -121,7 +132,7 @@ public class RecipeListFragment extends Fragment {
             case R.id.group_bookmark:
             case R.id.group_category:
             case R.id.group_energy:
-            case R.id.group_food:
+            case R.id.group_ingredient:
             case R.id.group_label:
             case R.id.group_nutrition:
             case R.id.group_time:

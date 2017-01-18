@@ -2,7 +2,13 @@
 <resources>
     <color name="primary">#FF5722</color>
     <color name="primary_dark">#E64A19</color>
-    <color name="accent">#64FFDA</color>
+    <color name="accent">#1de9b6</color>
     <color name="white">#FFFFFFFF</color>
     <color name="black">#FF000000</color>
+    <color name="icon_light_default">@color/white</color>
+    <color name="icon_light_checked">@color/accent</color>
+    <color name="icon_light_disabled">#36ffffff</color>
+    <color name="icon_dark_default">#8a000000</color>
+    <color name="icon_dark_checked">@color/primary</color>
+    <color name="icon_dark_disabled">#24000000</color>
 </resources>
