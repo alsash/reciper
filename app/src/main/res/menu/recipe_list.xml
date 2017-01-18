@@ -4,14 +4,14 @@
 
     <item
         android:id="@+id/action_search"
-        android:icon="@drawable/ic_search"
+        android:icon="@drawable/ic_search_color_white"
         android:title="@string/action_search"
         app:actionViewClass="android.support.v7.widget.SearchView"
         app:showAsAction="ifRoom|collapseActionView" />
 
     <item
         android:id="@+id/group"
-        android:icon="@drawable/ic_list_group"
+        android:icon="@drawable/ic_list_group_color_white"
         android:title="@string/list_group"
         app:showAsAction="ifRoom">
         <menu>
@@ -40,7 +40,7 @@
 
     <item
         android:id="@+id/sort"
-        android:icon="@drawable/ic_list_sort"
+        android:icon="@drawable/ic_list_sort_color_white"
         android:title="@string/list_sort"
         app:showAsAction="ifRoom">
         <menu>
@@ -73,7 +73,7 @@
 
     <item
         android:id="@+id/filter"
-        android:icon="@drawable/ic_list_filter"
+        android:icon="@drawable/ic_list_filter_color_white"
         android:title="@string/list_filter"
         app:showAsAction="ifRoom">
         <menu>
@@ -136,7 +136,7 @@
 
     <item
         android:id="@+id/view"
-        android:icon="@drawable/ic_list_view"
+        android:icon="@drawable/ic_list_view_color_white"
         android:title="@string/list_view"
         app:showAsAction="ifRoom">
         <menu>
@@ -155,12 +155,12 @@
         android:id="@+id/search_clear"
         android:icon="@drawable/ic_search_clear"
         android:title="@string/action_search_clear"
-        app:showAsAction="ifRoom" />
+        app:showAsAction="never" />
 
     <item
         android:id="@+id/reset"
         android:icon="@drawable/ic_reset"
         android:title="@string/list_reset"
-        app:showAsAction="ifRoom" />
+        app:showAsAction="never" />
 
 </menu>
