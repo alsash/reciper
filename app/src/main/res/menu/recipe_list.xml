@@ -35,23 +35,23 @@
             <item
                 android:id="@+id/group_all"
                 android:icon="@drawable/ic_clear"
-                android:title="@string/list_group_all" />
+                android:title="@string/recipe_group_all" />
             <item
                 android:id="@+id/group_bookmark"
                 android:icon="@drawable/ic_bookmark"
-                android:title="@string/list_group_bookmark" />
+                android:title="@string/recipe_group_bookmark" />
             <item
                 android:id="@+id/group_label"
                 android:icon="@drawable/ic_label"
-                android:title="@string/list_group_label" />
+                android:title="@string/recipe_group_label" />
             <item
                 android:id="@+id/group_category"
                 android:icon="@drawable/ic_recipe_category"
-                android:title="@string/list_group_category" />
+                android:title="@string/recipe_group_category" />
             <item
                 android:id="@+id/group_food"
                 android:icon="@drawable/ic_food"
-                android:title="@string/list_group_food" />
+                android:title="@string/recipe_group_food" />
         </menu>
     </item>
 
@@ -101,15 +101,15 @@
             <item
                 android:id="@+id/filter_bookmark"
                 android:icon="@drawable/ic_bookmark"
-                android:title="@string/list_group_bookmark" />
+                android:title="@string/recipe_group_bookmark" />
             <item
                 android:id="@+id/filter_label"
                 android:icon="@drawable/ic_label"
-                android:title="@string/list_group_label" />
+                android:title="@string/recipe_group_label" />
             <item
                 android:id="@+id/filter_category"
                 android:icon="@drawable/ic_recipe_category"
-                android:title="@string/list_group_category" />
+                android:title="@string/recipe_group_category" />
             <item
                 android:id="@+id/filter_energy"
                 android:icon="@drawable/ic_food_energy"
@@ -125,7 +125,7 @@
             <item
                 android:id="@+id/filter_food"
                 android:icon="@drawable/ic_food"
-                android:title="@string/list_group_food" />
+                android:title="@string/recipe_group_food" />
 
             <item
                 android:id="@+id/filter_name"

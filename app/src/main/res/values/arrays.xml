@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="spinner_recipe_group_names">
+        <item>@string/recipe_group_all</item>
+        <item>@string/recipe_group_bookmark</item>
+        <item>@string/recipe_group_label</item>
+        <item>@string/recipe_group_category</item>
+        <item>@string/recipe_group_food</item>
+    </string-array>
+    <integer-array name="spinner_recipe_group_icons">   <!-- Group by:   -->
+        <item>@drawable/ic_clear</item>                 <!-- all         -->
+        <item>@drawable/ic_bookmark</item>              <!-- bookmark    -->
+        <item>@drawable/ic_label</item>                 <!-- label       -->
+        <item>@drawable/ic_recipe_category</item>       <!-- category    -->
+        <item>@drawable/ic_food</item>                  <!-- food        -->
+    </integer-array>
+</resources>

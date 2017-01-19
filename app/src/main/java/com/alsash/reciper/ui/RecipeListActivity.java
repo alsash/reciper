@@ -6,11 +6,21 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 
-public class RecipeListActivity extends DrawerFrameActivity {
+import com.alsash.reciper.R;
+
+public class RecipeListActivity extends DrawerSpinnerActivity {
+
+    private static final SpinnerArrayRes spinnerRes = new SpinnerArrayRes(
+            R.array.spinner_recipe_group_names, null);
 
     @Override
-    protected Fragment getFrameFragment(@Nullable Intent activityIntent) {
+    protected Fragment getSpinnerFragment(int position, @Nullable Intent activityIntent) {
         return RecipeListFragment.newInstance();
+    }
+
+    @Override
+    protected SpinnerArrayRes getSpinnerArrayRes() {
+        return spinnerRes;
     }
 
     @Override
