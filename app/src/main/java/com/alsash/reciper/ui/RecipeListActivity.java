@@ -11,7 +11,7 @@ import com.alsash.reciper.R;
 public class RecipeListActivity extends DrawerSpinnerActivity {
 
     private static final SpinnerArrayRes spinnerRes = new SpinnerArrayRes(
-            R.array.spinner_recipe_group_names, null);
+            R.array.spinner_recipe_group_names, R.array.spinner_recipe_group_icons);
 
     @Override
     protected Fragment getSpinnerFragment(int position, @Nullable Intent activityIntent) {
