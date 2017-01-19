@@ -10,6 +10,7 @@ import android.support.annotation.ArrayRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.ActionBar;
 import android.support.v7.widget.ThemedSpinnerAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -36,12 +37,13 @@ public abstract class DrawerSpinnerActivity extends DrawerBaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().setDisplayShowTitleEnabled(false);
-        }
+        ActionBar actionBar = getSupportActionBar();
+        assert actionBar != null;
+
+        actionBar.setDisplayShowTitleEnabled(false);
 
         Spinner spinner = (Spinner) findViewById(R.id.spinner);
-        spinner.setAdapter(new SpinnerAdapter(this, getSpinnerArrayRes()));
+        spinner.setAdapter(new SpinnerAdapter(actionBar.getThemedContext(), getSpinnerArrayRes()));
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -97,8 +99,12 @@ public abstract class DrawerSpinnerActivity extends DrawerBaseActivity {
                 TypedArray iconsArray = textView.getContext().getResources()
                         .obtainTypedArray(arrayResources.iconsArrayRes);
                 Drawable icon = iconsArray.getDrawable(position);
-                // textView.setCompoundDrawablePadding(14);
-                textView.setCompoundDrawablesWithIntrinsicBounds(icon, null, null, null);
+                if (icon != null) {
+                    // icon.mutate();
+                    // DrawableCompat.setTint(icon, R.color.icon_dark);
+                    textView.setCompoundDrawablePadding(14);
+                    textView.setCompoundDrawablesWithIntrinsicBounds(icon, null, null, null);
+                }
                 iconsArray.recycle();
             }
 
