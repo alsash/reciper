@@ -10,17 +10,29 @@ import com.alsash.reciper.R;
 
 public class RecipeListActivity extends DrawerSpinnerActivity {
 
-    private static final SpinnerArrayRes spinnerRes = new SpinnerArrayRes(
-            R.array.spinner_recipe_group_names, R.array.spinner_recipe_group_icons);
-
     @Override
-    protected Fragment getSpinnerFragment(int position, @Nullable Intent activityIntent) {
-        return RecipeListFragment.newInstance();
+    @Nullable
+    protected Fragment getSpinnerFragment(int menuItemId, @Nullable Intent activityIntent) {
+        switch (menuItemId) {
+            case R.id.group_all:
+            case R.id.group_bookmark:
+            case R.id.group_label:
+            case R.id.group_category:
+            case R.id.group_food:
+                return RecipeListFragment.newInstance();
+            default:
+                return null;
+        }
     }
 
     @Override
-    protected SpinnerArrayRes getSpinnerArrayRes() {
-        return spinnerRes;
+    protected int getSpinnerMenuRes() {
+        return R.menu.recipe_group;
+    }
+
+    @Override
+    protected int getSpinnerMenuItemDefault() {
+        return R.id.group_all;
     }
 
     @Override

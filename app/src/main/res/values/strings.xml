@@ -18,6 +18,7 @@
     <string name="action_search_clear">Clear search</string>
     <string name="action_clear">Clear</string>
     <string name="action_reset">Reset to default</string>
+    <string name="action_spinner">Choose</string>
     <string name="list_group">Group by</string>
     <string name="recipe_group_all">All (no group)</string>
     <string name="recipe_group_bookmark">Bookmark</string>

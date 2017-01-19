@@ -1,18 +1,14 @@
 package com.alsash.reciper.ui;
 
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.graphics.drawable.DrawableCompat;
-import android.support.v4.view.MenuItemCompat;
-import android.support.v7.widget.SearchView;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
 import com.alsash.reciper.R;
+import com.alsash.reciper.ui.menu.MenuHelper;
 
 public class RecipeListFragment extends Fragment {
 
@@ -35,22 +31,8 @@ public class RecipeListFragment extends Fragment {
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
 
-        inflater.inflate(R.menu.recipe_list, menu);
-        tintMenuItem(menu, R.color.icon_dark);
-
-        final SearchView searchView = (SearchView)
-                MenuItemCompat.getActionView(menu.findItem(R.id.action_search));
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                return false;
-            }
-        });
+        getActivity().getMenuInflater().inflate(R.menu.recipe_list, menu);
+        MenuHelper.tintItems(getActivity(), menu);
     }
 
     @Override
@@ -59,6 +41,10 @@ public class RecipeListFragment extends Fragment {
         int id = item.getItemId();
 
         switch (id) {
+
+            case R.id.search:
+                // Call to Search Activity;
+                return true;
 
             // Group options
             case R.id.group_all:
@@ -104,20 +90,6 @@ public class RecipeListFragment extends Fragment {
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
-        }
-    }
-
-    private void tintMenuItem(Menu menu, int colorRes) {
-        for (int i = 0; i < menu.size(); i++) {
-            MenuItem item = menu.getItem(i);
-            Drawable icon = item.getIcon();
-            if (icon != null) {
-                icon.mutate();
-                DrawableCompat.setTint(icon, ContextCompat.getColor(getActivity(), colorRes));
-            }
-            if (item.hasSubMenu()) {
-                tintMenuItem(item.getSubMenu(), R.color.icon_light);
-            }
         }
     }
 
