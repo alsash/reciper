@@ -3,11 +3,17 @@ package com.alsash.reciper.ui;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
 
 import com.alsash.reciper.R;
+import com.alsash.reciper.ui.adapter.RecipeListAdapter;
 import com.alsash.reciper.ui.menu.MenuHelper;
 
 public class RecipeListFragment extends Fragment {
@@ -25,6 +31,19 @@ public class RecipeListFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
+    }
+
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+
+        View rootView = inflater.inflate(R.layout.fragment_recipe_list, container, false);
+
+        RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.list);
+        recyclerView.setLayoutManager(new LinearLayoutManager(recyclerView.getContext()));
+        recyclerView.setAdapter(new RecipeListAdapter());
+
+        return rootView;
     }
 
     @Override
