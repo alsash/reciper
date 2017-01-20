@@ -15,7 +15,7 @@ public class RecipeListActivity extends DrawerFrameActivity {
 
     @Override
     protected void setupFab(FloatingActionButton fab) {
-        fab.hide();
+        // fab.hide();
     }
 
     @Override
