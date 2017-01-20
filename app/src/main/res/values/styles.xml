@@ -30,4 +30,9 @@
         <item name="android:background">@drawable/bg_transparent_pressed</item>
     </style>
 
+    <style name="AppTheme.RatingBarIndicator">
+        <item name="colorControlNormal">@color/secondary_dark</item>
+        <item name="colorControlActivated">@color/secondary</item>
+    </style>
+
 </resources>
