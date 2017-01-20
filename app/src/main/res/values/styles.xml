@@ -13,7 +13,7 @@
 
     <style name="StartTheme" parent="AppTheme.NoActionBar">
         <item name="android:windowFullscreen">true</item>
-        <item name="android:windowBackground">@drawable/bg_splash</item>
+        <item name="android:windowBackground">@drawable/bg_app_splash</item>
     </style>
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
@@ -23,6 +23,11 @@
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light">
         <item name="colorControlNormal">@color/icon_light</item>
         <item name="colorAccent">?android:attr/textColorPrimary</item>
+    </style>
+
+    <style name="LayoutMenuButton" parent="@style/Widget.AppCompat.ImageButton">
+        <item name="android:alpha">0.4</item>
+        <item name="android:background">@drawable/bg_transparent_pressed</item>
     </style>
 
 </resources>

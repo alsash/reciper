@@ -19,6 +19,7 @@
     <string name="action_clear">Clear</string>
     <string name="action_reset">Reset to default</string>
     <string name="action_spinner">Choose</string>
+    <string name="action_overflow">More</string>
     <string name="list_group">Group by</string>
     <string name="recipe_group_all">All (no group)</string>
     <string name="recipe_group_bookmark">Bookmark</string>
@@ -38,4 +39,5 @@
     <string name="list_view">View</string>
     <string name="list_view_full">Full</string>
     <string name="list_view_short">Short</string>
+    <string name="recipe_image_description">Recipe image</string>
 </resources>
