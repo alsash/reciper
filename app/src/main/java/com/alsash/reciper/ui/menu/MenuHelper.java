@@ -26,6 +26,6 @@ public class MenuHelper {
     }
 
     public static void tintItems(Context context, Menu menu) {
-        tintItems(context, menu, R.color.icon_dark, R.color.icon_light);
+        tintItems(context, menu, R.color.white, R.color.black_a054);
     }
 }

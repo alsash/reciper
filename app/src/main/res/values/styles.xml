@@ -17,17 +17,27 @@
     </style>
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
-        <item name="colorControlNormal">@color/icon_dark</item>
+        <item name="colorControlNormal">@color/white</item>
     </style>
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light">
-        <item name="colorControlNormal">@color/icon_light</item>
+        <item name="colorControlNormal">@color/black_a054</item>
         <item name="colorAccent">?android:attr/textColorPrimary</item>
     </style>
 
-    <style name="LayoutMenuButton" parent="@style/Widget.AppCompat.ImageButton">
-        <item name="android:alpha">0.4</item>
+    <style name="LightIconButton" parent="@style/Widget.AppCompat.ImageButton">
+        <item name="android:tint">@color/gray_600</item>
         <item name="android:background">@drawable/bg_transparent_pressed</item>
+    </style>
+
+    <style name="LightIconView">
+        <item name="android:tint">@color/gray_600</item>
+        <item name="android:scaleType">center</item>
+        <item name="tools:ignore">ContentDescription</item>
+    </style>
+
+    <style name="LightIconText">
+        <item name="android:textColor">@color/gray_600</item>
     </style>
 
     <style name="AppTheme.RatingBarIndicator">
