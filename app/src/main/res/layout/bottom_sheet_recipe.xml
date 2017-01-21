@@ -1,68 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/recipe_card"
+    android:id="@+id/bottom_sheet_recipe"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    app:cardElevation="4dp"
-    app:cardUseCompatPadding="true">
+    android:layout_height="340dp"
+    app:behavior_hideable="true"
+    app:layout_behavior="android.support.design.widget.BottomSheetBehavior">
 
     <android.support.constraint.ConstraintLayout
-        android:id="@+id/recipe_card_layout"
+        android:id="@+id/bottom_sheet_recipe_constraint"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingBottom="16dp">
+        android:background="@color/white">
 
-        <ImageView
-            android:id="@+id/recipe_image"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:background="@color/gray_300"
-            android:contentDescription="@string/recipe_image_description"
-            android:minHeight="120dp"
-            android:tint="@color/white"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_cook" />
-
-        <RatingBar
-            android:id="@+id/recipe_rating"
-            style="@style/Widget.AppCompat.RatingBar.Small"
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/bottom_sheet_recipe_fab"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="16dp"
-            android:layout_marginStart="16dp"
-            android:isIndicator="true"
-            android:numStars="5"
-            android:rating="1.5"
-            android:stepSize="0.5"
-            android:theme="@style/AppTheme.RatingBarIndicator"
-            app:layout_constraintBottom_toBottomOf="@+id/recipe_bookmark"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/recipe_bookmark" />
-
-        <ImageButton
-            android:id="@+id/recipe_bookmark"
-            style="@style/LightIconButton"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:contentDescription="@string/action_overflow"
-            app:layout_constraintRight_toLeftOf="@+id/recipe_menu"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_bookmark" />
-
-        <ImageButton
-            android:id="@+id/recipe_menu"
-            style="@style/LightIconButton"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:contentDescription="@string/action_overflow"
+            android:layout_marginEnd="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginTop="16dp"
+            android:clickable="true"
+            app:fabSize="normal"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_overflow_vertical" />
+            app:srcCompat="@drawable/ic_collapse" />
 
         <TextView
             android:id="@+id/recipe_name"
@@ -72,9 +35,9 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:text="Recipe name"
-            android:textAppearance="@style/TextAppearance.AppCompat.Title"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/recipe_image"
+            app:layout_constraintTop_toTopOf="parent"
             tools:text="Recipe name" />
 
         <TextView
@@ -83,132 +46,57 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="16dp"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="16dp"
+            android:text="Recipe title"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/recipe_name"
             tools:text="Recipe title" />
 
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/recipe_expand"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
-            android:layout_marginRight="16dp"
-            android:clickable="true"
-            android:tint="@color/white"
-            app:backgroundTint="@color/primary"
-            app:fabSize="mini"
-            app:layout_constraintBottom_toBottomOf="@+id/recipe_image"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/recipe_image"
-            app:srcCompat="@drawable/ic_chevron_down" />
-
-        <LinearLayout
-            android:id="@+id/recipe_label_layout"
-            style="@style/Widget.AppCompat.Button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:gravity="start|center_vertical"
-            android:minHeight="24dp"
-            android:orientation="horizontal"
-            android:paddingBottom="4dp"
-            android:paddingTop="4dp"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/recipe_title"
-            tools:ignore="UseCompoundDrawables">
-
-            <ImageView
-                android:id="@+id/recipe_label_icon"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="16dp"
-                android:layout_marginLeft="4dp"
-                android:layout_marginRight="16dp"
-                android:layout_marginStart="4dp"
-                android:tint="@color/accent"
-                app:srcCompat="@drawable/ic_labeled"
-                tools:ignore="ContentDescription" />
-
-            <TextView
-                android:id="@+id/recipe_label"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:layout_marginRight="8dp"
-                android:text="Recipe label"
-                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-                tools:text="Recipe label" />
-        </LinearLayout>
 
         <ImageView
             android:id="@+id/recipe_time_icon"
+            style="@style/LightIconView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="16dp"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="8dp"
-            android:tint="@color/black_a054"
+            android:layout_marginTop="16dp"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/recipe_label_layout"
+            app:layout_constraintTop_toBottomOf="@+id/recipe_title"
             app:srcCompat="@drawable/ic_timer"
             tools:ignore="ContentDescription" />
 
         <TextView
             android:id="@+id/recipe_time"
+            style="@style/LightIconText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="16dp"
             android:layout_marginStart="16dp"
             android:text="Time"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
             app:layout_constraintBottom_toBottomOf="@+id/recipe_time_icon"
             app:layout_constraintLeft_toRightOf="@+id/recipe_time_icon"
             app:layout_constraintTop_toTopOf="@+id/recipe_time_icon"
             tools:text="Time" />
 
         <ImageView
-            android:id="@+id/recipe_category_icon"
+            android:id="@+id/recipe_energy_icon"
+            style="@style/LightIconView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="16dp"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="8dp"
-            android:tint="@color/black_a054"
+            android:layout_marginTop="16dp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/recipe_time_icon"
-            app:srcCompat="@drawable/ic_recipe_category"
-            tools:ignore="ContentDescription" />
-
-        <TextView
-            android:id="@+id/recipe_category"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="16dp"
-            android:layout_marginStart="16dp"
-            android:text="Category"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-            app:layout_constraintBottom_toBottomOf="@+id/recipe_category_icon"
-            app:layout_constraintLeft_toRightOf="@+id/recipe_category_icon"
-            app:layout_constraintTop_toTopOf="@+id/recipe_category_icon"
-            tools:text="Category" />
-
-        <ImageView
-            android:id="@+id/recipe_energy_icon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="16dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="8dp"
-            android:tint="@color/black_a054"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/recipe_category_icon"
             app:srcCompat="@drawable/ic_food_energy"
             tools:ignore="ContentDescription" />
 
         <TextView
             android:id="@+id/recipe_energy"
+            style="@style/LightIconText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="16dp"
@@ -222,12 +110,12 @@
 
         <ImageView
             android:id="@+id/recipe_nutrition_icon"
+            style="@style/LightIconView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="16dp"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="8dp"
-            android:tint="@color/black_a054"
+            android:layout_marginTop="16dp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/recipe_energy_icon"
             app:srcCompat="@drawable/ic_food_nutrition"
@@ -235,6 +123,7 @@
 
         <TextView
             android:id="@+id/recipe_nutrition"
+            style="@style/LightIconText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="16dp"
@@ -247,20 +136,48 @@
             tools:text="Nutrition" />
 
         <ImageView
-            android:id="@+id/recipe_food_icon"
+            android:id="@+id/recipe_category_icon"
+            style="@style/LightIconView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="16dp"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="8dp"
-            android:tint="@color/black_a054"
+            android:layout_marginTop="16dp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/recipe_nutrition_icon"
+            app:srcCompat="@drawable/ic_recipe_category"
+            tools:ignore="ContentDescription" />
+
+        <TextView
+            android:id="@+id/recipe_category"
+            style="@style/LightIconText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginStart="16dp"
+            android:text="Category"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            app:layout_constraintBottom_toBottomOf="@+id/recipe_category_icon"
+            app:layout_constraintLeft_toRightOf="@+id/recipe_category_icon"
+            app:layout_constraintTop_toTopOf="@+id/recipe_category_icon"
+            tools:text="Category" />
+
+        <ImageView
+            android:id="@+id/recipe_food_icon"
+            style="@style/LightIconView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/recipe_category_icon"
             app:srcCompat="@drawable/ic_food"
             tools:ignore="ContentDescription" />
 
         <TextView
             android:id="@+id/recipe_food_first"
+            style="@style/LightIconText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="16dp"
@@ -274,6 +191,7 @@
 
         <TextView
             android:id="@+id/recipe_food_second"
+            style="@style/LightIconText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="16dp"
@@ -287,6 +205,7 @@
 
         <TextView
             android:id="@+id/recipe_food_third"
+            style="@style/LightIconText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="16dp"
@@ -300,12 +219,12 @@
 
         <ImageView
             android:id="@+id/recipe_creation_date_icon"
+            style="@style/LightIconView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="16dp"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="8dp"
-            android:tint="@color/black_a054"
+            android:layout_marginTop="16dp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/recipe_food_icon"
             app:srcCompat="@drawable/ic_date_top"
@@ -313,6 +232,7 @@
 
         <TextView
             android:id="@+id/recipe_creation_date"
+            style="@style/LightIconText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="16dp"
@@ -326,11 +246,11 @@
 
         <ImageView
             android:id="@+id/recipe_change_date_icon"
+            style="@style/LightIconView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="32dp"
             android:layout_marginStart="32dp"
-            android:tint="@color/black_a054"
             app:layout_constraintBottom_toBottomOf="@+id/recipe_creation_date"
             app:layout_constraintLeft_toRightOf="@+id/recipe_creation_date"
             app:layout_constraintTop_toTopOf="@+id/recipe_creation_date"
@@ -339,6 +259,7 @@
 
         <TextView
             android:id="@+id/recipe_change_date"
+            style="@style/LightIconText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="16dp"
@@ -351,5 +272,4 @@
             tools:text="Change date" />
 
     </android.support.constraint.ConstraintLayout>
-
-</android.support.v7.widget.CardView>
+</android.support.v4.widget.NestedScrollView>

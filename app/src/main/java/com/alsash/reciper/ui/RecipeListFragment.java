@@ -1,5 +1,6 @@
 package com.alsash.reciper.ui;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -18,6 +19,8 @@ import com.alsash.reciper.ui.menu.MenuHelper;
 
 public class RecipeListFragment extends Fragment {
 
+    RecipeListAdapter.OnRecipeInteraction recipeInteraction;
+
     public static RecipeListFragment newInstance() {
 
         Bundle args = new Bundle();
@@ -25,6 +28,18 @@ public class RecipeListFragment extends Fragment {
         RecipeListFragment fragment = new RecipeListFragment();
         fragment.setArguments(args);
         return fragment;
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        recipeInteraction = (RecipeListAdapter.OnRecipeInteraction) context;
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        recipeInteraction = null;
     }
 
     @Override
@@ -41,8 +56,7 @@ public class RecipeListFragment extends Fragment {
 
         RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.list);
         recyclerView.setLayoutManager(new LinearLayoutManager(recyclerView.getContext()));
-        recyclerView.setAdapter(new RecipeListAdapter());
-
+        recyclerView.setAdapter(new RecipeListAdapter(recipeInteraction));
         return rootView;
     }
 
