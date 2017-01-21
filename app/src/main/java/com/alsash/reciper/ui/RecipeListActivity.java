@@ -34,7 +34,7 @@ public class RecipeListActivity extends DrawerFrameActivity implements RecipeLis
         View bottomSheetLayout = findViewById(R.id.bottom_sheet_recipe);
 
         final FloatingActionButton bottomFab = (FloatingActionButton)
-                bottomSheetLayout.findViewById(R.id.bottom_sheet_recipe_fab);
+                bottomSheetLayout.findViewById(R.id.recipe_bottom_cart_fab);
 
         bottomSheetBehavior = BottomSheetBehavior.from(bottomSheetLayout);
         bottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
