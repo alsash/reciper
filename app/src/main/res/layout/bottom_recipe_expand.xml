@@ -11,7 +11,7 @@
     tools:layout_marginTop="32dp">
 
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/floatingActionButton2"
+        android:id="@+id/collapse_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="32dp"
@@ -21,7 +21,7 @@
         app:layout_constraintBottom_toTopOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_account" />
+        app:srcCompat="@drawable/ic_collapse" />
 
     <TextView
         android:id="@+id/recipe_name"
@@ -42,7 +42,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="16dp"
         android:text="Recipe title"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -53,14 +53,15 @@
     <ImageView
         android:id="@+id/recipe_time_icon"
         style="@style/LightIconView"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/recipe_title"
-        app:srcCompat="@drawable/ic_timer" />
+        app:srcCompat="@drawable/ic_timer"
+        tools:ignore="ContentDescription" />
 
     <TextView
         android:id="@+id/recipe_time"
@@ -78,12 +79,12 @@
 
     <ImageView
         android:id="@+id/recipe_energy_icon"
+        style="@style/LightIconView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        android:tint="@color/black_a054"
+        android:layout_marginTop="16dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/recipe_time_icon"
         app:srcCompat="@drawable/ic_food_energy"
@@ -91,6 +92,7 @@
 
     <TextView
         android:id="@+id/recipe_energy"
+        style="@style/LightIconText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
@@ -104,11 +106,12 @@
 
     <ImageView
         android:id="@+id/recipe_nutrition_icon"
+        style="@style/LightIconView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="16dp"
         android:tint="@color/black_a054"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/recipe_energy_icon"
@@ -117,6 +120,7 @@
 
     <TextView
         android:id="@+id/recipe_nutrition"
+        style="@style/LightIconText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
@@ -130,19 +134,21 @@
 
     <ImageView
         android:id="@+id/recipe_category_icon"
+        style="@style/LightIconView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="16dp"
         android:tint="@color/black_a054"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/recipe_nutrition"
+        app:layout_constraintTop_toBottomOf="@+id/recipe_nutrition_icon"
         app:srcCompat="@drawable/ic_recipe_category"
         tools:ignore="ContentDescription" />
 
     <TextView
         android:id="@+id/recipe_category"
+        style="@style/LightIconText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
@@ -156,11 +162,12 @@
 
     <ImageView
         android:id="@+id/recipe_food_icon"
+        style="@style/LightIconView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="16dp"
         android:tint="@color/black_a054"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/recipe_category_icon"
@@ -169,6 +176,7 @@
 
     <TextView
         android:id="@+id/recipe_food_first"
+        style="@style/LightIconText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
@@ -182,6 +190,7 @@
 
     <TextView
         android:id="@+id/recipe_food_second"
+        style="@style/LightIconText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
@@ -195,6 +204,7 @@
 
     <TextView
         android:id="@+id/recipe_food_third"
+        style="@style/LightIconText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
@@ -208,11 +218,12 @@
 
     <ImageView
         android:id="@+id/recipe_creation_date_icon"
+        style="@style/LightIconView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="16dp"
         android:tint="@color/black_a054"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/recipe_food_icon"
@@ -221,6 +232,7 @@
 
     <TextView
         android:id="@+id/recipe_creation_date"
+        style="@style/LightIconText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
@@ -234,6 +246,7 @@
 
     <ImageView
         android:id="@+id/recipe_change_date_icon"
+        style="@style/LightIconView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="32dp"
@@ -247,6 +260,7 @@
 
     <TextView
         android:id="@+id/recipe_change_date"
+        style="@style/LightIconText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
