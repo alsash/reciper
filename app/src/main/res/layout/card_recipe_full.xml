@@ -16,8 +16,8 @@
 
         <ImageView
             android:id="@+id/recipe_image"
-            android:layout_width="0dp"
-            android:layout_height="160dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:background="@color/lighter_gray"
             android:contentDescription="@string/recipe_image_description"
             android:minHeight="120dp"
@@ -30,7 +30,7 @@
 
         <RatingBar
             android:id="@+id/recipe_rating"
-            style="@style/Widget.AppCompat.RatingBar.Indicator"
+            style="@style/Widget.AppCompat.RatingBar.Small"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="16dp"
@@ -86,7 +86,7 @@
             android:layout_marginLeft="16dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
-            android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/recipe_name"
             tools:text="Recipe title" />
