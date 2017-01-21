@@ -4,7 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -55,7 +55,7 @@ public class RecipeListFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_recipe_list, container, false);
 
         RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.list);
-        recyclerView.setLayoutManager(new LinearLayoutManager(recyclerView.getContext()));
+        recyclerView.setLayoutManager(new GridLayoutManager(recyclerView.getContext(), 2));
         recyclerView.setAdapter(new RecipeListAdapter(recipeInteraction));
         return rootView;
     }
