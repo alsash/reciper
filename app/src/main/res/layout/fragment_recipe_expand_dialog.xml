@@ -2,28 +2,26 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/bottom_sheet_recipe_constraint"
+    android:id="@+id/recipe_info_dialog_root"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/white"
+    android:paddingBottom="16dp"
     app:behavior_hideable="true"
     app:layout_behavior="android.support.design.widget.BottomSheetBehavior">
 
     <android.support.constraint.Guideline
-        android:id="@+id/guideline"
-        android:layout_width="0dp"
-        android:layout_height="290dp"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.5"
-        tools:layout_editor_absoluteX="192dp"
-        tools:layout_editor_absoluteY="0dp" />
-
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/recipe_bottom_collapse_fab"
+        android:id="@+id/guideline_vertical"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.5" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/recipe_info_collapse_fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="20dp"
+        android:layout_marginRight="20dp"
         android:layout_marginTop="16dp"
         android:clickable="true"
         android:tint="@color/white"
@@ -34,7 +32,7 @@
         app:srcCompat="@drawable/ic_collapse" />
 
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/recipe_bottom_cart_fab"
+        android:id="@+id/recipe_info_cart_fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
@@ -44,7 +42,7 @@
         android:tint="@color/white"
         app:backgroundTint="@color/accent"
         app:fabSize="mini"
-        app:layout_constraintRight_toLeftOf="@+id/recipe_bottom_collapse_fab"
+        app:layout_constraintRight_toLeftOf="@+id/recipe_info_collapse_fab"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_cart" />
 
@@ -185,7 +183,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="@+id/recipe_food_third"
-        app:layout_constraintLeft_toLeftOf="@+id/guideline"
+        app:layout_constraintLeft_toLeftOf="@+id/guideline_vertical"
         app:layout_constraintTop_toTopOf="@+id/recipe_food_first"
         app:srcCompat="@drawable/ic_food"
         tools:ignore="ContentDescription" />
@@ -228,7 +226,7 @@
         style="@style/LightIconView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintLeft_toLeftOf="@+id/guideline"
+        app:layout_constraintLeft_toLeftOf="@+id/guideline_vertical"
         app:layout_constraintTop_toTopOf="@+id/recipe_time"
         app:srcCompat="@drawable/ic_date_top"
         tools:ignore="ContentDescription" />
@@ -252,7 +250,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        app:layout_constraintLeft_toLeftOf="@+id/guideline"
+        app:layout_constraintLeft_toLeftOf="@+id/guideline_vertical"
         app:layout_constraintTop_toBottomOf="@+id/recipe_creation_date_icon"
         app:srcCompat="@drawable/ic_date_end"
         tools:ignore="ContentDescription" />

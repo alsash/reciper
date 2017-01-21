@@ -8,26 +8,37 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.alsash.reciper.R;
+import com.alsash.reciper.data.model.Recipe;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class RecipeListAdapter extends RecyclerView.Adapter<RecipeListAdapter.RecipeViewHolder> {
 
-    private final List<String> recipeList = new ArrayList<>();
+    private final List<Recipe> recipeList = new ArrayList<>();
     private final OnRecipeInteraction recipeInteraction;
 
     public RecipeListAdapter(OnRecipeInteraction recipeInteraction) {
         this.recipeInteraction = recipeInteraction;
         for (int i = 0; i < 30; i++) {
-            recipeList.add("Recipe # " + i);
+            recipeList.add(new Recipe() {
+                @Override
+                public Long getId() {
+                    return 1L;
+                }
+
+                @Override
+                public String getName() {
+                    return "Recipe";
+                }
+            });
         }
     }
 
     @Override
     public RecipeViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.card_recipe_full, parent, false);
+                .inflate(R.layout.card_recipe_list_full, parent, false);
         return new RecipeViewHolder(view);
     }
 
@@ -42,9 +53,9 @@ public class RecipeListAdapter extends RecyclerView.Adapter<RecipeListAdapter.Re
     }
 
     public interface OnRecipeInteraction {
-        void click();
+        void click(Recipe recipe);
 
-        void expand();
+        void expand(Recipe recipe);
     }
 
     public static class RecipeViewHolder extends RecyclerView.ViewHolder {
@@ -57,18 +68,18 @@ public class RecipeListAdapter extends RecyclerView.Adapter<RecipeListAdapter.Re
             expandButton = (FloatingActionButton) rootView.findViewById(R.id.recipe_expand);
         }
 
-        public void bindRecipe(final String recipe, final OnRecipeInteraction recipeInteraction) {
+        public void bindRecipe(final Recipe recipe, final OnRecipeInteraction recipeInteraction) {
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    recipeInteraction.click();
+                    recipeInteraction.click(recipe);
                 }
             });
-            recipeName.setText(recipe);
+            recipeName.setText(recipe.getName());
             expandButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    recipeInteraction.expand();
+                    recipeInteraction.expand(recipe);
                 }
             });
         }
