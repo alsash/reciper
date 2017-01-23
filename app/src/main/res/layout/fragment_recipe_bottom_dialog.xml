@@ -5,6 +5,7 @@
     android:id="@+id/recipe_bottom_dialog_root"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@color/white"
     android:paddingBottom="32dp"
     app:behavior_hideable="true"
     app:layout_behavior="android.support.design.widget.BottomSheetBehavior">
@@ -13,8 +14,8 @@
         android:id="@+id/recipe_bottom_toolbar"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:minHeight="?attr/actionBarSize"
-        android:theme="@style/BottomToolbarTheme"
+        android:background="@color/white"
+        android:minHeight="64dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -26,10 +27,10 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0.5"
-        tools:layout_editor_absoluteX="192dp"
+        tools:layout_editor_absoluteX="0dp"
         tools:layout_editor_absoluteY="0dp" />
 
-    <Button
+    <android.support.v7.widget.AppCompatButton
         android:id="@+id/label_button"
         style="@style/LabelButton"
         android:layout_width="wrap_content"
@@ -39,7 +40,8 @@
         android:layout_marginTop="8dp"
         android:text="Some label of recipe"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/recipe_bottom_toolbar" />
+        app:layout_constraintTop_toBottomOf="@+id/recipe_bottom_toolbar"
+        tools:drawableLeft="@drawable/ic_labeled_accent" />
 
     <ImageView
         android:id="@+id/recipe_time_icon"
