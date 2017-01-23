@@ -43,8 +43,8 @@
     <style name="LabelButton" parent="Widget.AppCompat.Button.Small">
         <item name="android:drawableLeft">@drawable/ic_labeled_accent</item>
         <item name="android:drawableStart">@drawable/ic_labeled_accent</item>
-        <item name="android:paddingTop">8dp</item>
-        <item name="android:paddingBottom">8dp</item>
+        <item name="android:paddingTop">4dp</item>
+        <item name="android:paddingBottom">4dp</item>
         <item name="android:drawablePadding">16dp</item>
         <item name="android:minHeight">24dp</item>
         <item name="android:textAppearance">@style/TextAppearance.AppCompat.Body1</item>

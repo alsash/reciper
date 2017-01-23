@@ -1,13 +1,8 @@
 package com.alsash.reciper.ui.dialog;
 
 import android.app.Dialog;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.design.widget.BottomSheetDialogFragment;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.content.res.ResourcesCompat;
-import android.support.v4.graphics.drawable.DrawableCompat;
-import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
@@ -36,14 +31,6 @@ public class RecipeBottomDialog extends BottomSheetDialogFragment implements Too
         bottomToolbar.setOnMenuItemClickListener(this);
         bottomToolbar.setTitle("Recipe name");
         bottomToolbar.setSubtitle("Recipe title");
-
-        // Label button
-        AppCompatButton labelButton = (AppCompatButton) contentView.findViewById(R.id.label_button);
-        Drawable labelIcon = ResourcesCompat.getDrawable(getResources(), R.drawable.ic_labeled, null);
-        assert labelIcon != null;
-        labelIcon.mutate();
-        DrawableCompat.setTint(labelIcon, ContextCompat.getColor(getContext(), R.color.accent));
-        labelButton.setCompoundDrawablesWithIntrinsicBounds(labelIcon, null, null, null);
 
         dialog.setContentView(contentView);
     }
