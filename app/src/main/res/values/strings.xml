@@ -40,4 +40,7 @@
     <string name="list_view_full">Full</string>
     <string name="list_view_short">Short</string>
     <string name="recipe_image_description">Recipe image</string>
+    <string name="action_collapse">Collapse</string>
+    <string name="action_add_to_cart">Add to cart</string>
+    <string name="action_add_to_bookmark">Add to bookmark</string>
 </resources>

@@ -7,7 +7,7 @@ import android.support.v4.app.Fragment;
 
 import com.alsash.reciper.data.model.Recipe;
 import com.alsash.reciper.ui.adapter.RecipeListAdapter;
-import com.alsash.reciper.ui.dialog.RecipeExpandDialog;
+import com.alsash.reciper.ui.dialog.RecipeBottomDialog;
 
 public class RecipeListActivity extends DrawerFrameActivity implements RecipeListAdapter.OnRecipeInteraction {
 
@@ -20,8 +20,8 @@ public class RecipeListActivity extends DrawerFrameActivity implements RecipeLis
 
     @Override
     public void expand(Recipe recipe) {
-        RecipeExpandDialog recipeExpandDialog = RecipeExpandDialog.newInstance(recipe);
-        recipeExpandDialog.show(getSupportFragmentManager(), recipeExpandDialog.getTag());
+        RecipeBottomDialog recipeBottomDialog = RecipeBottomDialog.newInstance(recipe);
+        recipeBottomDialog.show(getSupportFragmentManager(), recipeBottomDialog.getTag());
     }
 
     @Override

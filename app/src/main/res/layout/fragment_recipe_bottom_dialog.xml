@@ -2,76 +2,44 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/recipe_info_dialog_root"
+    android:id="@+id/recipe_bottom_dialog_root"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:paddingBottom="32dp"
     app:behavior_hideable="true"
     app:layout_behavior="android.support.design.widget.BottomSheetBehavior">
 
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/recipe_bottom_toolbar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="@style/BottomToolbarTheme"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:popupTheme="@style/AppTheme.PopupOverlay" />
+
     <android.support.constraint.Guideline
         android:id="@+id/guideline_vertical"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.5" />
+        app:layout_constraintGuide_percent="0.5"
+        tools:layout_editor_absoluteX="192dp"
+        tools:layout_editor_absoluteY="0dp" />
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/recipe_info_collapse_fab"
+    <Button
+        android:id="@+id/label_button"
+        style="@style/LabelButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginTop="16dp"
-        android:clickable="true"
-        android:tint="@color/white"
-        app:backgroundTint="@color/primary"
-        app:fabSize="mini"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_collapse" />
-
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/recipe_info_cart_fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginTop="16dp"
-        android:clickable="true"
-        android:tint="@color/white"
-        app:backgroundTint="@color/accent"
-        app:fabSize="mini"
-        app:layout_constraintRight_toLeftOf="@+id/recipe_info_collapse_fab"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_cart" />
-
-    <TextView
-        android:id="@+id/recipe_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:text="Recipe name"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:layout_marginLeft="4dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="8dp"
+        android:text="Some label of recipe"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="Recipe name" />
-
-    <TextView
-        android:id="@+id/recipe_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="24dp"
-        android:text="Recipe title"
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/recipe_name"
-        tools:text="Recipe title" />
-
+        app:layout_constraintTop_toBottomOf="@+id/recipe_bottom_toolbar" />
 
     <ImageView
         android:id="@+id/recipe_time_icon"
@@ -80,9 +48,9 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="16dp"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/recipe_title"
+        app:layout_constraintTop_toBottomOf="@+id/label_button"
         app:srcCompat="@drawable/ic_timer"
         tools:ignore="ContentDescription" />
 
