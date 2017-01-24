@@ -6,9 +6,11 @@ import android.support.design.widget.BottomSheetDialogFragment;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 
 import com.alsash.reciper.R;
 import com.alsash.reciper.data.model.Recipe;
+import com.alsash.reciper.ui.vector.VectorHelper;
 
 public class RecipeBottomDialog extends BottomSheetDialogFragment implements Toolbar.OnMenuItemClickListener {
 
@@ -25,12 +27,24 @@ public class RecipeBottomDialog extends BottomSheetDialogFragment implements Too
     public void setupDialog(Dialog dialog, int style) {
         super.setupDialog(dialog, style);
         View contentView = View.inflate(getContext(), R.layout.fragment_recipe_bottom_dialog, null);
+
+        VectorHelper vectorHelper = new VectorHelper(getContext());
+
         // Toolbar
         Toolbar bottomToolbar = (Toolbar) contentView.findViewById(R.id.recipe_bottom_toolbar);
         bottomToolbar.inflateMenu(R.menu.recipe_bottom);
+        vectorHelper.tintMenuItems(bottomToolbar.getMenu(),
+                R.color.gray_600,
+                R.color.black_a054);
         bottomToolbar.setOnMenuItemClickListener(this);
         bottomToolbar.setTitle("Recipe name");
         bottomToolbar.setSubtitle("Recipe title");
+
+        // Button label
+        Button button = (Button) contentView.findViewById(R.id.recipe_label_button);
+        vectorHelper.setCompoundDrawables(button,
+                new Integer[]{R.drawable.ic_labeled}, // drawableLeft
+                R.color.accent);
 
         dialog.setContentView(contentView);
     }

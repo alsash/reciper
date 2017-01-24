@@ -23,11 +23,10 @@
             android:contentDescription="@string/recipe_image_description"
             android:minHeight="120dp"
             android:tint="@color/white"
-            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_cook" />
+            app:srcCompat="@drawable/ic_recipe_portion" />
 
         <RatingBar
             android:id="@+id/recipe_rating"
@@ -41,19 +40,9 @@
             android:rating="1.5"
             android:stepSize="0.5"
             android:theme="@style/AppTheme.RatingBarIndicator"
-            app:layout_constraintBottom_toBottomOf="@+id/recipe_bookmark"
+            app:layout_constraintBottom_toBottomOf="@+id/recipe_menu"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/recipe_bookmark" />
-
-        <ImageButton
-            android:id="@+id/recipe_bookmark"
-            style="@style/LightIconButton"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:contentDescription="@string/action_overflow"
-            app:layout_constraintRight_toLeftOf="@+id/recipe_menu"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_bookmark" />
+            app:layout_constraintTop_toTopOf="@+id/recipe_menu" />
 
         <ImageButton
             android:id="@+id/recipe_menu"
@@ -97,8 +86,8 @@
             android:layout_marginEnd="16dp"
             android:layout_marginRight="16dp"
             android:clickable="true"
-            android:tint="@color/white"
-            app:backgroundTint="@color/primary"
+            android:tint="@color/gray_800"
+            app:backgroundTint="@color/gray_100"
             app:fabSize="mini"
             app:layout_constraintBottom_toBottomOf="@+id/recipe_image"
             app:layout_constraintRight_toRightOf="parent"

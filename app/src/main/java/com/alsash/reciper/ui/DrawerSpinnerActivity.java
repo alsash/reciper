@@ -13,7 +13,7 @@ import android.view.MenuItem;
 import android.view.SubMenu;
 
 import com.alsash.reciper.R;
-import com.alsash.reciper.ui.menu.MenuHelper;
+import com.alsash.reciper.ui.vector.VectorHelper;
 
 public abstract class DrawerSpinnerActivity extends DrawerBaseActivity {
 
@@ -54,7 +54,7 @@ public abstract class DrawerSpinnerActivity extends DrawerBaseActivity {
         subMenu.clear();
         inflater.inflate(getSpinnerMenuRes(), subMenu);
 
-        MenuHelper.tintItems(this, menu);
+        new VectorHelper(this).tintMenuItems(menu);
 
         return true;
     }

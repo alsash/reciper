@@ -15,7 +15,7 @@ import android.view.ViewGroup;
 
 import com.alsash.reciper.R;
 import com.alsash.reciper.ui.adapter.RecipeListAdapter;
-import com.alsash.reciper.ui.menu.MenuHelper;
+import com.alsash.reciper.ui.vector.VectorHelper;
 
 public class RecipeListFragment extends Fragment {
 
@@ -65,7 +65,7 @@ public class RecipeListFragment extends Fragment {
         super.onCreateOptionsMenu(menu, inflater);
 
         getActivity().getMenuInflater().inflate(R.menu.recipe_list, menu);
-        MenuHelper.tintItems(getActivity(), menu);
+        new VectorHelper(getActivity()).tintMenuItems(menu);
     }
 
     @Override
