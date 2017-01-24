@@ -36,10 +36,6 @@
                 android:icon="@drawable/ic_clear"
                 android:title="@string/recipe_group_all" />
             <item
-                android:id="@+id/group_bookmark"
-                android:icon="@drawable/ic_bookmark"
-                android:title="@string/recipe_group_bookmark" />
-            <item
                 android:id="@+id/group_label"
                 android:icon="@drawable/ic_label"
                 android:title="@string/recipe_group_label" />
@@ -97,10 +93,6 @@
                 android:id="@+id/filter_clear"
                 android:icon="@drawable/ic_cancel"
                 android:title="@string/action_clear" />
-            <item
-                android:id="@+id/filter_bookmark"
-                android:icon="@drawable/ic_bookmark"
-                android:title="@string/recipe_group_bookmark" />
             <item
                 android:id="@+id/filter_label"
                 android:icon="@drawable/ic_label"

@@ -2,12 +2,6 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
-    <item
-        android:id="@+id/recipe_bottom_bookmark"
-        android:icon="@drawable/ic_bookmark"
-        android:title="@string/action_add_to_bookmark"
-        app:showAsAction="always"
-        tools:ignore="AlwaysShowAction" />
 
     <item
         android:id="@+id/recipe_bottom_cart"

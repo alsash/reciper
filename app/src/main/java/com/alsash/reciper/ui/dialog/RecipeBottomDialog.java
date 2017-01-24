@@ -52,8 +52,6 @@ public class RecipeBottomDialog extends BottomSheetDialogFragment implements Too
     @Override
     public boolean onMenuItemClick(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.recipe_bottom_bookmark:
-                return true;
             case R.id.recipe_bottom_cart:
                 return true;
             case R.id.recipe_bottom_collapse:

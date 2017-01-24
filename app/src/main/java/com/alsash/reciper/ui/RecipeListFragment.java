@@ -81,7 +81,6 @@ public class RecipeListFragment extends Fragment {
 
             // Group options
             case R.id.group_all:
-            case R.id.group_bookmark:
             case R.id.group_category:
             case R.id.group_food:
             case R.id.group_label:
@@ -100,7 +99,6 @@ public class RecipeListFragment extends Fragment {
 
             // Filter options
             case R.id.filter_account:
-            case R.id.filter_bookmark:
             case R.id.filter_category:
             case R.id.filter_clear:
             case R.id.filter_date_top:
@@ -129,7 +127,6 @@ public class RecipeListFragment extends Fragment {
     private void groupRecipeList(int groupMenuId) {
         switch (groupMenuId) {
             case R.id.group_all:
-            case R.id.group_bookmark:
             case R.id.group_category:
             case R.id.group_food:
             case R.id.group_label:
