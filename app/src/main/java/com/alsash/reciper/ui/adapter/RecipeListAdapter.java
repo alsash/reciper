@@ -27,13 +27,16 @@ public class RecipeListAdapter extends RecyclerView.Adapter<RecipeListAdapter.Re
 
     @Override
     public RecipeViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.card_recipe, parent, false);
-        return new RecipeViewHolder(view);
+        View frontView = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.card_recipe_front, parent, false);
+        View backView = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.card_recipe_back, parent, false);
+        return new RecipeViewHolder(frontView, backView);
     }
 
     @Override
     public void onBindViewHolder(RecipeViewHolder holder, int position) {
+
         holder.bindRecipe(recipeList.get(position), recipeInteraction);
     }
 
@@ -67,16 +70,23 @@ public class RecipeListAdapter extends RecyclerView.Adapter<RecipeListAdapter.Re
         }
     }
 
-    public static class RecipeViewHolder extends RecyclerView.ViewHolder {
+    public static class RecipeViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+        final View frontView;
+        final View backView;
         final TextView recipeTitle;
         final ImageButton expandButton;
         final ImageButton openButton;
+        boolean isInFront;
 
-        public RecipeViewHolder(View rootView) {
-            super(rootView);
-            recipeTitle = (TextView) rootView.findViewById(R.id.card_recipe_title);
-            expandButton = (ImageButton) rootView.findViewById(R.id.card_recipe_expand_button);
-            openButton = (ImageButton) rootView.findViewById(R.id.card_recipe_open_button);
+        public RecipeViewHolder(View frontView, View backView) {
+            super(frontView);
+            recipeTitle = (TextView) frontView.findViewById(R.id.card_recipe_title);
+            expandButton = (ImageButton) frontView.findViewById(R.id.card_recipe_expand_button);
+            openButton = (ImageButton) frontView.findViewById(R.id.card_recipe_open_button);
+            frontView.setOnClickListener(this);
+            this.frontView = frontView;
+            this.backView = backView;
+            isInFront = true;
         }
 
         public void bindRecipe(final Recipe recipe, final OnRecipeInteraction recipeInteraction) {
@@ -93,6 +103,16 @@ public class RecipeListAdapter extends RecyclerView.Adapter<RecipeListAdapter.Re
                     recipeInteraction.expand(recipe);
                 }
             });
+        }
+
+        /**
+         * Flip recipe card animation
+         *
+         * @param v
+         */
+        @Override
+        public void onClick(View v) {
+
         }
     }
 }

@@ -27,7 +27,7 @@
 
     <style name="LightIconButton" parent="@style/Widget.AppCompat.ImageButton">
         <item name="android:tint">@color/gray_600</item>
-        <item name="android:background">@drawable/bg_transparent_pressed</item>
+        <item name="android:background">@drawable/bg_light_icon_button</item>
     </style>
 
     <style name="LightIconView">
