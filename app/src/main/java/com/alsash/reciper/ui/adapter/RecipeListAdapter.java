@@ -1,5 +1,8 @@
 package com.alsash.reciper.ui.adapter;
 
+import android.animation.AnimatorInflater;
+import android.animation.AnimatorSet;
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +21,8 @@ public class RecipeListAdapter extends RecyclerView.Adapter<RecipeListAdapter.Re
     private final List<Recipe> recipeList = new ArrayList<>();
     private final OnRecipeInteraction recipeInteraction;
 
+    public boolean newView;
+
     public RecipeListAdapter(OnRecipeInteraction recipeInteraction) {
         this.recipeInteraction = recipeInteraction;
         for (int i = 0; i < 30; i++) {
@@ -31,7 +36,9 @@ public class RecipeListAdapter extends RecyclerView.Adapter<RecipeListAdapter.Re
                 .inflate(R.layout.card_recipe_front, parent, false);
         View backView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.card_recipe_back, parent, false);
-        return new RecipeViewHolder(frontView, backView);
+        RecipeViewHolder holder = new RecipeViewHolder(frontView, backView);
+        holder.setAdapter(this);
+        return holder;
     }
 
     @Override
@@ -78,22 +85,42 @@ public class RecipeListAdapter extends RecyclerView.Adapter<RecipeListAdapter.Re
         final ImageButton openButton;
         boolean isInFront;
 
+        private AnimatorSet mSetRightOut;
+        private AnimatorSet mSetLeftIn;
+
+        private RecipeListAdapter adapter;
+
         public RecipeViewHolder(View frontView, View backView) {
             super(frontView);
             recipeTitle = (TextView) frontView.findViewById(R.id.card_recipe_title);
             expandButton = (ImageButton) frontView.findViewById(R.id.card_recipe_expand_button);
             openButton = (ImageButton) frontView.findViewById(R.id.card_recipe_open_button);
             frontView.setOnClickListener(this);
+            backView.setOnClickListener(this);
             this.frontView = frontView;
             this.backView = backView;
             isInFront = true;
+            loadAnimations(frontView.getContext());
+        }
+
+        public void setAdapter(RecipeListAdapter adapter) {
+            this.adapter = adapter;
+        }
+
+        private void loadAnimations(Context context) {
+            if (mSetLeftIn == null) {
+                mSetRightOut = (AnimatorSet) AnimatorInflater.loadAnimator(context, R.animator.card_flip_right_out);
+                mSetLeftIn = (AnimatorSet) AnimatorInflater.loadAnimator(context, R.animator.card_flip_left_in);
+            }
         }
 
         public void bindRecipe(final Recipe recipe, final OnRecipeInteraction recipeInteraction) {
             openButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    recipeInteraction.click(recipe);
+                    adapter.newView = true;
+                    adapter.notifyItemChanged(getAdapterPosition());
+                    // recipeInteraction.click(recipe);
                 }
             });
             recipeTitle.setText(recipe.getName());
@@ -112,7 +139,19 @@ public class RecipeListAdapter extends RecyclerView.Adapter<RecipeListAdapter.Re
          */
         @Override
         public void onClick(View v) {
-
+            if (!isInFront) {
+                mSetRightOut.setTarget(frontView);
+                mSetLeftIn.setTarget(backView);
+                mSetRightOut.start();
+                mSetLeftIn.start();
+                isInFront = true;
+            } else {
+                mSetRightOut.setTarget(backView);
+                mSetLeftIn.setTarget(frontView);
+                mSetRightOut.start();
+                mSetLeftIn.start();
+                isInFront = false;
+            }
         }
     }
 }
