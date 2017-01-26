@@ -1,17 +1,16 @@
 package com.alsash.reciper.ui.adapter;
 
-import android.animation.AnimatorInflater;
-import android.animation.AnimatorSet;
-import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.alsash.reciper.R;
 import com.alsash.reciper.data.model.Recipe;
+import com.alsash.reciper.ui.animator.FlipAnimatorHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,8 +19,6 @@ public class RecipeListAdapter extends RecyclerView.Adapter<RecipeListAdapter.Re
 
     private final List<Recipe> recipeList = new ArrayList<>();
     private final OnRecipeInteraction recipeInteraction;
-
-    public boolean newView;
 
     public RecipeListAdapter(OnRecipeInteraction recipeInteraction) {
         this.recipeInteraction = recipeInteraction;
@@ -32,18 +29,13 @@ public class RecipeListAdapter extends RecyclerView.Adapter<RecipeListAdapter.Re
 
     @Override
     public RecipeViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View frontView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.card_recipe_front, parent, false);
-        View backView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.card_recipe_back, parent, false);
-        RecipeViewHolder holder = new RecipeViewHolder(frontView, backView);
-        holder.setAdapter(this);
-        return holder;
+        View view = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.card_recipe_flip, parent, false);
+        return new RecipeViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(RecipeViewHolder holder, int position) {
-
         holder.bindRecipe(recipeList.get(position), recipeInteraction);
     }
 
@@ -77,81 +69,57 @@ public class RecipeListAdapter extends RecyclerView.Adapter<RecipeListAdapter.Re
         }
     }
 
-    public static class RecipeViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        final View frontView;
-        final View backView;
-        final TextView recipeTitle;
-        final ImageButton expandButton;
-        final ImageButton openButton;
-        boolean isInFront;
+    public static class RecipeViewHolder extends RecyclerView.ViewHolder {
+        final FrameLayout cardRecipeFlip;
+        final TextView frontTitle;
+        final ImageButton frontExpandButton;
+        final ImageButton frontOpenButton;
+        final ImageButton backExpandButton;
+        final ImageButton backOpenButton;
 
-        private AnimatorSet mSetRightOut;
-        private AnimatorSet mSetLeftIn;
+        final FlipAnimatorHelper flipAnimator;
 
-        private RecipeListAdapter adapter;
+        public RecipeViewHolder(View rootView) {
+            super(rootView);
 
-        public RecipeViewHolder(View frontView, View backView) {
-            super(frontView);
-            recipeTitle = (TextView) frontView.findViewById(R.id.card_recipe_title);
-            expandButton = (ImageButton) frontView.findViewById(R.id.card_recipe_expand_button);
-            openButton = (ImageButton) frontView.findViewById(R.id.card_recipe_open_button);
-            frontView.setOnClickListener(this);
-            backView.setOnClickListener(this);
-            this.frontView = frontView;
-            this.backView = backView;
-            isInFront = true;
-            loadAnimations(frontView.getContext());
-        }
+            cardRecipeFlip = (FrameLayout) rootView.findViewById(R.id.card_recipe_flip);
+            flipAnimator = new FlipAnimatorHelper(cardRecipeFlip);
+            cardRecipeFlip.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    flipAnimator.flip();
+                }
+            });
 
-        public void setAdapter(RecipeListAdapter adapter) {
-            this.adapter = adapter;
-        }
-
-        private void loadAnimations(Context context) {
-            if (mSetLeftIn == null) {
-                mSetRightOut = (AnimatorSet) AnimatorInflater.loadAnimator(context, R.animator.card_flip_right_out);
-                mSetLeftIn = (AnimatorSet) AnimatorInflater.loadAnimator(context, R.animator.card_flip_left_in);
-            }
+            frontTitle = (TextView) rootView.findViewById(R.id.card_recipe_front_title);
+            frontExpandButton = (ImageButton) rootView.findViewById(R.id.card_recipe_front_expand_button);
+            backExpandButton = (ImageButton) rootView.findViewById(R.id.card_recipe_back_expand_button);
+            frontOpenButton = (ImageButton) rootView.findViewById(R.id.card_recipe_front_open_button);
+            backOpenButton = (ImageButton) rootView.findViewById(R.id.card_recipe_back_open_button);
         }
 
         public void bindRecipe(final Recipe recipe, final OnRecipeInteraction recipeInteraction) {
-            openButton.setOnClickListener(new View.OnClickListener() {
+            flipAnimator.reset();
+
+            View.OnClickListener openListener = new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    adapter.newView = true;
-                    adapter.notifyItemChanged(getAdapterPosition());
-                    // recipeInteraction.click(recipe);
+                    recipeInteraction.click(recipe);
                 }
-            });
-            recipeTitle.setText(recipe.getName());
-            expandButton.setOnClickListener(new View.OnClickListener() {
+            };
+            View.OnClickListener expandListener = new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     recipeInteraction.expand(recipe);
                 }
-            });
-        }
+            };
+            frontOpenButton.setOnClickListener(openListener);
+            backOpenButton.setOnClickListener(openListener);
 
-        /**
-         * Flip recipe card animation
-         *
-         * @param v
-         */
-        @Override
-        public void onClick(View v) {
-            if (!isInFront) {
-                mSetRightOut.setTarget(frontView);
-                mSetLeftIn.setTarget(backView);
-                mSetRightOut.start();
-                mSetLeftIn.start();
-                isInFront = true;
-            } else {
-                mSetRightOut.setTarget(backView);
-                mSetLeftIn.setTarget(frontView);
-                mSetRightOut.start();
-                mSetLeftIn.start();
-                isInFront = false;
-            }
+            frontExpandButton.setOnClickListener(expandListener);
+            backExpandButton.setOnClickListener(expandListener);
+
+            frontTitle.setText(recipe.getName());
         }
     }
 }
