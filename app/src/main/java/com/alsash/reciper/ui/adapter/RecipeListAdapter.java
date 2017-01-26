@@ -88,6 +88,7 @@ public class RecipeListAdapter extends RecyclerView.Adapter<RecipeListAdapter.Re
                 @Override
                 public void onClick(View v) {
                     flipAnimator.flip();
+                    setIsRecyclable(!isRecyclable());
                 }
             });
 
@@ -99,7 +100,6 @@ public class RecipeListAdapter extends RecyclerView.Adapter<RecipeListAdapter.Re
         }
 
         public void bindRecipe(final Recipe recipe, final OnRecipeInteraction recipeInteraction) {
-            flipAnimator.reset();
 
             View.OnClickListener openListener = new View.OnClickListener() {
                 @Override
@@ -121,5 +121,6 @@ public class RecipeListAdapter extends RecyclerView.Adapter<RecipeListAdapter.Re
 
             frontTitle.setText(recipe.getName());
         }
+
     }
 }
