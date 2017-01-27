@@ -25,6 +25,7 @@ public class FlipAnimatorHelper {
 
     public FlipAnimatorHelper(FrameLayout frameLayout) {
         flipContainer = frameLayout;
+        if (flipContainer.getChildCount() > 0) flipContainer.getChildAt(0).setAlpha(0);
         inflateAnimators(frameLayout.getContext());
     }
 
@@ -50,7 +51,7 @@ public class FlipAnimatorHelper {
         return isBackVisible;
     }
 
-    private boolean flip(View front, View back, AnimatorSet in, AnimatorSet out) {
+    private boolean flip(final View front, final View back, AnimatorSet in, AnimatorSet out) {
         in.setTarget(back);
         out.setTarget(front);
         in.start();

@@ -15,4 +15,13 @@
         android:startOffset="@integer/card_flip_half_time_ms"
         android:valueFrom="1.0"
         android:valueTo="0.0" />
+
+    <!-- After rotating, immediately set the visibility to View.GONE. -->
+    <objectAnimator
+        android:duration="0"
+        android:propertyName="visibility"
+        android:startOffset="@integer/card_flip_full_time_ms"
+        android:valueFrom="0x00000000"
+        android:valueTo="0x00000008"
+        android:valueType="intType" />
 </set>

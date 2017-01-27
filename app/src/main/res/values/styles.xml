@@ -26,12 +26,12 @@
     </style>
 
     <style name="LightIconButton" parent="@style/Widget.AppCompat.ImageButton">
-        <item name="android:tint">@color/gray_600</item>
+        <item name="android:tint">@color/gray_400</item>
         <item name="android:background">@drawable/bg_light_icon_button</item>
     </style>
 
     <style name="LightIconView">
-        <item name="android:tint">@color/gray_600</item>
+        <item name="android:tint">@color/gray_400</item>
         <item name="android:scaleType">center</item>
     </style>
 
