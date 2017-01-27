@@ -70,6 +70,7 @@ public class RecipeListAdapter extends RecyclerView.Adapter<RecipeListAdapter.Re
     }
 
     public static class RecipeViewHolder extends RecyclerView.ViewHolder {
+
         final FrameLayout cardRecipeFlip;
         final TextView frontTitle;
         final ImageButton frontExpandButton;
@@ -79,8 +80,12 @@ public class RecipeListAdapter extends RecyclerView.Adapter<RecipeListAdapter.Re
 
         final FlipAnimatorHelper flipAnimator;
 
+        View.OnClickListener openListener;
+        View.OnClickListener expandListener;
+
         public RecipeViewHolder(View rootView) {
             super(rootView);
+            setIsRecyclable(true);
 
             cardRecipeFlip = (FrameLayout) rootView.findViewById(R.id.card_recipe_flip);
             flipAnimator = new FlipAnimatorHelper(cardRecipeFlip);
@@ -89,6 +94,7 @@ public class RecipeListAdapter extends RecyclerView.Adapter<RecipeListAdapter.Re
                 public void onClick(View v) {
                     flipAnimator.flip();
                     setIsRecyclable(!isRecyclable());
+                    flipBinding();
                 }
             });
 
@@ -99,28 +105,43 @@ public class RecipeListAdapter extends RecyclerView.Adapter<RecipeListAdapter.Re
             backOpenButton = (ImageButton) rootView.findViewById(R.id.card_recipe_back_open_button);
         }
 
-        public void bindRecipe(final Recipe recipe, final OnRecipeInteraction recipeInteraction) {
+        public void bindRecipe(final Recipe recipe, final OnRecipeInteraction interacts) {
 
-            View.OnClickListener openListener = new View.OnClickListener() {
+            openListener = new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    recipeInteraction.click(recipe);
+                    interacts.click(recipe);
                 }
             };
-            View.OnClickListener expandListener = new View.OnClickListener() {
+            expandListener = new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    recipeInteraction.expand(recipe);
+                    interacts.expand(recipe);
                 }
             };
-            frontOpenButton.setOnClickListener(openListener);
-            backOpenButton.setOnClickListener(openListener);
 
-            frontExpandButton.setOnClickListener(expandListener);
-            backExpandButton.setOnClickListener(expandListener);
-
+            if (flipAnimator.isBackVisible()) {
+                frontOpenButton.setOnClickListener(openListener);
+                frontExpandButton.setOnClickListener(expandListener);
+            } else {
+                backOpenButton.setOnClickListener(openListener);
+                backExpandButton.setOnClickListener(expandListener);
+            }
             frontTitle.setText(recipe.getName());
         }
 
+        private void flipBinding() {
+            if (flipAnimator.isBackVisible()) {
+                backOpenButton.setOnClickListener(openListener);
+                backExpandButton.setOnClickListener(openListener);
+                frontOpenButton.setOnClickListener(null);
+                frontExpandButton.setOnClickListener(null);
+            } else {
+                backOpenButton.setOnClickListener(null);
+                backExpandButton.setOnClickListener(null);
+                frontOpenButton.setOnClickListener(openListener);
+                frontExpandButton.setOnClickListener(expandListener);
+            }
+        }
     }
 }

@@ -46,6 +46,10 @@ public class FlipAnimatorHelper {
         }
     }
 
+    public boolean isBackVisible() {
+        return isBackVisible;
+    }
+
     private boolean flip(View front, View back, AnimatorSet in, AnimatorSet out) {
         in.setTarget(back);
         out.setTarget(front);
