@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/card_recipe_buttons"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <View
+        android:id="@+id/button_horizontal_divider"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="8dp"
+        android:background="@color/gray_100"
+        app:layout_constraintBottom_toTopOf="@+id/expand_button"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
+
+    <ImageButton
+        android:id="@+id/expand_button"
+        style="@style/LightIconButton"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/button_vertical_divider"
+        app:srcCompat="@drawable/ic_chevron_down"
+        tools:ignore="ContentDescription" />
+
+    <View
+        android:id="@+id/button_vertical_divider"
+        android:layout_width="1dp"
+        android:layout_height="40dp"
+        android:background="@color/gray_100"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button_horizontal_divider" />
+
+    <ImageButton
+        android:id="@+id/open_button"
+        style="@style/LightIconButton"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toRightOf="@+id/button_vertical_divider"
+        app:layout_constraintRight_toRightOf="parent"
+        app:srcCompat="@drawable/ic_chevron_right"
+        tools:ignore="ContentDescription" />
+
+</android.support.constraint.ConstraintLayout>

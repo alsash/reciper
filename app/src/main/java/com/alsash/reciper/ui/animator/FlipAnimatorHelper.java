@@ -15,7 +15,10 @@ import com.alsash.reciper.R;
  */
 public class FlipAnimatorHelper {
 
-    private FrameLayout flipContainer;
+    private final int frontIndex = 1;
+    private final int backIndex = 0;
+
+    private final FrameLayout flipContainer;
 
     private boolean isBackVisible;
     private AnimatorSet flipLeftIn;
@@ -23,48 +26,65 @@ public class FlipAnimatorHelper {
     private AnimatorSet flipRightIn;
     private AnimatorSet flipRightOut;
 
-    public FlipAnimatorHelper(FrameLayout frameLayout) {
-        flipContainer = frameLayout;
-        if (flipContainer.getChildCount() > 0) flipContainer.getChildAt(0).setVisibility(View.GONE);
+    public FlipAnimatorHelper(final FrameLayout frameLayout, boolean isBackVisible) {
+        this.flipContainer = frameLayout;
+        this.isBackVisible = isBackVisible;
         inflateAnimators(frameLayout.getContext());
+
+        // Set start invisibility to front or back
+        if (flipContainer.getChildCount() > 1) {
+            int index = isBackVisible ? frontIndex : backIndex;
+            flipContainer.getChildAt(index).setVisibility(View.GONE);
+        }
     }
 
     /**
      * Flip two first children of a flipContainer
-     * added into {@link #FlipAnimatorHelper(FrameLayout)}
+     * added into {@link #FlipAnimatorHelper(FrameLayout, boolean)}
      *
+     * @param immediately end animation immediately
      * @return visibility of a first child
      */
-    public boolean flip() {
+    public boolean flip(boolean immediately) {
         if (flipContainer.getChildCount() < 2) return isBackVisible;
-        View frontView = flipContainer.getChildAt(1);
-        View backView = flipContainer.getChildAt(0);
-        endAll();
+        View frontView = flipContainer.getChildAt(frontIndex);
+        View backView = flipContainer.getChildAt(backIndex);
         if (isBackVisible) {
-            return flip(backView, frontView, flipRightIn, flipRightOut);
+            return flip(backView, frontView, flipRightIn, flipRightOut, immediately);
         } else {
-            return flip(frontView, backView, flipLeftIn, flipLeftOut);
+            return flip(frontView, backView, flipLeftIn, flipLeftOut, immediately);
         }
     }
 
+    /**
+     * See {@link #flip(boolean)}
+     */
+    public boolean flip() {
+        return flip(false);
+    }
+
+    /**
+     * Getter for visibility
+     *
+     * @return visibility of a first child
+     */
     public boolean isBackVisible() {
         return isBackVisible;
     }
 
-    private boolean flip(final View front, final View back, AnimatorSet in, AnimatorSet out) {
+    private boolean flip(final View front, final View back, AnimatorSet in, AnimatorSet out, boolean end) {
+        if (in.isStarted()) in.end();
+        if (out.isStarted()) out.end();
         in.setTarget(back);
         out.setTarget(front);
         in.start();
         out.start();
+        if (end) {
+            in.end();
+            out.end();
+        }
         isBackVisible = !isBackVisible;
         return isBackVisible;
-    }
-
-    private void endAll() {
-        if (flipLeftIn.isStarted()) flipLeftIn.end();
-        if (flipLeftOut.isStarted()) flipLeftOut.end();
-        if (flipRightIn.isStarted()) flipRightIn.end();
-        if (flipRightOut.isStarted()) flipRightOut.end();
     }
 
     private void inflateAnimators(Context context) {

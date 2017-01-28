@@ -7,15 +7,19 @@ import android.view.ViewGroup;
 
 import com.alsash.reciper.R;
 import com.alsash.reciper.data.model.Recipe;
-import com.alsash.reciper.ui.adapter.holder.RecipeListViewHolder;
+import com.alsash.reciper.ui.adapter.holder.RecipeFlipperHolder;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
-public class RecipeListAdapter extends RecyclerView.Adapter<RecipeListViewHolder> {
+public class RecipeListAdapter extends RecyclerView.Adapter<RecipeFlipperHolder>
+        implements RecipeFlipperHolder.OnFlipListener {
 
     private final List<Recipe> recipeList = new ArrayList<>();
     private final OnRecipeInteraction recipeInteraction;
+    private final Set<Long> flippedRecipes = new HashSet<>();
 
     public RecipeListAdapter(OnRecipeInteraction recipeInteraction) {
         this.recipeInteraction = recipeInteraction;
@@ -25,15 +29,35 @@ public class RecipeListAdapter extends RecyclerView.Adapter<RecipeListViewHolder
     }
 
     @Override
-    public RecipeListViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.card_recipe, parent, false);
-        return new RecipeListViewHolder(view);
+    public void onFlip(boolean isBackVisible, int adapterPosition) {
+        if (isBackVisible) {
+            flippedRecipes.add(recipeList.get(adapterPosition).getId());
+        } else {
+            flippedRecipes.remove(recipeList.get(adapterPosition).getId());
+        }
     }
 
     @Override
-    public void onBindViewHolder(RecipeListViewHolder holder, int position) {
-        holder.bindRecipe(recipeList.get(position), recipeInteraction);
+    public int getItemViewType(int position) {
+        if (flippedRecipes.contains(recipeList.get(position).getId())) {
+            return R.id.card_recipe_back;
+        } else {
+            return super.getItemViewType(position);
+        }
+    }
+
+    @Override
+    public RecipeFlipperHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.card_recipe, parent, false);
+
+        boolean isBackVisible = (viewType == R.id.card_recipe_back);
+        return new RecipeFlipperHolder(view, isBackVisible);
+    }
+
+    @Override
+    public void onBindViewHolder(RecipeFlipperHolder holder, int position) {
+        holder.bindRecipe(recipeList.get(position), recipeInteraction, this);
     }
 
     @Override
@@ -42,6 +66,7 @@ public class RecipeListAdapter extends RecyclerView.Adapter<RecipeListViewHolder
     }
 
     public interface OnRecipeInteraction {
+
         void click(Recipe recipe);
 
         void expand(Recipe recipe);
@@ -65,5 +90,4 @@ public class RecipeListAdapter extends RecyclerView.Adapter<RecipeListViewHolder
             return "Recipe # " + id;
         }
     }
-
 }
