@@ -47,7 +47,7 @@
 
     <!-- Bottom buttons -->
     <View
-        android:id="@+id/card_recipe_front_action_horizontal_divider"
+        android:id="@+id/card_recipe_front_button_horizontal_divider"
         android:layout_width="0dp"
         android:layout_height="1dp"
         android:layout_marginEnd="8dp"
@@ -66,28 +66,28 @@
         android:layout_width="0dp"
         android:layout_height="48dp"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toLeftOf="@+id/card_recipe_front_action_vertical_divider"
-        app:layout_constraintTop_toBottomOf="@+id/card_recipe_front_action_horizontal_divider"
+        app:layout_constraintRight_toLeftOf="@+id/card_recipe_front_button_vertical_divider"
+        app:layout_constraintTop_toBottomOf="@+id/card_recipe_front_button_horizontal_divider"
         app:srcCompat="@drawable/ic_chevron_down"
         tools:ignore="ContentDescription" />
 
     <View
-        android:id="@+id/card_recipe_front_action_vertical_divider"
+        android:id="@+id/card_recipe_front_button_vertical_divider"
         android:layout_width="1dp"
         android:layout_height="40dp"
         android:background="@color/gray_100"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/card_recipe_front_action_horizontal_divider" />
+        app:layout_constraintTop_toBottomOf="@+id/card_recipe_front_button_horizontal_divider" />
 
     <ImageButton
         android:id="@+id/card_recipe_front_open_button"
         style="@style/LightIconButton"
         android:layout_width="0dp"
         android:layout_height="48dp"
-        app:layout_constraintLeft_toRightOf="@+id/card_recipe_front_action_vertical_divider"
+        app:layout_constraintLeft_toRightOf="@+id/card_recipe_front_button_vertical_divider"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/card_recipe_front_action_horizontal_divider"
+        app:layout_constraintTop_toBottomOf="@+id/card_recipe_front_button_horizontal_divider"
         app:srcCompat="@drawable/ic_chevron_right"
         tools:ignore="ContentDescription" />
 

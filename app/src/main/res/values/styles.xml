@@ -30,7 +30,7 @@
         <item name="android:background">@drawable/bg_light_icon_button</item>
     </style>
 
-    <style name="LightIconView">
+    <style name="LightIconView" parent="Widget.Design.FloatingActionButton">
         <item name="android:tint">@color/gray_400</item>
         <item name="android:scaleType">center</item>
     </style>
