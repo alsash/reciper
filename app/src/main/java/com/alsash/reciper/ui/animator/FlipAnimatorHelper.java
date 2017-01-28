@@ -25,7 +25,7 @@ public class FlipAnimatorHelper {
 
     public FlipAnimatorHelper(FrameLayout frameLayout) {
         flipContainer = frameLayout;
-        if (flipContainer.getChildCount() > 0) flipContainer.getChildAt(0).setAlpha(0);
+        if (flipContainer.getChildCount() > 0) flipContainer.getChildAt(0).setVisibility(View.GONE);
         inflateAnimators(frameLayout.getContext());
     }
 

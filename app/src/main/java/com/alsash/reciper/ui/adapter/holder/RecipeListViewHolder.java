@@ -29,7 +29,8 @@ public class RecipeListViewHolder extends RecyclerView.ViewHolder {
         cardRecipe.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setIsRecyclable(flipAnimator.flip());
+                boolean isBackVisible = flipAnimator.flip();
+                setIsRecyclable(!isBackVisible);
             }
         });
 
@@ -62,7 +63,10 @@ public class RecipeListViewHolder extends RecyclerView.ViewHolder {
         backExpandButton.setOnClickListener(expandListener);
         backOpenButton.setOnClickListener(openListener);
 
+        frontTitle.setText("Very dfgdksg;s lkms;lgk ms;lkgm;slkbm; dlkfgbm ;lkm ;lkm;dfg");
+    }
 
-        frontTitle.setText(recipe.getName());
+    private void setBackgroundTint() {
+
     }
 }

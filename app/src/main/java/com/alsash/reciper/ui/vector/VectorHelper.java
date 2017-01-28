@@ -77,11 +77,11 @@ public class VectorHelper {
     }
 
     @Nullable
-    protected Drawable create(@DrawableRes int resId) {
+    private Drawable create(@DrawableRes int resId) {
         return VectorDrawableCompat.create(context.getResources(), resId, theme);
     }
 
-    protected Drawable tint(@Nullable Drawable icon, @Nullable Integer color) {
+    private Drawable tint(@Nullable Drawable icon, @Nullable Integer color) {
         if (icon == null || color == null) return icon;
         icon.mutate();
         DrawableCompat.setTint(icon, ContextCompat.getColor(context, color));

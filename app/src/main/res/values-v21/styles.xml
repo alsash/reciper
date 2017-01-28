@@ -16,4 +16,9 @@
         <item name="android:gravity">left|center_vertical</item>
     </style>
 
+    <style name="LightIconButton" parent="@style/Widget.AppCompat.Button.Borderless">
+        <item name="android:tint">@color/gray_400</item>
+        <item name="android:background">?android:attr/selectableItemBackground</item>
+    </style>
+
 </resources>
