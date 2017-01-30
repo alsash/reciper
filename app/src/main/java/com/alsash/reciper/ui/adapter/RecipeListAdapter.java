@@ -37,14 +37,14 @@ public class RecipeListAdapter extends RecyclerView.Adapter<RecipeFlipperHolder>
         }
     }
 
-    @Override
+/*    @Override
     public int getItemViewType(int position) {
         if (flippedRecipes.contains(recipeList.get(position).getId())) {
-            return R.id.card_recipe_back;
+         //   return R.id.card_recipe_back;
         } else {
             return super.getItemViewType(position);
         }
-    }
+    }*/
 
     @Override
     public RecipeFlipperHolder onCreateViewHolder(ViewGroup parent, int viewType) {

@@ -28,12 +28,12 @@ public class FlipAnimatorHelper {
 
     public FlipAnimatorHelper(final FrameLayout frameLayout, boolean isBackVisible) {
         this.flipContainer = frameLayout;
-        this.isBackVisible = isBackVisible;
+        this.isBackVisible = false;
         inflateAnimators(frameLayout.getContext());
 
         // Set start invisibility to front or back
         if (flipContainer.getChildCount() > 1) {
-            int index = isBackVisible ? frontIndex : backIndex;
+            int index = this.isBackVisible ? frontIndex : backIndex;
             flipContainer.getChildAt(index).setVisibility(View.GONE);
         }
     }
@@ -42,47 +42,26 @@ public class FlipAnimatorHelper {
      * Flip two first children of a flipContainer
      * added into {@link #FlipAnimatorHelper(FrameLayout, boolean)}
      *
-     * @param immediately end animation immediately
      * @return visibility of a first child
      */
-    public boolean flip(boolean immediately) {
+    public boolean flip() {
         if (flipContainer.getChildCount() < 2) return isBackVisible;
         View frontView = flipContainer.getChildAt(frontIndex);
         View backView = flipContainer.getChildAt(backIndex);
         if (isBackVisible) {
-            return flip(backView, frontView, flipRightIn, flipRightOut, immediately);
+            return flip(backView, frontView, flipRightIn, flipRightOut);
         } else {
-            return flip(frontView, backView, flipLeftIn, flipLeftOut, immediately);
+            return flip(frontView, backView, flipLeftIn, flipLeftOut);
         }
     }
 
-    /**
-     * See {@link #flip(boolean)}
-     */
-    public boolean flip() {
-        return flip(false);
-    }
-
-    /**
-     * Getter for visibility
-     *
-     * @return visibility of a first child
-     */
-    public boolean isBackVisible() {
-        return isBackVisible;
-    }
-
-    private boolean flip(final View front, final View back, AnimatorSet in, AnimatorSet out, boolean end) {
+    private boolean flip(final View front, final View back, AnimatorSet in, AnimatorSet out) {
         if (in.isStarted()) in.end();
         if (out.isStarted()) out.end();
         in.setTarget(back);
         out.setTarget(front);
         in.start();
         out.start();
-        if (end) {
-            in.end();
-            out.end();
-        }
         isBackVisible = !isBackVisible;
         return isBackVisible;
     }

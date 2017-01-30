@@ -4,9 +4,6 @@ import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.FrameLayout;
-import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.alsash.reciper.R;
 import com.alsash.reciper.data.model.Recipe;
@@ -19,17 +16,17 @@ public class RecipeFlipperHolder extends RecyclerView.ViewHolder {
     private final FlipAnimatorHelper flipAnimator;
     private final boolean startBackVisible;
 
-    private final ImageView frontRecipeImage;
-    private final TextView frontRecipeTitle;
-    private final ImageButton frontExpandButton;
-    private final ImageButton frontOpenButton;
-
-    private final ImageView backAccountImage;
-    private final TextView backAccountTitle;
-    private final TextView backRecipeCreationDate;
-    private final TextView backRecipeTitle;
-    private final ImageButton backExpandButton;
-    private final ImageButton backOpenButton;
+//    private final ImageView frontRecipeImage;
+    // private final TextView frontRecipeTitle;
+//    private final ImageButton frontExpandButton;
+//    private final ImageButton frontOpenButton;
+//
+//    private final ImageView backAccountImage;
+//    private final TextView backAccountTitle;
+//    private final TextView backRecipeCreationDate;
+//    private final TextView backRecipeTitle;
+//    private final ImageButton backExpandButton;
+//    private final ImageButton backOpenButton;
 
     public RecipeFlipperHolder(View rootView, boolean isBackVisible) {
         super(rootView);
@@ -41,9 +38,9 @@ public class RecipeFlipperHolder extends RecyclerView.ViewHolder {
         CardView backView = (CardView) rootView.findViewById(R.id.card_recipe_back);
 
         // Front binding
-        frontRecipeImage = (ImageView) frontView.findViewById(R.id.recipe_image);
-        frontRecipeTitle = (TextView) frontView.findViewById(R.id.recipe_title);
-        frontExpandButton = (ImageButton) frontView.findViewById(R.id.expand_button);
+        // frontRecipeImage = (ImageView) frontView.findViewById(R.id.recipe_image);
+        //  frontRecipeTitle = (TextView) frontView.findViewById(R.id.recipe_title);
+/*        frontExpandButton = (ImageButton) frontView.findViewById(R.id.expand_button);
         frontOpenButton = (ImageButton) frontView.findViewById(R.id.open_button);
 
         // Back binding
@@ -52,7 +49,7 @@ public class RecipeFlipperHolder extends RecyclerView.ViewHolder {
         backRecipeCreationDate = (TextView) backView.findViewById(R.id.recipe_creation_date);
         backRecipeTitle = (TextView) backView.findViewById(R.id.recipe_title);
         backExpandButton = (ImageButton) backView.findViewById(R.id.expand_button);
-        backOpenButton = (ImageButton) backView.findViewById(R.id.open_button);
+        backOpenButton = (ImageButton) backView.findViewById(R.id.open_button);*/
     }
 
     public void bindRecipe(final Recipe recipe, final RecipeListAdapter.OnRecipeInteraction interacts,
@@ -82,19 +79,19 @@ public class RecipeFlipperHolder extends RecyclerView.ViewHolder {
         cardRecipe.setOnClickListener(clickFlipListener);
 
         // Bindings to front view
-        frontRecipeTitle.setText(recipe.getName());
+        // frontRecipeTitle.setText(recipe.getName());
         // frontRecipeImage.setImageBitmap(recipe.getImage(frontRecipeImage.getX(), frontRecipeImage.getY()));
-        frontExpandButton.setOnClickListener(expandListener);
-        frontOpenButton.setOnClickListener(openListener);
+/*        frontExpandButton.setOnClickListener(expandListener);
+        frontOpenButton.setOnClickListener(openListener);*/
 
         // Bindings to back view
         // Account account = recipe.getAccount();
         // backAccountImage.setImageBitmap(account.getImage(backAccountImage.getX(), backAccountImage.getY()));
         // backAccountTitle.setText(account.getName());
         // backRecipeCreationDate.setText(recipe.getCreationDate());
-        backRecipeTitle.setText(recipe.getName());
+/*        backRecipeTitle.setText(recipe.getName());
         backExpandButton.setOnClickListener(expandListener);
-        backOpenButton.setOnClickListener(openListener);
+        backOpenButton.setOnClickListener(openListener);*/
     }
 
     private void flip(OnFlipListener listener) {
