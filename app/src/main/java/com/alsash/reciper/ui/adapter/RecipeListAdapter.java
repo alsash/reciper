@@ -7,19 +7,20 @@ import android.view.ViewGroup;
 
 import com.alsash.reciper.R;
 import com.alsash.reciper.data.model.Recipe;
-import com.alsash.reciper.ui.adapter.holder.RecipeFlipperHolder;
+import com.alsash.reciper.ui.adapter.holder.RecipeBackCardHolder;
+import com.alsash.reciper.ui.adapter.holder.RecipeFrontCardHolder;
+import com.alsash.reciper.ui.adapter.holder.RecipeListBaseHolder;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public class RecipeListAdapter extends RecyclerView.Adapter<RecipeFlipperHolder>
-        implements RecipeFlipperHolder.OnFlipListener {
+public class RecipeListAdapter extends RecyclerView.Adapter<RecipeListBaseHolder> {
 
     private final List<Recipe> recipeList = new ArrayList<>();
     private final OnRecipeInteraction recipeInteraction;
-    private final Set<Long> flippedRecipes = new HashSet<>();
+    private final Set<Integer> recipeBackCardViews = new HashSet<>();
 
     public RecipeListAdapter(OnRecipeInteraction recipeInteraction) {
         this.recipeInteraction = recipeInteraction;
@@ -29,40 +30,70 @@ public class RecipeListAdapter extends RecyclerView.Adapter<RecipeFlipperHolder>
     }
 
     @Override
-    public void onFlip(boolean isBackVisible, int adapterPosition) {
-        if (isBackVisible) {
-            flippedRecipes.add(recipeList.get(adapterPosition).getId());
-        } else {
-            flippedRecipes.remove(recipeList.get(adapterPosition).getId());
-        }
-    }
-
-/*    @Override
     public int getItemViewType(int position) {
-        if (flippedRecipes.contains(recipeList.get(position).getId())) {
-         //   return R.id.card_recipe_back;
+        if (recipeBackCardViews.contains(position)) {
+            return R.layout.card_recipe_back;
         } else {
-            return super.getItemViewType(position);
+            return R.layout.card_recipe_front;
         }
-    }*/
-
-    @Override
-    public RecipeFlipperHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.card_recipe, parent, false);
-
-        boolean isBackVisible = (viewType == R.id.card_recipe_back);
-        return new RecipeFlipperHolder(view, isBackVisible);
     }
 
     @Override
-    public void onBindViewHolder(RecipeFlipperHolder holder, int position) {
-        holder.bindRecipe(recipeList.get(position), recipeInteraction, this);
+    public RecipeListBaseHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+
+        View itemView;
+
+        switch (viewType) {
+            case R.layout.card_recipe_front:
+                itemView = LayoutInflater.from(parent.getContext())
+                        .inflate(R.layout.card_recipe_front, parent, false);
+                return new RecipeFrontCardHolder(itemView);
+            case R.layout.card_recipe_back:
+                itemView = LayoutInflater.from(parent.getContext())
+                        .inflate(R.layout.card_recipe_back, parent, false);
+                return new RecipeBackCardHolder(itemView);
+            default:
+                throw new IllegalArgumentException("Unknown view type: " + viewType);
+        }
+    }
+
+    @Override
+    public void onBindViewHolder(RecipeListBaseHolder holder, int position) {
+        holder.bindRecipe(recipeList.get(position));
+        for (ActionViewEntry actionView : holder.getActionViews()) {
+            switch (actionView.action) {
+                case OPEN:
+                    actionView.view.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+
+                        }
+                    });
+                case EXPAND:
+                    actionView.view.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+
+                        }
+                    });
+                case FLIP:
+                    actionView.view.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+
+                        }
+                    });
+            }
+        }
     }
 
     @Override
     public int getItemCount() {
         return recipeList.size();
+    }
+
+    public enum Action {
+        OPEN, EXPAND, FLIP
     }
 
     public interface OnRecipeInteraction {
@@ -88,6 +119,16 @@ public class RecipeListAdapter extends RecyclerView.Adapter<RecipeFlipperHolder>
         @Override
         public String getName() {
             return "Recipe # " + id;
+        }
+    }
+
+    public static class ActionViewEntry {
+        public final Action action;
+        public final View view;
+
+        public ActionViewEntry(Action action, View view) {
+            this.action = action;
+            this.view = view;
         }
     }
 }
