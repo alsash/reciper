@@ -14,7 +14,7 @@ public class RecipeListActivity extends DrawerFrameActivity implements RecipeLis
     private FloatingActionButton mainFab;
 
     @Override
-    public void click(Recipe recipe) {
+    public void open(Recipe recipe) {
 
     }
 

@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/card_recipe_front"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardElevation="4dp"
+    app:cardPreventCornerOverlap="false"
+    app:cardUseCompatPadding="true">
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/card_recipe_front_constraint"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <!--Image with 16:9 aspect ratio-->
+        <android.support.percent.PercentFrameLayout
+            android:id="@+id/card_recipe_front_image_container"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/card_recipe_front_image"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:adjustViewBounds="true"
+                android:scaleType="centerCrop"
+                app:layout_aspectRatio="178%"
+                app:layout_widthPercent="100%"
+                app:srcCompat="@drawable/bg_drawer_header"
+                tools:ignore="ContentDescription" />
+
+        </android.support.percent.PercentFrameLayout>
+
+        <TextView
+            android:id="@+id/card_recipe_front_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="24dp"
+            android:maxLines="2"
+            android:text="Recipe title"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textSize="18sp"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/card_recipe_front_image_container"
+            tools:text="Recipe title" />
+
+        <View
+            android:id="@+id/card_recipe_front_button_horizontal_divider"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="24dp"
+            android:background="@color/gray_100"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/card_recipe_front_title" />
+
+        <View
+            android:id="@+id/card_recipe_front_button_vertical_divider"
+            android:layout_width="1dp"
+            android:layout_height="40dp"
+            android:background="@color/gray_100"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/card_recipe_front_button_horizontal_divider" />
+
+        <ImageButton
+            android:id="@+id/card_recipe_front_expand_button"
+            style="@style/LightIconButton"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@+id/card_recipe_front_button_vertical_divider"
+            app:layout_constraintTop_toBottomOf="@+id/card_recipe_front_button_horizontal_divider"
+            app:srcCompat="@drawable/ic_chevron_down"
+            tools:ignore="ContentDescription" />
+
+        <ImageButton
+            android:id="@+id/card_recipe_front_open_button"
+            style="@style/LightIconButton"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            app:layout_constraintLeft_toRightOf="@+id/card_recipe_front_button_vertical_divider"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/card_recipe_front_button_horizontal_divider"
+            app:srcCompat="@drawable/ic_chevron_right"
+            tools:ignore="ContentDescription" />
+
+    </android.support.constraint.ConstraintLayout>
+</android.support.v7.widget.CardView>
