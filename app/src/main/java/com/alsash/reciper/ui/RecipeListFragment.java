@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 
 import com.alsash.reciper.R;
 import com.alsash.reciper.ui.adapter.RecipeListAdapter;
+import com.alsash.reciper.ui.animator.RecipeListAnimator;
 import com.alsash.reciper.ui.vector.VectorHelper;
 
 public class RecipeListFragment extends Fragment {
@@ -57,6 +58,7 @@ public class RecipeListFragment extends Fragment {
         RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.list);
         recyclerView.setLayoutManager(new GridLayoutManager(recyclerView.getContext(), 2));
         recyclerView.setAdapter(new RecipeListAdapter(recipeInteraction));
+        recyclerView.setItemAnimator(new RecipeListAnimator());
         return rootView;
     }
 
