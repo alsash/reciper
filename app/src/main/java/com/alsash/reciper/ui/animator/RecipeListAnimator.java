@@ -1,26 +1,16 @@
 package com.alsash.reciper.ui.animator;
 
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.RecyclerView;
-
-import com.alsash.reciper.ui.adapter.holder.RecipeListCardHolder;
 
 import java.util.List;
 
 public class RecipeListAnimator extends DefaultItemAnimator {
 
-    public RecipeListAnimator() {
-        setSupportsChangeAnimations(true);
-    }
-
     @Override
     public boolean canReuseUpdatedViewHolder(@NonNull RecyclerView.ViewHolder viewHolder) {
-        return true;
-    }
-
-    @Override
-    public boolean canReuseUpdatedViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, @NonNull List<Object> payloads) {
         return true;
     }
 
@@ -33,7 +23,7 @@ public class RecipeListAnimator extends DefaultItemAnimator {
         if (changeFlags == FLAG_CHANGED) {
             for (Object payload : payloads) {
                 if (payload instanceof String) {
-                    return new CardHolderInfo((String) payload);
+                    return obtainHolderInfo((String) payload, viewHolder);
                 }
             }
         }
@@ -41,24 +31,24 @@ public class RecipeListAnimator extends DefaultItemAnimator {
     }
 
     @Override
-    public boolean animateChange(RecyclerView.ViewHolder oldHolder, RecyclerView.ViewHolder newHolder, int fromX, int fromY, int toX, int toY) {
-        return super.animateChange(oldHolder, newHolder, fromX, fromY, toX, toY);
+    public boolean animateDisappearance(@NonNull RecyclerView.ViewHolder viewHolder,
+                                        @NonNull ItemHolderInfo preLayoutInfo,
+                                        @Nullable ItemHolderInfo postLayoutInfo) {
+        return super.animateDisappearance(viewHolder, preLayoutInfo, postLayoutInfo);
     }
 
     @Override
-    public boolean animateMove(RecyclerView.ViewHolder holder, int fromX, int fromY, int toX, int toY) {
-        return super.animateMove(holder, fromX, fromY, toX, toY);
-    }
-
-
-    @Override
-    public boolean animateAdd(RecyclerView.ViewHolder holder) {
-        return super.animateAdd(holder);
+    public boolean animateAppearance(@NonNull RecyclerView.ViewHolder viewHolder,
+                                     @Nullable ItemHolderInfo preLayoutInfo,
+                                     @NonNull ItemHolderInfo postLayoutInfo) {
+        return super.animateAppearance(viewHolder, preLayoutInfo, postLayoutInfo);
     }
 
     @Override
-    public boolean animateRemove(RecyclerView.ViewHolder holder) {
-        return super.animateRemove(holder);
+    public boolean animatePersistence(@NonNull RecyclerView.ViewHolder viewHolder,
+                                      @NonNull ItemHolderInfo preInfo,
+                                      @NonNull ItemHolderInfo postInfo) {
+        return super.animatePersistence(viewHolder, preInfo, postInfo);
     }
 
     @Override
@@ -66,11 +56,14 @@ public class RecipeListAnimator extends DefaultItemAnimator {
                                  @NonNull RecyclerView.ViewHolder newHolder,
                                  @NonNull ItemHolderInfo preInfo,
                                  @NonNull ItemHolderInfo postInfo) {
-
-        if (!(oldHolder instanceof RecipeListCardHolder && newHolder instanceof RecipeListCardHolder)) {
-            return super.animateChange(oldHolder, newHolder, preInfo, postInfo);
+        if (oldHolder == newHolder) {
+            //  Toast.makeText(newHolder.itemView.getContext(), "equal!", Toast.LENGTH_SHORT).show();
         }
         return super.animateChange(oldHolder, newHolder, preInfo, postInfo);
+    }
+
+    private ItemHolderInfo obtainHolderInfo(String payload, RecyclerView.ViewHolder holder) {
+        return new CardHolderInfo(payload).setFrom(holder);
     }
 
     private class CardHolderInfo extends ItemHolderInfo {

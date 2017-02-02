@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 
 import com.alsash.reciper.R;
 import com.alsash.reciper.data.model.Recipe;
+import com.alsash.reciper.ui.adapter.holder.RecipeBackCardHolder;
 import com.alsash.reciper.ui.adapter.holder.RecipeFrontCardHolder;
 import com.alsash.reciper.ui.adapter.holder.RecipeListCardHolder;
 
@@ -28,30 +29,30 @@ public class RecipeListAdapter extends RecyclerView.Adapter<RecipeListCardHolder
         }
     }
 
-//    @Override
-//    public int getItemViewType(int position) {
+    @Override
+    public int getItemViewType(int position) {
 //        if (recipeBackCardViews.contains(position)) {
 //            return R.layout.card_recipe_back;
 //        } else {
-//            return R.layout.card_recipe_front;
+        return R.layout.card_recipe_front;
 //        }
-//    }
+    }
 
     @Override
     public RecipeListCardHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView;
-//        switch (viewType) {
-//            case R.layout.card_recipe_front:
+        switch (viewType) {
+            case R.layout.card_recipe_front:
                 itemView = LayoutInflater.from(parent.getContext())
                         .inflate(R.layout.card_recipe_front, parent, false);
                 return new RecipeFrontCardHolder(itemView);
-//            case R.layout.card_recipe_back:
-//                itemView = LayoutInflater.from(parent.getContext())
-//                        .inflate(R.layout.card_recipe_back, parent, false);
-//                return new RecipeBackCardHolder(itemView);
-//            default:
-//                throw new IllegalArgumentException("Unknown view type: " + viewType);
-//        }
+            case R.layout.card_recipe_back:
+                itemView = LayoutInflater.from(parent.getContext())
+                        .inflate(R.layout.card_recipe_back, parent, false);
+                return new RecipeBackCardHolder(itemView);
+            default:
+                throw new IllegalArgumentException("Unknown view type: " + viewType);
+        }
     }
 
     @Override
