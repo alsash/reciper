@@ -30,6 +30,13 @@ public class RecipeListAnimator extends DefaultItemAnimator {
         return super.recordPreLayoutInformation(state, viewHolder, changeFlags, payloads);
     }
 
+    @NonNull
+    @Override
+    public ItemHolderInfo recordPostLayoutInformation(@NonNull RecyclerView.State state,
+                                                      @NonNull RecyclerView.ViewHolder viewHolder) {
+        return super.recordPostLayoutInformation(state, viewHolder);
+    }
+
     @Override
     public boolean animateDisappearance(@NonNull RecyclerView.ViewHolder viewHolder,
                                         @NonNull ItemHolderInfo preLayoutInfo,
