@@ -31,11 +31,11 @@ public class RecipeListAdapter extends RecyclerView.Adapter<RecipeListCardHolder
 
     @Override
     public int getItemViewType(int position) {
-//        if (recipeBackCardViews.contains(position)) {
-//            return R.layout.card_recipe_back;
-//        } else {
-        return R.layout.card_recipe_front;
-//        }
+        if (recipeBackCardViews.contains(position)) {
+            return R.layout.card_recipe_back;
+        } else {
+            return R.layout.card_recipe_front;
+        }
     }
 
     @Override
@@ -65,12 +65,13 @@ public class RecipeListAdapter extends RecyclerView.Adapter<RecipeListCardHolder
                     @Override
                     public void onClick(View v) {
                         int adapterPosition = holder.getAdapterPosition();
+                        notifyItemChanged(adapterPosition, "Flip");
+                        notifyItemRemoved(adapterPosition);
                         if (holder.getItemViewType() == R.layout.card_recipe_front) {
                             recipeBackCardViews.add(adapterPosition);
                         } else {
                             recipeBackCardViews.remove(adapterPosition);
                         }
-                        notifyItemChanged(adapterPosition, "Flip");
                     }
                 },
                 // Expand Listener

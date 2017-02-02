@@ -11,7 +11,7 @@ public class RecipeListAnimator extends DefaultItemAnimator {
 
     @Override
     public boolean canReuseUpdatedViewHolder(@NonNull RecyclerView.ViewHolder viewHolder) {
-        return true;
+        return false;
     }
 
     @NonNull
