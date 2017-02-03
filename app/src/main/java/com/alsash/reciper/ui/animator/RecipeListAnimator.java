@@ -5,9 +5,17 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.RecyclerView;
 
+import com.alsash.reciper.ui.adapter.RecipeListAdapter;
+
 import java.util.List;
 
 public class RecipeListAnimator extends DefaultItemAnimator {
+
+    private long recipe;
+
+    private RecyclerView.ViewHolder appearanceHolder;
+    private RecyclerView.ViewHolder disappearanceHolder;
+
 
     @Override
     public boolean canReuseUpdatedViewHolder(@NonNull RecyclerView.ViewHolder viewHolder) {
@@ -20,27 +28,22 @@ public class RecipeListAnimator extends DefaultItemAnimator {
                                                      @NonNull RecyclerView.ViewHolder viewHolder,
                                                      int changeFlags,
                                                      @NonNull List<Object> payloads) {
-        if (changeFlags == FLAG_CHANGED) {
-            for (Object payload : payloads) {
-                if (payload instanceof String) {
-                    return obtainHolderInfo((String) payload, viewHolder);
-                }
+        for (Object payload : payloads) {
+            if (RecipeListAdapter.PAYLOAD_FLIP.equals(payload)) {
+                return new FlipInfo().setFrom(viewHolder);
             }
         }
         return super.recordPreLayoutInformation(state, viewHolder, changeFlags, payloads);
-    }
-
-    @NonNull
-    @Override
-    public ItemHolderInfo recordPostLayoutInformation(@NonNull RecyclerView.State state,
-                                                      @NonNull RecyclerView.ViewHolder viewHolder) {
-        return super.recordPostLayoutInformation(state, viewHolder);
     }
 
     @Override
     public boolean animateDisappearance(@NonNull RecyclerView.ViewHolder viewHolder,
                                         @NonNull ItemHolderInfo preLayoutInfo,
                                         @Nullable ItemHolderInfo postLayoutInfo) {
+        if (preLayoutInfo instanceof FlipInfo) {
+            disappearanceHolder = viewHolder;
+            return true;
+        }
         return super.animateDisappearance(viewHolder, preLayoutInfo, postLayoutInfo);
     }
 
@@ -48,6 +51,10 @@ public class RecipeListAnimator extends DefaultItemAnimator {
     public boolean animateAppearance(@NonNull RecyclerView.ViewHolder viewHolder,
                                      @Nullable ItemHolderInfo preLayoutInfo,
                                      @NonNull ItemHolderInfo postLayoutInfo) {
+        if (postLayoutInfo instanceof FlipInfo) {
+            appearanceHolder = viewHolder;
+            return true;
+        }
         return super.animateAppearance(viewHolder, preLayoutInfo, postLayoutInfo);
     }
 
@@ -63,22 +70,15 @@ public class RecipeListAnimator extends DefaultItemAnimator {
                                  @NonNull RecyclerView.ViewHolder newHolder,
                                  @NonNull ItemHolderInfo preInfo,
                                  @NonNull ItemHolderInfo postInfo) {
-        if (oldHolder == newHolder) {
-            //  Toast.makeText(newHolder.itemView.getContext(), "equal!", Toast.LENGTH_SHORT).show();
-        }
         return super.animateChange(oldHolder, newHolder, preInfo, postInfo);
     }
 
-    private ItemHolderInfo obtainHolderInfo(String payload, RecyclerView.ViewHolder holder) {
-        return new CardHolderInfo(payload).setFrom(holder);
+    @Override
+    public void runPendingAnimations() {
+        super.runPendingAnimations();
     }
 
-    private class CardHolderInfo extends ItemHolderInfo {
-        public final String payload;
-
-        public CardHolderInfo(String payload) {
-            this.payload = payload;
-        }
+    private class FlipInfo extends ItemHolderInfo {
     }
 
 }

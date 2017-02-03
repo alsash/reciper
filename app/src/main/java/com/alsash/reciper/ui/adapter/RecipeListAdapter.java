@@ -18,6 +18,8 @@ import java.util.Set;
 
 public class RecipeListAdapter extends RecyclerView.Adapter<RecipeListCardHolder> {
 
+    public static final String PAYLOAD_FLIP = "com.alsash.reciper.ui.adapter.payload_flip";
+
     private final List<Recipe> recipeList = new ArrayList<>();
     private final OnRecipeInteraction recipeInteraction;
     private final Set<Integer> recipeBackCardViews = new HashSet<>();
@@ -40,15 +42,12 @@ public class RecipeListAdapter extends RecyclerView.Adapter<RecipeListCardHolder
 
     @Override
     public RecipeListCardHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View itemView;
+
+        View itemView = LayoutInflater.from(parent.getContext()).inflate(viewType, parent, false);
         switch (viewType) {
             case R.layout.card_recipe_front:
-                itemView = LayoutInflater.from(parent.getContext())
-                        .inflate(R.layout.card_recipe_front, parent, false);
                 return new RecipeFrontCardHolder(itemView);
             case R.layout.card_recipe_back:
-                itemView = LayoutInflater.from(parent.getContext())
-                        .inflate(R.layout.card_recipe_back, parent, false);
                 return new RecipeBackCardHolder(itemView);
             default:
                 throw new IllegalArgumentException("Unknown view type: " + viewType);
@@ -65,13 +64,13 @@ public class RecipeListAdapter extends RecyclerView.Adapter<RecipeListCardHolder
                     @Override
                     public void onClick(View v) {
                         int adapterPosition = holder.getAdapterPosition();
-                        notifyItemChanged(adapterPosition, "Flip");
-                        notifyItemRemoved(adapterPosition);
-                        if (holder.getItemViewType() == R.layout.card_recipe_front) {
+                        if (holder instanceof RecipeFrontCardHolder) {
                             recipeBackCardViews.add(adapterPosition);
                         } else {
                             recipeBackCardViews.remove(adapterPosition);
                         }
+                        notifyItemRemoved(adapterPosition); // Animate Disappearance
+                        notifyItemChanged(adapterPosition, PAYLOAD_FLIP); // Animate Appearance
                     }
                 },
                 // Expand Listener
