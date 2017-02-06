@@ -7,6 +7,9 @@ import com.alsash.reciper.data.model.Recipe;
 
 public abstract class RecipeListCardHolder extends RecyclerView.ViewHolder {
 
+    public boolean isFlipNeed;
+    public boolean isFlipped;
+
     RecipeListCardHolder(View itemView) {
         super(itemView);
     }

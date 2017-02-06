@@ -63,14 +63,8 @@ public class RecipeListAdapter extends RecyclerView.Adapter<RecipeListCardHolder
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        int adapterPosition = holder.getAdapterPosition();
-                        if (holder instanceof RecipeFrontCardHolder) {
-                            recipeBackCardViews.add(adapterPosition);
-                        } else {
-                            recipeBackCardViews.remove(adapterPosition);
-                        }
-                        notifyItemRemoved(adapterPosition); // Animate Disappearance
-                        notifyItemChanged(adapterPosition, PAYLOAD_FLIP); // Animate Appearance
+                        holder.isFlipNeed = true;
+                        notifyItemChanged(holder.getAdapterPosition());
                     }
                 },
                 // Expand Listener
