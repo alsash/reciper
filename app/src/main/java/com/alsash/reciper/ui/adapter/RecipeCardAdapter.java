@@ -7,24 +7,22 @@ import android.view.ViewGroup;
 
 import com.alsash.reciper.R;
 import com.alsash.reciper.data.model.Recipe;
-import com.alsash.reciper.ui.adapter.holder.RecipeBackCardHolder;
-import com.alsash.reciper.ui.adapter.holder.RecipeFrontCardHolder;
-import com.alsash.reciper.ui.adapter.holder.RecipeListCardHolder;
+import com.alsash.reciper.ui.adapter.holder.RecipeCardHolder;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public class RecipeListAdapter extends RecyclerView.Adapter<RecipeListCardHolder> {
+public class RecipeCardAdapter extends RecyclerView.Adapter<RecipeCardHolder> {
 
     public static final String PAYLOAD_FLIP = "com.alsash.reciper.ui.adapter.payload_flip";
 
     private final List<Recipe> recipeList = new ArrayList<>();
     private final OnRecipeInteraction recipeInteraction;
-    private final Set<Integer> recipeBackCardViews = new HashSet<>();
+    private final Set<Integer> backCardViews = new HashSet<>();
 
-    public RecipeListAdapter(OnRecipeInteraction recipeInteraction) {
+    public RecipeCardAdapter(OnRecipeInteraction recipeInteraction) {
         this.recipeInteraction = recipeInteraction;
         for (int i = 0; i < 30; i++) {
             recipeList.add(new RecipeImpl(i));
@@ -32,39 +30,29 @@ public class RecipeListAdapter extends RecyclerView.Adapter<RecipeListCardHolder
     }
 
     @Override
-    public int getItemViewType(int position) {
-        if (recipeBackCardViews.contains(position)) {
-            return R.layout.card_recipe_back;
-        } else {
-            return R.layout.card_recipe_front;
-        }
+    public RecipeCardHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+
+        View rootView = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_recipe, parent, false);
+        return new RecipeCardHolder(rootView);
     }
 
     @Override
-    public RecipeListCardHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public void onBindViewHolder(final RecipeCardHolder holder, int position) {
 
-        View itemView = LayoutInflater.from(parent.getContext()).inflate(viewType, parent, false);
-        switch (viewType) {
-            case R.layout.card_recipe_front:
-                return new RecipeFrontCardHolder(itemView);
-            case R.layout.card_recipe_back:
-                return new RecipeBackCardHolder(itemView);
-            default:
-                throw new IllegalArgumentException("Unknown view type: " + viewType);
-        }
-    }
-
-    @Override
-    public void onBindViewHolder(final RecipeListCardHolder holder, int position) {
-
+        holder.setBackVisible(backCardViews.contains(position));
         holder.bindRecipe(recipeList.get(position));
         holder.setListeners(
                 // Flip Listener
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        holder.isFlipNeed = true;
-                        notifyItemChanged(holder.getAdapterPosition());
+                        int adapterPosition = holder.getAdapterPosition();
+                        if (backCardViews.contains(adapterPosition)) {
+                            backCardViews.remove(adapterPosition);
+                        } else {
+                            backCardViews.add(adapterPosition);
+                        }
+                        notifyItemChanged(adapterPosition, PAYLOAD_FLIP);
                     }
                 },
                 // Expand Listener

@@ -6,10 +6,10 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 
 import com.alsash.reciper.data.model.Recipe;
-import com.alsash.reciper.ui.adapter.RecipeListAdapter;
+import com.alsash.reciper.ui.adapter.RecipeCardAdapter;
 import com.alsash.reciper.ui.dialog.RecipeBottomDialog;
 
-public class RecipeListActivity extends DrawerFrameActivity implements RecipeListAdapter.OnRecipeInteraction {
+public class RecipeListActivity extends DrawerFrameActivity implements RecipeCardAdapter.OnRecipeInteraction {
 
     private FloatingActionButton mainFab;
 

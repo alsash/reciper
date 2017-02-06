@@ -14,13 +14,13 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.alsash.reciper.R;
-import com.alsash.reciper.ui.adapter.RecipeListAdapter;
+import com.alsash.reciper.ui.adapter.RecipeCardAdapter;
 import com.alsash.reciper.ui.animator.RecipeListAnimator;
 import com.alsash.reciper.ui.vector.VectorHelper;
 
 public class RecipeListFragment extends Fragment {
 
-    RecipeListAdapter.OnRecipeInteraction recipeInteraction;
+    RecipeCardAdapter.OnRecipeInteraction recipeInteraction;
 
     public static RecipeListFragment newInstance() {
 
@@ -34,7 +34,7 @@ public class RecipeListFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        recipeInteraction = (RecipeListAdapter.OnRecipeInteraction) context;
+        recipeInteraction = (RecipeCardAdapter.OnRecipeInteraction) context;
     }
 
     @Override
@@ -57,7 +57,7 @@ public class RecipeListFragment extends Fragment {
 
         RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.list);
         recyclerView.setLayoutManager(new GridLayoutManager(recyclerView.getContext(), 2));
-        recyclerView.setAdapter(new RecipeListAdapter(recipeInteraction));
+        recyclerView.setAdapter(new RecipeCardAdapter(recipeInteraction));
         recyclerView.setItemAnimator(new RecipeListAnimator());
         return rootView;
     }
