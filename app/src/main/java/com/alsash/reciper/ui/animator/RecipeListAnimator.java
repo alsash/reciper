@@ -45,7 +45,7 @@ public class RecipeListAnimator extends DefaultItemAnimator {
             FlipInfo flipInfo = (FlipInfo) preInfo;
             new FlipAnimatorHelper(newHolder.itemView.getContext())
                     .setFlipContainer((FrameLayout) newHolder.itemView)
-                    .setBackVisible(!flipInfo.prevBackVisible)
+                    .setBackVisible(flipInfo.prevBackVisible)
                     .setListener(new AnimatorListenerAdapter() {
                         @Override
                         public void onAnimationEnd(Animator animation) {

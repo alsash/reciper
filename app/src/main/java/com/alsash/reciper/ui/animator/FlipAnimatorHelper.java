@@ -62,8 +62,10 @@ public class FlipAnimatorHelper {
         View backView = flipContainer.getChildAt(backIndex);
 
         if (isBackVisible) {
+            // Back to front
             return flip(backView, frontView, flipRightIn, flipRightOut);
         } else {
+            // Front to back
             return flip(frontView, backView, flipLeftIn, flipLeftOut);
         }
     }
