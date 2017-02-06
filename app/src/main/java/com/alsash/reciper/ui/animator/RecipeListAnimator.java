@@ -43,14 +43,15 @@ public class RecipeListAnimator extends DefaultItemAnimator {
                                  @NonNull ItemHolderInfo postInfo) {
         if (preInfo instanceof FlipInfo) {
             FlipInfo flipInfo = (FlipInfo) preInfo;
+            final boolean isOldEqual = (oldHolder == newHolder);
             new FlipAnimatorHelper(newHolder.itemView.getContext())
                     .setFlipContainer((FrameLayout) newHolder.itemView)
-                    .setBackVisible(flipInfo.prevBackVisible)
+                    .setToFrontDirection(flipInfo.prevBackVisible)
                     .setListener(new AnimatorListenerAdapter() {
                         @Override
                         public void onAnimationEnd(Animator animation) {
                             dispatchChangeFinished(newHolder, false);
-                            if (oldHolder != newHolder) {
+                            if (!isOldEqual) {
                                 dispatchChangeFinished(oldHolder, true);
                             }
                         }

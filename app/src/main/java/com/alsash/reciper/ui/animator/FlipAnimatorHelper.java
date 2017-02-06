@@ -25,7 +25,7 @@ public class FlipAnimatorHelper {
     private final AnimatorSet flipRightOut;
 
     private FrameLayout flipContainer;
-    private boolean isBackVisible;
+    private boolean isToFrontDirection;
 
     private Animator.AnimatorListener listener;
 
@@ -41,8 +41,8 @@ public class FlipAnimatorHelper {
         return this;
     }
 
-    public FlipAnimatorHelper setBackVisible(boolean backVisible) {
-        isBackVisible = backVisible;
+    public FlipAnimatorHelper setToFrontDirection(boolean toFrontDirection) {
+        this.isToFrontDirection = toFrontDirection;
         return this;
     }
 
@@ -56,12 +56,12 @@ public class FlipAnimatorHelper {
      * added into {@link #setFlipContainer(FrameLayout)}
      */
     public boolean flip() {
-        if (flipContainer.getChildCount() < 2) return isBackVisible;
+        if (flipContainer.getChildCount() < 2) return isToFrontDirection;
 
         View frontView = flipContainer.getChildAt(frontIndex);
         View backView = flipContainer.getChildAt(backIndex);
 
-        if (isBackVisible) {
+        if (isToFrontDirection) {
             // Back to front
             return flip(backView, frontView, flipRightIn, flipRightOut);
         } else {
@@ -70,7 +70,7 @@ public class FlipAnimatorHelper {
         }
     }
 
-    private boolean flip(final View front, final View back, AnimatorSet in, AnimatorSet out) {
+    private boolean flip(View outView, View inView, AnimatorSet in, AnimatorSet out) {
         if (in.isStarted()) in.end();
         if (out.isStarted()) out.end();
 
@@ -79,12 +79,12 @@ public class FlipAnimatorHelper {
             out.addListener(listener);
         }
 
-        in.setTarget(back);
-        out.setTarget(front);
+        in.setTarget(inView);
+        out.setTarget(outView);
         in.start();
         out.start();
 
-        isBackVisible = !isBackVisible;
-        return isBackVisible;
+        isToFrontDirection = !isToFrontDirection;
+        return isToFrontDirection;
     }
 }
