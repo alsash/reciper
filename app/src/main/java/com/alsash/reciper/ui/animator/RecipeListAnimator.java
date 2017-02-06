@@ -1,12 +1,14 @@
 package com.alsash.reciper.ui.animator;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.RecyclerView;
-import android.widget.Toast;
+import android.widget.FrameLayout;
 
 import com.alsash.reciper.ui.adapter.RecipeCardAdapter;
+import com.alsash.reciper.ui.adapter.holder.RecipeCardHolder;
 
 import java.util.List;
 
@@ -23,53 +25,47 @@ public class RecipeListAnimator extends DefaultItemAnimator {
                                                      @NonNull RecyclerView.ViewHolder viewHolder,
                                                      int changeFlags,
                                                      @NonNull List<Object> payloads) {
-        for (Object payload : payloads) {
-            if (RecipeCardAdapter.PAYLOAD_FLIP.equals(payload)) {
-                return new FlipInfo().setFrom(viewHolder);
+        if (changeFlags == FLAG_CHANGED) {
+            for (Object payload : payloads) {
+                if (RecipeCardAdapter.PAYLOAD_FLIP.equals(payload)) {
+                    RecipeCardHolder oldCardHolder = (RecipeCardHolder) viewHolder;
+                    return new FlipInfo(oldCardHolder.isBackVisible()).setFrom(viewHolder);
+                }
             }
         }
         return super.recordPreLayoutInformation(state, viewHolder, changeFlags, payloads);
     }
 
-    @NonNull
     @Override
-    public ItemHolderInfo recordPostLayoutInformation(@NonNull RecyclerView.State state, @NonNull RecyclerView.ViewHolder viewHolder) {
-        return super.recordPostLayoutInformation(state, viewHolder);
-    }
-
-    @Override
-    public boolean animateAppearance(@NonNull RecyclerView.ViewHolder viewHolder,
-                                     @Nullable ItemHolderInfo preLayoutInfo,
-                                     @NonNull ItemHolderInfo postLayoutInfo) {
-        return super.animateAppearance(viewHolder, preLayoutInfo, postLayoutInfo);
-    }
-
-    @Override
-    public boolean animateDisappearance(@NonNull RecyclerView.ViewHolder viewHolder,
-                                        @NonNull ItemHolderInfo preLayoutInfo,
-                                        @Nullable ItemHolderInfo postLayoutInfo) {
-        return super.animateDisappearance(viewHolder, preLayoutInfo, postLayoutInfo);
-    }
-
-    @Override
-    public boolean animatePersistence(@NonNull RecyclerView.ViewHolder viewHolder,
-                                      @NonNull ItemHolderInfo preInfo,
-                                      @NonNull ItemHolderInfo postInfo) {
-        return super.animatePersistence(viewHolder, preInfo, postInfo);
-    }
-
-    @Override
-    public boolean animateChange(@NonNull RecyclerView.ViewHolder oldHolder,
-                                 @NonNull RecyclerView.ViewHolder newHolder,
+    public boolean animateChange(@NonNull final RecyclerView.ViewHolder oldHolder,
+                                 @NonNull final RecyclerView.ViewHolder newHolder,
                                  @NonNull ItemHolderInfo preInfo,
                                  @NonNull ItemHolderInfo postInfo) {
-        if (postInfo instanceof FlipInfo) {
-            Toast.makeText(newHolder.itemView.getContext(), "Flip!", Toast.LENGTH_SHORT).show();
+        if (preInfo instanceof FlipInfo) {
+            FlipInfo flipInfo = (FlipInfo) preInfo;
+            new FlipAnimatorHelper(newHolder.itemView.getContext())
+                    .setFlipContainer((FrameLayout) newHolder.itemView)
+                    .setBackVisible(!flipInfo.prevBackVisible)
+                    .setListener(new AnimatorListenerAdapter() {
+                        @Override
+                        public void onAnimationEnd(Animator animation) {
+                            dispatchChangeFinished(newHolder, false);
+                            if (oldHolder != newHolder) {
+                                dispatchChangeFinished(oldHolder, true);
+                            }
+                        }
+                    }).flip();
+            return false;
         }
         return super.animateChange(oldHolder, newHolder, preInfo, postInfo);
     }
 
     private class FlipInfo extends ItemHolderInfo {
+        public final boolean prevBackVisible;
+
+        public FlipInfo(boolean prevBackVisible) {
+            this.prevBackVisible = prevBackVisible;
+        }
     }
 
 }

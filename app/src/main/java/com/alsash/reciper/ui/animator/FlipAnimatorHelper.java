@@ -1,5 +1,6 @@
 package com.alsash.reciper.ui.animator;
 
+import android.animation.Animator;
 import android.animation.AnimatorInflater;
 import android.animation.AnimatorSet;
 import android.content.Context;
@@ -18,36 +19,48 @@ public class FlipAnimatorHelper {
     private final int frontIndex = 1;
     private final int backIndex = 0;
 
-    private final FrameLayout flipContainer;
+    private final AnimatorSet flipLeftIn;
+    private final AnimatorSet flipLeftOut;
+    private final AnimatorSet flipRightIn;
+    private final AnimatorSet flipRightOut;
 
+    private FrameLayout flipContainer;
     private boolean isBackVisible;
-    private AnimatorSet flipLeftIn;
-    private AnimatorSet flipLeftOut;
-    private AnimatorSet flipRightIn;
-    private AnimatorSet flipRightOut;
 
-    public FlipAnimatorHelper(final FrameLayout frameLayout, boolean isBackVisible) {
-        this.flipContainer = frameLayout;
-        this.isBackVisible = false;
-        inflateAnimators(frameLayout.getContext());
+    private Animator.AnimatorListener listener;
 
-        // Set start invisibility to front or back
-        if (flipContainer.getChildCount() > 1) {
-            int index = this.isBackVisible ? frontIndex : backIndex;
-            flipContainer.getChildAt(index).setVisibility(View.GONE);
-        }
+    public FlipAnimatorHelper(Context context) {
+        flipLeftIn = (AnimatorSet) AnimatorInflater.loadAnimator(context, R.animator.card_flip_left_in);
+        flipLeftOut = (AnimatorSet) AnimatorInflater.loadAnimator(context, R.animator.card_flip_left_out);
+        flipRightIn = (AnimatorSet) AnimatorInflater.loadAnimator(context, R.animator.card_flip_right_in);
+        flipRightOut = (AnimatorSet) AnimatorInflater.loadAnimator(context, R.animator.card_flip_right_out);
+    }
+
+    public FlipAnimatorHelper setFlipContainer(FrameLayout flipContainer) {
+        this.flipContainer = flipContainer;
+        return this;
+    }
+
+    public FlipAnimatorHelper setBackVisible(boolean backVisible) {
+        isBackVisible = backVisible;
+        return this;
+    }
+
+    public FlipAnimatorHelper setListener(Animator.AnimatorListener listener) {
+        this.listener = listener;
+        return this;
     }
 
     /**
      * Flip two first children of a flipContainer
-     * added into {@link #FlipAnimatorHelper(FrameLayout, boolean)}
-     *
-     * @return visibility of a first child
+     * added into {@link #setFlipContainer(FrameLayout)}
      */
     public boolean flip() {
         if (flipContainer.getChildCount() < 2) return isBackVisible;
+
         View frontView = flipContainer.getChildAt(frontIndex);
         View backView = flipContainer.getChildAt(backIndex);
+
         if (isBackVisible) {
             return flip(backView, frontView, flipRightIn, flipRightOut);
         } else {
@@ -58,18 +71,18 @@ public class FlipAnimatorHelper {
     private boolean flip(final View front, final View back, AnimatorSet in, AnimatorSet out) {
         if (in.isStarted()) in.end();
         if (out.isStarted()) out.end();
+
+        out.removeAllListeners();
+        if (listener != null) {
+            out.addListener(listener);
+        }
+
         in.setTarget(back);
         out.setTarget(front);
         in.start();
         out.start();
+
         isBackVisible = !isBackVisible;
         return isBackVisible;
-    }
-
-    private void inflateAnimators(Context context) {
-        flipLeftIn = (AnimatorSet) AnimatorInflater.loadAnimator(context, R.animator.card_flip_left_in);
-        flipLeftOut = (AnimatorSet) AnimatorInflater.loadAnimator(context, R.animator.card_flip_left_out);
-        flipRightIn = (AnimatorSet) AnimatorInflater.loadAnimator(context, R.animator.card_flip_right_in);
-        flipRightOut = (AnimatorSet) AnimatorInflater.loadAnimator(context, R.animator.card_flip_right_out);
     }
 }
