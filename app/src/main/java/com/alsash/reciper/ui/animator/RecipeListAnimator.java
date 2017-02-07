@@ -7,7 +7,9 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.RecyclerView;
 import android.widget.FrameLayout;
 
+import com.alsash.reciper.data.model.Recipe;
 import com.alsash.reciper.ui.adapter.RecipeCardAdapter;
+import com.alsash.reciper.ui.adapter.holder.RecipeCardHolder;
 
 import java.util.List;
 
@@ -15,7 +17,11 @@ public class RecipeListAnimator extends DefaultItemAnimator {
 
     @Override
     public boolean canReuseUpdatedViewHolder(@NonNull RecyclerView.ViewHolder viewHolder) {
-        return true;
+        if (viewHolder instanceof RecipeCardHolder) {
+            return true;
+        } else {
+            return super.canReuseUpdatedViewHolder(viewHolder);
+        }
     }
 
     @NonNull
@@ -28,9 +34,9 @@ public class RecipeListAnimator extends DefaultItemAnimator {
         if (changeFlags == FLAG_CHANGED) {
             for (Object payload : payloads) {
                 if (RecipeCardAdapter.PAYLOAD_FLIP_FRONT_TO_BACK.equals(payload)) {
-                    return new FlipInfo(true).setFrom(viewHolder);
+                    return new FlipInfo().setFrontToBack(true).setFrom(viewHolder);
                 } else if (RecipeCardAdapter.PAYLOAD_FLIP_BACK_TO_FRONT.equals(payload)) {
-                    return new FlipInfo(false).setFrom(viewHolder);
+                    return new FlipInfo().setFrontToBack(false).setFrom(viewHolder);
                 }
             }
         }
@@ -53,15 +59,31 @@ public class RecipeListAnimator extends DefaultItemAnimator {
 
     private boolean animateFlip(@NonNull final RecyclerView.ViewHolder oldHolder,
                                 @NonNull final RecyclerView.ViewHolder newHolder,
-                                @NonNull FlipInfo preInfo,
+                                @NonNull final FlipInfo preInfo,
                                 @NonNull ItemHolderInfo postInfo) {
         final boolean isHolderEquals = (oldHolder == newHolder);
+
+        final RecipeCardHolder holder = (RecipeCardHolder) newHolder;
+//        holder.setBackVisible(!holder.isBackVisible());
+
         new FlipAnimatorHelper(newHolder.itemView.getContext())
                 .setFlipContainer((FrameLayout) newHolder.itemView)
                 .setToFrontDirection(!preInfo.isFrontToBack)
                 .setListener(new AnimatorListenerAdapter() {
                     @Override
                     public void onAnimationEnd(Animator animation) {
+                        holder.setBackVisible(preInfo.isFrontToBack);
+                        holder.bindRecipe(new Recipe() {
+                            @Override
+                            public Long getId() {
+                                return null;
+                            }
+
+                            @Override
+                            public String getName() {
+                                return " ";
+                            }
+                        });
                         dispatchChangeFinished(newHolder, false);
                         if (!isHolderEquals) dispatchChangeFinished(oldHolder, true);
                     }
@@ -70,10 +92,11 @@ public class RecipeListAnimator extends DefaultItemAnimator {
     }
 
     private class FlipInfo extends ItemHolderInfo {
-        public final boolean isFrontToBack;
+        public boolean isFrontToBack;
 
-        public FlipInfo(boolean isFrontToBack) {
-            this.isFrontToBack = isFrontToBack;
+        public FlipInfo setFrontToBack(boolean frontToBack) {
+            isFrontToBack = frontToBack;
+            return this;
         }
     }
 

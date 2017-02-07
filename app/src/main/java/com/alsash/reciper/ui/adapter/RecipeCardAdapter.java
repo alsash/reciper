@@ -1,6 +1,7 @@
 package com.alsash.reciper.ui.adapter;
 
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -55,8 +56,22 @@ public class RecipeCardAdapter extends RecyclerView.Adapter<RecipeCardHolder> {
 
     @Override
     public void onBindViewHolder(final RecipeCardHolder holder, int position) {
-        holder.setBackVisible(backCardPositions.contains(position));
+
+        int frontVisibility = holder.getFrontVisibility();
+        boolean isBackVisible = backCardPositions.contains(position);
+
+        if ((frontVisibility == View.GONE) && !isBackVisible) {
+            Log.i("Tag", "test");
+        }
+
         holder.bindRecipe(recipeList.get(position));
+        holder.setBackVisible(backCardPositions.contains(position));
+
+        frontVisibility = holder.getFrontVisibility();
+        if ((frontVisibility == View.GONE) && !isBackVisible) {
+            Log.i("Tag", "test 2");
+        }
+
         holder.setListeners(
                 // Flip Listener
                 new View.OnClickListener() {
