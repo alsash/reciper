@@ -8,7 +8,6 @@ import android.support.v7.widget.RecyclerView;
 import android.widget.FrameLayout;
 
 import com.alsash.reciper.ui.adapter.RecipeCardAdapter;
-import com.alsash.reciper.ui.adapter.holder.RecipeCardHolder;
 
 import java.util.List;
 
@@ -25,11 +24,13 @@ public class RecipeListAnimator extends DefaultItemAnimator {
                                                      @NonNull RecyclerView.ViewHolder viewHolder,
                                                      int changeFlags,
                                                      @NonNull List<Object> payloads) {
+        // Flip animation. Stage 2 of 4. Record flip direction.
         if (changeFlags == FLAG_CHANGED) {
             for (Object payload : payloads) {
-                if (RecipeCardAdapter.PAYLOAD_FLIP.equals(payload)) {
-                    RecipeCardHolder oldCardHolder = (RecipeCardHolder) viewHolder;
-                    return new FlipInfo(oldCardHolder.isBackVisible()).setFrom(viewHolder);
+                if (RecipeCardAdapter.PAYLOAD_FLIP_FRONT_TO_BACK.equals(payload)) {
+                    return new FlipInfo(true).setFrom(viewHolder);
+                } else if (RecipeCardAdapter.PAYLOAD_FLIP_BACK_TO_FRONT.equals(payload)) {
+                    return new FlipInfo(false).setFrom(viewHolder);
                 }
             }
         }
@@ -37,35 +38,42 @@ public class RecipeListAnimator extends DefaultItemAnimator {
     }
 
     @Override
-    public boolean animateChange(@NonNull final RecyclerView.ViewHolder oldHolder,
-                                 @NonNull final RecyclerView.ViewHolder newHolder,
+    public boolean animateChange(@NonNull RecyclerView.ViewHolder oldHolder,
+                                 @NonNull RecyclerView.ViewHolder newHolder,
                                  @NonNull ItemHolderInfo preInfo,
                                  @NonNull ItemHolderInfo postInfo) {
+        // Flip animation. Stage 4 of 4. Animate flip.
+        // NewHolder has the same visibility (front or back) as the previous holder at his position.
+        // After animation visibility will be set to the correct value and viewHolder can be reused.
         if (preInfo instanceof FlipInfo) {
-            FlipInfo flipInfo = (FlipInfo) preInfo;
-            final boolean isOldEqual = (oldHolder == newHolder);
-            new FlipAnimatorHelper(newHolder.itemView.getContext())
-                    .setFlipContainer((FrameLayout) newHolder.itemView)
-                    .setToFrontDirection(flipInfo.prevBackVisible)
-                    .setListener(new AnimatorListenerAdapter() {
-                        @Override
-                        public void onAnimationEnd(Animator animation) {
-                            dispatchChangeFinished(newHolder, false);
-                            if (!isOldEqual) {
-                                dispatchChangeFinished(oldHolder, true);
-                            }
-                        }
-                    }).flip();
-            return false;
+            return animateFlip(oldHolder, newHolder, (FlipInfo) preInfo, postInfo);
         }
         return super.animateChange(oldHolder, newHolder, preInfo, postInfo);
     }
 
-    private class FlipInfo extends ItemHolderInfo {
-        public final boolean prevBackVisible;
+    private boolean animateFlip(@NonNull final RecyclerView.ViewHolder oldHolder,
+                                @NonNull final RecyclerView.ViewHolder newHolder,
+                                @NonNull FlipInfo preInfo,
+                                @NonNull ItemHolderInfo postInfo) {
+        final boolean isHolderEquals = (oldHolder == newHolder);
+        new FlipAnimatorHelper(newHolder.itemView.getContext())
+                .setFlipContainer((FrameLayout) newHolder.itemView)
+                .setToFrontDirection(!preInfo.isFrontToBack)
+                .setListener(new AnimatorListenerAdapter() {
+                    @Override
+                    public void onAnimationEnd(Animator animation) {
+                        dispatchChangeFinished(newHolder, false);
+                        if (!isHolderEquals) dispatchChangeFinished(oldHolder, true);
+                    }
+                }).flip();
+        return false;
+    }
 
-        public FlipInfo(boolean prevBackVisible) {
-            this.prevBackVisible = prevBackVisible;
+    private class FlipInfo extends ItemHolderInfo {
+        public final boolean isFrontToBack;
+
+        public FlipInfo(boolean isFrontToBack) {
+            this.isFrontToBack = isFrontToBack;
         }
     }
 

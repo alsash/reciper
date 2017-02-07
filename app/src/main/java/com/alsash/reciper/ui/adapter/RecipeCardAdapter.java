@@ -16,11 +16,14 @@ import java.util.Set;
 
 public class RecipeCardAdapter extends RecyclerView.Adapter<RecipeCardHolder> {
 
-    public static final String PAYLOAD_FLIP = "com.alsash.reciper.ui.adapter.payload_flip";
+    private static final String CLASSNAME = RecipeCardAdapter.class.getCanonicalName();
+
+    public static final String PAYLOAD_FLIP_FRONT_TO_BACK = CLASSNAME + ".payload_front_to_back";
+    public static final String PAYLOAD_FLIP_BACK_TO_FRONT = CLASSNAME + ".payload_back_to_front";
 
     private final List<Recipe> recipeList = new ArrayList<>();
     private final OnRecipeInteraction recipeInteraction;
-    private final Set<Integer> backCardViews = new HashSet<>();
+    private final Set<Integer> backCardPositions = new HashSet<>();
 
     public RecipeCardAdapter(OnRecipeInteraction recipeInteraction) {
         this.recipeInteraction = recipeInteraction;
@@ -31,28 +34,41 @@ public class RecipeCardAdapter extends RecyclerView.Adapter<RecipeCardHolder> {
 
     @Override
     public RecipeCardHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-
-        View rootView = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_recipe, parent, false);
+        View rootView = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.card_recipe, parent, false);
         return new RecipeCardHolder(rootView);
     }
 
     @Override
-    public void onBindViewHolder(final RecipeCardHolder holder, int position) {
+    public void onBindViewHolder(RecipeCardHolder holder, int position, List<Object> payloads) {
+        onBindViewHolder(holder, position);
+        // Flip animation. Stage 3 of 4.
+        // Prepare visibility before animation and save view state for future bindings
+        for (Object payload : payloads) {
+            if (PAYLOAD_FLIP_BACK_TO_FRONT.equals(payload)) {
+                backCardPositions.remove(position);
+            } else if (PAYLOAD_FLIP_FRONT_TO_BACK.equals(payload)) {
+                backCardPositions.add(position);
+            }
+        }
+    }
 
-        holder.setBackVisible(backCardViews.contains(position));
+    @Override
+    public void onBindViewHolder(final RecipeCardHolder holder, int position) {
+        holder.setBackVisible(backCardPositions.contains(position));
         holder.bindRecipe(recipeList.get(position));
         holder.setListeners(
                 // Flip Listener
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        // Flip animation. Stage 1 of 4. Notify observers about flip is triggered.
                         int adapterPosition = holder.getAdapterPosition();
-                        if (backCardViews.contains(adapterPosition)) {
-                            backCardViews.remove(adapterPosition);
+                        if (backCardPositions.contains(adapterPosition)) {
+                            notifyItemChanged(adapterPosition, PAYLOAD_FLIP_BACK_TO_FRONT);
                         } else {
-                            backCardViews.add(adapterPosition);
+                            notifyItemChanged(adapterPosition, PAYLOAD_FLIP_FRONT_TO_BACK);
                         }
-                        notifyItemChanged(adapterPosition, PAYLOAD_FLIP);
                     }
                 },
                 // Expand Listener

@@ -29,10 +29,6 @@ public class RecipeCardHolder extends RecyclerView.ViewHolder {
     private boolean isBackVisible;
 
     public RecipeCardHolder(View rootView) {
-        this(rootView, false);
-    }
-
-    public RecipeCardHolder(View rootView, boolean isBackVisible) {
         super(rootView);
 
         frontCard = (CardView) rootView.findViewById(R.id.card_recipe_front);
@@ -49,7 +45,7 @@ public class RecipeCardHolder extends RecyclerView.ViewHolder {
         backExpandButton = (ImageButton) rootView.findViewById(R.id.card_recipe_back_expand_button);
         backOpenButton = (ImageButton) rootView.findViewById(R.id.card_recipe_back_open_button);
 
-        setBackVisible(isBackVisible);
+        setVisibility();
     }
 
     public void bindRecipe(Recipe recipe) {
