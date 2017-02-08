@@ -30,10 +30,10 @@ public class FlipAnimatorHelper {
     private Animator.AnimatorListener listener;
 
     public FlipAnimatorHelper(Context context) {
-        flipLeftIn = (AnimatorSet) AnimatorInflater.loadAnimator(context, R.animator.card_flip_left_in);
-        flipLeftOut = (AnimatorSet) AnimatorInflater.loadAnimator(context, R.animator.card_flip_left_out);
-        flipRightIn = (AnimatorSet) AnimatorInflater.loadAnimator(context, R.animator.card_flip_right_in);
-        flipRightOut = (AnimatorSet) AnimatorInflater.loadAnimator(context, R.animator.card_flip_right_out);
+        flipLeftIn = (AnimatorSet) AnimatorInflater.loadAnimator(context, R.animator.flip_left_in);
+        flipLeftOut = (AnimatorSet) AnimatorInflater.loadAnimator(context, R.animator.flip_left_out);
+        flipRightIn = (AnimatorSet) AnimatorInflater.loadAnimator(context, R.animator.flip_right_in);
+        flipRightOut = (AnimatorSet) AnimatorInflater.loadAnimator(context, R.animator.flip_right_out);
     }
 
     public FlipAnimatorHelper setFlipContainer(FrameLayout flipContainer) {
