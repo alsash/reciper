@@ -7,7 +7,6 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.RecyclerView;
 import android.widget.FrameLayout;
 
-import com.alsash.reciper.data.model.Recipe;
 import com.alsash.reciper.ui.adapter.RecipeCardAdapter;
 import com.alsash.reciper.ui.adapter.holder.RecipeCardHolder;
 
@@ -72,18 +71,6 @@ public class RecipeListAnimator extends DefaultItemAnimator {
                 .setListener(new AnimatorListenerAdapter() {
                     @Override
                     public void onAnimationEnd(Animator animation) {
-                        holder.setBackVisible(preInfo.isFrontToBack);
-                        holder.bindRecipe(new Recipe() {
-                            @Override
-                            public Long getId() {
-                                return null;
-                            }
-
-                            @Override
-                            public String getName() {
-                                return " ";
-                            }
-                        });
                         dispatchChangeFinished(newHolder, false);
                         if (!isHolderEquals) dispatchChangeFinished(oldHolder, true);
                     }

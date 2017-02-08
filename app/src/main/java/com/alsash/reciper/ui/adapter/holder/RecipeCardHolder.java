@@ -28,10 +28,6 @@ public class RecipeCardHolder extends RecyclerView.ViewHolder {
 
     private boolean isBackVisible;
 
-    private View.OnClickListener flipListener;
-    private View.OnClickListener expandListener;
-    private View.OnClickListener openListener;
-
     public RecipeCardHolder(View rootView) {
         super(rootView);
 
@@ -53,8 +49,8 @@ public class RecipeCardHolder extends RecyclerView.ViewHolder {
     }
 
     public void bindRecipe(Recipe recipe) {
-        frontTitle.setText(recipe.getName() + "F: " + frontCard.getVisibility() + " B: " + backCard.getVisibility());
-        backTitle.setText(recipe.getName() + "F: " + frontCard.getVisibility() + " B: " + backCard.getVisibility());
+        frontTitle.setText(recipe.getName());
+        backTitle.setText(recipe.getName());
     }
 
     /**
@@ -84,10 +80,6 @@ public class RecipeCardHolder extends RecyclerView.ViewHolder {
         }
     }
 
-    public int getFrontVisibility() {
-        return frontCard.getVisibility();
-    }
-
     public CardView getFrontCard() {
         return frontCard;
     }
@@ -102,6 +94,8 @@ public class RecipeCardHolder extends RecyclerView.ViewHolder {
 
     public void setBackVisible(boolean backVisible) {
         isBackVisible = backVisible;
+        frontCard.clearAnimation();
+        backCard.clearAnimation();
         if (isBackVisible) {
             frontCard.setVisibility(View.GONE);
             backCard.setVisibility(View.VISIBLE);
