@@ -9,7 +9,6 @@ import android.widget.TextView;
 
 import com.alsash.reciper.R;
 import com.alsash.reciper.data.model.Recipe;
-import com.alsash.reciper.ui.animator.FlipAnimatorHelper;
 
 public class RecipeCardHolder extends RecyclerView.ViewHolder {
 
@@ -26,8 +25,6 @@ public class RecipeCardHolder extends RecyclerView.ViewHolder {
     private final TextView backTitle;
     private final ImageButton backExpandButton;
     private final ImageButton backOpenButton;
-
-    private FlipAnimatorHelper flipAnimator;
 
     public RecipeCardHolder(View rootView) {
         super(rootView);
@@ -94,12 +91,5 @@ public class RecipeCardHolder extends RecyclerView.ViewHolder {
         frontCard.setRotationY(0.0f);
         backCard.setAlpha(1.0f);
         backCard.setRotationY(0.0f);
-    }
-
-    public FlipAnimatorHelper getFlipAnimator() {
-        if (flipAnimator == null) {
-            flipAnimator = new FlipAnimatorHelper(itemView.getContext());
-        }
-        return flipAnimator;
     }
 }

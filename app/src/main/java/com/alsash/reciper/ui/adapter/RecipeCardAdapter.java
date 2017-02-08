@@ -50,7 +50,7 @@ public class RecipeCardAdapter extends RecyclerView.Adapter<RecipeCardHolder> {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        // Flip animation. Stage 1 of 4. Notify observers about flip is triggered.
+                        // Flip animation. Stage 1 of 3. Notify observers about flip is triggered.
                         int adapterPosition = holder.getAdapterPosition();
                         if (backCardPositions.contains(adapterPosition)) {
                             backCardPositions.remove(adapterPosition);
