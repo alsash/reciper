@@ -1,5 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <set xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- and visibility to View.VISIBLE. -->
+    <objectAnimator
+        android:duration="0"
+        android:propertyName="visibility"
+        android:valueFrom="0x00000008"
+        android:valueTo="0x00000000"
+        android:valueType="intType" />
+
     <!-- Rotate. -->
     <objectAnimator
         android:duration="@integer/card_flip_full_time_ms"
@@ -24,4 +33,19 @@
         android:valueFrom="0x00000000"
         android:valueTo="0x00000008"
         android:valueType="intType" />
+
+    <!-- And reset other property to start values for future reuses -->
+    <objectAnimator
+        android:duration="0"
+        android:propertyName="rotationY"
+        android:startOffset="@integer/card_flip_full_time_ms"
+        android:valueFrom="-180"
+        android:valueTo="0" />
+
+    <objectAnimator
+        android:duration="0"
+        android:propertyName="alpha"
+        android:startOffset="@integer/card_flip_full_time_ms"
+        android:valueFrom="0.0"
+        android:valueTo="1.0" />
 </set>

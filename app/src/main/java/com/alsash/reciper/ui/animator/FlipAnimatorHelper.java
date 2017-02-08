@@ -12,12 +12,12 @@ import com.alsash.reciper.R;
 /**
  * Helper class for flipping two children of a {@link FrameLayout}
  * with animation like a poker card flip
- * Uses modern {@link AnimatorSet} class instead of an old {@link android.view.animation.Animation}
+ * Uses the {@link AnimatorSet} class instead of the {@link android.view.animation.Animation}
  */
 public class FlipAnimatorHelper {
 
-    private final int frontIndex = 1;
-    private final int backIndex = 0;
+    private static final int FRONT_INDEX = 1;
+    private static final int BACK_INDEX = 0;
 
     private final AnimatorSet flipLeftIn;
     private final AnimatorSet flipLeftOut;
@@ -25,7 +25,7 @@ public class FlipAnimatorHelper {
     private final AnimatorSet flipRightOut;
 
     private FrameLayout flipContainer;
-    private boolean isToFrontDirection;
+    private boolean isFrontToBackDirection;
 
     private Animator.AnimatorListener listener;
 
@@ -41,8 +41,8 @@ public class FlipAnimatorHelper {
         return this;
     }
 
-    public FlipAnimatorHelper setToFrontDirection(boolean toFrontDirection) {
-        this.isToFrontDirection = toFrontDirection;
+    public FlipAnimatorHelper setFrontToBackDirection(boolean frontToBackDirection) {
+        isFrontToBackDirection = frontToBackDirection;
         return this;
     }
 
@@ -55,36 +55,37 @@ public class FlipAnimatorHelper {
      * Flip two first children of a flipContainer
      * added into {@link #setFlipContainer(FrameLayout)}
      */
-    public boolean flip() {
-        if (flipContainer.getChildCount() < 2) return isToFrontDirection;
+    public void flip() {
+        if (flipContainer.getChildCount() < 2) return;
 
-        View frontView = flipContainer.getChildAt(frontIndex);
-        View backView = flipContainer.getChildAt(backIndex);
+        View frontView = flipContainer.getChildAt(FRONT_INDEX);
+        View backView = flipContainer.getChildAt(BACK_INDEX);
 
-        if (isToFrontDirection) {
-            // Back to front
-            return flip(backView, frontView, flipRightIn, flipRightOut);
-        } else {
+        if (isFrontToBackDirection) {
             // Front to back
-            return flip(frontView, backView, flipLeftIn, flipLeftOut);
+            flip(frontView, backView, flipLeftIn, flipLeftOut);
+        } else {
+            // Back to front
+            flip(backView, frontView, flipRightIn, flipRightOut);
         }
     }
 
-    private boolean flip(View outView, View inView, AnimatorSet in, AnimatorSet out) {
-        if (in.isStarted()) in.end();
-        if (out.isStarted()) out.end();
+    public void endIfStarted() {
+        if (flipLeftIn.isStarted()) flipLeftIn.end();
+        if (flipLeftOut.isStarted()) flipLeftOut.end();
+        if (flipRightIn.isStarted()) flipRightIn.end();
+        if (flipRightOut.isStarted()) flipRightOut.end();
+    }
 
+    private void flip(View outView, View inView, AnimatorSet in, AnimatorSet out) {
+        endIfStarted();
         out.removeAllListeners();
         if (listener != null) {
             out.addListener(listener);
         }
-
         in.setTarget(inView);
         out.setTarget(outView);
         in.start();
         out.start();
-
-        isToFrontDirection = !isToFrontDirection;
-        return isToFrontDirection;
     }
 }

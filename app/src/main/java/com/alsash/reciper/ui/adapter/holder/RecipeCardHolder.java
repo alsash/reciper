@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.alsash.reciper.R;
 import com.alsash.reciper.data.model.Recipe;
+import com.alsash.reciper.ui.animator.FlipAnimatorHelper;
 
 public class RecipeCardHolder extends RecyclerView.ViewHolder {
 
@@ -26,7 +27,7 @@ public class RecipeCardHolder extends RecyclerView.ViewHolder {
     private final ImageButton backExpandButton;
     private final ImageButton backOpenButton;
 
-    private boolean isBackVisible;
+    private FlipAnimatorHelper flipAnimator;
 
     public RecipeCardHolder(View rootView) {
         super(rootView);
@@ -80,28 +81,25 @@ public class RecipeCardHolder extends RecyclerView.ViewHolder {
         }
     }
 
-    public CardView getFrontCard() {
-        return frontCard;
-    }
-
-    public CardView getBackCard() {
-        return backCard;
-    }
-
-    public boolean isBackVisible() {
-        return isBackVisible;
-    }
-
     public void setBackVisible(boolean backVisible) {
-        isBackVisible = backVisible;
-        frontCard.clearAnimation();
-        backCard.clearAnimation();
-        if (isBackVisible) {
+        if (backVisible) {
             frontCard.setVisibility(View.GONE);
             backCard.setVisibility(View.VISIBLE);
         } else {
             frontCard.setVisibility(View.VISIBLE);
             backCard.setVisibility(View.GONE);
         }
+        // Animations not always ends correctly. Here is the "medicine"
+        frontCard.setAlpha(1.0f);
+        frontCard.setRotationY(0.0f);
+        backCard.setAlpha(1.0f);
+        backCard.setRotationY(0.0f);
+    }
+
+    public FlipAnimatorHelper getFlipAnimator() {
+        if (flipAnimator == null) {
+            flipAnimator = new FlipAnimatorHelper(itemView.getContext());
+        }
+        return flipAnimator;
     }
 }

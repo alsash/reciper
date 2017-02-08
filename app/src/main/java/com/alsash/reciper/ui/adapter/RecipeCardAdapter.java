@@ -40,20 +40,6 @@ public class RecipeCardAdapter extends RecyclerView.Adapter<RecipeCardHolder> {
     }
 
     @Override
-    public void onBindViewHolder(RecipeCardHolder holder, int position, List<Object> payloads) {
-        onBindViewHolder(holder, position);
-        // Flip animation. Stage 3 of 4.
-        // Prepare visibility before animation and save view state for future bindings
-        for (Object payload : payloads) {
-            if (PAYLOAD_FLIP_BACK_TO_FRONT.equals(payload)) {
-                backCardPositions.remove(position);
-            } else if (PAYLOAD_FLIP_FRONT_TO_BACK.equals(payload)) {
-                backCardPositions.add(position);
-            }
-        }
-    }
-
-    @Override
     public void onBindViewHolder(final RecipeCardHolder holder, int position) {
 
         holder.bindRecipe(recipeList.get(position));
@@ -67,8 +53,10 @@ public class RecipeCardAdapter extends RecyclerView.Adapter<RecipeCardHolder> {
                         // Flip animation. Stage 1 of 4. Notify observers about flip is triggered.
                         int adapterPosition = holder.getAdapterPosition();
                         if (backCardPositions.contains(adapterPosition)) {
+                            backCardPositions.remove(adapterPosition);
                             notifyItemChanged(adapterPosition, PAYLOAD_FLIP_BACK_TO_FRONT);
                         } else {
+                            backCardPositions.add(adapterPosition);
                             notifyItemChanged(adapterPosition, PAYLOAD_FLIP_FRONT_TO_BACK);
                         }
                     }
