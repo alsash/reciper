@@ -14,8 +14,6 @@ import android.widget.TextView;
 
 import com.alsash.reciper.R;
 
-import java.util.ArrayList;
-
 public class VectorHelper {
 
     private final Context context;
@@ -51,29 +49,25 @@ public class VectorHelper {
     /**
      * Set vector drawable into textView or other textView inheritor
      *
-     * @param textView  target view
-     * @param lrtbRes   Left Right Top and Bottom vector drawables
-     * @param tintColor tint color
+     * @param textView              target view
+     * @param tintColor             tint color
+     * @param leftRightTopBottomRes Left Right Top and Bottom vector drawables
      */
-    public void setCompoundDrawables(TextView textView, Integer[] lrtbRes,
-                                     @Nullable Integer tintColor) {
+    public void setCompoundDrawables(TextView textView, @Nullable Integer tintColor,
+                                     Integer... leftRightTopBottomRes) {
         if (textView == null) return;
 
-        ArrayList<Drawable> icons = new ArrayList<>();
-        for (int i = 0; i < 4; i++) {
-            if (lrtbRes.length > i && lrtbRes[i] != null) {
-                Drawable icon = tint(create(lrtbRes[0]), tintColor);
-                icons.add(icon);
+        Drawable[] icons = new Drawable[4];
+        for (int i = 0; i < icons.length; i++) {
+            if (leftRightTopBottomRes.length > i && leftRightTopBottomRes[i] != null) {
+                Drawable icon = create(leftRightTopBottomRes[i]);
+                tint(icon, tintColor);
+                icons[i] = icon;
             } else {
-                icons.add(null);
+                icons[i] = null;
             }
         }
-
-        textView.setCompoundDrawablesWithIntrinsicBounds(
-                icons.get(0),
-                icons.get(1),
-                icons.get(2),
-                icons.get(3));
+        textView.setCompoundDrawablesWithIntrinsicBounds(icons[0], icons[1], icons[2], icons[3]);
     }
 
     @Nullable

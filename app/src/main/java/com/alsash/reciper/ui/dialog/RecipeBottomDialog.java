@@ -42,9 +42,7 @@ public class RecipeBottomDialog extends BottomSheetDialogFragment implements Too
 
         // Button label
         Button button = (Button) contentView.findViewById(R.id.recipe_label_button);
-        vectorHelper.setCompoundDrawables(button,
-                new Integer[]{R.drawable.ic_labeled}, // drawableLeft
-                R.color.accent);
+        vectorHelper.setCompoundDrawables(button, R.color.accent, R.drawable.ic_labeled); // to Left
 
         dialog.setContentView(contentView);
     }
