@@ -37,8 +37,8 @@ public class RecipeBottomDialog extends BottomSheetDialogFragment implements Too
                 R.color.gray_600,
                 R.color.black_a054);
         bottomToolbar.setOnMenuItemClickListener(this);
-        bottomToolbar.setTitle("Recipe name");
-        bottomToolbar.setSubtitle("Recipe title");
+        bottomToolbar.setLogo(R.mipmap.ic_launcher);
+        bottomToolbar.setTitle(" Recipe name");
 
         // Button label
         Button button = (Button) contentView.findViewById(R.id.recipe_label_button);
