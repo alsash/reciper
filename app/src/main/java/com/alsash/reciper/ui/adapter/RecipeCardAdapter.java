@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import com.alsash.reciper.R;
 import com.alsash.reciper.data.model.Recipe;
 import com.alsash.reciper.ui.adapter.holder.RecipeCardHolder;
+import com.alsash.reciper.ui.animator.FlipCardAnimator;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -15,11 +16,6 @@ import java.util.List;
 import java.util.Set;
 
 public class RecipeCardAdapter extends RecyclerView.Adapter<RecipeCardHolder> {
-
-    private static final String CLASSNAME = RecipeCardAdapter.class.getCanonicalName();
-
-    public static final String PAYLOAD_FLIP_FRONT_TO_BACK = CLASSNAME + ".payload_front_to_back";
-    public static final String PAYLOAD_FLIP_BACK_TO_FRONT = CLASSNAME + ".payload_back_to_front";
 
     private final List<Recipe> recipeList = new ArrayList<>();
     private final OnRecipeInteraction recipeInteraction;
@@ -54,10 +50,12 @@ public class RecipeCardAdapter extends RecyclerView.Adapter<RecipeCardHolder> {
                         int adapterPosition = holder.getAdapterPosition();
                         if (backCardPositions.contains(adapterPosition)) {
                             backCardPositions.remove(adapterPosition);
-                            notifyItemChanged(adapterPosition, PAYLOAD_FLIP_BACK_TO_FRONT);
+                            notifyItemChanged(adapterPosition,
+                                    FlipCardAnimator.PAYLOAD_FLIP_BACK_TO_FRONT);
                         } else {
                             backCardPositions.add(adapterPosition);
-                            notifyItemChanged(adapterPosition, PAYLOAD_FLIP_FRONT_TO_BACK);
+                            notifyItemChanged(adapterPosition,
+                                    FlipCardAnimator.PAYLOAD_FLIP_FRONT_TO_BACK);
                         }
                     }
                 },
