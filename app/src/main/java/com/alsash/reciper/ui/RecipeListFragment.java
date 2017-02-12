@@ -1,6 +1,8 @@
 package com.alsash.reciper.ui;
 
 import android.content.Context;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -51,12 +53,22 @@ public class RecipeListFragment extends Fragment {
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater,
+                             @Nullable ViewGroup container,
+                             @Nullable Bundle savedInstanceState) {
+
+        Context context = getContext();
+        Resources resources = context.getResources();
 
         View rootView = inflater.inflate(R.layout.fragment_recipe_list, container, false);
 
         RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.list);
-        recyclerView.setLayoutManager(new GridLayoutManager(recyclerView.getContext(), 2));
+
+        recyclerView.setLayoutManager(new GridLayoutManager(context,
+                resources.getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE ?
+                        resources.getInteger(R.integer.card_layout_span_h) :
+                        resources.getInteger(R.integer.card_layout_span_v)
+        ));
         recyclerView.setAdapter(new RecipeCardAdapter(recipeInteraction));
         recyclerView.setItemAnimator(new FlipCardAnimator());
         return rootView;

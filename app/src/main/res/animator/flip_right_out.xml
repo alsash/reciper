@@ -18,7 +18,7 @@
 
     <!-- Rotate. -->
     <objectAnimator
-        android:duration="@integer/card_flip_full_time_ms"
+        android:duration="@integer/flip_full_time_ms"
         android:interpolator="@android:interpolator/accelerate_decelerate"
         android:propertyName="rotationY"
         android:valueFrom="0"
@@ -28,7 +28,7 @@
     <objectAnimator
         android:duration="1"
         android:propertyName="alpha"
-        android:startOffset="@integer/card_flip_half_time_ms"
+        android:startOffset="@integer/flip_half_time_ms"
         android:valueFrom="1.0"
         android:valueTo="0.0" />
 
@@ -36,7 +36,7 @@
     <objectAnimator
         android:duration="0"
         android:propertyName="visibility"
-        android:startOffset="@integer/card_flip_half_time_ms"
+        android:startOffset="@integer/flip_half_time_ms"
         android:valueFrom="0x00000000"
         android:valueTo="0x00000008"
         android:valueType="intType" />
@@ -45,14 +45,14 @@
     <objectAnimator
         android:duration="1"
         android:propertyName="rotationY"
-        android:startOffset="@integer/card_flip_full_time_ms"
+        android:startOffset="@integer/flip_full_time_ms"
         android:valueFrom="-180"
         android:valueTo="0" />
 
     <objectAnimator
         android:duration="1"
         android:propertyName="alpha"
-        android:startOffset="@integer/card_flip_full_time_ms"
+        android:startOffset="@integer/flip_full_time_ms"
         android:valueFrom="0.0"
         android:valueTo="1.0" />
 

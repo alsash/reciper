@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <integer name="card_layout_span_v">3</integer>
+    <integer name="card_layout_span_h">4</integer>
+</resources>

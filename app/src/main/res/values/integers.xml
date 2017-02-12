@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <integer name="card_flip_full_time_ms">500</integer>
-    <integer name="card_flip_half_time_ms">250</integer>
+    <integer name="card_layout_span_v">2</integer>
+    // Vertical, Portrait orientation
+    <integer name="card_layout_span_h">3</integer>
+    // Horizontal, Landscape orientation
+    <integer name="flip_full_time_ms">500</integer>
+    <integer name="flip_half_time_ms">250</integer>
 </resources>
