@@ -1,4 +1,4 @@
-package com.alsash.reciper.ui.dialog;
+package com.alsash.reciper.ui.fragment.dialog;
 
 import android.app.Dialog;
 import android.os.Bundle;
@@ -12,7 +12,8 @@ import com.alsash.reciper.R;
 import com.alsash.reciper.data.model.Recipe;
 import com.alsash.reciper.ui.vector.VectorHelper;
 
-public class RecipeBottomDialog extends BottomSheetDialogFragment implements Toolbar.OnMenuItemClickListener {
+public class RecipeBottomDialog extends BottomSheetDialogFragment
+        implements Toolbar.OnMenuItemClickListener {
 
     public static RecipeBottomDialog newInstance(Recipe recipe) {
 

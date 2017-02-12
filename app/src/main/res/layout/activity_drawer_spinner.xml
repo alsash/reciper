@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context=".ui.DrawerSpinnerActivity"
+    tools:context=".ui.activity.DrawerSpinnerActivity"
     tools:openDrawer="start">
 
     <android.support.design.widget.CoordinatorLayout
@@ -54,7 +54,7 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:fitsSystemWindows="true"
-        app:headerLayout="@layout/drawer_header"
-        app:menu="@menu/drawer_navigation" />
+        app:headerLayout="@layout/drawer_base_header"
+        app:menu="@menu/drawer_base_nav" />
 
 </android.support.v4.widget.DrawerLayout>

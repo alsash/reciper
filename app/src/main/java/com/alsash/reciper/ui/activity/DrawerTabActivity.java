@@ -1,4 +1,4 @@
-package com.alsash.reciper.ui;
+package com.alsash.reciper.ui.activity;
 
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;

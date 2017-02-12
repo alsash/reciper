@@ -36,9 +36,6 @@
     <string name="list_sort_date_end">Change date</string>
     <string name="list_sort_rating">Rating</string>
     <string name="list_filter">Filter</string>
-    <string name="list_view">View</string>
-    <string name="list_view_full">Full</string>
-    <string name="list_view_short">Short</string>
     <string name="recipe_image_description">Recipe image</string>
     <string name="action_collapse">Collapse</string>
     <string name="action_add_to_cart">Add to cart</string>

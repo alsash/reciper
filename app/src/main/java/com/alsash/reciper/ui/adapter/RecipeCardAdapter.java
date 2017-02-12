@@ -10,22 +10,20 @@ import com.alsash.reciper.data.model.Recipe;
 import com.alsash.reciper.ui.adapter.holder.RecipeCardHolder;
 import com.alsash.reciper.ui.animator.FlipCardAnimator;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 public class RecipeCardAdapter extends RecyclerView.Adapter<RecipeCardHolder> {
 
-    private final List<Recipe> recipeList = new ArrayList<>();
     private final OnRecipeInteraction recipeInteraction;
-    private final Set<Integer> backCardPositions = new HashSet<>();
+    private final List<Recipe> recipeList;
+    private final Set<Integer> backCardPositions;
 
-    public RecipeCardAdapter(OnRecipeInteraction recipeInteraction) {
+    public RecipeCardAdapter(OnRecipeInteraction recipeInteraction, List<Recipe> recipeList) {
         this.recipeInteraction = recipeInteraction;
-        for (int i = 0; i < 30; i++) {
-            recipeList.add(new RecipeImpl(i));
-        }
+        this.recipeList = recipeList;
+        this.backCardPositions = new HashSet<>();
     }
 
     @Override
@@ -86,24 +84,5 @@ public class RecipeCardAdapter extends RecyclerView.Adapter<RecipeCardHolder> {
         void open(Recipe recipe);
 
         void expand(Recipe recipe);
-    }
-
-    private static class RecipeImpl implements Recipe {
-
-        private final long id;
-
-        public RecipeImpl(long id) {
-            this.id = id;
-        }
-
-        @Override
-        public Long getId() {
-            return id;
-        }
-
-        @Override
-        public String getName() {
-            return "Recipe # " + id;
-        }
     }
 }
