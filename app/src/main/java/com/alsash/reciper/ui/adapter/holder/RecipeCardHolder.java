@@ -37,6 +37,7 @@ public class RecipeCardHolder extends RecyclerView.ViewHolder {
 
         backCard = (CardView) rootView.findViewById(R.id.card_recipe_back);
         backAccountImage = (ImageView) rootView.findViewById(R.id.card_recipe_back_account_image);
+
         backAccountTitle = (TextView) rootView.findViewById(R.id.card_recipe_back_account_title);
         backCreationDate = (TextView) rootView.findViewById(R.id.card_recipe_back_recipe_creation_date);
         backTitle = (TextView) rootView.findViewById(R.id.card_recipe_back_title);

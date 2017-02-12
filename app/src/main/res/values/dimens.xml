@@ -1,3 +1,4 @@
 <resources>
     <dimen name="fab_margin">16dp</dimen>
+    <dimen name="card_recipe_buttons_margin_top">68dp</dimen>
 </resources>
