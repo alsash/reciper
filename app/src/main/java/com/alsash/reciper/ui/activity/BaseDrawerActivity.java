@@ -18,7 +18,7 @@ import android.widget.ImageButton;
 
 import com.alsash.reciper.R;
 
-public abstract class BaseDrawerActivity extends AppCompatActivity
+public class BaseDrawerActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private DrawerLayout drawerLayout;
@@ -27,7 +27,10 @@ public abstract class BaseDrawerActivity extends AppCompatActivity
     private View drawerNavHeader;
 
     @IdRes
-    protected abstract int getNavItemId();
+    @Nullable
+    protected Integer getNavItemId() {
+        return null;
+    }
 
     @Override
     public void setContentView(@LayoutRes int layoutResID) {
@@ -55,7 +58,9 @@ public abstract class BaseDrawerActivity extends AppCompatActivity
         drawerToggle.syncState();
 
         drawerNav.setNavigationItemSelectedListener(this);
-        drawerNav.setCheckedItem(getNavItemId());
+        if (getNavItemId() != null) {
+            drawerNav.setCheckedItem(getNavItemId());
+        }
         final ImageButton button = (ImageButton) drawerNavHeader.findViewById(R.id.drawer_account_details);
         button.setOnClickListener(new View.OnClickListener() {
             @Override

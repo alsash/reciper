@@ -33,7 +33,7 @@ public class RecipeBottomDialog extends BottomSheetDialogFragment
 
         // Toolbar
         Toolbar bottomToolbar = (Toolbar) contentView.findViewById(R.id.recipe_bottom_toolbar);
-        bottomToolbar.inflateMenu(R.menu.recipe_bottom);
+        bottomToolbar.inflateMenu(R.menu.menu_recipe_bottom_dialog);
         vectorHelper.tintMenuItems(bottomToolbar.getMenu(),
                 R.color.gray_600,
                 R.color.black_a054);

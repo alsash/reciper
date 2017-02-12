@@ -32,7 +32,15 @@
             </intent-filter>
         </activity>
         <activity android:name=".ui.activity.RecipeListActivity" />
-        <activity android:name=".ui.activity.RecipeActivity" />
+        <activity
+            android:name=".ui.activity.RecipeDetailActivity"
+            android:label="@string/title_activity_recipe_detail"
+            android:parentActivityName=".ui.activity.RecipeListActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.alsash.reciper.ui.activity.RecipeListActivity" />
+        </activity>
     </application>
 
 </manifest>
