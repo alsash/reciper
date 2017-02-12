@@ -37,8 +37,8 @@ public class RecipeListActivity extends BaseDrawerActivity
     }
 
     @Override
-    protected boolean hasToolbar() {
-        return true;
+    protected int getNavItemId() {
+        return R.id.drawer_recipe_list;
     }
 
     @Override

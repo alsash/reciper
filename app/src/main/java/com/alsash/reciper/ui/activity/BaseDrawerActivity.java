@@ -1,5 +1,6 @@
 package com.alsash.reciper.ui.activity;
 
+import android.support.annotation.IdRes;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -25,7 +26,8 @@ public abstract class BaseDrawerActivity extends AppCompatActivity
     private NavigationView drawerNav;
     private View drawerNavHeader;
 
-    protected abstract boolean hasToolbar();
+    @IdRes
+    protected abstract int getNavItemId();
 
     @Override
     public void setContentView(@LayoutRes int layoutResID) {
@@ -47,15 +49,13 @@ public abstract class BaseDrawerActivity extends AppCompatActivity
      * @param toolbar child activity's toolbar
      */
     protected final void setupDrawer(@Nullable Toolbar toolbar) {
-        if (hasToolbar() && (toolbar == null)) {
-            throw new IllegalArgumentException("Call setupDrawer() after instantiate toolbar");
-        }
         ActionBarDrawerToggle drawerToggle = new ActionBarDrawerToggle(this, drawerLayout,
                 toolbar, R.string.drawer_open, R.string.drawer_close);
         drawerLayout.addDrawerListener(drawerToggle);
         drawerToggle.syncState();
 
         drawerNav.setNavigationItemSelectedListener(this);
+        drawerNav.setCheckedItem(getNavItemId());
         final ImageButton button = (ImageButton) drawerNavHeader.findViewById(R.id.drawer_account_details);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -85,6 +85,21 @@ public abstract class BaseDrawerActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
+
+        switch (id) {
+            case R.id.drawer_recipe_list:
+                break;
+            case R.id.drawer_food:
+                break;
+            case R.id.drawer_cart:
+                break;
+            case R.id.drawer_label:
+                break;
+            case R.id.drawer_category:
+                break;
+            case R.id.drawer_settings:
+                break;
+        }
 
         drawerLayout.closeDrawer(GravityCompat.START);
         return true;
