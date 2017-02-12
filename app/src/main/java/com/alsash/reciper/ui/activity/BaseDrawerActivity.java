@@ -25,15 +25,13 @@ public abstract class BaseDrawerActivity extends AppCompatActivity
     private NavigationView drawerNav;
     private View drawerNavHeader;
 
-    @Nullable
-    protected abstract Toolbar getToolbar();
+    protected abstract boolean hasToolbar();
 
     @Override
     public void setContentView(@LayoutRes int layoutResID) {
         super.setContentView(R.layout.activity_drawer_base);
         bindViews();
         LayoutInflater.from(this).inflate(layoutResID, drawerContent, true);
-        setupDrawer();
     }
 
     private void bindViews() {
@@ -43,9 +41,17 @@ public abstract class BaseDrawerActivity extends AppCompatActivity
         drawerNavHeader = drawerNav.getHeaderView(0);
     }
 
-    private void setupDrawer() {
+    /**
+     * Setup Navigation Drawer after toolbar have been bound
+     *
+     * @param toolbar child activity's toolbar
+     */
+    protected final void setupDrawer(@Nullable Toolbar toolbar) {
+        if (hasToolbar() && (toolbar == null)) {
+            throw new IllegalArgumentException("Call setupDrawer() after instantiate toolbar");
+        }
         ActionBarDrawerToggle drawerToggle = new ActionBarDrawerToggle(this, drawerLayout,
-                getToolbar(), R.string.drawer_open, R.string.drawer_close);
+                toolbar, R.string.drawer_open, R.string.drawer_close);
         drawerLayout.addDrawerListener(drawerToggle);
         drawerToggle.syncState();
 
@@ -57,7 +63,7 @@ public abstract class BaseDrawerActivity extends AppCompatActivity
                 int headers = drawerNav.getHeaderCount();
                 if (headers == 1) {
                     button.animate().rotation(180F).start();
-                    drawerNav.inflateHeaderView(R.layout.drawer_statistic);
+                    drawerNav.inflateHeaderView(R.layout.drawer_base_statistic);
                 } else {
                     button.animate().rotation(0F).start();
                     drawerNav.removeHeaderView(drawerNav.getHeaderView(1));

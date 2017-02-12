@@ -62,7 +62,7 @@ public abstract class DrawerBaseActivity extends AppCompatActivity
                 int headers = navigationView.getHeaderCount();
                 if (headers == 1) {
                     button.animate().rotation(180F).start();
-                    navigationView.inflateHeaderView(R.layout.drawer_statistic);
+                    navigationView.inflateHeaderView(R.layout.drawer_base_statistic);
                 } else {
                     button.animate().rotation(0F).start();
                     navigationView.removeHeaderView(navigationView.getHeaderView(1));

@@ -10,7 +10,7 @@ public class RecipeActivity extends DrawerItemActivity {
 
     @Override
     protected Fragment getItemFragment(@Nullable Intent activityIntent) {
-        return null;
+        return new Fragment();
     }
 
     @Override

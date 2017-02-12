@@ -132,11 +132,12 @@
         app:layout_constraintTop_toBottomOf="@+id/drawer_recipe_num_text" />
 
     <View
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="1dp"
         android:layout_margin="4dp"
         android:alpha="0.1"
         android:background="@color/black"
-        app:layout_constraintBottom_toBottomOf="parent" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent" />
 
 </android.support.constraint.ConstraintLayout>
