@@ -27,15 +27,16 @@ public class RecipeListActivity extends BaseDrawerActivity
     private RecyclerView list;
 
     @Override
-    public void open(Recipe recipe) {
-        startActivityForResult(RecipeDetailActivity.getStarter(this, recipe.getId()), 0);
-
+    public void open(Recipe recipe, int adapterPosition) {
+        RecipeDetailActivity.start(this, recipe.getId());
+        list.getAdapter().notifyItemChanged(adapterPosition);
     }
 
     @Override
-    public void expand(Recipe recipe) {
+    public void expand(Recipe recipe, int adapterPosition) {
         RecipeBottomDialog recipeBottomDialog = RecipeBottomDialog.newInstance(recipe);
         recipeBottomDialog.show(getSupportFragmentManager(), recipeBottomDialog.getTag());
+        list.getAdapter().notifyItemChanged(adapterPosition);
     }
 
     @Nullable

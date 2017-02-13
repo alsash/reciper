@@ -25,12 +25,11 @@ public class RecipeDetailActivity extends BaseDrawerActivity {
     private RecyclerView list;
 
     private Recipe recipe;
-    private boolean isNewRecipe;
 
-    public static Intent getStarter(Context context, long recipeId) {
+    public static void start(Context context, long recipeId) {
         Intent starter = new Intent(context, RecipeDetailActivity.class);
         starter.putExtra(EXTRA_RECIPE_ID, recipeId);
-        return starter;
+        context.startActivity(starter);
     }
 
     @Override
@@ -38,37 +37,16 @@ public class RecipeDetailActivity extends BaseDrawerActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipe_detail);
         bindViews();
-        bindRecipe();
-        setupToolbar();
         setupFab();
         setupList();
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
+        bindRecipe();
+        setupToolbar();
     }
 
     private void bindViews() {
         toolbar = (Toolbar) findViewById(R.id.activity_recipe_detail_toolbar);
         list = (RecyclerView) findViewById(R.id.activity_recipe_detail_rv);
         fab = (FloatingActionButton) findViewById(R.id.activity_recipe_detail_fab);
-    }
-
-    private void bindRecipe() {
-        long id = getIntent().getLongExtra(EXTRA_RECIPE_ID, RecipeManager.RECIPE_ID_UNKNOWN);
-        if (id == RecipeManager.RECIPE_ID_UNKNOWN) {
-            isNewRecipe = true;
-        }
-        recipe = RecipeManager.getInstance().getRecipe(id);
-    }
-
-    private void setupToolbar() {
-        setSupportActionBar(toolbar);
-        ActionBar actionBar = getSupportActionBar();
-        assert actionBar != null;
-        actionBar.setDisplayHomeAsUpEnabled(true);
-        setupDrawer(toolbar); // Parent
     }
 
     private void setupFab() {
@@ -83,5 +61,20 @@ public class RecipeDetailActivity extends BaseDrawerActivity {
 
     private void setupList() {
         // list.setLayoutManager(new LinearLayoutManager(this));
+    }
+
+    private void setupToolbar() {
+        setSupportActionBar(toolbar);
+        ActionBar actionBar = getSupportActionBar();
+        assert actionBar != null;
+        actionBar.setDisplayHomeAsUpEnabled(true); // Back arrow on toolbar
+        setupDrawer(null); // Parent drawer without button on toolbar
+    }
+
+    private void bindRecipe() {
+        long id = getIntent().getLongExtra(EXTRA_RECIPE_ID, -1);
+        recipe = RecipeManager.getInstance().getRecipe(id);
+        assert recipe != null;
+        toolbar.setTitle(recipe.getName());
     }
 }

@@ -61,14 +61,18 @@ public class RecipeCardAdapter extends RecyclerView.Adapter<RecipeCardHolder> {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        recipeInteraction.expand(recipeList.get(holder.getAdapterPosition()));
+                        int adapterPosition = holder.getAdapterPosition();
+                        Recipe recipe = recipeList.get(adapterPosition);
+                        recipeInteraction.expand(recipe, adapterPosition);
                     }
                 },
                 // Open Listener
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        recipeInteraction.open(recipeList.get(holder.getAdapterPosition()));
+                        int adapterPosition = holder.getAdapterPosition();
+                        Recipe recipe = recipeList.get(adapterPosition);
+                        recipeInteraction.open(recipe, adapterPosition);
                     }
                 }
         );
@@ -81,8 +85,8 @@ public class RecipeCardAdapter extends RecyclerView.Adapter<RecipeCardHolder> {
 
     public interface OnRecipeInteraction {
 
-        void open(Recipe recipe);
+        void open(Recipe recipe, int adapterPosition);
 
-        void expand(Recipe recipe);
+        void expand(Recipe recipe, int adapterPosition);
     }
 }

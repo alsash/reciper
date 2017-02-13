@@ -48,13 +48,14 @@ public class BaseDrawerActivity extends AppCompatActivity
 
     /**
      * Setup Navigation Drawer after toolbar have been bound
-     *
-     * @param toolbar child activity's toolbar
+     * @param toolbar child activity's toolbar.
+     *                Null if homeAsUpButton is enabled
      */
     protected final void setupDrawer(@Nullable Toolbar toolbar) {
         ActionBarDrawerToggle drawerToggle = new ActionBarDrawerToggle(this, drawerLayout,
                 toolbar, R.string.drawer_open, R.string.drawer_close);
         drawerLayout.addDrawerListener(drawerToggle);
+        drawerToggle.setDrawerIndicatorEnabled(toolbar != null);
         drawerToggle.syncState();
 
         drawerNav.setNavigationItemSelectedListener(this);

@@ -10,8 +10,6 @@ import java.util.List;
 
 public class RecipeManager {
 
-    public static final long RECIPE_ID_UNKNOWN = -1;
-
     private static RecipeManager instance = new RecipeManager();
 
     private final List<Recipe> recipes;
@@ -31,20 +29,6 @@ public class RecipeManager {
         return recipes;
     }
 
-    /**
-     * Get exist Recipe or create new
-     *
-     * @param id of the exist recipe
-     * @return new or exist recipe
-     */
-    public Recipe getRecipe(long id) {
-        Recipe recipe = existRecipe(id);
-        if (recipe == null) {
-            recipe = newRecipe();
-        }
-        return recipe;
-    }
-
     public Recipe newRecipe() {
         long id = recipes.size();
         Recipe recipe = new RecipeDb(id, "Recipe # " + id);
@@ -53,8 +37,8 @@ public class RecipeManager {
     }
 
     @Nullable
-    public Recipe existRecipe(long id) {
-        if (id == RECIPE_ID_UNKNOWN) return null;
+    public Recipe getRecipe(long id) {
+        if (id < 0) return null;
         for (Recipe recipe : recipes) {
             if (recipe.getId() == id) return recipe;
         }
