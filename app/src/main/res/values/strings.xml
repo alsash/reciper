@@ -40,7 +40,6 @@
     <string name="action_collapse">Collapse</string>
     <string name="action_add_to_cart">Add to cart</string>
     <string name="action_add_to_bookmark">Add to bookmark</string>
-    <string name="title_activity_recipe_detail">RecipeDetailActivity</string>
     <string name="large_text">
         "Material is the metaphor.\n\n"
 

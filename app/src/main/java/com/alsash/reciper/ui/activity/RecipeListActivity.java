@@ -28,6 +28,7 @@ public class RecipeListActivity extends BaseDrawerActivity
 
     @Override
     public void open(Recipe recipe) {
+        startActivityForResult(RecipeDetailActivity.getStarter(this, recipe.getId()), 0);
 
     }
 
