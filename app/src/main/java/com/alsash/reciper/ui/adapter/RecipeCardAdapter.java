@@ -85,8 +85,8 @@ public class RecipeCardAdapter extends RecyclerView.Adapter<RecipeCardHolder> {
 
     public interface OnRecipeInteraction {
 
-        void open(Recipe recipe, int adapterPosition);
-
         void expand(Recipe recipe, int adapterPosition);
+
+        void open(Recipe recipe, int adapterPosition);
     }
 }

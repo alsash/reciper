@@ -21,7 +21,7 @@ public class RecipeDetailActivity extends BaseDrawerActivity {
     private static final String EXTRA_RECIPE_ID = TAG + "extra_recipe_id";
 
     private Toolbar toolbar;
-    private FloatingActionButton fab;
+    private FloatingActionButton photoFab;
     private RecyclerView list;
 
     private Recipe recipe;
@@ -46,11 +46,11 @@ public class RecipeDetailActivity extends BaseDrawerActivity {
     private void bindViews() {
         toolbar = (Toolbar) findViewById(R.id.activity_recipe_detail_toolbar);
         list = (RecyclerView) findViewById(R.id.activity_recipe_detail_rv);
-        fab = (FloatingActionButton) findViewById(R.id.activity_recipe_detail_fab);
+        photoFab = (FloatingActionButton) findViewById(R.id.activity_recipe_detail_fab_photo);
     }
 
     private void setupFab() {
-        fab.setOnClickListener(new View.OnClickListener() {
+        photoFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
