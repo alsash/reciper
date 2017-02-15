@@ -9,10 +9,12 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.TextView;
 
 import com.alsash.reciper.R;
 import com.alsash.reciper.data.RecipeManager;
 import com.alsash.reciper.data.model.Recipe;
+import com.github.shchurov.horizontalwheelview.HorizontalWheelView;
 
 public class RecipeDetailActivity extends BaseDrawerActivity {
 
@@ -21,8 +23,10 @@ public class RecipeDetailActivity extends BaseDrawerActivity {
     private static final String EXTRA_RECIPE_ID = TAG + "extra_recipe_id";
 
     private Toolbar toolbar;
-    private FloatingActionButton photoFab;
     private RecyclerView list;
+    private FloatingActionButton photoFab;
+    private TextView weightQuantity;
+    private HorizontalWheelView weightWheel;
 
     private Recipe recipe;
 
@@ -37,6 +41,7 @@ public class RecipeDetailActivity extends BaseDrawerActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipe_detail);
         bindViews();
+        setupBottom();
         setupFab();
         setupList();
         bindRecipe();
@@ -47,6 +52,21 @@ public class RecipeDetailActivity extends BaseDrawerActivity {
         toolbar = (Toolbar) findViewById(R.id.activity_recipe_detail_toolbar);
         list = (RecyclerView) findViewById(R.id.activity_recipe_detail_rv);
         photoFab = (FloatingActionButton) findViewById(R.id.activity_recipe_detail_fab_photo);
+        weightQuantity = (TextView) findViewById(R.id.bottom_recipe_detail_weight_quantity);
+        weightWheel = (HorizontalWheelView) findViewById(R.id.bottom_recipe_detail_weight_wheel);
+    }
+
+    private void setupBottom() {
+        weightWheel.setListener(new HorizontalWheelView.Listener() {
+            @Override
+            public void onRotationChanged(double radians) {
+                long quantity = Long.parseLong((weightQuantity.getText().toString()));
+                quantity -= radians;
+                quantity = Math.round(quantity);
+                quantity = (quantity > 0) ? quantity : 0;
+                weightQuantity.setText(String.valueOf(quantity));
+            }
+        });
     }
 
     private void setupFab() {

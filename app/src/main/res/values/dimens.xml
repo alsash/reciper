@@ -1,5 +1,5 @@
 <resources>
     <dimen name="card_recipe_buttons_margin_top">68dp</dimen>
-    <dimen name="activity_recipe_detail_appbar_height">240dp</dimen>
+    <dimen name="activity_recipe_detail_appbar_height">200dp</dimen>
     <dimen name="bottom_recipe_detail_peek_height">48dp</dimen>
 </resources>

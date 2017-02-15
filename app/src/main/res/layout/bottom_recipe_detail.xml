@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/bottom_recipe_detail"
+    android:id="@+id/bottom_recipe_detail_layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
@@ -9,26 +9,56 @@
     app:behavior_peekHeight="@dimen/bottom_recipe_detail_peek_height"
     app:layout_behavior="android.support.design.widget.BottomSheetBehavior">
 
-    <TextView
-        android:id="@+id/bottom_recipe_detail_weight"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/bottom_recipe_detail_peek_height"
         android:background="@drawable/bg_bottom_peak"
-        android:gravity="center"
-        android:text="Peek"
-        android:textColor="@android:color/white" />
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
 
-    <TextView
+        <TextView
+            android:id="@+id/bottom_recipe_detail_weight_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.4"
+            android:gravity="end"
+            android:text="Weight"
+            android:textAppearance="@style/TextAppearance.AppCompat.Inverse" />
+
+        <TextView
+            android:id="@+id/bottom_recipe_detail_weight_quantity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.2"
+            android:gravity="center"
+            android:text="100"
+            android:textAppearance="@style/TextAppearance.AppCompat.Inverse" />
+
+        <TextView
+            android:id="@+id/bottom_recipe_detail_weight_unit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.4"
+            android:gravity="start"
+            android:text="gram"
+            android:textAppearance="@style/TextAppearance.AppCompat.Inverse" />
+
+    </LinearLayout>
+
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/bottom_recipe_detail_peek_height"
-        android:background="@android:color/darker_gray"
-        android:gravity="center"
-        android:text="Content"
-        android:textColor="@android:color/white" />
+        android:layout_height="wrap_content"
+        android:background="@color/gray_800">
 
-    <SeekBar
-        android:id="@+id/seekBar"
-        android:layout_width="match_parent"
-        android:layout_height="64dp" />
-
+        <com.github.shchurov.horizontalwheelview.HorizontalWheelView
+            android:id="@+id/bottom_recipe_detail_weight_wheel"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/bottom_recipe_detail_peek_height"
+            android:layout_margin="@dimen/bottom_recipe_detail_peek_height"
+            app:activeColor="@color/secondary_dark"
+            app:marksCount="100"
+            app:normalColor="@color/gray_100"
+            app:onlyPositiveValues="false"
+            app:snapToMarks="true" />
+    </FrameLayout>
 </LinearLayout>
