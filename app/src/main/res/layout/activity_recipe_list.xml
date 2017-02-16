@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context="com.alsash.reciper.ui.activity.RecipeListActivity">
+    tools:contextRef="com.alsash.reciper.ui.activity.RecipeListActivity">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/activity_recipe_list_appbar"

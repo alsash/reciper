@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context=".ui.activity.BaseDrawerActivity"
+    tools:contextRef=".ui.activity.BaseDrawerActivity"
     tools:openDrawer="start">
 
     <FrameLayout

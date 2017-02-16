@@ -10,22 +10,33 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.graphics.drawable.DrawableCompat;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 
 import com.alsash.reciper.R;
 
+import java.lang.ref.WeakReference;
+
 public class VectorHelper {
 
-    private final Context context;
-    private final Resources.Theme theme;
+    private final WeakReference<Context> contextRef;
+    private final WeakReference<Resources.Theme> themeRef;
 
     public VectorHelper(Context context) {
         this(context, context.getTheme());
     }
 
     public VectorHelper(Context context, Resources.Theme theme) {
-        this.context = context;
-        this.theme = theme;
+        this.contextRef = new WeakReference<>(context);
+        this.themeRef = new WeakReference<>(theme);
+    }
+
+    public void setBackground(View view,
+                              @Nullable Integer tintColor,
+                              @DrawableRes int backgroundResId) {
+        Drawable background = create(backgroundResId);
+        tint(background, tintColor);
+        view.setBackground(background);
     }
 
     public void tintMenuItems(Menu menu) {
@@ -36,13 +47,8 @@ public class VectorHelper {
         for (int i = 0; i < menu.size(); i++) {
             MenuItem item = menu.getItem(i);
             Drawable icon = item.getIcon();
-            if (icon != null) {
-                icon.mutate();
-                DrawableCompat.setTint(icon, ContextCompat.getColor(context, mainMenuColor));
-            }
-            if (item.hasSubMenu()) {
-                tintMenuItems(item.getSubMenu(), subMenuColor, subMenuColor);
-            }
+            tint(icon, mainMenuColor);
+            if (item.hasSubMenu()) tintMenuItems(item.getSubMenu(), subMenuColor, subMenuColor);
         }
     }
 
@@ -72,13 +78,12 @@ public class VectorHelper {
 
     @Nullable
     private Drawable create(@DrawableRes int resId) {
-        return VectorDrawableCompat.create(context.getResources(), resId, theme);
+        return VectorDrawableCompat.create(contextRef.get().getResources(), resId, themeRef.get());
     }
 
-    private Drawable tint(@Nullable Drawable icon, @Nullable Integer color) {
-        if (icon == null || color == null) return icon;
+    private void tint(@Nullable Drawable icon, @Nullable Integer color) {
+        if (icon == null || color == null) return;
         icon.mutate();
-        DrawableCompat.setTint(icon, ContextCompat.getColor(context, color));
-        return icon;
+        DrawableCompat.setTint(icon, ContextCompat.getColor(contextRef.get(), color));
     }
 }

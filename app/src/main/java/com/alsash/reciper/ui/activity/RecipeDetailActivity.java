@@ -9,10 +9,13 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.NumberPicker;
+import android.widget.TextView;
 
 import com.alsash.reciper.R;
 import com.alsash.reciper.data.RecipeManager;
 import com.alsash.reciper.data.model.Recipe;
+import com.alsash.reciper.ui.vector.VectorHelper;
 
 public class RecipeDetailActivity extends BaseDrawerActivity {
 
@@ -23,6 +26,12 @@ public class RecipeDetailActivity extends BaseDrawerActivity {
     private Toolbar toolbar;
     private RecyclerView list;
     private FloatingActionButton photoFab;
+
+    private View bottomPeak;
+    private TextView peakWeight;
+    private TextView peakServing;
+    private NumberPicker weightPicker;
+    private NumberPicker servingPicker;
 
     private Recipe recipe;
 
@@ -48,9 +57,20 @@ public class RecipeDetailActivity extends BaseDrawerActivity {
         toolbar = (Toolbar) findViewById(R.id.activity_recipe_detail_toolbar);
         list = (RecyclerView) findViewById(R.id.activity_recipe_detail_rv);
         photoFab = (FloatingActionButton) findViewById(R.id.activity_recipe_detail_fab_photo);
+
+        bottomPeak = findViewById(R.id.bottom_recipe_detail_peak);
+        peakWeight = (TextView) findViewById(R.id.bottom_recipe_detail_weight);
+        peakServing = (TextView) findViewById(R.id.bottom_recipe_detail_serving);
+        weightPicker = (NumberPicker) findViewById(R.id.bottom_recipe_detail_weight_picker);
     }
 
     private void setupBottom() {
+        VectorHelper vector = new VectorHelper(this);
+        vector.setBackground(bottomPeak, R.color.primary, R.drawable.bg_bottom_peak);
+        vector.setCompoundDrawables(peakWeight, R.color.white, R.drawable.ic_weight);
+        vector.setCompoundDrawables(peakServing, R.color.white, R.drawable.ic_serving);
+        weightPicker.setMinValue(0);
+        weightPicker.setMaxValue(1000);
 
     }
 
