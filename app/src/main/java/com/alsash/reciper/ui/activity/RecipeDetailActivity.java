@@ -27,7 +27,6 @@ public class RecipeDetailActivity extends BaseDrawerActivity {
     private RecyclerView list;
     private FloatingActionButton photoFab;
 
-    private View bottomPeak;
     private TextView peakWeight;
     private TextView peakServing;
     private NumberPicker weightPicker;
@@ -58,20 +57,36 @@ public class RecipeDetailActivity extends BaseDrawerActivity {
         list = (RecyclerView) findViewById(R.id.activity_recipe_detail_rv);
         photoFab = (FloatingActionButton) findViewById(R.id.activity_recipe_detail_fab_photo);
 
-        bottomPeak = findViewById(R.id.bottom_recipe_detail_peak);
         peakWeight = (TextView) findViewById(R.id.bottom_recipe_detail_weight);
         peakServing = (TextView) findViewById(R.id.bottom_recipe_detail_serving);
         weightPicker = (NumberPicker) findViewById(R.id.bottom_recipe_detail_weight_picker);
+        servingPicker = (NumberPicker) findViewById(R.id.bottom_recipe_detail_serving_picker);
     }
 
     private void setupBottom() {
         VectorHelper vector = new VectorHelper(this);
-        vector.setBackground(bottomPeak, R.color.primary, R.drawable.bg_bottom_peak);
         vector.setCompoundDrawables(peakWeight, R.color.white, R.drawable.ic_weight);
         vector.setCompoundDrawables(peakServing, R.color.white, R.drawable.ic_serving);
         weightPicker.setMinValue(0);
         weightPicker.setMaxValue(1000);
-
+        weightPicker.setValue(500);
+        weightPicker.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
+            @Override
+            public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
+                peakWeight.setText(getResources()
+                        .getQuantityString(R.plurals.quantity_weight_gram, newVal, newVal));
+            }
+        });
+        servingPicker.setMinValue(1);
+        servingPicker.setMaxValue(10);
+        servingPicker.setValue(2);
+        servingPicker.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
+            @Override
+            public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
+                peakServing.setText(getResources()
+                        .getQuantityString(R.plurals.quantity_serving, newVal, newVal));
+            }
+        });
     }
 
     private void setupFab() {
