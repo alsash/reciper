@@ -11,47 +11,31 @@
     app:layout_behavior="android.support.design.widget.BottomSheetBehavior">
 
     <android.support.constraint.ConstraintLayout
+        android:id="@+id/bottom_recipe_detail_peak"
         android:layout_width="match_parent"
         android:layout_height="@dimen/bottom_recipe_detail_peek_height"
         android:background="@drawable/bg_bottom_peak">
 
         <TextView
-            android:id="@+id/bottom_recipe_detail_weight_title"
+            android:id="@+id/bottom_recipe_detail_weight"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="48dp"
-            android:layout_marginRight="48dp"
-            android:gravity="end"
-            android:text="Weight"
-            android:textAppearance="@style/TextAppearance.AppCompat.Inverse"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintRight_toLeftOf="@+id/guideline"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/bottom_recipe_detail_weight_quantity"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="100"
+            android:layout_marginBottom="16dp"
+            android:layout_marginEnd="32dp"
+            android:layout_marginLeft="32dp"
+            android:layout_marginRight="32dp"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="16dp"
+            android:drawablePadding="8dp"
+            android:gravity="center_vertical"
+            android:text="100 gram"
             android:textAppearance="@style/TextAppearance.AppCompat.Inverse"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/bottom_recipe_detail_weight_unit"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="48dp"
-            android:layout_marginStart="48dp"
-            android:gravity="start"
-            android:text="gram"
-            android:textAppearance="@style/TextAppearance.AppCompat.Inverse"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="@+id/guideline"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintRight_toLeftOf="@+id/guideline"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:drawableLeft="@drawable/ic_weight"
+            tools:drawableTint="@color/white" />
 
         <android.support.constraint.Guideline
             android:id="@+id/guideline"
@@ -62,6 +46,27 @@
             tools:layout_editor_absoluteX="192dp"
             tools:layout_editor_absoluteY="0dp" />
 
+        <TextView
+            android:id="@+id/bottom_recipe_detail_serving"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:layout_marginEnd="32dp"
+            android:layout_marginLeft="32dp"
+            android:layout_marginRight="32dp"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="16dp"
+            android:drawablePadding="8dp"
+            android:gravity="center_vertical"
+            android:text="4 servings"
+            android:textAppearance="@style/TextAppearance.AppCompat.Inverse"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="@+id/guideline"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:drawableLeft="@drawable/ic_serving"
+            tools:drawableTint="@color/white" />
+
     </android.support.constraint.ConstraintLayout>
 
     <FrameLayout
@@ -69,15 +74,5 @@
         android:layout_height="wrap_content"
         android:background="@color/gray_800">
 
-        <com.github.shchurov.horizontalwheelview.HorizontalWheelView
-            android:id="@+id/bottom_recipe_detail_weight_wheel"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/bottom_recipe_detail_peek_height"
-            android:layout_margin="@dimen/bottom_recipe_detail_peek_height"
-            app:activeColor="@color/secondary_dark"
-            app:marksCount="100"
-            app:normalColor="@color/gray_100"
-            app:onlyPositiveValues="false"
-            app:snapToMarks="true" />
     </FrameLayout>
 </LinearLayout>
