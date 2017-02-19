@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     app:behavior_hideable="false"
-    app:behavior_peekHeight="@dimen/bottom_recipe_detail_peek_height"
+    app:behavior_peekHeight="?attr/actionBarSize"
     app:layout_behavior="android.support.design.widget.BottomSheetBehavior">
 
     <android.support.constraint.Guideline
@@ -15,7 +15,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0.25"
-        tools:layout_editor_absoluteX="96dp"
+        tools:layout_editor_absoluteX="0dp"
         tools:layout_editor_absoluteY="0dp" />
 
     <android.support.constraint.Guideline
@@ -24,7 +24,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0.75"
-        tools:layout_editor_absoluteX="288dp"
+        tools:layout_editor_absoluteX="0dp"
         tools:layout_editor_absoluteY="0dp" />
 
     <ImageView

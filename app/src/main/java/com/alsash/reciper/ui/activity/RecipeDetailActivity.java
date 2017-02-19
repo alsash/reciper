@@ -55,7 +55,7 @@ public class RecipeDetailActivity extends BaseDrawerActivity {
     private void bindViews() {
         toolbar = (Toolbar) findViewById(R.id.activity_recipe_detail_toolbar);
         list = (RecyclerView) findViewById(R.id.activity_recipe_detail_rv);
-        photoFab = (FloatingActionButton) findViewById(R.id.activity_recipe_detail_fab_photo);
+        photoFab = (FloatingActionButton) findViewById(R.id.activity_recipe_detail_fab);
 
         peakWeight = (TextView) findViewById(R.id.bottom_recipe_detail_weight);
         peakServing = (TextView) findViewById(R.id.bottom_recipe_detail_serving);
