@@ -5,8 +5,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.NumberPicker;
@@ -24,8 +27,9 @@ public class RecipeDetailActivity extends BaseDrawerActivity {
     private static final String EXTRA_RECIPE_ID = TAG + "extra_recipe_id";
 
     private Toolbar toolbar;
-    private RecyclerView list;
-    private FloatingActionButton photoFab;
+    private TabLayout tabs;
+    private ViewPager pager;
+    private FloatingActionButton fab;
 
     private TextView peakWeight;
     private TextView peakServing;
@@ -45,6 +49,7 @@ public class RecipeDetailActivity extends BaseDrawerActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipe_detail);
         bindViews();
+        setupTabs();
         setupBottom();
         setupFab();
         setupList();
@@ -54,13 +59,34 @@ public class RecipeDetailActivity extends BaseDrawerActivity {
 
     private void bindViews() {
         toolbar = (Toolbar) findViewById(R.id.activity_recipe_detail_toolbar);
-        list = (RecyclerView) findViewById(R.id.activity_recipe_detail_rv);
-        photoFab = (FloatingActionButton) findViewById(R.id.activity_recipe_detail_fab);
+        tabs = (TabLayout) findViewById(R.id.activity_recipe_detail_tabs);
+        pager = (ViewPager) findViewById(R.id.activity_recipe_detail_container);
+        fab = (FloatingActionButton) findViewById(R.id.activity_recipe_detail_fab);
 
         peakWeight = (TextView) findViewById(R.id.bottom_recipe_detail_weight);
         peakServing = (TextView) findViewById(R.id.bottom_recipe_detail_serving);
         weightPicker = (NumberPicker) findViewById(R.id.bottom_recipe_detail_weight_picker);
         servingPicker = (NumberPicker) findViewById(R.id.bottom_recipe_detail_serving_picker);
+    }
+
+    private void setupTabs() {
+        pager.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager()) {
+            @Override
+            public Fragment getItem(int position) {
+                return new Fragment();
+            }
+
+            @Override
+            public int getCount() {
+                return 3;
+            }
+
+            @Override
+            public CharSequence getPageTitle(int position) {
+                return "PAGE " + position;
+            }
+        });
+        tabs.setupWithViewPager(pager);
     }
 
     private void setupBottom() {
@@ -90,7 +116,7 @@ public class RecipeDetailActivity extends BaseDrawerActivity {
     }
 
     private void setupFab() {
-        photoFab.setOnClickListener(new View.OnClickListener() {
+        fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
