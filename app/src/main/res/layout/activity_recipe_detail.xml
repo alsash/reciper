@@ -20,9 +20,8 @@
             android:layout_height="match_parent"
             android:fitsSystemWindows="true"
             app:contentScrim="?attr/colorPrimary"
-            app:expandedTitleMarginBottom="?attr/actionBarSize"
             app:layout_scrollFlags="scroll|exitUntilCollapsed"
-            app:titleEnabled="true">
+            app:titleEnabled="false">
 
             <ImageView
                 android:id="@+id/activity_recipe_detail_toolbar_image"
@@ -48,7 +47,8 @@
                 android:layout_height="?attr/actionBarSize"
                 android:layout_gravity="bottom"
                 app:layout_collapseMode="pin"
-                app:tabMode="fixed" />
+                app:tabContentStart="48dp"
+                app:tabMode="scrollable" />
 
         </android.support.design.widget.CollapsingToolbarLayout>
 
