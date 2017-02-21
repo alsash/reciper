@@ -2,10 +2,8 @@
 <resources>
     <color name="primary">#ff5722</color>
     <color name="primary_dark">#e64a19</color>
-    <color name="accent">#1de9b6</color>
-    <color name="accent_translucent">#801de9b6</color>
-    <color name="secondary">#ffc107</color>
-    <color name="secondary_dark">#ffa000</color>
+    <color name="accent">#ffc400</color>
+    <color name="accent_translucent">#80ffc400</color>
     <color name="white">#ffffff</color>
     <color name="white_a20">#33ffffff</color>
     <color name="black">#000000</color>

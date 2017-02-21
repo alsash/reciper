@@ -52,9 +52,4 @@
         <item name="android:gravity">left|center_vertical</item>
     </style>
 
-    <style name="AppTheme.RatingBarIndicator">
-        <item name="colorControlNormal">@color/secondary_dark</item>
-        <item name="colorControlActivated">@color/secondary</item>
-    </style>
-
 </resources>
