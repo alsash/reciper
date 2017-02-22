@@ -18,7 +18,7 @@ import android.widget.ImageButton;
 
 import com.alsash.reciper.R;
 
-public class BaseDrawerActivity extends AppCompatActivity
+public abstract class BaseDrawerActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private DrawerLayout drawerLayout;
@@ -28,9 +28,7 @@ public class BaseDrawerActivity extends AppCompatActivity
 
     @IdRes
     @Nullable
-    protected Integer getNavItemId() {
-        return null;
-    }
+    protected abstract Integer getNavItemId();
 
     @Override
     public void setContentView(@LayoutRes int layoutResID) {

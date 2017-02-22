@@ -16,7 +16,7 @@ public class RecipeManager {
 
     private RecipeManager() {
         this.recipes = new ArrayList<>();
-        for (int i = 0; i < 31; i++) {
+        for (int i = 0; i < 30; i++) {
             recipes.add(new RecipeDb(i, "Recipe # " + i));
         }
     }

@@ -47,6 +47,12 @@ public class RecipeDetailActivity extends BaseDrawerActivity {
         context.startActivity(starter);
     }
 
+    @Nullable
+    @Override
+    protected Integer getNavItemId() {
+        return null;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -84,7 +90,7 @@ public class RecipeDetailActivity extends BaseDrawerActivity {
         ActionBar actionBar = getSupportActionBar();
         assert actionBar != null;
         actionBar.setDisplayHomeAsUpEnabled(true); // Back arrow on toolbar
-        setupDrawer(null); // Parent drawer without button on toolbar
+        setupDrawer(null); // Parent navigation drawer without button on toolbar
     }
 
     private void setupTabs() {
