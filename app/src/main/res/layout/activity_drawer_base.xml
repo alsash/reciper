@@ -9,7 +9,7 @@
     tools:contextRef=".ui.activity.BaseDrawerActivity"
     tools:openDrawer="start">
 
-    <!--CoordinatorLayout uses instead of FrameLayout.-->
+    <!--CoordinatorLayout used instead of FrameLayout.-->
     <!--This ensures the fitsSystemWindows="true" gets passed onto the inflated child views.-->
     <android.support.design.widget.CoordinatorLayout
         android:id="@+id/activity_drawer_base_content"
