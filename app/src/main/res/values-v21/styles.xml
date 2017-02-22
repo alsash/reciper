@@ -1,13 +1,9 @@
 <resources>
 
-    <style name="AppTheme.NoActionBar">
-        <item name="android:windowTranslucentStatus">true</item>
-        <item name="android:colorControlHighlight">@color/accent_translucent</item>
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
-        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+    <style name="AppTheme" parent="BaseTheme">
         <item name="android:statusBarColor">@android:color/transparent</item>
-        <item name="android:windowSharedElementsUseOverlay">false</item>
+        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
     </style>
 
     <style name="LabelButton" parent="Widget.AppCompat.Button.Small">
@@ -17,6 +13,11 @@
         <item name="android:minHeight">24dp</item>
         <item name="android:textAppearance">@style/TextAppearance.AppCompat.Body1</item>
         <item name="android:gravity">left|center_vertical</item>
+    </style>
+
+    <style name="LightIconButton" parent="@style/Widget.AppCompat.Button.Borderless">
+        <item name="android:tint">@color/gray_400</item>
+        <item name="android:background">?attr/selectableItemBackground</item>
     </style>
 
 </resources>
