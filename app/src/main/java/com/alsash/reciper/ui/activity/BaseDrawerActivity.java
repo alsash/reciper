@@ -39,7 +39,7 @@ public abstract class BaseDrawerActivity extends AppCompatActivity
 
     private void bindViews() {
         drawerLayout = (DrawerLayout) findViewById(R.id.activity_drawer_base_layout);
-        drawerContent = (ViewGroup) findViewById(R.id.activity_drawer_base_content);
+        drawerContent = (ViewGroup) findViewById(R.id.activity_drawer_base_view_group);
         drawerNav = (NavigationView) findViewById(R.id.activity_drawer_base_nav);
         drawerNavHeader = drawerNav.getHeaderView(0);
     }
