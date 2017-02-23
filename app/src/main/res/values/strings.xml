@@ -40,6 +40,25 @@
     <string name="action_collapse">Collapse</string>
     <string name="action_add_to_cart">Add to cart</string>
     <string name="action_add_to_bookmark">Add to bookmark</string>
+    <string name="action_settings">Settings</string>
+    <string name="action_edit">Edit</string>
+    <string name="action_delete">Delete</string>
+    <plurals name="quantity_serving">
+        <item quantity="zero">%d serving</item>
+        <item quantity="one">%d serving</item>
+        <item quantity="two">%d servings</item>
+        <item quantity="few">%d servings</item>
+        <item quantity="many">%d servings</item>
+        <item quantity="other">%d servings</item>
+    </plurals>
+    <plurals name="quantity_weight_gram">
+        <item quantity="zero">%d gram</item>
+        <item quantity="one">%d gram</item>
+        <item quantity="two">%d grams</item>
+        <item quantity="few">%d grams</item>
+        <item quantity="many">%d grams</item>
+        <item quantity="other">%d grams</item>
+    </plurals>
     <string name="large_text">
         "Material is the metaphor.\n\n"
 
@@ -102,23 +121,4 @@
         "interact, and exist in space and in relation to each other. Realistic lighting shows "
         "seams, divides space, and indicates moving parts.\n\n"
     </string>
-    <string name="action_settings">Settings</string>
-    <string name="action_edit">Edit</string>
-    <string name="action_delete">Delete</string>
-    <plurals name="quantity_serving">
-        <item quantity="zero">%d serving</item>
-        <item quantity="one">%d serving</item>
-        <item quantity="two">%d servings</item>
-        <item quantity="few">%d servings</item>
-        <item quantity="many">%d servings</item>
-        <item quantity="other">%d servings</item>
-    </plurals>
-    <plurals name="quantity_weight_gram">
-        <item quantity="zero">%d gram</item>
-        <item quantity="one">%d gram</item>
-        <item quantity="two">%d grams</item>
-        <item quantity="few">%d grams</item>
-        <item quantity="many">%d grams</item>
-        <item quantity="other">%d grams</item>
-    </plurals>
 </resources>
