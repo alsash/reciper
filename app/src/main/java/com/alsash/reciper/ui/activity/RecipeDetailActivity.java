@@ -22,6 +22,7 @@ import com.alsash.reciper.R;
 import com.alsash.reciper.data.RecipeManager;
 import com.alsash.reciper.data.model.Recipe;
 import com.alsash.reciper.ui.contract.KeyContract;
+import com.alsash.reciper.ui.fragment.RecipeDetailMainFragment;
 import com.alsash.reciper.ui.vector.VectorHelper;
 
 public class RecipeDetailActivity extends BaseDrawerActivity {
@@ -92,21 +93,27 @@ public class RecipeDetailActivity extends BaseDrawerActivity {
 
     private void setupTabs() {
         pager.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager()) {
-            @Override
-            public Fragment getItem(int position) {
-                return new DetailFragment();
-            }
+                             @Override
+                             public Fragment getItem(int position) {
+                                 if (position == 0) {
+                                     return RecipeDetailMainFragment.newInstance(recipe.getId());
+                                 } else {
+                                     return new DetailFragment();
+                                 }
+                             }
 
-            @Override
-            public int getCount() {
-                return 3;
-            }
+                             @Override
+                             public int getCount() {
+                                 return 3;
+                             }
 
-            @Override
-            public CharSequence getPageTitle(int position) {
-                return "PAGE " + String.valueOf(position + 1);
-            }
-        });
+                             @Override
+                             public CharSequence getPageTitle(int position) {
+                                 return "PAGE " + String.valueOf(position + 1);
+                             }
+                         }
+
+        );
         tabs.setupWithViewPager(pager);
     }
 
