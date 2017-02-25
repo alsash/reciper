@@ -8,6 +8,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
@@ -92,28 +93,7 @@ public class RecipeDetailActivity extends BaseDrawerActivity {
     }
 
     private void setupTabs() {
-        pager.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager()) {
-                             @Override
-                             public Fragment getItem(int position) {
-                                 if (position == 0) {
-                                     return RecipeDetailMainFragment.newInstance(recipe.getId());
-                                 } else {
-                                     return new DetailFragment();
-                                 }
-                             }
-
-                             @Override
-                             public int getCount() {
-                                 return 3;
-                             }
-
-                             @Override
-                             public CharSequence getPageTitle(int position) {
-                                 return "PAGE " + String.valueOf(position + 1);
-                             }
-                         }
-
-        );
+        pager.setAdapter(new TabAdapter(getSupportFragmentManager(), recipe.getId()));
         tabs.setupWithViewPager(pager);
     }
 
@@ -157,6 +137,36 @@ public class RecipeDetailActivity extends BaseDrawerActivity {
 
     private void setupList() {
         // list.setLayoutManager(new LinearLayoutManager(this));
+    }
+
+    public static class TabAdapter extends FragmentPagerAdapter {
+
+        private long recipeId;
+
+        public TabAdapter(FragmentManager fm, long recipeId) {
+            super(fm);
+            this.recipeId = recipeId;
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            switch (position) {
+                case 0:
+                    return RecipeDetailMainFragment.newInstance(recipeId);
+                default:
+                    return new DetailFragment();
+            }
+        }
+
+        @Override
+        public int getCount() {
+            return 3;
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            return "PAGE " + String.valueOf(position + 1);
+        }
     }
 
     public static class DetailFragment extends Fragment {

@@ -1,6 +1,5 @@
 package com.alsash.reciper.ui.fragment;
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -12,20 +11,11 @@ import com.alsash.reciper.R;
 import com.alsash.reciper.data.RecipeManager;
 import com.alsash.reciper.data.model.Recipe;
 import com.alsash.reciper.ui.contract.KeyContract;
-import com.github.mikephil.charting.charts.PieChart;
-import com.github.mikephil.charting.data.PieData;
-import com.github.mikephil.charting.data.PieDataSet;
-import com.github.mikephil.charting.data.PieEntry;
-import com.github.mikephil.charting.formatter.PercentFormatter;
-import com.github.mikephil.charting.utils.ColorTemplate;
-
-import java.util.ArrayList;
 
 public class RecipeDetailMainFragment extends Fragment {
 
     private Recipe recipe;
 
-    private PieChart pieChart;
 
     public static RecipeDetailMainFragment newInstance(long recipeId) {
         Bundle args = new Bundle();
@@ -54,24 +44,8 @@ public class RecipeDetailMainFragment extends Fragment {
     }
 
     private void setupChart(View layout) {
-        pieChart = (PieChart) layout.findViewById(R.id.recipe_detail_main_pie_chart);
+//        pieChart = (PieChart) layout.findViewById(R.id.recipe_detail_main_pie_chart);
 
-        ArrayList<PieEntry> values = new ArrayList<PieEntry>();
-        values.add(new PieEntry(50, "protein"));
-        values.add(new PieEntry(20, "fat"));
-        values.add(new PieEntry(100, "carbohydrate"));
 
-        PieDataSet dataSet = new PieDataSet(values, "nutrition");
-        dataSet.setSliceSpace(4f);
-        dataSet.setSelectionShift(12f);
-        dataSet.setColors(ColorTemplate.MATERIAL_COLORS);
-
-        PieData data = new PieData(dataSet);
-        data.setValueFormatter(new PercentFormatter());
-        data.setValueTextSize(14f);
-        data.setValueTextColor(Color.WHITE);
-
-        pieChart.setData(data);
-        pieChart.invalidate();
     }
 }
