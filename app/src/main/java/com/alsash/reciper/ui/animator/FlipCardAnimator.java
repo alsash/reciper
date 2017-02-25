@@ -13,12 +13,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static com.alsash.reciper.ui.contract.KeyContract.PAYLOAD_FLIP_BACK_TO_FRONT;
+import static com.alsash.reciper.ui.contract.KeyContract.PAYLOAD_FLIP_FRONT_TO_BACK;
+
 public class FlipCardAnimator extends DefaultItemAnimator {
-
-    private static final String TAG = FlipCardAnimator.class.getCanonicalName();
-
-    public static final String PAYLOAD_FLIP_FRONT_TO_BACK = TAG + ".payload_flip_front_to_back";
-    public static final String PAYLOAD_FLIP_BACK_TO_FRONT = TAG + ".payload_flip_back_to_front";
 
     private Map<RecyclerView.ViewHolder, FlipAnimatorHelper> flipAnimationsMap = new HashMap<>();
 

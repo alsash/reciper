@@ -8,11 +8,13 @@ import android.view.ViewGroup;
 import com.alsash.reciper.R;
 import com.alsash.reciper.data.model.Recipe;
 import com.alsash.reciper.ui.adapter.holder.RecipeCardHolder;
-import com.alsash.reciper.ui.animator.FlipCardAnimator;
 
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
+import static com.alsash.reciper.ui.contract.KeyContract.PAYLOAD_FLIP_BACK_TO_FRONT;
+import static com.alsash.reciper.ui.contract.KeyContract.PAYLOAD_FLIP_FRONT_TO_BACK;
 
 public class RecipeCardAdapter extends RecyclerView.Adapter<RecipeCardHolder> {
 
@@ -48,12 +50,10 @@ public class RecipeCardAdapter extends RecyclerView.Adapter<RecipeCardHolder> {
                         int adapterPosition = holder.getAdapterPosition();
                         if (backCardPositions.contains(adapterPosition)) {
                             backCardPositions.remove(adapterPosition);
-                            notifyItemChanged(adapterPosition,
-                                    FlipCardAnimator.PAYLOAD_FLIP_BACK_TO_FRONT);
+                            notifyItemChanged(adapterPosition, PAYLOAD_FLIP_BACK_TO_FRONT);
                         } else {
                             backCardPositions.add(adapterPosition);
-                            notifyItemChanged(adapterPosition,
-                                    FlipCardAnimator.PAYLOAD_FLIP_FRONT_TO_BACK);
+                            notifyItemChanged(adapterPosition, PAYLOAD_FLIP_FRONT_TO_BACK);
                         }
                     }
                 },

@@ -21,13 +21,10 @@ import android.widget.TextView;
 import com.alsash.reciper.R;
 import com.alsash.reciper.data.RecipeManager;
 import com.alsash.reciper.data.model.Recipe;
+import com.alsash.reciper.ui.contract.KeyContract;
 import com.alsash.reciper.ui.vector.VectorHelper;
 
 public class RecipeDetailActivity extends BaseDrawerActivity {
-
-    private static final String TAG = RecipeDetailActivity.class.getCanonicalName();
-
-    private static final String EXTRA_RECIPE_ID = TAG + "extra_recipe_id";
 
     private Toolbar toolbar;
     private TabLayout tabs;
@@ -43,7 +40,7 @@ public class RecipeDetailActivity extends BaseDrawerActivity {
 
     public static void start(Context context, long recipeId) {
         Intent starter = new Intent(context, RecipeDetailActivity.class);
-        starter.putExtra(EXTRA_RECIPE_ID, recipeId);
+        starter.putExtra(KeyContract.KEY_RECIPE_ID, recipeId);
         context.startActivity(starter);
     }
 
@@ -67,7 +64,7 @@ public class RecipeDetailActivity extends BaseDrawerActivity {
     }
 
     private void bindRecipe() {
-        long id = getIntent().getLongExtra(EXTRA_RECIPE_ID, -1);
+        long id = getIntent().getLongExtra(KeyContract.KEY_RECIPE_ID, -1);
         recipe = RecipeManager.getInstance().getRecipe(id);
         assert recipe != null;
     }
