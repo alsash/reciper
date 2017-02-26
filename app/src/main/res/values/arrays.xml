@@ -13,4 +13,10 @@
         <item>@drawable/ic_recipe_category</item>       <!-- category    -->
         <item>@drawable/ic_food</item>                  <!-- food        -->
     </integer-array>
+    <string-array name="devlight">
+        <item>@color/primary</item>
+        <item>@color/primary_dark</item>
+        <item>@color/accent</item>
+        <item>@color/accent_translucent</item>
+    </string-array>
 </resources>
