@@ -17,7 +17,7 @@
     <color name="gray_700">#616161</color>
     <color name="gray_800">#424242</color>
     <color name="gray_900">#212121</color>
-    <color name="nutrition_carbohydrate">#76FF03</color>
+    <color name="nutrition_carbohydrate">#76ff03</color>
     <color name="nutrition_protein">#ff1744</color>
     <color name="nutrition_fat">#ffc400</color>
 </resources>

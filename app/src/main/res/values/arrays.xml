@@ -13,11 +13,11 @@
         <item>@drawable/ic_recipe_category</item>       <!-- category    -->
         <item>@drawable/ic_food</item>                  <!-- food        -->
     </integer-array>
-    <string-array name="nutrition_colors">
+    <integer-array name="nutrition_colors">
         <item>@color/nutrition_carbohydrate</item>
         <item>@color/nutrition_protein</item>
         <item>@color/nutrition_fat</item>
-    </string-array>
+    </integer-array>
     <string-array name="nutrition_titles">
         <item>@string/nutrition_carbohydrate</item>
         <item>@string/nutrition_protein</item>

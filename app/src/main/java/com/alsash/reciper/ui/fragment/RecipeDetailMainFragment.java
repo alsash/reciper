@@ -1,6 +1,5 @@
 package com.alsash.reciper.ui.fragment;
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -68,23 +67,16 @@ public class RecipeDetailMainFragment extends Fragment {
 
     private void setupChart() {
         String[] titles = getResources().getStringArray(R.array.nutrition_titles);
-
+        int[] colors = getResources().getIntArray(R.array.nutrition_colors);
         int[] progress = new int[]{
                 recipe.getNutrition().getCarbohydrate(),
                 recipe.getNutrition().getProtein(),
                 recipe.getNutrition().getFat()
         };
 
-        String[] stringColors = getResources().getStringArray(R.array.nutrition_colors);
-        int[] colors = new int[]{
-                Color.parseColor(stringColors[0]),
-                Color.parseColor(stringColors[1]),
-                Color.parseColor(stringColors[2])
-        };
-
         final List<ArcProgressStackView.Model> models = new ArrayList<>();
-        for (int i = 0; i < titles.length; i++) {
-            models.add(new ArcProgressStackView.Model(titles[i], progress[i], colors));
+        for (int i = 0; i < 3; i++) {
+            models.add(new ArcProgressStackView.Model(titles[i], progress[i], colors[i]));
         }
 
         nutritionChart.setModels(models);
