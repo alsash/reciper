@@ -21,31 +21,27 @@ public class FlipCardAnimator extends DefaultItemAnimator {
     private Map<RecyclerView.ViewHolder, FlipAnimatorHelper> flipAnimationsMap = new HashMap<>();
 
     @Override
-    public boolean canReuseUpdatedViewHolder(@NonNull RecyclerView.ViewHolder viewHolder) {
-        if (viewHolder instanceof RecipeCardHolder) {
-            return true;
-        } else {
-            return super.canReuseUpdatedViewHolder(viewHolder);
-        }
+    public boolean canReuseUpdatedViewHolder(@NonNull RecyclerView.ViewHolder holder) {
+        return (holder instanceof RecipeCardHolder) || super.canReuseUpdatedViewHolder(holder);
     }
 
     @NonNull
     @Override
     public ItemHolderInfo recordPreLayoutInformation(@NonNull RecyclerView.State state,
-                                                     @NonNull RecyclerView.ViewHolder viewHolder,
+                                                     @NonNull RecyclerView.ViewHolder holder,
                                                      int changeFlags,
                                                      @NonNull List<Object> payloads) {
         // Flip animation. Stage 2 of 3. Record flip direction.
         if (changeFlags == FLAG_CHANGED) {
             for (Object payload : payloads) {
                 if (PAYLOAD_FLIP_FRONT_TO_BACK.equals(payload)) {
-                    return new FlipInfo().setFrontToBack(true).setFrom(viewHolder);
+                    return new FlipInfo().setFrontToBack(true).setFrom(holder);
                 } else if (PAYLOAD_FLIP_BACK_TO_FRONT.equals(payload)) {
-                    return new FlipInfo().setFrontToBack(false).setFrom(viewHolder);
+                    return new FlipInfo().setFrontToBack(false).setFrom(holder);
                 }
             }
         }
-        return super.recordPreLayoutInformation(state, viewHolder, changeFlags, payloads);
+        return super.recordPreLayoutInformation(state, holder, changeFlags, payloads);
     }
 
     @Override

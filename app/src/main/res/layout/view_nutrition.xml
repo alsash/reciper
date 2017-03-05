@@ -5,15 +5,16 @@
     android:layout_height="wrap_content">
 
     <devlight.io.library.ArcProgressStackView
-        android:id="@+id/nutrition_apsv"
+        android:id="@+id/nutrition_chart"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:apsv_animated="true"
         app:apsv_dragged="false"
         app:apsv_leveled="true"
         app:apsv_model_bg_enabled="true"
+        app:apsv_model_offset="4dp"
         app:apsv_rounded="true"
-        app:apsv_shadowed="true" />
+        app:apsv_shadowed="false" />
 
     <TextView
         android:id="@+id/nutrition_energy"

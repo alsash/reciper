@@ -1,7 +1,9 @@
 package com.alsash.reciper.data.model;
 
 public interface Recipe {
-    Long getId();
+    long getId();
 
     String getName();
+
+    Nutrition getNutrition();
 }
