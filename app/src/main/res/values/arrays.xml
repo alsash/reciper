@@ -18,6 +18,11 @@
         <item>@color/nutrition_protein</item>
         <item>@color/nutrition_fat</item>
     </integer-array>
+    <integer-array name="nutrition_backgrounds">
+        <item>@color/nutrition_carbohydrate_bg</item>
+        <item>@color/nutrition_protein_bg</item>
+        <item>@color/nutrition_fat_bg</item>
+    </integer-array>
     <string-array name="nutrition_titles">
         <item>@string/nutrition_carbohydrate</item>
         <item>@string/nutrition_protein</item>

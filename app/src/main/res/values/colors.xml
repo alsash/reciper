@@ -2,8 +2,8 @@
 <resources>
     <color name="primary">#ff5722</color>
     <color name="primary_dark">#e64a19</color>
-    <color name="accent">#ffc400</color>
-    <color name="accent_translucent">#80ffc400</color>
+    <color name="accent">#1de9b6</color>
+    <color name="accent_bg">#801de9b6</color>
     <color name="white">#ffffff</color>
     <color name="white_a20">#33ffffff</color>
     <color name="black">#000000</color>
@@ -17,7 +17,12 @@
     <color name="gray_700">#616161</color>
     <color name="gray_800">#424242</color>
     <color name="gray_900">#212121</color>
-    <color name="nutrition_carbohydrate">#76ff03</color>
-    <color name="nutrition_protein">#ff1744</color>
-    <color name="nutrition_fat">#ffc400</color>
+    <color name="nutrition_carbohydrate">#8bc34a</color>
+    <color name="nutrition_carbohydrate_bg">#808bc34a</color>
+    <color name="nutrition_protein">#f44336</color>
+    <color name="nutrition_protein_bg">#80f44336</color>
+    <color name="nutrition_fat">#ffc107</color>
+    <color name="nutrition_fat_bg">#80ffc107</color>
+    <color name="nutrition_energy">#1de9b6</color>
+    <color name="nutrition_energy_bg">#1de9b6</color>
 </resources>

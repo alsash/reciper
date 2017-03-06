@@ -10,19 +10,28 @@
         android:layout_height="match_parent"
         app:apsv_animated="true"
         app:apsv_dragged="false"
+        app:apsv_draw_width="55%"
         app:apsv_leveled="true"
         app:apsv_model_bg_enabled="true"
-        app:apsv_model_offset="4dp"
-        app:apsv_rounded="true"
-        app:apsv_shadowed="false" />
+        app:apsv_model_offset="-4dp"
+        app:apsv_preview_bg="@color/nutrition_carbohydrate_bg"
+        app:apsv_preview_colors="@array/nutrition_colors"
+        app:apsv_rounded="false"
+        app:apsv_shadowed="true"
+        app:apsv_sweep_angle="270" />
 
     <TextView
         android:id="@+id/nutrition_energy"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
         android:layout_gravity="center"
-        android:text="200 kCal"
+        android:gravity="center"
+        android:shadowColor="@color/accent_bg"
+        android:shadowDx="4dp"
+        android:shadowDy="4dp"
+        android:text="200\nkCal"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        android:textSize="20sp" />
+        android:textColor="@color/accent"
+        android:textStyle="bold" />
 
 </FrameLayout>
