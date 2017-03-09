@@ -1,37 +1,87 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.percent.PercentFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/card_recipe_front_image_container"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <devlight.io.library.ArcProgressStackView
-        android:id="@+id/nutrition_chart"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:apsv_animated="true"
-        app:apsv_dragged="false"
-        app:apsv_draw_width="55%"
-        app:apsv_leveled="true"
-        app:apsv_model_bg_enabled="true"
-        app:apsv_model_offset="-4dp"
-        app:apsv_preview_bg="@color/nutrition_carbohydrate_bg"
-        app:apsv_preview_colors="@array/nutrition_colors"
-        app:apsv_rounded="false"
-        app:apsv_shadowed="true"
-        app:apsv_sweep_angle="270" />
+        android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/nutrition_energy"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:layout_gravity="center"
-        android:gravity="center"
-        android:shadowColor="@color/accent_bg"
-        android:shadowDx="4dp"
-        android:shadowDy="4dp"
-        android:text="200\nkCal"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        android:textColor="@color/accent"
-        android:textStyle="bold" />
+        <devlight.io.library.ArcProgressStackView
+            android:id="@+id/nutrition_chart"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:apsv_animated="true"
+            app:apsv_dragged="false"
+            app:apsv_draw_width="75%"
+            app:apsv_leveled="true"
+            app:apsv_model_bg_enabled="true"
+            app:apsv_model_offset="4dp"
+            app:apsv_preview_bg="@color/primary"
+            app:apsv_preview_colors="@array/nutrition_colors"
+            app:apsv_rounded="false"
+            app:apsv_shadow_distance="8dp"
+            app:apsv_shadow_radius="16dp"
+            app:apsv_shadowed="true"
+            app:apsv_sweep_angle="270" />
+    </FrameLayout>
 
-</FrameLayout>
+    <android.support.constraint.ConstraintLayout
+        android:layout_gravity="top|start"
+        app:layout_aspectRatio="100%"
+        app:layout_widthPercent="50%">
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginTop="32dp"
+            android:text="@string/nutrition_carbohydrate"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginTop="10dp"
+            android:text="@string/nutrition_protein"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginTop="10dp"
+            android:text="@string/nutrition_fat"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView2" />
+
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginTop="10dp"
+            android:text="@string/nutrition_energy"
+            android:textAllCaps="false"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textColor="?android:attr/textColorPrimary"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView3" />
+    </android.support.constraint.ConstraintLayout>
+
+</android.support.percent.PercentFrameLayout>

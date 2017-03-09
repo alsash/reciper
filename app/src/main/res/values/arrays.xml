@@ -17,6 +17,7 @@
         <item>@color/nutrition_carbohydrate</item>
         <item>@color/nutrition_protein</item>
         <item>@color/nutrition_fat</item>
+        <item>@color/nutrition_fat</item>
     </integer-array>
     <integer-array name="nutrition_backgrounds">
         <item>@color/nutrition_carbohydrate_bg</item>
