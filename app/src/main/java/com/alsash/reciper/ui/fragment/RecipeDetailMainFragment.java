@@ -6,7 +6,6 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.alsash.reciper.R;
 import com.alsash.reciper.data.RecipeManager;
@@ -25,7 +24,6 @@ public class RecipeDetailMainFragment extends Fragment {
 
     // Views
     private ArcProgressStackView nutritionChart;
-    private TextView nutritionEnergy;
 
 
     public static RecipeDetailMainFragment newInstance(long recipeId) {
@@ -62,26 +60,26 @@ public class RecipeDetailMainFragment extends Fragment {
 
     private void bindViews(View layout) {
         nutritionChart = (ArcProgressStackView) layout.findViewById(R.id.nutrition_chart);
-        nutritionEnergy = (TextView) layout.findViewById(R.id.nutrition_energy);
     }
 
     private void setupChart() {
         String[] titles = getResources().getStringArray(R.array.nutrition_titles);
         int[] colors = getResources().getIntArray(R.array.nutrition_colors);
-        int[] progress = new int[]{
+        int[] values = new int[]{
                 recipe.getNutrition().getCarbohydrate(),
                 recipe.getNutrition().getProtein(),
-                recipe.getNutrition().getFat()
+                recipe.getNutrition().getFat(),
+                100 // Energy will always = 100 %
         };
+        int length = titles.length;
+        if (length > colors.length) length = colors.length;
+        if (length > values.length) length = values.length;
 
         final List<ArcProgressStackView.Model> models = new ArrayList<>();
-        for (int i = 0; i < 3; i++) {
-            models.add(new ArcProgressStackView.Model(titles[i], progress[i], colors[i]));
+        for (int i = 0; i < length; i++) {
+            models.add(new ArcProgressStackView.Model(titles[i], values[i], colors[i]));
         }
-
         nutritionChart.setModels(models);
-        nutritionEnergy.setText(getResources().getString(R.string.nutrition_energy_unit,
-                recipe.getNutrition().getEnergy()));
-
+        nutritionChart.animateProgress();
     }
 }

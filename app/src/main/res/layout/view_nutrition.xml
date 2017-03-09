@@ -17,13 +17,11 @@
             app:apsv_dragged="false"
             app:apsv_draw_width="75%"
             app:apsv_leveled="true"
-            app:apsv_model_bg_enabled="true"
+            app:apsv_model_bg_enabled="false"
             app:apsv_model_offset="4dp"
             app:apsv_preview_bg="@color/primary"
             app:apsv_preview_colors="@array/nutrition_colors"
             app:apsv_rounded="false"
-            app:apsv_shadow_distance="8dp"
-            app:apsv_shadow_radius="16dp"
             app:apsv_shadowed="true"
             app:apsv_sweep_angle="270" />
     </FrameLayout>
