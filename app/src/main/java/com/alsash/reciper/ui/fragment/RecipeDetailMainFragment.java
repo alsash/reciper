@@ -69,7 +69,6 @@ public class RecipeDetailMainFragment extends Fragment {
                 recipe.getNutrition().getCarbohydrate(),
                 recipe.getNutrition().getProtein(),
                 recipe.getNutrition().getFat(),
-                100 // Energy will always = 100 %
         };
         int length = titles.length;
         if (length > colors.length) length = colors.length;
