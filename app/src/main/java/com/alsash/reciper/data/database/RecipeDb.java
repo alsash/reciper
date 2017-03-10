@@ -29,7 +29,7 @@ public class RecipeDb implements Recipe, Nutrition {
 
     @Override
     public int getCarbohydrate() {
-        return 70;
+        return 50;
     }
 
     @Override
@@ -39,7 +39,7 @@ public class RecipeDb implements Recipe, Nutrition {
 
     @Override
     public int getFat() {
-        return 10;
+        return 30;
     }
 
     @Override

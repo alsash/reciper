@@ -28,6 +28,7 @@
             app:apsv_preview_colors="@array/nutrition_colors"
             app:apsv_rounded="true"
             app:apsv_shadowed="false"
+            app:apsv_start_angle="270"
             app:apsv_sweep_angle="270" />
     </FrameLayout>
 
@@ -46,9 +47,9 @@
         android:layout_gravity="top|start"
         android:gravity="center_vertical|end"
         android:orientation="vertical"
-        android:paddingEnd="24dp"
-        android:paddingRight="24dp"
-        app:layout_aspectRatio="142%"
+        android:paddingEnd="32dp"
+        android:paddingRight="32dp"
+        app:layout_aspectRatio="145%"
         app:layout_widthPercent="50%"
         tools:ignore="RtlSymmetry">
 
