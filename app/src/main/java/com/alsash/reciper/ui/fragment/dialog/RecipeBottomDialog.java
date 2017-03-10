@@ -26,7 +26,6 @@ public class RecipeBottomDialog extends BottomSheetDialogFragment
 
     @Override
     public void setupDialog(Dialog dialog, int style) {
-        super.setupDialog(dialog, style);
         View contentView = View.inflate(getContext(), R.layout.fragment_recipe_bottom_dialog, null);
 
         VectorHelper vectorHelper = new VectorHelper(getContext());

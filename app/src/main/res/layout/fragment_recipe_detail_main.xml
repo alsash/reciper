@@ -1,27 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/recipe_detail_main_root"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-    <devlight.io.library.ArcProgressStackView
-        android:id="@+id/nutrition_chart"
+    <LinearLayout
+        android:id="@+id/recipe_detail_main_root"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:apsv_animated="true"
-        app:apsv_dragged="false"
-        app:apsv_draw_width="75%"
-        app:apsv_indicator_orientation="horizontal"
-        app:apsv_leveled="false"
-        app:apsv_model_bg_enabled="false"
-        app:apsv_model_offset="4dp"
-        app:apsv_preview_bg="@color/gray_200"
-        app:apsv_preview_colors="@array/nutrition_colors"
-        app:apsv_rounded="false"
-        app:apsv_shadowed="true"
-        app:apsv_start_angle="240"
-        app:apsv_sweep_angle="360" />
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
-</LinearLayout>
+        <include layout="@layout/view_nutrition" />
+
+    </LinearLayout>
+</android.support.v4.widget.NestedScrollView>

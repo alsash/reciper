@@ -1,11 +1,15 @@
 package com.alsash.reciper.ui.fragment;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.animation.ValueAnimator;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.alsash.reciper.R;
 import com.alsash.reciper.data.RecipeManager;
@@ -24,7 +28,7 @@ public class RecipeDetailMainFragment extends Fragment {
 
     // Views
     private ArcProgressStackView nutritionChart;
-
+    private TextView nutritionEnergy;
 
     public static RecipeDetailMainFragment newInstance(long recipeId) {
         Bundle args = new Bundle();
@@ -60,25 +64,47 @@ public class RecipeDetailMainFragment extends Fragment {
 
     private void bindViews(View layout) {
         nutritionChart = (ArcProgressStackView) layout.findViewById(R.id.nutrition_chart);
+        nutritionEnergy = (TextView) layout.findViewById(R.id.nutrition_energy);
     }
 
     private void setupChart() {
-        String[] titles = getResources().getStringArray(R.array.nutrition_titles);
         int[] colors = getResources().getIntArray(R.array.nutrition_colors);
+        int[] backgrounds = getResources().getIntArray(R.array.nutrition_backgrounds);
         int[] values = new int[]{
                 recipe.getNutrition().getCarbohydrate(),
                 recipe.getNutrition().getProtein(),
                 recipe.getNutrition().getFat(),
         };
-        int length = titles.length;
+        int length = backgrounds.length;
         if (length > colors.length) length = colors.length;
         if (length > values.length) length = values.length;
 
-        final List<ArcProgressStackView.Model> models = new ArrayList<>();
+        List<ArcProgressStackView.Model> models = new ArrayList<>();
         for (int i = 0; i < length; i++) {
-            models.add(new ArcProgressStackView.Model(titles[i], values[i], colors[i]));
+            models.add(new ArcProgressStackView.Model(
+                    getResources().getQuantityString(R.plurals.quantity_weight_gram, values[i], values[i]),
+                    values[i],
+                    backgrounds[i],
+                    colors[i]));
         }
         nutritionChart.setModels(models);
+        nutritionChart.setTypeface(nutritionEnergy.getTypeface());
+        nutritionChart.setAnimatorUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                float fraction = (float) animation.getAnimatedValue();
+                int energy = (int) (fraction * recipe.getNutrition().getEnergy());
+                nutritionEnergy.setText(getResources().getString(R.string.nutrition_energy_value, energy));
+            }
+        });
+        nutritionChart.setAnimatorListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                nutritionEnergy.setText(getResources().getString(
+                        R.string.nutrition_energy_value,
+                        recipe.getNutrition().getEnergy()));
+            }
+        });
         nutritionChart.animateProgress();
     }
 }

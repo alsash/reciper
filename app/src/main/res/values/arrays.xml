@@ -1,34 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
-    <string-array name="spinner_recipe_group_names">
-        <item>@string/recipe_group_all</item>
-        <item>@string/recipe_group_label</item>
-        <item>@string/recipe_group_category</item>
-        <item>@string/recipe_group_food</item>
-    </string-array>
-    <integer-array name="spinner_recipe_group_icons">   <!-- Group by:   -->
-        <item>@drawable/ic_clear</item>                 <!-- all         -->
-        <item>@drawable/ic_label</item>                 <!-- label       -->
-        <item>@drawable/ic_recipe_category</item>       <!-- category    -->
-        <item>@drawable/ic_food</item>                  <!-- food        -->
-    </integer-array>
     <integer-array name="nutrition_colors">
         <item>@color/nutrition_carbohydrate</item>
         <item>@color/nutrition_protein</item>
         <item>@color/nutrition_fat</item>
-        <item>@color/nutrition_energy</item>
     </integer-array>
     <integer-array name="nutrition_backgrounds">
         <item>@color/nutrition_carbohydrate_bg</item>
         <item>@color/nutrition_protein_bg</item>
         <item>@color/nutrition_fat_bg</item>
-        <item>@color/nutrition_energy_bg</item>
     </integer-array>
-    <string-array name="nutrition_titles">
-        <item>@string/nutrition_carbohydrate</item>
-        <item>@string/nutrition_protein</item>
-        <item>@string/nutrition_fat</item>
-        <item>@string/nutrition_energy</item>
-    </string-array>
 </resources>
