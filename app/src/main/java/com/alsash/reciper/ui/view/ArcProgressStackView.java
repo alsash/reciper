@@ -18,6 +18,7 @@ import android.graphics.SweepGradient;
 import android.graphics.Typeface;
 import android.os.Build;
 import android.support.annotation.FloatRange;
+import android.support.annotation.Nullable;
 import android.support.v4.view.ViewCompat;
 import android.text.TextPaint;
 import android.text.TextUtils;
@@ -573,6 +574,12 @@ public class ArcProgressStackView extends View {
         return mTypeface;
     }
 
+    public void setTypeface(final Typeface typeface) {
+        mTypeface = typeface;
+        mTextPaint.setTypeface(typeface);
+        postInvalidate();
+    }
+
     public void setTypeface(final String typeface) {
         Typeface tempTypeface;
         try {
@@ -583,12 +590,6 @@ public class ArcProgressStackView extends View {
         }
 
         setTypeface(tempTypeface);
-    }
-
-    public void setTypeface(final Typeface typeface) {
-        mTypeface = typeface;
-        mTextPaint.setTypeface(typeface);
-        postInvalidate();
     }
 
     public IndicatorOrientation getIndicatorOrientation() {
@@ -886,7 +887,7 @@ public class ArcProgressStackView extends View {
             if (isInEditMode()) continue;
 
             // Get model title bounds
-            mTextPaint.setTextSize(mProgressModelSize * 0.5F);
+            mTextPaint.setTextSize(mProgressModelSize * 0.4F);
             mTextPaint.getTextBounds(
                     model.getTitle(),
                     0, model.getTitle().length(),
@@ -900,7 +901,7 @@ public class ArcProgressStackView extends View {
                     * 0.5F;
 
             // Draw title at start with offset if exist
-            if (model.getTitle() != null || !model.getTitle().equals("")) {
+            if (model.getTitle() != null && !model.getTitle().equals("")) {
                 final String title = (String) TextUtils.ellipsize(
                         model.getTitle(), mTextPaint,
                         progressLength - model.mTextBounds.height(), TextUtils.TruncateAt.END
@@ -914,10 +915,10 @@ public class ArcProgressStackView extends View {
                 );
             }
 
+            // Create formatted model progress (default like : 23%)
+            final String formattedProgress = model.getFormattedProgress();
             // Draw progress if exist
-            if (model.getFormattedProgress() != null || !model.getFormattedProgress().equals("")) {
-                // Create formatted model progress (default like : 23%)
-                final String formattedProgress = model.getFormattedProgress();
+            if (formattedProgress != null && !formattedProgress.equals("")) {
                 // Get title width and offset
                 final float titleWidth = model.mTextBounds.width();
                 final float titleHorizontalOffset = model.mTextBounds.height() * 0.5F;
@@ -927,7 +928,7 @@ public class ArcProgressStackView extends View {
                 model.mPathMeasure.getPosTan(model.mPathMeasure.getLength(), model.mPos, model.mTan);
 
                 // Get progress text bounds
-                mTextPaint.setTextSize(mProgressModelSize * 0.4F);
+                mTextPaint.setTextSize(mProgressModelSize * 0.35F);
                 mTextPaint.getTextBounds(
                         formattedProgress, 0, formattedProgress.length(), model.mTextBounds
                 );
@@ -1013,10 +1014,20 @@ public class ArcProgressStackView extends View {
     }
 
     public interface ProgressConverter {
-        String getConvertedProgress(@FloatRange(from = MIN_PROGRESS, to = MAX_PROGRESS) float progress);
+        @Nullable
+        String getConvertedProgress(float progress);
     }
 
     public static class Model {
+
+        private static ProgressConverter defaultProgressConverter = new ProgressConverter() {
+            @SuppressLint("DefaultLocale")
+            @Nullable
+            @Override
+            public String getConvertedProgress(float progress) {
+                return String.format("%d%%", (int) progress);
+            }
+        };
 
         private final RectF mBounds = new RectF();
         private final Rect mTextBounds = new Rect();
@@ -1031,7 +1042,7 @@ public class ArcProgressStackView extends View {
         private int mBgColor;
         private int[] mColors;
         private SweepGradient mSweepGradient;
-        private ProgressConverter progressConverter;
+        private ProgressConverter progressConverter = defaultProgressConverter;
 
         public Model(final String title, final float progress, final int color) {
             setTitle(title);
@@ -1101,20 +1112,22 @@ public class ArcProgressStackView extends View {
             else mColors = null;
         }
 
+        @Nullable
         public ProgressConverter getProgressConverter() {
             return progressConverter;
         }
 
-        public Model setProgressConverter(ProgressConverter progressConverter) {
+        public Model setProgressConverter(@Nullable ProgressConverter progressConverter) {
             this.progressConverter = progressConverter;
             return this;
         }
 
+        @Nullable
         @SuppressLint("DefaultLocale")
         public String getFormattedProgress() {
             return (progressConverter != null) ?
                     progressConverter.getConvertedProgress(getProgress()) :
-                    String.format("%d%%", (int) getProgress());
+                    null;
         }
     }
 }

@@ -42,7 +42,6 @@
 
         <Switch
             android:id="@+id/card_recipe_nutrition_quantity_switch"
-            style="@android:style/Widget.CompoundButton.Switch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="16dp"
@@ -68,7 +67,7 @@
             android:id="@+id/recipe_detail_main_chart_container"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:padding="32dp"
+            android:padding="16dp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toBottomOf="@id/card_recipe_nutrition_title_divider">
 

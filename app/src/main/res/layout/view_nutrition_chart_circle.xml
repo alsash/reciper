@@ -40,7 +40,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.055" />
+        app:layout_constraintGuide_percent="0.05" />
 
     <android.support.constraint.Guideline
         android:id="@+id/nutrition_protein_horizontal_guideline"
@@ -75,7 +75,7 @@
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.17" />
+        app:layout_constraintGuide_percent="0.175" />
 
     <android.support.constraint.Guideline
         android:id="@+id/nutrition_fat_vertical_guideline"
@@ -88,6 +88,7 @@
         android:id="@+id/nutrition_carbohydrate_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="0dp"
         android:layout_marginRight="8dp"
         android:background="@drawable/bg_rectangle_stroke_c"
         android:padding="4dp"

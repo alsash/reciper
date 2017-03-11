@@ -3,6 +3,7 @@ package com.alsash.reciper.ui.fragment;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ValueAnimator;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -84,10 +85,11 @@ public class RecipeDetailMainFragment extends Fragment {
                     getResources().getQuantityString(R.plurals.quantity_weight_gram, values[i], values[i]),
                     values[i],
                     backgrounds[i],
-                    colors[i]));
+                    colors[i])
+                    .setProgressConverter(null));
         }
         nutritionChart.setModels(models);
-        nutritionChart.setTypeface(nutritionEnergy.getTypeface());
+        nutritionChart.setTypeface(Typeface.create("sans-serif-condensed", Typeface.NORMAL));
         nutritionChart.setAnimatorUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {

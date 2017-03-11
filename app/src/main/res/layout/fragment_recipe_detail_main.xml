@@ -5,34 +5,6 @@
     android:layout_height="wrap_content"
     app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-    <android.support.v7.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:cardCornerRadius="4dp"
-        app:cardElevation="4dp"
-        app:cardUseCompatPadding="true">
+    <include layout="@layout/card_recipe_nutrition" />
 
-        <android.support.constraint.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <android.support.percent.PercentFrameLayout
-                android:id="@+id/recipe_detail_main_chart_container"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:padding="16dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.5">
-
-                <include
-                    layout="@layout/view_nutrition_chart_circle"
-                    app:layout_aspectRatio="100%"
-                    app:layout_widthPercent="100%" />
-            </android.support.percent.PercentFrameLayout>
-        </android.support.constraint.ConstraintLayout>
-    </android.support.v7.widget.CardView>
 </android.support.v4.widget.NestedScrollView>
