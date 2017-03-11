@@ -59,6 +59,8 @@
         <item quantity="many">%d grams</item>
         <item quantity="other">%d grams</item>
     </plurals>
+    <string name="nutrition_title">Nutrition value</string>
+    <string name="nutrition_quantity_switch">Per %s</string>
     <string name="nutrition_carbohydrate">Carbohydrate</string>
     <string name="nutrition_protein">Protein</string>
     <string name="nutrition_fat">Fat</string>
