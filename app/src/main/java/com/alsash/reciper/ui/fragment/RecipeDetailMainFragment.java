@@ -15,11 +15,10 @@ import com.alsash.reciper.R;
 import com.alsash.reciper.data.RecipeManager;
 import com.alsash.reciper.data.model.Recipe;
 import com.alsash.reciper.ui.contract.KeyContract;
+import com.alsash.reciper.ui.view.ArcProgressStackView;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import devlight.io.library.ArcProgressStackView;
 
 public class RecipeDetailMainFragment extends Fragment {
 

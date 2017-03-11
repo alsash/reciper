@@ -11,7 +11,7 @@
         app:layout_aspectRatio="100%"
         app:layout_widthPercent="100%">
 
-        <devlight.io.library.ArcProgressStackView
+        <com.alsash.reciper.ui.view.ArcProgressStackView
             android:id="@+id/nutrition_chart"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -23,7 +23,7 @@
             app:apsv_interpolator="@android:anim/overshoot_interpolator"
             app:apsv_leveled="false"
             app:apsv_model_bg_enabled="true"
-            app:apsv_model_offset="-4dp"
+            app:apsv_model_offset="0dp"
             app:apsv_preview_bg="@color/gray_200"
             app:apsv_preview_colors="@array/nutrition_colors"
             app:apsv_rounded="true"
