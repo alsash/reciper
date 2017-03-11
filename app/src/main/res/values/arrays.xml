@@ -11,7 +11,7 @@
         <item>@color/nutrition_fat_bg</item>
     </integer-array>
     <!-- ArcProgressStackView. Forked from 'devlight.io:arcprogressstackview:1.0.4' -->
-    <string-array name="default_preview">
+    <string-array name="apsv_default_preview">
         <item>#ff670729</item>
         <item>#ff7a0c2d</item>
         <item>#ff96092d</item>

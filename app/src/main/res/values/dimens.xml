@@ -1,4 +1,5 @@
 <resources>
     <dimen name="card_recipe_buttons_margin_top">68dp</dimen>
     <dimen name="activity_recipe_detail_appbar_height">256dp</dimen>
+    <dimen name="nutrition_circle_chart_width">0dp</dimen>
 </resources>

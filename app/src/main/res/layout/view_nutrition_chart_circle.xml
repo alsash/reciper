@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/card_recipe_front_image_container"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <android.support.percent.PercentFrameLayout
+        android:id="@+id/nutrition_energy_container"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/nutrition_energy"
+            android:layout_gravity="center"
+            android:background="@drawable/bg_circle_stroke_accent"
+            android:fontFamily="sans-serif-condensed"
+            android:gravity="center"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large.Inverse"
+            app:layout_aspectRatio="100%"
+            app:layout_widthPercent="29%"
+            tools:text="200\nkCal" />
+
+    </android.support.percent.PercentFrameLayout>
+
+    <android.support.constraint.Guideline
+        android:id="@+id/nutrition_horizontal_center_guideline"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.5" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/nutrition_carbohydrate_horizontal_guideline"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.055" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/nutrition_protein_horizontal_guideline"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.17" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/nutrition_fat_horizontal_guideline"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.29" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/nutrition_vertical_center_guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.5" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/nutrition_carbohydrate_vertical_guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.055" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/nutrition_protein_vertical_guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.17" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/nutrition_fat_vertical_guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.29" />
+
+    <TextView
+        android:id="@+id/nutrition_carbohydrate_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="32dp"
+        android:background="@drawable/bg_rectangle_stroke_c"
+        android:padding="4dp"
+        android:text="@string/nutrition_carbohydrate"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="@color/nutrition_carbohydrate"
+        app:layout_constraintBottom_toTopOf="@+id/nutrition_carbohydrate_horizontal_guideline"
+        app:layout_constraintRight_toLeftOf="@+id/nutrition_vertical_center_guideline"
+        app:layout_constraintTop_toTopOf="@+id/nutrition_carbohydrate_horizontal_guideline"
+        tools:ignore="RtlHardcoded" />
+
+
+    <TextView
+        android:id="@+id/nutrition_protein_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="32dp"
+        android:background="@drawable/bg_rectangle_stroke_p"
+        android:padding="4dp"
+        android:text="@string/nutrition_protein"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="@color/nutrition_protein"
+        app:layout_constraintBottom_toTopOf="@+id/nutrition_protein_horizontal_guideline"
+        app:layout_constraintRight_toLeftOf="@+id/nutrition_vertical_center_guideline"
+        app:layout_constraintTop_toTopOf="@+id/nutrition_protein_horizontal_guideline"
+        tools:ignore="RtlHardcoded" />
+
+    <TextView
+        android:id="@+id/nutrition_fat_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="32dp"
+        android:background="@drawable/bg_rectangle_stroke_f"
+        android:padding="4dp"
+        android:text="@string/nutrition_fat"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="@color/nutrition_fat"
+        app:layout_constraintBottom_toTopOf="@+id/nutrition_fat_horizontal_guideline"
+        app:layout_constraintRight_toLeftOf="@+id/nutrition_vertical_center_guideline"
+        app:layout_constraintTop_toTopOf="@+id/nutrition_fat_horizontal_guideline"
+        tools:ignore="RtlHardcoded" />
+
+    <View
+        android:id="@+id/nutrition_carbohydrate_title_bg_line"
+        android:layout_width="32dp"
+        android:layout_height="1dp"
+        android:background="@color/nutrition_carbohydrate_bg"
+        app:layout_constraintBottom_toTopOf="@+id/nutrition_carbohydrate_horizontal_guideline"
+        app:layout_constraintLeft_toRightOf="@+id/nutrition_carbohydrate_title"
+        app:layout_constraintTop_toTopOf="@+id/nutrition_carbohydrate_horizontal_guideline" />
+
+    <View
+        android:id="@+id/nutrition_protein_title_bg_line"
+        android:layout_width="32dp"
+        android:layout_height="1dp"
+        android:background="@color/nutrition_protein_bg"
+        app:layout_constraintBottom_toTopOf="@+id/nutrition_protein_horizontal_guideline"
+        app:layout_constraintLeft_toRightOf="@+id/nutrition_protein_title"
+        app:layout_constraintTop_toTopOf="@+id/nutrition_protein_horizontal_guideline" />
+
+    <View
+        android:id="@+id/nutrition_fat_title_bg_line"
+        android:layout_width="32dp"
+        android:layout_height="1dp"
+        android:background="@color/nutrition_fat_bg"
+        app:layout_constraintBottom_toTopOf="@+id/nutrition_fat_horizontal_guideline"
+        app:layout_constraintLeft_toRightOf="@+id/nutrition_fat_title"
+        app:layout_constraintTop_toTopOf="@+id/nutrition_fat_horizontal_guideline" />
+
+    <TextView
+        android:id="@+id/nutrition_carbohydrate_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="32dp"
+        android:background="@drawable/bg_rectangle_stroke_c"
+        android:padding="4dp"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+        android:textColor="@color/nutrition_carbohydrate"
+        app:layout_constraintBottom_toBottomOf="@id/nutrition_horizontal_center_guideline"
+        app:layout_constraintLeft_toLeftOf="@id/nutrition_carbohydrate_vertical_guideline"
+        app:layout_constraintRight_toLeftOf="@id/nutrition_carbohydrate_vertical_guideline"
+        tools:text="50%" />
+
+    <TextView
+        android:id="@+id/nutrition_protein_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="32dp"
+        android:background="@drawable/bg_rectangle_stroke_p"
+        android:padding="4dp"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+        android:textColor="@color/nutrition_protein"
+        app:layout_constraintBottom_toBottomOf="@id/nutrition_horizontal_center_guideline"
+        app:layout_constraintLeft_toLeftOf="@id/nutrition_protein_vertical_guideline"
+        app:layout_constraintRight_toLeftOf="@id/nutrition_protein_vertical_guideline"
+        tools:text="30%" />
+
+    <TextView
+        android:id="@+id/nutrition_fat_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="32dp"
+        android:background="@drawable/bg_rectangle_stroke_f"
+        android:padding="4dp"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+        android:textColor="@color/nutrition_fat"
+        app:layout_constraintBottom_toBottomOf="@id/nutrition_horizontal_center_guideline"
+        app:layout_constraintLeft_toLeftOf="@id/nutrition_fat_vertical_guideline"
+        app:layout_constraintRight_toLeftOf="@id/nutrition_fat_vertical_guideline"
+        tools:text="30%" />
+
+    <View
+        android:id="@+id/nutrition_carbohydrate_value_bg_line"
+        android:layout_width="1dp"
+        android:layout_height="32dp"
+        android:background="@color/nutrition_carbohydrate_bg"
+        app:layout_constraintLeft_toLeftOf="@id/nutrition_carbohydrate_vertical_guideline"
+        app:layout_constraintRight_toLeftOf="@id/nutrition_carbohydrate_vertical_guideline"
+        app:layout_constraintTop_toBottomOf="@id/nutrition_carbohydrate_value" />
+
+    <View
+        android:id="@+id/nutrition_protein_value_bg_line"
+        android:layout_width="1dp"
+        android:layout_height="32dp"
+        android:background="@color/nutrition_protein_bg"
+        app:layout_constraintLeft_toLeftOf="@id/nutrition_protein_vertical_guideline"
+        app:layout_constraintRight_toLeftOf="@id/nutrition_protein_vertical_guideline"
+        app:layout_constraintTop_toBottomOf="@id/nutrition_protein_value" />
+
+    <View
+        android:id="@+id/nutrition_fat_value_bg_line"
+        android:layout_width="1dp"
+        android:layout_height="32dp"
+        android:background="@color/nutrition_fat_bg"
+        app:layout_constraintLeft_toLeftOf="@id/nutrition_fat_vertical_guideline"
+        app:layout_constraintRight_toLeftOf="@id/nutrition_fat_vertical_guideline"
+        app:layout_constraintTop_toBottomOf="@id/nutrition_fat_value" />
+
+    <com.alsash.reciper.ui.view.ArcProgressStackView
+        android:id="@+id/nutrition_chart"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:apsv_animated="true"
+        app:apsv_animation_duration="3000"
+        app:apsv_dragged="false"
+        app:apsv_draw_width="65%"
+        app:apsv_indicator_orientation="horizontal"
+        app:apsv_interpolator="@android:anim/overshoot_interpolator"
+        app:apsv_leveled="false"
+        app:apsv_model_bg_enabled="true"
+        app:apsv_model_offset="-4dp"
+        app:apsv_preview_bg="@color/gray_200"
+        app:apsv_preview_colors="@array/nutrition_colors"
+        app:apsv_rounded="true"
+        app:apsv_shadowed="false"
+        app:apsv_start_angle="270"
+        app:apsv_sweep_angle="270"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</android.support.constraint.ConstraintLayout>

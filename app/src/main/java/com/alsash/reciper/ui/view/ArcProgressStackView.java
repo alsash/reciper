@@ -319,7 +319,7 @@ public class ArcProgressStackView extends View {
                     exception.printStackTrace();
                 } finally {
                     if (preview == null)
-                        preview = typedArray.getResources().getStringArray(R.array.default_preview);
+                        preview = typedArray.getResources().getStringArray(R.array.apsv_default_preview);
 
                     final Random random = new Random();
                     for (String previewColor : preview)
@@ -573,12 +573,6 @@ public class ArcProgressStackView extends View {
         return mTypeface;
     }
 
-    public void setTypeface(final Typeface typeface) {
-        mTypeface = typeface;
-        mTextPaint.setTypeface(typeface);
-        postInvalidate();
-    }
-
     public void setTypeface(final String typeface) {
         Typeface tempTypeface;
         try {
@@ -589,6 +583,12 @@ public class ArcProgressStackView extends View {
         }
 
         setTypeface(tempTypeface);
+    }
+
+    public void setTypeface(final Typeface typeface) {
+        mTypeface = typeface;
+        mTextPaint.setTypeface(typeface);
+        postInvalidate();
     }
 
     public IndicatorOrientation getIndicatorOrientation() {
@@ -893,86 +893,95 @@ public class ArcProgressStackView extends View {
                     model.mTextBounds
             );
 
-            // Draw title at start with offset
-            final float titleHorizontalOffset = model.mTextBounds.height() * 0.5F;
-            final float progressLength =
-                    (float) (Math.PI / 180.0F) * progress * model.mBounds.width() * 0.5F;
-            final String title = (String) TextUtils.ellipsize(
-                    model.getTitle(), mTextPaint,
-                    progressLength - titleHorizontalOffset * 2, TextUtils.TruncateAt.END
-            );
-            canvas.drawTextOnPath(
-                    title,
-                    model.mPath,
-                    mIsRounded ? 0.0F : titleHorizontalOffset,
-                    model.mTextBounds.height() * 0.5F,
-                    mTextPaint
-            );
+            // Get progress length
+            final float progressLength = (float) (Math.PI / 180.0F)
+                    * progress
+                    * model.mBounds.width()
+                    * 0.5F;
 
-            // Get pos and tan at final path point
-            model.mPathMeasure.setPath(model.mPath, false);
-            model.mPathMeasure.getPosTan(model.mPathMeasure.getLength(), model.mPos, model.mTan);
-
-            // Get title width
-            final float titleWidth = model.mTextBounds.width();
-
-            // Create formatted model progress (default like : 23%)
-            final String formattedProgress = model.getFormattedProgress();
-            // Get progress text bounds
-            mTextPaint.setTextSize(mProgressModelSize * 0.4F);
-            mTextPaint.getTextBounds(
-                    formattedProgress, 0, formattedProgress.length(), model.mTextBounds
-            );
-
-            // Get pos tan with end point offset and check whether the rounded corners for offset
-            final float progressHorizontalOffset =
-                    mIndicatorOrientation == IndicatorOrientation.VERTICAL ?
-                            model.mTextBounds.height() * 0.5F : model.mTextBounds.width() * 0.5F;
-            final float indicatorProgressOffset = (mIsRounded ? progressFraction : 1.0F) *
-                    (-progressHorizontalOffset - titleHorizontalOffset
-                            - (mIsRounded ? model.mTextBounds.height() * 2.0F : 0.0F));
-            model.mPathMeasure.getPosTan(
-                    model.mPathMeasure.getLength() + indicatorProgressOffset, model.mPos,
-                    mIndicatorOrientation == IndicatorOrientation.VERTICAL && !mIsRounded ?
-                            new float[2] :
-                            model.mTan
-            );
-
-            // Check if there available place for indicator
-            if ((titleWidth + model.mTextBounds.height() + titleHorizontalOffset * 2.0F) -
-                    indicatorProgressOffset < progressLength) {
-                // Get rotate indicator progress angle for progress value
-                float indicatorProgressAngle =
-                        (float) (Math.atan2(model.mTan[1], model.mTan[0]) * (180.0F / Math.PI));
-                // Get arc angle of progress indicator
-                final float indicatorLengthProgressAngle = ((progressLength + indicatorProgressOffset) /
-                        (model.mBounds.width() * 0.5F)) * (float) (180.0F / Math.PI);
-
-                // Detect progress indicator position : left or right and then rotate
-                if (mIndicatorOrientation == IndicatorOrientation.VERTICAL) {
-                    // Get X point of arc angle progress indicator
-                    final float x = (float) (model.mBounds.width() * 0.5F *
-                            (Math.cos((indicatorLengthProgressAngle + mStartAngle) *
-                                    Math.PI / 180.0F))) + model.mBounds.centerX();
-                    indicatorProgressAngle += (x > radius) ? -90.0F : 90.0F;
-                } else {
-                    // Get Y point of arc angle progress indicator
-                    final float y = (float) (model.mBounds.height() * 0.5F *
-                            (Math.sin((indicatorLengthProgressAngle + mStartAngle) *
-                                    Math.PI / 180.0F))) + model.mBounds.centerY();
-                    indicatorProgressAngle += (y > radius) ? 180.0F : 0.0F;
-                }
-
-                // Draw progress value
-                canvas.save();
-                canvas.rotate(indicatorProgressAngle, model.mPos[0], model.mPos[1]);
-                canvas.drawText(
-                        formattedProgress,
-                        model.mPos[0] - model.mTextBounds.exactCenterX(),
-                        model.mPos[1] - model.mTextBounds.exactCenterY(),
+            // Draw title at start with offset if exist
+            if (model.getTitle() != null || !model.getTitle().equals("")) {
+                final String title = (String) TextUtils.ellipsize(
+                        model.getTitle(), mTextPaint,
+                        progressLength - model.mTextBounds.height(), TextUtils.TruncateAt.END
+                );
+                canvas.drawTextOnPath(
+                        title,
+                        model.mPath,
+                        0.0F,
+                        model.mTextBounds.height() * 0.35F,
                         mTextPaint
                 );
-                canvas.restore();
+            }
+
+            // Draw progress if exist
+            if (model.getFormattedProgress() != null || !model.getFormattedProgress().equals("")) {
+                // Create formatted model progress (default like : 23%)
+                final String formattedProgress = model.getFormattedProgress();
+                // Get title width and offset
+                final float titleWidth = model.mTextBounds.width();
+                final float titleHorizontalOffset = model.mTextBounds.height() * 0.5F;
+
+                // Get pos and tan at final path point
+                model.mPathMeasure.setPath(model.mPath, false);
+                model.mPathMeasure.getPosTan(model.mPathMeasure.getLength(), model.mPos, model.mTan);
+
+                // Get progress text bounds
+                mTextPaint.setTextSize(mProgressModelSize * 0.4F);
+                mTextPaint.getTextBounds(
+                        formattedProgress, 0, formattedProgress.length(), model.mTextBounds
+                );
+
+                // Get pos tan with end point offset and check whether the rounded corners for offset
+                final float progressHorizontalOffset =
+                        mIndicatorOrientation == IndicatorOrientation.VERTICAL ?
+                                model.mTextBounds.height() * 0.5F : model.mTextBounds.width() * 0.5F;
+                final float indicatorProgressOffset = (mIsRounded ? progressFraction : 1.0F) *
+                        (-progressHorizontalOffset - titleHorizontalOffset
+                                - (mIsRounded ? model.mTextBounds.height() * 2.0F : 0.0F));
+                model.mPathMeasure.getPosTan(
+                        model.mPathMeasure.getLength() + indicatorProgressOffset, model.mPos,
+                        mIndicatorOrientation == IndicatorOrientation.VERTICAL && !mIsRounded ?
+                                new float[2] :
+                                model.mTan
+                );
+
+                // Check if there available place for indicator
+                if ((titleWidth + model.mTextBounds.height() + titleHorizontalOffset * 2.0F) -
+                        indicatorProgressOffset < progressLength) {
+                    // Get rotate indicator progress angle for progress value
+                    float indicatorProgressAngle =
+                            (float) (Math.atan2(model.mTan[1], model.mTan[0]) * (180.0F / Math.PI));
+                    // Get arc angle of progress indicator
+                    final float indicatorLengthProgressAngle = ((progressLength + indicatorProgressOffset) /
+                            (model.mBounds.width() * 0.5F)) * (float) (180.0F / Math.PI);
+
+                    // Detect progress indicator position : left or right and then rotate
+                    if (mIndicatorOrientation == IndicatorOrientation.VERTICAL) {
+                        // Get X point of arc angle progress indicator
+                        final float x = (float) (model.mBounds.width() * 0.5F *
+                                (Math.cos((indicatorLengthProgressAngle + mStartAngle) *
+                                        Math.PI / 180.0F))) + model.mBounds.centerX();
+                        indicatorProgressAngle += (x > radius) ? -90.0F : 90.0F;
+                    } else {
+                        // Get Y point of arc angle progress indicator
+                        final float y = (float) (model.mBounds.height() * 0.5F *
+                                (Math.sin((indicatorLengthProgressAngle + mStartAngle) *
+                                        Math.PI / 180.0F))) + model.mBounds.centerY();
+                        indicatorProgressAngle += (y > radius) ? 180.0F : 0.0F;
+                    }
+
+                    // Draw progress value
+                    canvas.save();
+                    canvas.rotate(indicatorProgressAngle, model.mPos[0], model.mPos[1]);
+                    canvas.drawText(
+                            formattedProgress,
+                            model.mPos[0] - model.mTextBounds.exactCenterX(),
+                            model.mPos[1] - model.mTextBounds.exactCenterY(),
+                            mTextPaint
+                    );
+                    canvas.restore();
+                }
             }
 
             // Check if gradient and have rounded corners, because we must to create elevation effect
