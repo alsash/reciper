@@ -237,7 +237,7 @@
         app:apsv_dragged="false"
         app:apsv_draw_width="65%"
         app:apsv_indicator_orientation="horizontal"
-        app:apsv_interpolator="@android:anim/overshoot_interpolator"
+        app:apsv_interpolator="@android:anim/accelerate_decelerate_interpolator"
         app:apsv_leveled="false"
         app:apsv_model_bg_enabled="true"
         app:apsv_model_offset="-4dp"
