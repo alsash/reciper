@@ -33,7 +33,6 @@ public class RecipeDetailMainFragment extends Fragment {
 
     // Views
     private SwitchCompat nutritionSwitch;
-    private TextView nutritionSwitchText;
     private ArcProgressStackView nutritionChart;
     private TextView nutritionEnergy;
     private TextView nutritionCarbohydrate;
@@ -69,7 +68,6 @@ public class RecipeDetailMainFragment extends Fragment {
         View layout = inflater.inflate(R.layout.fragment_recipe_detail_main, container, false);
         bindViews(layout);
         setupSwitch();
-        setupSwitchText();
         setupChart();
         return layout;
     }
@@ -104,7 +102,6 @@ public class RecipeDetailMainFragment extends Fragment {
 
     private void bindViews(View layout) {
         nutritionSwitch = (SwitchCompat) layout.findViewById(R.id.card_recipe_nutrition_quantity_switch);
-        nutritionSwitchText = (TextView) layout.findViewById(R.id.card_recipe_nutrition_quantity_switch_text);
         nutritionChart = (ArcProgressStackView) layout.findViewById(R.id.nutrition_chart);
         nutritionEnergy = (TextView) layout.findViewById(R.id.nutrition_energy);
         nutritionCarbohydrate = (TextView) layout.findViewById(R.id.nutrition_carbohydrate_value);
@@ -113,6 +110,7 @@ public class RecipeDetailMainFragment extends Fragment {
     }
 
     private void setupSwitch() {
+        setupSwitchText();
         nutritionSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -120,20 +118,14 @@ public class RecipeDetailMainFragment extends Fragment {
                 nutritionChart.startAnimateProgress();
             }
         });
-        nutritionSwitchText.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                nutritionSwitch.setChecked(!nutritionSwitch.isChecked());
-            }
-        });
     }
 
     private void setupSwitchText() {
         if (nutritionSwitch.isChecked()) {
-            nutritionSwitchText.setText(getString(R.string.nutrition_quantity_switch,
+            nutritionSwitch.setText(getString(R.string.nutrition_quantity_switch,
                     getResources().getQuantityString(R.plurals.quantity_serving, 1, 1)));
         } else {
-            nutritionSwitchText.setText(getString(R.string.nutrition_quantity_switch,
+            nutritionSwitch.setText(getString(R.string.nutrition_quantity_switch,
                     getResources().getQuantityString(R.plurals.quantity_weight_gram, 100, 100)));
         }
     }
