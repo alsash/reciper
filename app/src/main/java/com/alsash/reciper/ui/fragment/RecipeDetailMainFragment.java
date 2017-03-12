@@ -5,11 +5,11 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.SwitchCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
-import android.widget.Switch;
 import android.widget.TextView;
 
 import com.alsash.reciper.R;
@@ -32,7 +32,7 @@ public class RecipeDetailMainFragment extends Fragment {
     private Recipe recipe;
 
     // Views
-    private Switch nutritionSwitch;
+    private SwitchCompat nutritionSwitch;
     private TextView nutritionSwitchText;
     private ArcProgressStackView nutritionChart;
     private TextView nutritionEnergy;
@@ -103,7 +103,7 @@ public class RecipeDetailMainFragment extends Fragment {
     }
 
     private void bindViews(View layout) {
-        nutritionSwitch = (Switch) layout.findViewById(R.id.card_recipe_nutrition_quantity_switch);
+        nutritionSwitch = (SwitchCompat) layout.findViewById(R.id.card_recipe_nutrition_quantity_switch);
         nutritionSwitchText = (TextView) layout.findViewById(R.id.card_recipe_nutrition_quantity_switch_text);
         nutritionChart = (ArcProgressStackView) layout.findViewById(R.id.nutrition_chart);
         nutritionEnergy = (TextView) layout.findViewById(R.id.nutrition_energy);
