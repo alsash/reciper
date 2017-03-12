@@ -168,7 +168,7 @@ public class ArcProgressStackView extends View {
     @SuppressLint("ObsoleteSdkInt")
     public ArcProgressStackView(final Context context, final AttributeSet attrs, final int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        // Init CPSV
+        // Init APSV
 
         // Always draw
         setWillNotDraw(false);
@@ -574,12 +574,6 @@ public class ArcProgressStackView extends View {
         return mTypeface;
     }
 
-    public void setTypeface(final Typeface typeface) {
-        mTypeface = typeface;
-        mTextPaint.setTypeface(typeface);
-        postInvalidate();
-    }
-
     public void setTypeface(final String typeface) {
         Typeface tempTypeface;
         try {
@@ -590,6 +584,12 @@ public class ArcProgressStackView extends View {
         }
 
         setTypeface(tempTypeface);
+    }
+
+    public void setTypeface(final Typeface typeface) {
+        mTypeface = typeface;
+        mTextPaint.setTypeface(typeface);
+        postInvalidate();
     }
 
     public IndicatorOrientation getIndicatorOrientation() {
@@ -637,7 +637,7 @@ public class ArcProgressStackView extends View {
     }
 
     // Animate progress
-    public void animateProgress() {
+    public void startAnimateProgress() {
         if (!mIsAnimated || mProgressAnimator == null) return;
         if (mProgressAnimator.isRunning()) {
             if (mAnimatorListener != null) mProgressAnimator.removeListener(mAnimatorListener);
@@ -652,6 +652,11 @@ public class ArcProgressStackView extends View {
             mProgressAnimator.addListener(mAnimatorListener);
         }
         mProgressAnimator.start();
+    }
+
+    public void endAnimateProgress() {
+        if (!mIsAnimated || mProgressAnimator == null || !mProgressAnimator.isRunning()) return;
+        mProgressAnimator.end();
     }
 
     // Animate progress

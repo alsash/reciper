@@ -65,6 +65,7 @@
     <string name="nutrition_protein">Protein</string>
     <string name="nutrition_fat">Fat</string>
     <string name="nutrition_energy_value">%d\nkCal</string>
+    <string name="percent">%d%%</string>
     <string name="large_text">
         "Material is the metaphor.\n\n"
 

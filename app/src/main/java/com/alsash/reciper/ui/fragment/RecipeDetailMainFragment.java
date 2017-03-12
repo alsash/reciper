@@ -1,7 +1,5 @@
 package com.alsash.reciper.ui.fragment;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
 import android.animation.ValueAnimator;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -10,6 +8,8 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import com.alsash.reciper.R;
@@ -23,12 +23,22 @@ import java.util.List;
 
 public class RecipeDetailMainFragment extends Fragment {
 
-    // Models
+    private static final String KEY_STATE_IS_CHART_ANIMATED = "STATE_IS_CHART_ANIMATED";
+
+    // State
+    private boolean isChartAnimated;
+
+    // Model
     private Recipe recipe;
 
     // Views
+    private Switch nutritionSwitch;
+    private TextView nutritionSwitchText;
     private ArcProgressStackView nutritionChart;
     private TextView nutritionEnergy;
+    private TextView nutritionCarbohydrate;
+    private TextView nutritionProtein;
+    private TextView nutritionFat;
 
     public static RecipeDetailMainFragment newInstance(long recipeId) {
         Bundle args = new Bundle();
@@ -41,10 +51,11 @@ public class RecipeDetailMainFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        bindModels();
+        restoreInstanceState(savedInstanceState);
+        bindModel();
     }
 
-    private void bindModels() {
+    private void bindModel() {
         long recipeId = getArguments().getLong(KeyContract.KEY_RECIPE_ID, -1);
         recipe = RecipeManager.getInstance().getRecipe(recipeId);
         assert recipe != null;
@@ -57,14 +68,74 @@ public class RecipeDetailMainFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         View layout = inflater.inflate(R.layout.fragment_recipe_detail_main, container, false);
         bindViews(layout);
-
+        setupSwitch();
+        setupSwitchText();
         setupChart();
         return layout;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (!isChartAnimated) {
+            isChartAnimated = true;
+            nutritionChart.startAnimateProgress();
+        }
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        if (isChartAnimated) {
+            nutritionChart.endAnimateProgress();
+        }
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putBoolean(KEY_STATE_IS_CHART_ANIMATED, isChartAnimated);
+    }
+
+    private void restoreInstanceState(@Nullable Bundle savedInstanceState) {
+        if (savedInstanceState == null) return;
+        isChartAnimated = savedInstanceState.getBoolean(KEY_STATE_IS_CHART_ANIMATED);
+    }
+
     private void bindViews(View layout) {
+        nutritionSwitch = (Switch) layout.findViewById(R.id.card_recipe_nutrition_quantity_switch);
+        nutritionSwitchText = (TextView) layout.findViewById(R.id.card_recipe_nutrition_quantity_switch_text);
         nutritionChart = (ArcProgressStackView) layout.findViewById(R.id.nutrition_chart);
         nutritionEnergy = (TextView) layout.findViewById(R.id.nutrition_energy);
+        nutritionCarbohydrate = (TextView) layout.findViewById(R.id.nutrition_carbohydrate_value);
+        nutritionProtein = (TextView) layout.findViewById(R.id.nutrition_protein_value);
+        nutritionFat = (TextView) layout.findViewById(R.id.nutrition_fat_value);
+    }
+
+    private void setupSwitch() {
+        nutritionSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                setupSwitchText();
+                nutritionChart.startAnimateProgress();
+            }
+        });
+        nutritionSwitchText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                nutritionSwitch.setChecked(!nutritionSwitch.isChecked());
+            }
+        });
+    }
+
+    private void setupSwitchText() {
+        if (nutritionSwitch.isChecked()) {
+            nutritionSwitchText.setText(getString(R.string.nutrition_quantity_switch,
+                    getResources().getQuantityString(R.plurals.quantity_serving, 1, 1)));
+        } else {
+            nutritionSwitchText.setText(getString(R.string.nutrition_quantity_switch,
+                    getResources().getQuantityString(R.plurals.quantity_weight_gram, 100, 100)));
+        }
     }
 
     private void setupChart() {
@@ -95,17 +166,15 @@ public class RecipeDetailMainFragment extends Fragment {
             public void onAnimationUpdate(ValueAnimator animation) {
                 float fraction = (float) animation.getAnimatedValue();
                 int energy = (int) (fraction * recipe.getNutrition().getEnergy());
+                int carbohydrate = (int) (fraction * recipe.getNutrition().getCarbohydrate());
+                int protein = (int) (fraction * recipe.getNutrition().getProtein());
+                int fat = (int) (fraction * recipe.getNutrition().getFat());
                 nutritionEnergy.setText(getResources().getString(R.string.nutrition_energy_value, energy));
+                nutritionCarbohydrate.setText(getString(R.string.percent, carbohydrate));
+                nutritionProtein.setText(getString(R.string.percent, protein));
+                nutritionFat.setText(getString(R.string.percent, fat));
+
             }
         });
-        nutritionChart.setAnimatorListener(new AnimatorListenerAdapter() {
-            @Override
-            public void onAnimationEnd(Animator animation) {
-                nutritionEnergy.setText(getResources().getString(
-                        R.string.nutrition_energy_value,
-                        recipe.getNutrition().getEnergy()));
-            }
-        });
-        nutritionChart.animateProgress();
     }
 }
