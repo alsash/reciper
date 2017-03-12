@@ -4,40 +4,18 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
 import com.alsash.reciper.R;
-import com.alsash.reciper.data.RecipeManager;
-import com.alsash.reciper.data.model.Recipe;
-import com.alsash.reciper.ui.adapter.RecipeCardAdapter;
-import com.alsash.reciper.ui.animator.FlipCardAnimator;
-import com.alsash.reciper.ui.fragment.dialog.RecipeBottomDialog;
 import com.alsash.reciper.ui.vector.VectorHelper;
 
-public class RecipeListActivity extends BaseDrawerActivity
-        implements RecipeCardAdapter.OnRecipeInteraction {
+public class RecipeListActivity extends BaseDrawerActivity {
 
     private Toolbar toolbar;
     private FloatingActionButton fab;
-    private RecyclerView list;
-
-    @Override
-    public void open(Recipe recipe, int adapterPosition) {
-        RecipeDetailActivity.start(this, recipe.getId());
-        list.getAdapter().notifyItemChanged(adapterPosition);
-    }
-
-    @Override
-    public void expand(Recipe recipe, int adapterPosition) {
-        RecipeBottomDialog recipeBottomDialog = RecipeBottomDialog.newInstance(recipe);
-        recipeBottomDialog.show(getSupportFragmentManager(), recipeBottomDialog.getTag());
-        list.getAdapter().notifyItemChanged(adapterPosition);
-    }
 
     @Nullable
     @Override
@@ -48,22 +26,20 @@ public class RecipeListActivity extends BaseDrawerActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_recipe_list);
+        setContentView(R.layout.activity_recipe_list); // Include RecipeListFragment
         bindViews();
         setupToolbar();
         setupFab();
-        setupList();
     }
 
     private void bindViews() {
         toolbar = (Toolbar) findViewById(R.id.activity_recipe_list_toolbar);
-        list = (RecyclerView) findViewById(R.id.activity_recipe_list_rv);
         fab = (FloatingActionButton) findViewById(R.id.activity_recipe_list_fab);
     }
 
     private void setupToolbar() {
         setSupportActionBar(toolbar);
-        setupDrawer(toolbar); // Parent
+        setupDrawer(toolbar); // parent BaseDrawerActivity call
     }
 
     private void setupFab() {
@@ -74,13 +50,6 @@ public class RecipeListActivity extends BaseDrawerActivity
                         .setAction("Action", null).show();
             }
         });
-    }
-
-    private void setupList() {
-        list.setLayoutManager(new GridLayoutManager(this,
-                getResources().getInteger(R.integer.recipe_list_span)));
-        list.setAdapter(new RecipeCardAdapter(this, RecipeManager.getInstance().getRecipes()));
-        list.setItemAnimator(new FlipCardAnimator());
     }
 
     @Override

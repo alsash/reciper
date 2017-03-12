@@ -28,6 +28,10 @@ import com.alsash.reciper.ui.vector.VectorHelper;
 
 public class RecipeDetailActivity extends BaseDrawerActivity {
 
+    // Model
+    private Recipe recipe;
+
+    // Views
     private Toolbar toolbar;
     private TabLayout tabs;
     private ViewPager pager;
@@ -37,8 +41,6 @@ public class RecipeDetailActivity extends BaseDrawerActivity {
     private TextView peakServing;
     private NumberPicker weightPicker;
     private NumberPicker servingPicker;
-
-    private Recipe recipe;
 
     public static void start(Context context, long recipeId) {
         Intent starter = new Intent(context, RecipeDetailActivity.class);
@@ -56,7 +58,7 @@ public class RecipeDetailActivity extends BaseDrawerActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipe_detail);
-        bindRecipe();
+        bindModel();
         bindViews();
         setupToolbar();
         setupTabs();
@@ -65,7 +67,7 @@ public class RecipeDetailActivity extends BaseDrawerActivity {
         setupList();
     }
 
-    private void bindRecipe() {
+    private void bindModel() {
         long id = getIntent().getLongExtra(KeyContract.KEY_RECIPE_ID, -1);
         recipe = RecipeManager.getInstance().getRecipe(id);
         assert recipe != null;
@@ -74,7 +76,7 @@ public class RecipeDetailActivity extends BaseDrawerActivity {
     private void bindViews() {
         toolbar = (Toolbar) findViewById(R.id.activity_recipe_detail_toolbar);
         tabs = (TabLayout) findViewById(R.id.activity_recipe_detail_tabs);
-        pager = (ViewPager) findViewById(R.id.activity_recipe_detail_container);
+        pager = (ViewPager) findViewById(R.id.activity_recipe_detail_pager);
         fab = (FloatingActionButton) findViewById(R.id.activity_recipe_detail_fab);
 
         peakWeight = (TextView) findViewById(R.id.bottom_recipe_detail_weight);
