@@ -19,7 +19,6 @@ import android.graphics.Typeface;
 import android.os.Build;
 import android.support.annotation.FloatRange;
 import android.support.annotation.Nullable;
-import android.support.v4.view.ViewCompat;
 import android.text.TextPaint;
 import android.text.TextUtils;
 import android.util.AttributeSet;
@@ -165,18 +164,21 @@ public class ArcProgressStackView extends View {
         this(context, attrs, 0);
     }
 
-    @SuppressLint("ObsoleteSdkInt")
     public ArcProgressStackView(final Context context, final AttributeSet attrs, final int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        // Init APSV
+        // Init ArcProgressStackView
 
         // Always draw
         setWillNotDraw(false);
-        setLayerType(LAYER_TYPE_SOFTWARE, null);
-        ViewCompat.setLayerType(this, ViewCompat.LAYER_TYPE_SOFTWARE, null);
+
+        // Software layer type is not used in this project.
+        // But shadows are always require software layer type,
+        // so if they are used, keep calm and uncomment two lines below.
+        // setLayerType(LAYER_TYPE_SOFTWARE, null);
+        // ViewCompat.setLayerType(this, ViewCompat.LAYER_TYPE_SOFTWARE, null);
 
         // Detect if features available
-        mIsFeaturesAvailable = Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB;
+        mIsFeaturesAvailable = true; // Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB;
 
         // Retrieve attributes from xml
         final TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.ArcProgressStackView);
@@ -574,6 +576,12 @@ public class ArcProgressStackView extends View {
         return mTypeface;
     }
 
+    public void setTypeface(final Typeface typeface) {
+        mTypeface = typeface;
+        mTextPaint.setTypeface(typeface);
+        postInvalidate();
+    }
+
     public void setTypeface(final String typeface) {
         Typeface tempTypeface;
         try {
@@ -584,12 +592,6 @@ public class ArcProgressStackView extends View {
         }
 
         setTypeface(tempTypeface);
-    }
-
-    public void setTypeface(final Typeface typeface) {
-        mTypeface = typeface;
-        mTextPaint.setTypeface(typeface);
-        postInvalidate();
     }
 
     public IndicatorOrientation getIndicatorOrientation() {

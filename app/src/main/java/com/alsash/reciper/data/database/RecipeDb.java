@@ -34,7 +34,7 @@ public class RecipeDb implements Recipe, Nutrition {
 
     @Override
     public int getProtein() {
-        return 20;
+        return 100;
     }
 
     @Override

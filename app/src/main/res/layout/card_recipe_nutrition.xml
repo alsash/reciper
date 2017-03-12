@@ -72,7 +72,7 @@
             app:layout_constraintTop_toBottomOf="@id/card_recipe_nutrition_title_divider">
 
             <include
-                layout="@layout/view_nutrition_chart_circle"
+                layout="@layout/view_nutrition_circle_chart"
                 app:layout_aspectRatio="100%"
                 app:layout_widthPercent="100%" />
         </android.support.percent.PercentFrameLayout>

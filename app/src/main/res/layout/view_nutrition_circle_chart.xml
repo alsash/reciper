@@ -233,7 +233,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:apsv_animated="true"
-        app:apsv_animation_duration="3000"
+        app:apsv_animation_duration="@integer/circle_chart_anim_ms"
         app:apsv_dragged="false"
         app:apsv_draw_width="65%"
         app:apsv_indicator_orientation="horizontal"
