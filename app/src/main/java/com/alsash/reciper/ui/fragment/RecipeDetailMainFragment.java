@@ -101,7 +101,7 @@ public class RecipeDetailMainFragment extends Fragment {
     }
 
     private void bindViews(View layout) {
-        nutritionSwitch = (SwitchCompat) layout.findViewById(R.id.card_recipe_nutrition_quantity_switch);
+        nutritionSwitch = (SwitchCompat) layout.findViewById(R.id.card_nutrition_quantity_switch);
         nutritionChart = (ArcProgressStackView) layout.findViewById(R.id.nutrition_chart);
         nutritionEnergy = (TextView) layout.findViewById(R.id.nutrition_energy);
         nutritionCarbohydrate = (TextView) layout.findViewById(R.id.nutrition_carbohydrate_value);

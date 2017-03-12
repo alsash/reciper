@@ -2,7 +2,7 @@
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/card_recipe_nutrition"
+    android:id="@+id/card_nutrition"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     app:cardElevation="4dp"
@@ -14,7 +14,7 @@
         android:layout_height="wrap_content">
 
         <TextView
-            android:id="@+id/card_recipe_nutrition_title"
+            android:id="@+id/card_nutrition_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="16dp"
@@ -27,7 +27,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <android.support.v7.widget.SwitchCompat
-            android:id="@+id/card_recipe_nutrition_quantity_switch"
+            android:id="@+id/card_nutrition_quantity_switch"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
@@ -38,12 +38,12 @@
             android:textColor="?android:attr/textColorSecondary"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/card_recipe_nutrition_title"
+            app:layout_constraintTop_toBottomOf="@+id/card_nutrition_title"
             tools:ignore="RtlHardcoded"
             tools:text="Per 100 gram" />
 
         <View
-            android:id="@+id/card_recipe_nutrition_title_divider"
+            android:id="@+id/card_nutrition_title_divider"
             android:layout_width="0dp"
             android:layout_height="1dp"
             android:layout_marginEnd="8dp"
@@ -54,18 +54,18 @@
             android:background="@color/gray_100"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/card_recipe_nutrition_quantity_switch" />
+            app:layout_constraintTop_toBottomOf="@+id/card_nutrition_quantity_switch" />
 
         <android.support.percent.PercentFrameLayout
-            android:id="@+id/recipe_detail_main_chart_container"
+            android:id="@+id/card_nutrition_chart_container"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:padding="16dp"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/card_recipe_nutrition_title_divider">
+            app:layout_constraintTop_toBottomOf="@+id/card_nutrition_title_divider">
 
             <include
-                layout="@layout/view_nutrition_circle_chart"
+                layout="@layout/view_chart_nutrition"
                 app:layout_aspectRatio="100%"
                 app:layout_widthPercent="100%" />
         </android.support.percent.PercentFrameLayout>
