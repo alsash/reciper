@@ -25,7 +25,7 @@
                     android:title="@string/recipe_group_label" />
                 <item
                     android:id="@+id/group_category"
-                    android:icon="@drawable/ic_recipe_category"
+                    android:icon="@drawable/ic_category"
                     android:title="@string/recipe_group_category" />
                 <item
                     android:id="@+id/group_food"
@@ -87,7 +87,7 @@
                     android:title="@string/recipe_group_label" />
                 <item
                     android:id="@+id/filter_category"
-                    android:icon="@drawable/ic_recipe_category"
+                    android:icon="@drawable/ic_category"
                     android:title="@string/recipe_group_category" />
                 <item
                     android:id="@+id/filter_energy"

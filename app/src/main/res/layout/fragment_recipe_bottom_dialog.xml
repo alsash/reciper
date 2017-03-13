@@ -54,7 +54,7 @@
         android:tint="@color/gray_800"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/recipe_label_button"
-        app:srcCompat="@drawable/ic_recipe_category"
+        app:srcCompat="@drawable/ic_category"
         tools:ignore="ContentDescription" />
 
     <TextView

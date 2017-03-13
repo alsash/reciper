@@ -5,23 +5,38 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
 import com.alsash.reciper.R;
-import com.alsash.reciper.view.fragment.RecipeListFragment;
-import com.alsash.reciper.view.views.MotionEventViewPager;
+import com.alsash.reciper.model.models.Recipe;
+import com.alsash.reciper.presenter.interaction.RecipeListInteraction;
+import com.alsash.reciper.view.adapter.SwipePagerAdapter;
+import com.alsash.reciper.view.fragment.dialog.RecipeBottomDialog;
+import com.alsash.reciper.view.views.SwipeViewPager;
 
-public class RecipeTabActivity extends BaseDrawerActivity {
+public class RecipeTabActivity extends BaseDrawerActivity implements RecipeListInteraction {
+
+    // Adapters
+    private SwipePagerAdapter pagerAdapter;
 
     // Views
     private Toolbar toolbar;
-    private MotionEventViewPager pager;
+    private SwipeViewPager pager;
     private TabLayout tabs;
     private FloatingActionButton fab;
+
+    @Override
+    public void onExpand(Recipe recipe, int position) {
+        RecipeBottomDialog bottomDialog = RecipeBottomDialog.newInstance(recipe);
+        bottomDialog.show(getSupportFragmentManager(), bottomDialog.getTag());
+    }
+
+    @Override
+    public void onOpen(Recipe recipe, int position) {
+        RecipeDetailActivity.start(RecipeTabActivity.this, recipe.getId());
+    }
 
     @Nullable
     @Override
@@ -42,7 +57,7 @@ public class RecipeTabActivity extends BaseDrawerActivity {
 
     private void bindViews() {
         toolbar = (Toolbar) findViewById(R.id.activity_recipe_tab_toolbar);
-        pager = (MotionEventViewPager) findViewById(R.id.activity_recipe_tab_pager);
+        pager = (SwipeViewPager) findViewById(R.id.activity_recipe_tab_pager);
         tabs = (TabLayout) findViewById(R.id.activity_recipe_tab_tabs);
         fab = (FloatingActionButton) findViewById(R.id.activity_recipe_tab_fab);
     }
@@ -53,11 +68,25 @@ public class RecipeTabActivity extends BaseDrawerActivity {
     }
 
     private void setupPager() {
-        pager.setAdapter(new SectionsPagerAdapter(getSupportFragmentManager()));
+        pagerAdapter = new SwipePagerAdapter(this, getSupportFragmentManager());
+        pager.setAdapter(pagerAdapter);
+        pager.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
+            @Override
+            public void onPageSelected(int position) {
+                pager.setSwipeEnabled(pagerAdapter.isSwipeEnabled(position));
+                setupTabs();
+            }
+        });
+        tabs.setupWithViewPager(pager);
     }
 
     private void setupTabs() {
-        tabs.setupWithViewPager(pager);
+        for (int i = 0; i < tabs.getTabCount(); i++) {
+            TabLayout.Tab tab = tabs.getTabAt(i);
+            assert tab != null;
+            int tintColor = (pager.getCurrentItem() == i) ? R.color.white : R.color.white_a80;
+            tab.setIcon(pagerAdapter.getPageIcon(i, tintColor));
+        }
     }
 
     private void setupFab() {
@@ -68,36 +97,5 @@ public class RecipeTabActivity extends BaseDrawerActivity {
                         .setAction("Action", null).show();
             }
         });
-    }
-
-    public class SectionsPagerAdapter extends FragmentPagerAdapter {
-
-        public SectionsPagerAdapter(FragmentManager fm) {
-            super(fm);
-        }
-
-        @Override
-        public Fragment getItem(int position) {
-            return RecipeListFragment.newInstance();
-        }
-
-        @Override
-        public int getCount() {
-            // Show 3 total pages.
-            return 3;
-        }
-
-        @Override
-        public CharSequence getPageTitle(int position) {
-            switch (position) {
-                case 0:
-                    return "SECTION 1";
-                case 1:
-                    return "SECTION 2";
-                case 2:
-                    return "SECTION 3";
-            }
-            return null;
-        }
     }
 }

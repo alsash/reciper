@@ -30,7 +30,7 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <com.alsash.reciper.view.views.MotionEventViewPager
+    <com.alsash.reciper.view.views.SwipeViewPager
         android:id="@+id/activity_recipe_tab_pager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -42,6 +42,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="end|bottom"
         android:layout_margin="16dp"
+        android:tint="@color/white"
         app:srcCompat="@drawable/ic_add" />
 
 </android.support.design.widget.CoordinatorLayout>

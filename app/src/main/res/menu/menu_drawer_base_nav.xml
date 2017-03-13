@@ -32,7 +32,7 @@
             android:title="@string/drawer_menu_labels" />
         <item
             android:id="@+id/drawer_category"
-            android:icon="@drawable/ic_recipe_category"
+            android:icon="@drawable/ic_category"
             android:title="@string/drawer_menu_categories" />
     </group>
 

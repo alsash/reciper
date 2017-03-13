@@ -6,6 +6,7 @@
     <color name="accent_dark">#00bfa5</color>
     <color name="white">#ffffff</color>
     <color name="white_a20">#33ffffff</color>
+    <color name="white_a80">#ccffffff</color>
     <color name="black">#000000</color>
     <color name="black_a054">#8a000000</color>
     <color name="gray_100">#F5F5F5</color>

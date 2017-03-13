@@ -22,13 +22,13 @@ public class RecipeListActivity extends BaseDrawerActivity implements RecipeList
 
     @Override
     public void onExpand(Recipe recipe, int position) {
-        RecipeDetailActivity.start(RecipeListActivity.this, recipe.getId());
+        RecipeBottomDialog bottomDialog = RecipeBottomDialog.newInstance(recipe);
+        bottomDialog.show(getSupportFragmentManager(), bottomDialog.getTag());
     }
 
     @Override
     public void onOpen(Recipe recipe, int position) {
-        RecipeBottomDialog bottomDialog = RecipeBottomDialog.newInstance(recipe);
-        bottomDialog.show(getSupportFragmentManager(), bottomDialog.getTag());
+        RecipeDetailActivity.start(RecipeListActivity.this, recipe.getId());
     }
 
     @Nullable
