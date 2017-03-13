@@ -9,7 +9,7 @@
         android:supportsRtl="false"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".ui.activity.StartActivity"
+            android:name=".view.activity.StartActivity"
             android:configChanges="orientation|keyboardHidden"
             android:noHistory="true"
             android:theme="@style/StartTheme">
@@ -30,16 +30,16 @@
                     android:scheme="http" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.activity.RecipeListActivity" />
+        <activity android:name=".view.activity.RecipeListActivity" />
         <activity
-            android:name=".ui.activity.RecipeDetailActivity"
-            android:parentActivityName=".ui.activity.RecipeListActivity">
+            android:name=".view.activity.RecipeDetailActivity"
+            android:parentActivityName=".view.activity.RecipeListActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.alsash.reciper.ui.activity.RecipeListActivity" />
+                android:value="com.alsash.reciper.view.activity.RecipeListActivity" />
         </activity>
         <activity
-            android:name=".ui.activity.RecipeTabActivity"
+            android:name=".view.activity.RecipeTabActivity"
             android:label="@string/title_activity_recipe_tab"
             android:theme="@style/AppTheme"></activity>
     </application>

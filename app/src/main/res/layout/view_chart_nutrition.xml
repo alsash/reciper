@@ -228,7 +228,7 @@
         app:layout_constraintRight_toLeftOf="@id/nutrition_fat_vertical_guideline"
         app:layout_constraintTop_toBottomOf="@id/nutrition_fat_value" />
 
-    <com.alsash.reciper.ui.view.ArcProgressStackView
+    <com.alsash.reciper.view.views.ArcProgressStackView
         android:id="@+id/nutrition_chart"
         android:layout_width="0dp"
         android:layout_height="wrap_content"

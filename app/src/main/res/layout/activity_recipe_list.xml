@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:contextRef="com.alsash.reciper.ui.activity.RecipeListActivity">
+    tools:contextRef="com.alsash.reciper.view.activity.RecipeListActivity">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/activity_recipe_list_appbar"
@@ -23,7 +23,7 @@
 
     <fragment
         android:id="@+id/activity_recipe_list_fragment"
-        android:name="com.alsash.reciper.ui.fragment.RecipeListFragment"
+        android:name="com.alsash.reciper.view.fragment.RecipeListFragment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"

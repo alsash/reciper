@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.alsash.reciper.ui.activity.RecipeTabActivity">
+    tools:context="com.alsash.reciper.view.activity.RecipeTabActivity">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/activity_recipe_tab_appbar"
@@ -30,7 +30,7 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <com.alsash.reciper.ui.view.MotionEventViewPager
+    <com.alsash.reciper.view.views.MotionEventViewPager
         android:id="@+id/activity_recipe_tab_pager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
