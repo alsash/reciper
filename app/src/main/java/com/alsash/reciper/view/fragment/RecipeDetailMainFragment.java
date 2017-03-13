@@ -23,7 +23,8 @@ import java.util.List;
 
 public class RecipeDetailMainFragment extends Fragment {
 
-    private static final String KEY_STATE_IS_CHART_ANIMATED = "STATE_IS_CHART_ANIMATED";
+    private static final String TAG = RecipeDetailMainFragment.class.getCanonicalName();
+    private static final String KEY_STATE_IS_CHART_ANIMATED = TAG + ".key_state_is_chart_animated";
 
     // State
     private boolean isChartAnimated;
