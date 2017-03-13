@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import com.alsash.reciper.R;
 import com.alsash.reciper.data.model.Recipe;
 import com.alsash.reciper.ui.adapter.holder.RecipeCardHolder;
+import com.alsash.reciper.ui.interaction.RecipeListInteraction;
 
 import java.util.HashSet;
 import java.util.List;
@@ -18,11 +19,11 @@ import static com.alsash.reciper.ui.contract.KeyContract.PAYLOAD_FLIP_FRONT_TO_B
 
 public class RecipeCardAdapter extends RecyclerView.Adapter<RecipeCardHolder> {
 
-    private final OnRecipeInteraction recipeInteraction;
+    private final RecipeListInteraction recipeInteraction;
     private final List<Recipe> recipeList;
     private final Set<Integer> backCardPositions;
 
-    public RecipeCardAdapter(OnRecipeInteraction recipeInteraction, List<Recipe> recipeList) {
+    public RecipeCardAdapter(RecipeListInteraction recipeInteraction, List<Recipe> recipeList) {
         this.recipeInteraction = recipeInteraction;
         this.recipeList = recipeList;
         this.backCardPositions = new HashSet<>();
@@ -63,7 +64,7 @@ public class RecipeCardAdapter extends RecyclerView.Adapter<RecipeCardHolder> {
                     public void onClick(View v) {
                         int adapterPosition = holder.getAdapterPosition();
                         Recipe recipe = recipeList.get(adapterPosition);
-                        recipeInteraction.expand(recipe, adapterPosition);
+                        recipeInteraction.onExpand(recipe, adapterPosition);
                     }
                 },
                 // Open Listener
@@ -72,7 +73,7 @@ public class RecipeCardAdapter extends RecyclerView.Adapter<RecipeCardHolder> {
                     public void onClick(View v) {
                         int adapterPosition = holder.getAdapterPosition();
                         Recipe recipe = recipeList.get(adapterPosition);
-                        recipeInteraction.open(recipe, adapterPosition);
+                        recipeInteraction.onOpen(recipe, adapterPosition);
                     }
                 }
         );
@@ -83,10 +84,4 @@ public class RecipeCardAdapter extends RecyclerView.Adapter<RecipeCardHolder> {
         return recipeList.size();
     }
 
-    public interface OnRecipeInteraction {
-
-        void expand(Recipe recipe, int adapterPosition);
-
-        void open(Recipe recipe, int adapterPosition);
-    }
 }

@@ -16,11 +16,12 @@ import com.alsash.reciper.ui.activity.RecipeDetailActivity;
 import com.alsash.reciper.ui.adapter.RecipeCardAdapter;
 import com.alsash.reciper.ui.animator.FlipCardAnimator;
 import com.alsash.reciper.ui.fragment.dialog.RecipeBottomDialog;
+import com.alsash.reciper.ui.interaction.RecipeListInteraction;
 
 import java.util.List;
 
 
-public class RecipeListFragment extends Fragment implements RecipeCardAdapter.OnRecipeInteraction {
+public class RecipeListFragment extends Fragment implements RecipeListInteraction {
 
     // Model
     private List<Recipe> recipes;
@@ -36,16 +37,16 @@ public class RecipeListFragment extends Fragment implements RecipeCardAdapter.On
     }
 
     @Override
-    public void open(Recipe recipe, int adapterPosition) {
+    public void onOpen(Recipe recipe, int position) {
         RecipeDetailActivity.start(getActivity(), recipe.getId());
-        list.getAdapter().notifyItemChanged(adapterPosition);
+        list.getAdapter().notifyItemChanged(position);
     }
 
     @Override
-    public void expand(Recipe recipe, int adapterPosition) {
+    public void onExpand(Recipe recipe, int position) {
         RecipeBottomDialog bottomDialog = RecipeBottomDialog.newInstance(recipe);
         bottomDialog.show(getActivity().getSupportFragmentManager(), bottomDialog.getTag());
-        list.getAdapter().notifyItemChanged(adapterPosition);
+        list.getAdapter().notifyItemChanged(position);
     }
 
     @Override

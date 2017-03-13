@@ -25,6 +25,7 @@ import com.alsash.reciper.data.model.Recipe;
 import com.alsash.reciper.ui.contract.KeyContract;
 import com.alsash.reciper.ui.fragment.RecipeDetailMainFragment;
 import com.alsash.reciper.ui.vector.VectorHelper;
+import com.alsash.reciper.ui.view.DepthPageTransformer;
 
 public class RecipeDetailActivity extends BaseDrawerActivity {
 
@@ -61,6 +62,7 @@ public class RecipeDetailActivity extends BaseDrawerActivity {
         bindModel();
         bindViews();
         setupToolbar();
+        setupPager();
         setupTabs();
         setupBottom();
         setupFab();
@@ -94,8 +96,12 @@ public class RecipeDetailActivity extends BaseDrawerActivity {
         setupDrawer(null); // Parent navigation drawer without button on toolbar
     }
 
-    private void setupTabs() {
+    private void setupPager() {
         pager.setAdapter(new TabAdapter(getSupportFragmentManager(), recipe.getId()));
+        pager.setPageTransformer(true, new DepthPageTransformer());
+    }
+
+    private void setupTabs() {
         tabs.setupWithViewPager(pager);
     }
 
@@ -106,7 +112,6 @@ public class RecipeDetailActivity extends BaseDrawerActivity {
         weightPicker.setMinValue(0);
         weightPicker.setMaxValue(1000);
         weightPicker.setValue(500);
-        weightPicker.jumpDrawablesToCurrentState();
         weightPicker.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
             @Override
             public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
@@ -117,7 +122,6 @@ public class RecipeDetailActivity extends BaseDrawerActivity {
         servingPicker.setMinValue(1);
         servingPicker.setMaxValue(10);
         servingPicker.setValue(2);
-        servingPicker.jumpDrawablesToCurrentState();
         servingPicker.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
             @Override
             public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
