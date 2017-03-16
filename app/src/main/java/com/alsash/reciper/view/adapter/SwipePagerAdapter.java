@@ -1,8 +1,8 @@
 package com.alsash.reciper.view.adapter;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
-import android.support.annotation.ColorRes;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -51,10 +51,21 @@ public class SwipePagerAdapter extends FragmentPagerAdapter
 
     @Override
     public CharSequence getPageTitle(int position) {
+        Resources resources = contextRef.get().getResources();
+        switch (position) {
+            case 0:
+                return resources.getString(R.string.recipe_group_category);
+            case 1:
+                return resources.getString(R.string.recipe_group_label);
+            case 2:
+                return resources.getString(R.string.recipe_group_bookmark);
+            case 3:
+                return resources.getString(R.string.recipe_group_all);
+        }
         return null;
     }
 
-    public Drawable getPageIcon(int position, @ColorRes int color) {
+    public Drawable getPageIcon(int position) {
         Drawable icon;
         switch (position) {
             case 0:
@@ -72,6 +83,7 @@ public class SwipePagerAdapter extends FragmentPagerAdapter
             default:
                 icon = null;
         }
+        vectorHelper.tintStateList(icon, R.color.cs_tab_icon);
         return icon;
     }
 }

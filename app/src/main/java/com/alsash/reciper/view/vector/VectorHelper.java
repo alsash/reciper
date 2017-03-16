@@ -1,12 +1,15 @@
 package com.alsash.reciper.view.vector;
 
 import android.content.Context;
+import android.content.res.ColorStateList;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
+import android.support.annotation.ColorRes;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.Nullable;
 import android.support.graphics.drawable.VectorDrawableCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.content.res.ResourcesCompat;
 import android.support.v4.graphics.drawable.DrawableCompat;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -81,9 +84,18 @@ public class VectorHelper {
         return VectorDrawableCompat.create(contextRef.get().getResources(), resId, themeRef.get());
     }
 
-    public void tint(@Nullable Drawable icon, @Nullable Integer color) {
+    public void tint(@Nullable Drawable icon, @ColorRes @Nullable Integer color) {
         if (icon == null || color == null) return;
         icon.mutate();
         DrawableCompat.setTint(icon, ContextCompat.getColor(contextRef.get(), color));
+    }
+
+    public void tintStateList(Drawable icon, @ColorRes Integer colorsRes) {
+        icon.mutate();
+        ColorStateList colors = ResourcesCompat.getColorStateList(
+                contextRef.get().getResources(),
+                colorsRes,
+                themeRef.get());
+        DrawableCompat.setTintList(icon, colors);
     }
 }

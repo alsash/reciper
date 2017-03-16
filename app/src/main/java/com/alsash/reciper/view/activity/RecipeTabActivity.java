@@ -5,6 +5,8 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
+import android.support.v4.view.ViewPager;
+import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
@@ -63,12 +65,19 @@ public class RecipeTabActivity extends BaseDrawerActivity implements RecipeListI
 
     private void setupToolbar() {
         setSupportActionBar(toolbar);
-        setupDrawer(toolbar); // parent BaseDrawerActivity call
+        setupDrawer(toolbar); // Call to parent BaseDrawerActivity
     }
 
     private void setupPager() {
         pagerAdapter = new SwipePagerAdapter(this, getSupportFragmentManager());
         pager.setAdapter(pagerAdapter);
+        pager.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
+            @Override
+            public void onPageSelected(int position) {
+                setToolbarTitle(pagerAdapter.getPageTitle(position));
+            }
+        });
+        setToolbarTitle(pagerAdapter.getPageTitle(0));
     }
 
     private void setupTabs() {
@@ -76,9 +85,15 @@ public class RecipeTabActivity extends BaseDrawerActivity implements RecipeListI
         for (int i = 0; i < tabs.getTabCount(); i++) {
             TabLayout.Tab tab = tabs.getTabAt(i);
             assert tab != null;
-            int tintColor = (pager.getCurrentItem() == i) ? R.color.white : R.color.white_a80;
-            tab.setIcon(pagerAdapter.getPageIcon(i, tintColor));
+            tab.setText(null); // Icons only
+            tab.setIcon(pagerAdapter.getPageIcon(i));
         }
+    }
+
+    private void setToolbarTitle(CharSequence title) {
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar == null) return;
+        actionBar.setTitle(title);
     }
 
     private void setupFab() {
