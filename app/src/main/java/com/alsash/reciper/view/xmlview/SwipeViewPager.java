@@ -1,10 +1,13 @@
 package com.alsash.reciper.view.xmlview;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
+
+import com.alsash.reciper.R;
 
 /**
  * Custom ViewPager that toggle handling motion events
@@ -20,6 +23,15 @@ public class SwipeViewPager extends ViewPager {
 
     public SwipeViewPager(Context context, AttributeSet attrs) {
         super(context, attrs);
+        // Retrieve attributes from xml
+        final TypedArray typedArray = context.obtainStyledAttributes(attrs,
+                R.styleable.SwipeViewPager);
+        try {
+            setSwipeEnabled(typedArray.getBoolean(R.styleable.SwipeViewPager_svp_is_swipe_enabled,
+                    false));
+        } finally {
+            typedArray.recycle();
+        }
     }
 
     @Override

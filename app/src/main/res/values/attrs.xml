@@ -32,4 +32,7 @@
         <attr name="apsv_preview_colors" format="reference" />
         <attr name="apsv_preview_bg" format="color" />
     </declare-styleable>
+    <declare-styleable name="SwipeViewPager">
+        <attr name="svp_is_swipe_enabled" format="boolean" />
+    </declare-styleable>
 </resources>
