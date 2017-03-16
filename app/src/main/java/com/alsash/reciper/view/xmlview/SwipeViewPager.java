@@ -1,6 +1,7 @@
-package com.alsash.reciper.view.views;
+package com.alsash.reciper.view.xmlview;
 
 import android.content.Context;
+import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
@@ -31,11 +32,29 @@ public class SwipeViewPager extends ViewPager {
         return this.isSwipeEnabled && super.onInterceptTouchEvent(event);
     }
 
+    @Override
+    public void setAdapter(PagerAdapter adapter) {
+        super.setAdapter(adapter);
+        if (adapter instanceof OnPageSelectListener) {
+            addOnPageChangeListener(new SimpleOnPageChangeListener() {
+                @Override
+                public void onPageSelected(int position) {
+                    OnPageSelectListener listener = (OnPageSelectListener) getAdapter();
+                    setSwipeEnabled(listener.isSwipeEnabled(position));
+                }
+            });
+        }
+    }
+
     public boolean isSwipeEnabled() {
         return isSwipeEnabled;
     }
 
     public void setSwipeEnabled(boolean isSwipeEnabled) {
         this.isSwipeEnabled = isSwipeEnabled;
+    }
+
+    public interface OnPageSelectListener {
+        boolean isSwipeEnabled(int position);
     }
 }

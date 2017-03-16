@@ -30,7 +30,7 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <com.alsash.reciper.view.views.SwipeViewPager
+    <com.alsash.reciper.view.xmlview.SwipeViewPager
         android:id="@+id/activity_recipe_tab_pager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

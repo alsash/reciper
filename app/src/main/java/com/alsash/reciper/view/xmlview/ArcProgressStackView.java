@@ -1,4 +1,4 @@
-package com.alsash.reciper.view.views;
+package com.alsash.reciper.view.xmlview;
 
 import android.animation.ValueAnimator;
 import android.annotation.SuppressLint;
@@ -41,7 +41,6 @@ import java.util.Random;
  * Created by GIGAMOLE on 04.03.2016.
  * Updated by Alsash on 11.03.2017.
  */
-@TargetApi(Build.VERSION_CODES.HONEYCOMB)
 public class ArcProgressStackView extends View {
 
     // Default values
@@ -576,6 +575,12 @@ public class ArcProgressStackView extends View {
         return mTypeface;
     }
 
+    public void setTypeface(final Typeface typeface) {
+        mTypeface = typeface;
+        mTextPaint.setTypeface(typeface);
+        postInvalidate();
+    }
+
     public void setTypeface(final String typeface) {
         Typeface tempTypeface;
         try {
@@ -586,12 +591,6 @@ public class ArcProgressStackView extends View {
         }
 
         setTypeface(tempTypeface);
-    }
-
-    public void setTypeface(final Typeface typeface) {
-        mTypeface = typeface;
-        mTextPaint.setTypeface(typeface);
-        postInvalidate();
     }
 
     public IndicatorOrientation getIndicatorOrientation() {

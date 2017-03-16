@@ -5,7 +5,6 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
-import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
@@ -14,7 +13,7 @@ import com.alsash.reciper.model.models.Recipe;
 import com.alsash.reciper.presenter.interaction.RecipeListInteraction;
 import com.alsash.reciper.view.adapter.SwipePagerAdapter;
 import com.alsash.reciper.view.fragment.dialog.RecipeBottomDialog;
-import com.alsash.reciper.view.views.SwipeViewPager;
+import com.alsash.reciper.view.xmlview.SwipeViewPager;
 
 public class RecipeTabActivity extends BaseDrawerActivity implements RecipeListInteraction {
 
@@ -70,17 +69,10 @@ public class RecipeTabActivity extends BaseDrawerActivity implements RecipeListI
     private void setupPager() {
         pagerAdapter = new SwipePagerAdapter(this, getSupportFragmentManager());
         pager.setAdapter(pagerAdapter);
-        pager.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
-            @Override
-            public void onPageSelected(int position) {
-                pager.setSwipeEnabled(pagerAdapter.isSwipeEnabled(position));
-                setupTabs();
-            }
-        });
-        tabs.setupWithViewPager(pager);
     }
 
     private void setupTabs() {
+        tabs.setupWithViewPager(pager);
         for (int i = 0; i < tabs.getTabCount(); i++) {
             TabLayout.Tab tab = tabs.getTabAt(i);
             assert tab != null;

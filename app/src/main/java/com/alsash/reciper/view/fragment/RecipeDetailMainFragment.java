@@ -16,7 +16,7 @@ import com.alsash.reciper.R;
 import com.alsash.reciper.model.RecipeManager;
 import com.alsash.reciper.model.models.Recipe;
 import com.alsash.reciper.view.contract.KeyContract;
-import com.alsash.reciper.view.views.ArcProgressStackView;
+import com.alsash.reciper.view.xmlview.ArcProgressStackView;
 
 import java.util.ArrayList;
 import java.util.List;
