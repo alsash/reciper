@@ -8,6 +8,7 @@ import com.alsash.reciper.R;
 import com.alsash.reciper.model.models.Recipe;
 import com.alsash.reciper.presenter.interaction.RecipeListInteraction;
 import com.alsash.reciper.view.adapter.RecipeCatPagerAdapter;
+import com.alsash.reciper.view.adapter.SwipePagerAdapter;
 import com.alsash.reciper.view.fragment.dialog.RecipeBottomDialog;
 
 /**
@@ -34,12 +35,15 @@ public class RecipeTabCatActivity extends RecipeTabActivity implements RecipeLis
     @Nullable
     @Override
     protected Integer getNavItemId() {
-        return R.id.drawer_recipe_list;
+        return R.id.drawer_base_nav_recipe_all;
     }
 
     @Override
-    protected RecipeCatPagerAdapter getPagerAdapter() {
-        return null;
+    protected SwipePagerAdapter getPagerAdapter() {
+        if (pagerAdapter == null) {
+            pagerAdapter = new RecipeCatPagerAdapter(this, getSupportFragmentManager());
+        }
+        return pagerAdapter;
     }
 
     @Override

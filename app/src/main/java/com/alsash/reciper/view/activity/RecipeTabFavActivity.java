@@ -1,37 +1,25 @@
 package com.alsash.reciper.view.activity;
 
-import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
-import android.support.design.widget.TabLayout;
-import android.support.v4.view.ViewPager;
-import android.support.v7.app.ActionBar;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 
 import com.alsash.reciper.R;
 import com.alsash.reciper.model.models.Recipe;
 import com.alsash.reciper.presenter.interaction.RecipeListInteraction;
-import com.alsash.reciper.view.adapter.RecipeCatPagerAdapter;
+import com.alsash.reciper.view.adapter.RecipeFavPagerAdapter;
+import com.alsash.reciper.view.adapter.SwipePagerAdapter;
 import com.alsash.reciper.view.fragment.dialog.RecipeBottomDialog;
-import com.alsash.reciper.view.xmlview.SwipeViewPager;
 
 /**
  * The Activity that represents two tabs with RecipeCatPagerAdapter:
  * Tab one - RecipeLabelsFragment
  * Tab two - RecipeBookmarksFragment
  */
-public class RecipeTabFavActivity extends BaseDrawerActivity implements RecipeListInteraction {
+public class RecipeTabFavActivity extends RecipeTabActivity implements RecipeListInteraction {
 
     // Adapters
-    private RecipeCatPagerAdapter pagerAdapter;
-
-    // Views
-    private Toolbar toolbar;
-    private SwipeViewPager pager;
-    private TabLayout tabs;
-    private FloatingActionButton fab;
+    private RecipeFavPagerAdapter pagerAdapter;
 
     @Override
     public void onExpand(Recipe recipe, int position) {
@@ -47,61 +35,19 @@ public class RecipeTabFavActivity extends BaseDrawerActivity implements RecipeLi
     @Nullable
     @Override
     protected Integer getNavItemId() {
-        return R.id.drawer_recipe_list;
+        return R.id.drawer_base_nav_recipe_all;
     }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_tab);
-        bindViews();
-        setupToolbar();
-        setupPager();
-        setupTabs();
-        setupFab();
-    }
-
-    private void bindViews() {
-        toolbar = (Toolbar) findViewById(R.id.activity_tab_toolbar);
-        pager = (SwipeViewPager) findViewById(R.id.activity_tab_svp);
-        tabs = (TabLayout) findViewById(R.id.activity_tab_tabs);
-        fab = (FloatingActionButton) findViewById(R.id.activity_tab_fab);
-    }
-
-    private void setupToolbar() {
-        setSupportActionBar(toolbar);
-        setupDrawer(toolbar); // Call to parent BaseDrawerActivity
-    }
-
-    private void setupPager() {
-        pagerAdapter = new RecipeCatPagerAdapter(this, getSupportFragmentManager());
-        pager.setAdapter(pagerAdapter);
-        pager.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
-            @Override
-            public void onPageSelected(int position) {
-                setToolbarTitle(pagerAdapter.getPageTitle(position));
-            }
-        });
-        setToolbarTitle(pagerAdapter.getPageTitle(0));
-    }
-
-    private void setupTabs() {
-        tabs.setupWithViewPager(pager);
-        for (int i = 0; i < tabs.getTabCount(); i++) {
-            TabLayout.Tab tab = tabs.getTabAt(i);
-            assert tab != null;
-            tab.setText(null); // Icons only
-            tab.setIcon(pagerAdapter.getPageIcon(i));
+    protected SwipePagerAdapter getPagerAdapter() {
+        if (pagerAdapter == null) {
+            pagerAdapter = new RecipeFavPagerAdapter(this, getSupportFragmentManager());
         }
+        return pagerAdapter;
     }
 
-    private void setToolbarTitle(CharSequence title) {
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar == null) return;
-        actionBar.setTitle(title);
-    }
-
-    private void setupFab() {
+    @Override
+    protected void setupFab() {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -8,7 +8,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 
 import com.alsash.reciper.R;
-import com.alsash.reciper.view.adapter.RecipeCatPagerAdapter;
+import com.alsash.reciper.view.adapter.SwipePagerAdapter;
 import com.alsash.reciper.view.xmlview.SwipeViewPager;
 
 /**
@@ -21,6 +21,10 @@ public abstract class RecipeTabActivity extends BaseDrawerActivity {
     protected SwipeViewPager pager;
     protected TabLayout tabs;
     protected FloatingActionButton fab;
+
+    protected abstract SwipePagerAdapter getPagerAdapter();
+
+    protected abstract void setupFab();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,12 +51,14 @@ public abstract class RecipeTabActivity extends BaseDrawerActivity {
 
     private void setupPager() {
         pager.setAdapter(getPagerAdapter());
-        pager.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
-            @Override
-            public void onPageSelected(int position) {
-                setToolbarTitle(getPagerAdapter().getPageTitle(position));
-            }
-        });
+        if (!drawTabTitle()) {
+            pager.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
+                @Override
+                public void onPageSelected(int position) {
+                    setToolbarTitle(getPagerAdapter().getPageTitle(position));
+                }
+            });
+        }
         setToolbarTitle(getPagerAdapter().getPageTitle(0));
     }
 
@@ -61,8 +67,8 @@ public abstract class RecipeTabActivity extends BaseDrawerActivity {
         for (int i = 0; i < tabs.getTabCount(); i++) {
             TabLayout.Tab tab = tabs.getTabAt(i);
             assert tab != null;
-            tab.setText(null); // Icons only
-            tab.setIcon(getPagerAdapter().getPageIcon(i));
+            if (!drawTabTitle()) tab.setText(null); // Icons only
+            if (drawTabIcons()) tab.setIcon(getPagerAdapter().getPageIcon(i));
         }
     }
 
@@ -72,7 +78,11 @@ public abstract class RecipeTabActivity extends BaseDrawerActivity {
         actionBar.setTitle(title);
     }
 
-    protected abstract RecipeCatPagerAdapter getPagerAdapter();
+    protected boolean drawTabIcons() {
+        return true;
+    }
 
-    protected abstract void setupFab();
+    protected boolean drawTabTitle() {
+        return false;
+    }
 }

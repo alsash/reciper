@@ -8,7 +8,6 @@
     <string name="drawer_date_top_description">Creation date</string>
     <string name="drawer_date_end_description">Change date</string>
     <string name="drawer_recipe_num_description">Recipes</string>
-    <string name="drawer_menu_recipes">Recipes</string>
     <string name="drawer_menu_foods">Ingredients</string>
     <string name="drawer_menu_cart">Cart</string>
     <string name="drawer_menu_labels">Labels</string>
@@ -128,6 +127,7 @@
         "interact, and exist in space and in relation to each other. Realistic lighting shows "
         "seams, divides space, and indicates moving parts.\n\n"
     </string>
-    <string name="title_activity_recipe_tab">RecipeTabActivity</string>
-    <string name="section_format">Hello World from section: %1$d</string>
+    <string name="drawer_base_nav_root_recipe">Recipes</string>
+    <string name="drawer_base_nav_recipe_all">All recipes</string>
+    <string name="drawer_base_nav_recipe_favorite">Favorite recipes</string>
 </resources>

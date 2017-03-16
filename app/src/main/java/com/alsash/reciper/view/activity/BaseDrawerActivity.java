@@ -1,5 +1,6 @@
 package com.alsash.reciper.view.activity;
 
+import android.content.Intent;
 import android.support.annotation.IdRes;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
@@ -89,14 +90,28 @@ public abstract class BaseDrawerActivity extends AppCompatActivity
     }
 
     @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // back stack for child activity's navigation
+        if (getNavItemId() == null && item.getItemId() == android.R.id.home) {
+            finish();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
+        Class<?> thisClass = getClass();
+        Class<?> nextCLass = null;
 
         switch (id) {
-            case R.id.drawer_recipe_list:
+            case R.id.drawer_base_nav_recipe_all:
+                nextCLass = RecipeTabCatActivity.class;
                 break;
-            case R.id.drawer_food:
+            case R.id.drawer_base_nav_recipe_favorite:
+                nextCLass = RecipeTabFavActivity.class;
                 break;
             case R.id.drawer_cart:
                 break;
@@ -106,6 +121,11 @@ public abstract class BaseDrawerActivity extends AppCompatActivity
                 break;
             case R.id.drawer_settings:
                 break;
+        }
+
+        if (nextCLass != null && !thisClass.equals(nextCLass)) {
+            startActivity(new Intent(this, nextCLass));
+            finish(); // Remove current activity from back stack;
         }
 
         drawerLayout.closeDrawer(GravityCompat.START);

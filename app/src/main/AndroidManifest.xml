@@ -30,18 +30,10 @@
                     android:scheme="http" />
             </intent-filter>
         </activity>
+        <activity android:name=".view.activity.RecipeTabCatActivity" />
+        <activity android:name=".view.activity.RecipeTabFavActivity" />
         <activity android:name=".view.activity.RecipeListActivity" />
-        <activity
-            android:name=".view.activity.RecipeDetailActivity"
-            android:parentActivityName=".view.activity.RecipeListActivity">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.alsash.reciper.view.activity.RecipeListActivity" />
-        </activity>
-        <activity
-            android:name=".view.activity.RecipeTabCatActivity"
-            android:label="@string/title_activity_recipe_tab"
-            android:theme="@style/AppTheme"></activity>
+        <activity android:name=".view.activity.RecipeDetailActivity" />
     </application>
 
 </manifest>
