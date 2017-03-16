@@ -16,8 +16,8 @@ import java.lang.ref.WeakReference;
 
 /**
  * RecipeCatPagerAdapter that represents two tabs:
- * list of Recipe categories and
- * list of single Recipes
+ * list of recipe categories and
+ * list of single recipes
  */
 public class RecipeCatPagerAdapter extends FragmentPagerAdapter
         implements SwipeViewPager.OnPageSelectListener {

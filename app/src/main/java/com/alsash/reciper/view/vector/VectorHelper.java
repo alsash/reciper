@@ -90,11 +90,12 @@ public class VectorHelper {
         DrawableCompat.setTint(icon, ContextCompat.getColor(contextRef.get(), color));
     }
 
-    public void tintStateList(Drawable icon, @ColorRes Integer colorsRes) {
+    public void tintStateList(@Nullable Drawable icon, @ColorRes @Nullable Integer colorList) {
+        if (icon == null || colorList == null) return;
         icon.mutate();
         ColorStateList colors = ResourcesCompat.getColorStateList(
                 contextRef.get().getResources(),
-                colorsRes,
+                colorList,
                 themeRef.get());
         DrawableCompat.setTintList(icon, colors);
     }

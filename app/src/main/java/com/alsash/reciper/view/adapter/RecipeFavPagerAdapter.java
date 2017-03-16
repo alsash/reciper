@@ -15,9 +15,9 @@ import com.alsash.reciper.view.xmlview.SwipeViewPager;
 import java.lang.ref.WeakReference;
 
 /**
- * RecipeCatPagerAdapter that holds two fragments, that represents
- * list of Recipe categories and
- * list of single Recipes
+ * RecipeFavPagerAdapter that represents tabs with user's favorite recipes:
+ * list of labeled recipes and
+ * list of bookmarked recipes
  */
 public class RecipeFavPagerAdapter extends FragmentPagerAdapter
         implements SwipeViewPager.OnPageSelectListener {
@@ -48,7 +48,7 @@ public class RecipeFavPagerAdapter extends FragmentPagerAdapter
 
     @Override
     public int getCount() {
-        return 4;
+        return 2;
     }
 
     @Override
@@ -56,13 +56,9 @@ public class RecipeFavPagerAdapter extends FragmentPagerAdapter
         Resources resources = contextRef.get().getResources();
         switch (position) {
             case 0:
-                return resources.getString(R.string.recipe_group_category);
-            case 1:
                 return resources.getString(R.string.recipe_group_label);
-            case 2:
+            case 1:
                 return resources.getString(R.string.recipe_group_bookmark);
-            case 3:
-                return resources.getString(R.string.recipe_group_all);
         }
         return null;
     }
@@ -71,12 +67,9 @@ public class RecipeFavPagerAdapter extends FragmentPagerAdapter
         Drawable icon;
         switch (position) {
             case 0:
-                icon = vectorHelper.create(R.drawable.ic_category);
-                break;
-            case 1:
                 icon = vectorHelper.create(R.drawable.ic_labeled);
                 break;
-            case 2:
+            case 1:
                 icon = vectorHelper.create(R.drawable.ic_bookmarked);
                 break;
             case 3:
