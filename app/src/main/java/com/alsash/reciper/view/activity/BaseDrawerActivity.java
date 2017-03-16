@@ -18,6 +18,9 @@ import android.widget.ImageButton;
 
 import com.alsash.reciper.R;
 
+/**
+ * An abstract activity that implements main Navigation Drawer
+ */
 public abstract class BaseDrawerActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 

@@ -15,15 +15,17 @@ import com.alsash.reciper.view.xmlview.SwipeViewPager;
 import java.lang.ref.WeakReference;
 
 /**
- * SwipePagerAdapter for use with SwipeViewPager
+ * RecipeCatPagerAdapter that represents two tabs:
+ * list of Recipe categories and
+ * list of single Recipes
  */
-public class SwipePagerAdapter extends FragmentPagerAdapter
+public class RecipeCatPagerAdapter extends FragmentPagerAdapter
         implements SwipeViewPager.OnPageSelectListener {
 
     private final WeakReference<Context> contextRef;
     private final VectorHelper vectorHelper;
 
-    public SwipePagerAdapter(Context context, FragmentManager fm) {
+    public RecipeCatPagerAdapter(Context context, FragmentManager fm) {
         super(fm);
         this.contextRef = new WeakReference<>(context);
         this.vectorHelper = new VectorHelper(context);

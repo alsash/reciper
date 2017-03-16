@@ -39,7 +39,7 @@
                 android:value="com.alsash.reciper.view.activity.RecipeListActivity" />
         </activity>
         <activity
-            android:name=".view.activity.RecipeTabActivity"
+            android:name=".view.activity.RecipeTabCatActivity"
             android:label="@string/title_activity_recipe_tab"
             android:theme="@style/AppTheme"></activity>
     </application>
