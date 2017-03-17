@@ -127,7 +127,6 @@
         "interact, and exist in space and in relation to each other. Realistic lighting shows "
         "seams, divides space, and indicates moving parts.\n\n"
     </string>
-    <string name="drawer_base_nav_root_recipe">Recipes</string>
     <string name="drawer_base_nav_recipe_all">All recipes</string>
     <string name="drawer_base_nav_recipe_favorite">Favorite recipes</string>
 </resources>

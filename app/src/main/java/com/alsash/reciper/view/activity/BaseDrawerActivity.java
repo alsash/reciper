@@ -1,6 +1,7 @@
 package com.alsash.reciper.view.activity;
 
 import android.content.Intent;
+import android.os.Handler;
 import android.support.annotation.IdRes;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
@@ -24,6 +25,8 @@ import com.alsash.reciper.R;
  */
 public abstract class BaseDrawerActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    private static final int ON_NAV_FINISH_DELAY_MS = 100;
 
     private DrawerLayout drawerLayout;
     private ViewGroup drawerContent;
@@ -50,6 +53,7 @@ public abstract class BaseDrawerActivity extends AppCompatActivity
 
     /**
      * Setup Navigation Drawer after toolbar have been bound
+     *
      * @param toolbar child activity's toolbar.
      *                Null if homeAsUpButton is enabled
      */
@@ -125,7 +129,12 @@ public abstract class BaseDrawerActivity extends AppCompatActivity
 
         if (nextCLass != null && !thisClass.equals(nextCLass)) {
             startActivity(new Intent(this, nextCLass));
-            finish(); // Remove current activity from back stack;
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    finish(); // Remove current activity from back stack;
+                }
+            }, ON_NAV_FINISH_DELAY_MS); // Run after short delay for smooth animation
         }
 
         drawerLayout.closeDrawer(GravityCompat.START);

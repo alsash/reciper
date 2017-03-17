@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item
+    <group
         android:id="@+id/drawer_base_nav_root_recipe"
-        android:title="@string/drawer_base_nav_root_recipe">
+        android:checkableBehavior="single">
         <item
             android:id="@+id/drawer_base_nav_recipe_all"
             android:icon="@drawable/ic_recipe"
@@ -12,7 +12,7 @@
             android:id="@+id/drawer_base_nav_recipe_favorite"
             android:icon="@drawable/ic_favorite"
             android:title="@string/drawer_base_nav_recipe_favorite" />
-    </item>
+    </group>
 
     <group
         android:id="@+id/drawer_group_cart"
