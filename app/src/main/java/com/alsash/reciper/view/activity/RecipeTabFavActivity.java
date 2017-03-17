@@ -35,7 +35,7 @@ public class RecipeTabFavActivity extends RecipeTabActivity implements RecipeLis
     @Nullable
     @Override
     protected Integer getNavItemId() {
-        return R.id.drawer_base_nav_recipe_all;
+        return R.id.drawer_base_nav_recipe_favorite;
     }
 
     @Override
