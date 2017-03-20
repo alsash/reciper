@@ -104,7 +104,7 @@ public abstract class BaseDrawerActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
-        Class<?> thisClass = getClass();
+        final Class<?> thisClass = getClass();
         Class<?> nextClass = null;
 
         switch (id) {
@@ -137,6 +137,8 @@ public abstract class BaseDrawerActivity extends AppCompatActivity
 
                 public Runnable setStarter(Intent starter) {
                     this.starter = starter;
+                    this.starter.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION
+                            | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     return this;
                 }
             }.setStarter(new Intent(BaseDrawerActivity.this, nextClass)));
@@ -157,11 +159,11 @@ public abstract class BaseDrawerActivity extends AppCompatActivity
 
         @Override
         public void onDrawerClosed(View drawerView) {
-            super.onDrawerClosed(drawerView);
             if (closedRunnable != null) {
                 closedRunnable.run();
                 closedRunnable = null;
             }
+            super.onDrawerClosed(drawerView);
         }
 
         public synchronized void setClosedRunnable(Runnable closedRunnable) {
