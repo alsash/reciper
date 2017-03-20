@@ -2,7 +2,6 @@ package com.alsash.reciper.view.activity;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.os.Handler;
 import android.support.annotation.IdRes;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
@@ -123,8 +122,6 @@ public abstract class BaseDrawerActivity extends AppCompatActivity
                 break;
             case R.id.drawer_settings:
                 break;
-            default:
-                nextClass = null;
         }
 
         if (nextClass != null && !thisClass.equals(nextClass)) {
@@ -142,7 +139,7 @@ public abstract class BaseDrawerActivity extends AppCompatActivity
                     this.starter = starter;
                     return this;
                 }
-            }.setStarter(new Intent(this, nextClass)));
+            }.setStarter(new Intent(BaseDrawerActivity.this, nextClass)));
         }
         drawerLayout.closeDrawer(GravityCompat.START);
         return true;
@@ -150,43 +147,25 @@ public abstract class BaseDrawerActivity extends AppCompatActivity
 
     private static class DrawerToggle extends ActionBarDrawerToggle {
 
-        private final Handler handler;
         private Runnable closedRunnable;
 
         public DrawerToggle(Activity activity,
                             DrawerLayout layout,
                             @Nullable Toolbar toolbar) {
             super(activity, layout, toolbar, R.string.drawer_open, R.string.drawer_close);
-            handler = new Handler(activity.getMainLooper());
         }
 
         @Override
         public void onDrawerClosed(View drawerView) {
             super.onDrawerClosed(drawerView);
-            postClosedRunnable();
+            if (closedRunnable != null) {
+                closedRunnable.run();
+                closedRunnable = null;
+            }
         }
 
         public synchronized void setClosedRunnable(Runnable closedRunnable) {
             this.closedRunnable = closedRunnable;
-        }
-
-        private synchronized void postClosedRunnable() {
-            if (closedRunnable != null) {
-                handler.post(new Runnable() {
-                    private Runnable execRunnable;
-
-                    @Override
-                    public void run() {
-                        execRunnable.run();
-                    }
-
-                    public Runnable setExecRunnable(Runnable execRunnable) {
-                        this.execRunnable = execRunnable;
-                        return this;
-                    }
-                }.setExecRunnable(closedRunnable));
-                closedRunnable = null;
-            }
         }
     }
 }
