@@ -1,5 +1,6 @@
 package com.alsash.reciper.view.activity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Handler;
 import android.support.annotation.IdRes;
@@ -26,11 +27,10 @@ import com.alsash.reciper.R;
 public abstract class BaseDrawerActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    private static final int ON_NAV_FINISH_DELAY_MS = 100;
-
     private DrawerLayout drawerLayout;
     private ViewGroup drawerContent;
     private NavigationView drawerNav;
+    private DrawerToggle drawerToggle;
     private View drawerNavHeader;
 
     @IdRes
@@ -58,16 +58,14 @@ public abstract class BaseDrawerActivity extends AppCompatActivity
      *                Null if homeAsUpButton is enabled
      */
     protected final void setupDrawer(@Nullable Toolbar toolbar) {
-        ActionBarDrawerToggle drawerToggle = new ActionBarDrawerToggle(this, drawerLayout,
-                toolbar, R.string.drawer_open, R.string.drawer_close);
+        drawerToggle = new DrawerToggle(this, drawerLayout, toolbar);
         drawerLayout.addDrawerListener(drawerToggle);
         drawerToggle.setDrawerIndicatorEnabled(toolbar != null);
         drawerToggle.syncState();
-
         drawerNav.setNavigationItemSelectedListener(this);
-        if (getNavItemId() != null) {
-            drawerNav.setCheckedItem(getNavItemId());
-        }
+
+        if (getNavItemId() != null) drawerNav.setCheckedItem(getNavItemId());
+
         final ImageButton button = (ImageButton) drawerNavHeader.findViewById(R.id.drawer_account_details);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -108,14 +106,14 @@ public abstract class BaseDrawerActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
         Class<?> thisClass = getClass();
-        Class<?> nextCLass = null;
+        Class<?> nextClass = null;
 
         switch (id) {
             case R.id.drawer_base_nav_recipe_all:
-                nextCLass = RecipeTabCatActivity.class;
+                nextClass = RecipeTabCatActivity.class;
                 break;
             case R.id.drawer_base_nav_recipe_favorite:
-                nextCLass = RecipeTabFavActivity.class;
+                nextClass = RecipeTabFavActivity.class;
                 break;
             case R.id.drawer_cart:
                 break;
@@ -125,19 +123,70 @@ public abstract class BaseDrawerActivity extends AppCompatActivity
                 break;
             case R.id.drawer_settings:
                 break;
+            default:
+                nextClass = null;
         }
 
-        if (nextCLass != null && !thisClass.equals(nextCLass)) {
-            startActivity(new Intent(this, nextCLass));
-            new Handler().postDelayed(new Runnable() {
+        if (nextClass != null && !thisClass.equals(nextClass)) {
+            // Post startActivity after drawerClosed event for smooth animation
+            drawerToggle.setClosedRunnable(new Runnable() {
+                private Intent starter;
+
                 @Override
                 public void run() {
-                    finish(); // Remove current activity from back stack;
+                    startActivity(starter);
+                    finish();
                 }
-            }, ON_NAV_FINISH_DELAY_MS); // Run after short delay for smooth animation
-        }
 
+                public Runnable setStarter(Intent starter) {
+                    this.starter = starter;
+                    return this;
+                }
+            }.setStarter(new Intent(this, nextClass)));
+        }
         drawerLayout.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    private static class DrawerToggle extends ActionBarDrawerToggle {
+
+        private final Handler handler;
+        private Runnable closedRunnable;
+
+        public DrawerToggle(Activity activity,
+                            DrawerLayout layout,
+                            @Nullable Toolbar toolbar) {
+            super(activity, layout, toolbar, R.string.drawer_open, R.string.drawer_close);
+            handler = new Handler(activity.getMainLooper());
+        }
+
+        @Override
+        public void onDrawerClosed(View drawerView) {
+            super.onDrawerClosed(drawerView);
+            postClosedRunnable();
+        }
+
+        public synchronized void setClosedRunnable(Runnable closedRunnable) {
+            this.closedRunnable = closedRunnable;
+        }
+
+        private synchronized void postClosedRunnable() {
+            if (closedRunnable != null) {
+                handler.post(new Runnable() {
+                    private Runnable execRunnable;
+
+                    @Override
+                    public void run() {
+                        execRunnable.run();
+                    }
+
+                    public Runnable setExecRunnable(Runnable execRunnable) {
+                        this.execRunnable = execRunnable;
+                        return this;
+                    }
+                }.setExecRunnable(closedRunnable));
+                closedRunnable = null;
+            }
+        }
     }
 }
