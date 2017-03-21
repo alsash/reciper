@@ -26,7 +26,7 @@ import com.alsash.reciper.R;
 public abstract class BaseDrawerActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    private static final int NAV_STARTER_POST_DELAY_MS = 160;
+    private static final int NAV_STARTER_POST_DELAY_MS = 100;
 
     private DrawerLayout drawerLayout;
     private ViewGroup drawerContent;
@@ -125,27 +125,30 @@ public abstract class BaseDrawerActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
-        final Class<?> thisClass = getClass();
-        Class<?> nextClass = null;
+        int thisId = getNavItemId() != null ? getNavItemId() : 0;
 
-        switch (id) {
-            case R.id.drawer_base_nav_recipe_all:
-                nextClass = RecipeTabCatActivity.class;
-                break;
-            case R.id.drawer_base_nav_recipe_favorite:
-                nextClass = RecipeTabFavActivity.class;
-                break;
-            case R.id.drawer_cart:
-                break;
-            case R.id.drawer_label:
-                break;
-            case R.id.drawer_category:
-                break;
-            case R.id.drawer_settings:
-                break;
-        }
-        if (nextClass != null && !thisClass.equals(nextClass)) {
-            postNavStarter(newNavStarter(new Intent(this, nextClass)));
+        if (id != thisId) {
+            Class<?> thisClass = getClass();
+            Class<?> nextClass = null;
+            switch (id) {
+                case R.id.drawer_base_nav_recipe_all:
+                    nextClass = RecipeTabCatActivity.class;
+                    break;
+                case R.id.drawer_base_nav_recipe_favorite:
+                    nextClass = RecipeTabFavActivity.class;
+                    break;
+                case R.id.drawer_cart:
+                    break;
+                case R.id.drawer_label:
+                    break;
+                case R.id.drawer_category:
+                    break;
+                case R.id.drawer_settings:
+                    break;
+            }
+            if (nextClass != null && !thisClass.equals(nextClass)) {
+                postNavStarter(newNavStarter(new Intent(this, nextClass)));
+            }
         }
         drawerLayout.closeDrawer(GravityCompat.START);
         return true;
@@ -154,16 +157,23 @@ public abstract class BaseDrawerActivity extends AppCompatActivity
     private Runnable newNavStarter(Intent starter) {
         return new Runnable() {
             private Intent starter;
+            private boolean noAnim = getNavItemId() != null;
 
             @Override
             public void run() {
                 startActivity(starter);
                 finish();
+                if (noAnim) overridePendingTransition(0, 0); // No animation if navigate on root
             }
 
-            public Runnable setStarter(Intent starter) {
+            Runnable setStarter(Intent starter) {
+                if (noAnim) {
+                    starter.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                } else {
+                    starter.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK
+                            | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                }
                 this.starter = starter;
-                this.starter.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                 return this;
             }
         }.setStarter(starter);
