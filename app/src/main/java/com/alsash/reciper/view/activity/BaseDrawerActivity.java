@@ -1,7 +1,7 @@
 package com.alsash.reciper.view.activity;
 
-import android.app.Activity;
 import android.content.Intent;
+import android.os.Handler;
 import android.support.annotation.IdRes;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
@@ -26,11 +26,15 @@ import com.alsash.reciper.R;
 public abstract class BaseDrawerActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    private static final int NAV_STARTER_POST_DELAY_MS = 160;
+
     private DrawerLayout drawerLayout;
     private ViewGroup drawerContent;
     private NavigationView drawerNav;
-    private DrawerToggle drawerToggle;
     private View drawerNavHeader;
+
+    private Handler navHandler = new Handler();
+    private Runnable navStarter = null;
 
     @IdRes
     @Nullable
@@ -57,7 +61,8 @@ public abstract class BaseDrawerActivity extends AppCompatActivity
      *                Null if homeAsUpButton is enabled
      */
     protected final void setupDrawer(@Nullable Toolbar toolbar) {
-        drawerToggle = new DrawerToggle(this, drawerLayout, toolbar);
+        ActionBarDrawerToggle drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar,
+                R.string.drawer_open, R.string.drawer_close);
         drawerLayout.addDrawerListener(drawerToggle);
         drawerToggle.setDrawerIndicatorEnabled(toolbar != null);
         drawerToggle.syncState();
@@ -87,6 +92,22 @@ public abstract class BaseDrawerActivity extends AppCompatActivity
             drawerLayout.closeDrawer(GravityCompat.START);
         } else {
             super.onBackPressed();
+        }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (navStarter != null) {
+            navHandler.removeCallbacks(navStarter);
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (navStarter != null) {
+            navHandler.postDelayed(navStarter, NAV_STARTER_POST_DELAY_MS);
         }
     }
 
@@ -123,51 +144,36 @@ public abstract class BaseDrawerActivity extends AppCompatActivity
             case R.id.drawer_settings:
                 break;
         }
-
         if (nextClass != null && !thisClass.equals(nextClass)) {
-            // Post startActivity after drawerClosed event for smooth animation
-            drawerToggle.setClosedRunnable(new Runnable() {
-                private Intent starter;
-
-                @Override
-                public void run() {
-                    startActivity(starter);
-                    finish();
-                }
-
-                public Runnable setStarter(Intent starter) {
-                    this.starter = starter;
-                    this.starter.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION
-                            | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    return this;
-                }
-            }.setStarter(new Intent(BaseDrawerActivity.this, nextClass)));
+            postNavStarter(newNavStarter(new Intent(this, nextClass)));
         }
         drawerLayout.closeDrawer(GravityCompat.START);
         return true;
     }
 
-    private static class DrawerToggle extends ActionBarDrawerToggle {
+    private Runnable newNavStarter(Intent starter) {
+        return new Runnable() {
+            private Intent starter;
 
-        private Runnable closedRunnable;
-
-        public DrawerToggle(Activity activity,
-                            DrawerLayout layout,
-                            @Nullable Toolbar toolbar) {
-            super(activity, layout, toolbar, R.string.drawer_open, R.string.drawer_close);
-        }
-
-        @Override
-        public void onDrawerClosed(View drawerView) {
-            if (closedRunnable != null) {
-                closedRunnable.run();
-                closedRunnable = null;
+            @Override
+            public void run() {
+                startActivity(starter);
+                finish();
             }
-            super.onDrawerClosed(drawerView);
-        }
 
-        public synchronized void setClosedRunnable(Runnable closedRunnable) {
-            this.closedRunnable = closedRunnable;
+            public Runnable setStarter(Intent starter) {
+                this.starter = starter;
+                this.starter.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                return this;
+            }
+        }.setStarter(starter);
+    }
+
+    private void postNavStarter(Runnable newNavStarter) {
+        if (navStarter != null) {
+            navHandler.removeCallbacks(navStarter); // Run only last chosen item
         }
+        navStarter = newNavStarter;
+        navHandler.postDelayed(navStarter, NAV_STARTER_POST_DELAY_MS);
     }
 }
