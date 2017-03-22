@@ -26,7 +26,7 @@ import com.alsash.reciper.R;
 public abstract class BaseDrawerActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    private static final int NAV_STARTER_POST_DELAY_MS = 100;
+    private static final int NAV_STARTER_POST_DELAY_MS = 120;
 
     private DrawerLayout drawerLayout;
     private ViewGroup drawerContent;
