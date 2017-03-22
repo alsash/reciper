@@ -156,19 +156,26 @@ public abstract class BaseDrawerActivity extends AppCompatActivity
 
     private Runnable newNavStarter(Intent starter) {
         return new Runnable() {
+            boolean isRoot = getNavItemId() != null;
             private Intent starter;
 
             @Override
             public void run() {
                 startActivity(starter);
                 finish();
-                overridePendingTransition(0, 0); // No animation if navigate on root
+                overridePendingTransition(0, 0); // No animation on finish
                 navStarter = null;
             }
 
             Runnable setStarter(Intent starter) {
-                starter.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION
-                        | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                if (isRoot) {   // Same task
+                    starter.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION
+                            | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                } else {        // New task
+                    starter.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION
+                            | Intent.FLAG_ACTIVITY_CLEAR_TASK
+                            | Intent.FLAG_ACTIVITY_NEW_TASK);
+                }
                 this.starter = starter;
                 return this;
             }
