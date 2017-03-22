@@ -1,6 +1,5 @@
 package com.alsash.reciper.view.fragment;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -14,39 +13,21 @@ import com.alsash.reciper.R;
 import com.alsash.reciper.model.RecipeManager;
 import com.alsash.reciper.model.models.Recipe;
 import com.alsash.reciper.presenter.interaction.RecipeListInteraction;
+import com.alsash.reciper.view.activity.RecipeDetailActivity;
 import com.alsash.reciper.view.adapter.RecipeCardAdapter;
 import com.alsash.reciper.view.animator.FlipCardAnimator;
+import com.alsash.reciper.view.fragment.dialog.RecipeBottomDialog;
 
 import java.util.List;
 
 
-public class RecipeListFragment extends Fragment {
+public class RecipeListFragment extends Fragment implements RecipeListInteraction {
 
     // Model
     private List<Recipe> recipes;
 
     // Views
     private RecyclerView list;
-
-    // Interactions
-    // Decorator Pattern
-    private RecipeListInteraction activityInteraction;
-    private RecipeListInteraction decoratorInteraction = new RecipeListInteraction() {
-        @Override
-        public void onOpen(Recipe recipe, int position) {
-            if (activityInteraction == null) return;
-            activityInteraction.onOpen(recipe, position);
-            updateList(recipe, position);
-        }
-
-        @Override
-        public void onExpand(Recipe recipe, int position) {
-            if (activityInteraction == null) return;
-            activityInteraction.onExpand(recipe, position);
-            list.getAdapter().notifyItemChanged(position);
-            updateList(recipe, position);
-        }
-    };
 
     public static RecipeListFragment newInstance() {
         Bundle args = new Bundle();
@@ -56,17 +37,15 @@ public class RecipeListFragment extends Fragment {
     }
 
     @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof RecipeListInteraction) {
-            activityInteraction = (RecipeListInteraction) context;
-        }
+    public void onExpand(Recipe recipe, int position) {
+        RecipeBottomDialog bottomDialog = RecipeBottomDialog.newInstance(recipe);
+        bottomDialog.show(getActivity().getSupportFragmentManager(), bottomDialog.getTag());
     }
 
     @Override
-    public void onDetach() {
-        super.onDetach();
-        activityInteraction = null;
+    public void onOpen(Recipe recipe, int position) {
+        RecipeDetailActivity.start(getContext(), recipe.getId());
+        list.getAdapter().notifyItemChanged(position);
     }
 
     @Override
@@ -96,15 +75,7 @@ public class RecipeListFragment extends Fragment {
     private void setupList() {
         list.setLayoutManager(new GridLayoutManager(getActivity(), getResources()
                 .getInteger(R.integer.recipe_list_span)));
-        list.setAdapter(new RecipeCardAdapter(decoratorInteraction, recipes));
+        list.setAdapter(new RecipeCardAdapter(this, recipes));
         list.setItemAnimator(new FlipCardAnimator());
-    }
-
-    private void updateList(Recipe recipe, int position) {
-        if (recipes.get(position) != null && recipes.get(position).equals(recipe)) {
-            list.getAdapter().notifyItemChanged(position);
-        } else {
-            list.getAdapter().notifyItemRemoved(position);
-        }
     }
 }

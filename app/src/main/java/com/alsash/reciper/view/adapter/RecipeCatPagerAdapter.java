@@ -40,7 +40,7 @@ public class RecipeCatPagerAdapter extends SwipePagerAdapter {
         Resources resources = contextRef.get().getResources();
         return (position == 0) ?
                 resources.getString(R.string.recipe_group_category) :
-                resources.getString(R.string.recipe_group_all);
+                resources.getString(R.string.recipe_group_list);
     }
 
     @Override

@@ -4,7 +4,7 @@
         android:id="@+id/group_all"
         android:checked="true"
         android:icon="@drawable/ic_clear"
-        android:title="@string/recipe_group_all" />
+        android:title="@string/recipe_group_list" />
     <item
         android:id="@+id/group_label"
         android:icon="@drawable/ic_label"

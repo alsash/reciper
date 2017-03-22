@@ -2,6 +2,7 @@ package com.alsash.reciper.view.adapter;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
+import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
@@ -24,5 +25,6 @@ public abstract class SwipePagerAdapter extends FragmentPagerAdapter
 
     public abstract boolean isSwipeEnabled(int position);
 
+    @Nullable
     public abstract Drawable getPageIcon(int position);
 }

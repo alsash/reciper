@@ -23,7 +23,7 @@
     <string name="recipe_group_category">Categories</string>
     <string name="recipe_group_label">Labels</string>
     <string name="recipe_group_bookmark">Bookmarks</string>
-    <string name="recipe_group_all">All</string>
+    <string name="recipe_group_list">List</string>
     <string name="list_group_energy">Energy</string>
     <string name="list_group_nutrition">Nutrition</string>
     <string name="list_group_time">Time</string>

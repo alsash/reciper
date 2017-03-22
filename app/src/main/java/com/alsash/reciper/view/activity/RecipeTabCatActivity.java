@@ -5,32 +5,18 @@ import android.support.design.widget.Snackbar;
 import android.view.View;
 
 import com.alsash.reciper.R;
-import com.alsash.reciper.model.models.Recipe;
-import com.alsash.reciper.presenter.interaction.RecipeListInteraction;
 import com.alsash.reciper.view.adapter.RecipeCatPagerAdapter;
 import com.alsash.reciper.view.adapter.SwipePagerAdapter;
-import com.alsash.reciper.view.fragment.dialog.RecipeBottomDialog;
 
 /**
  * The Activity that represents two tabs with RecipeCatPagerAdapter:
  * Tab one - RecipeCategoriesFragment
  * Tab two - RecipeListFragment
  */
-public class RecipeTabCatActivity extends RecipeTabActivity implements RecipeListInteraction {
+public class RecipeTabCatActivity extends BaseTabActivity {
 
     // Adapters
     private RecipeCatPagerAdapter pagerAdapter;
-
-    @Override
-    public void onExpand(Recipe recipe, int position) {
-        RecipeBottomDialog bottomDialog = RecipeBottomDialog.newInstance(recipe);
-        bottomDialog.show(getSupportFragmentManager(), bottomDialog.getTag());
-    }
-
-    @Override
-    public void onOpen(Recipe recipe, int position) {
-        RecipeDetailActivity.start(RecipeTabCatActivity.this, recipe.getId());
-    }
 
     @Nullable
     @Override

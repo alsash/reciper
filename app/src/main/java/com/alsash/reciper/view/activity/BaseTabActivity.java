@@ -14,7 +14,7 @@ import com.alsash.reciper.view.xmlview.SwipeViewPager;
 /**
  * An abstract Activity that holds tab layout
  */
-public abstract class RecipeTabActivity extends BaseDrawerActivity {
+public abstract class BaseTabActivity extends BaseDrawerActivity {
 
     // Views
     protected Toolbar toolbar;
@@ -29,7 +29,7 @@ public abstract class RecipeTabActivity extends BaseDrawerActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_tab);
+        setContentView(R.layout.activity_tab_base);
         bindViews();
         setupToolbar();
         setupPager();
@@ -45,6 +45,7 @@ public abstract class RecipeTabActivity extends BaseDrawerActivity {
     }
 
     private void setupToolbar() {
+        if (drawTabTitle()) toolbar.setTitle(R.string.app_name);
         setSupportActionBar(toolbar);
         setupDrawer(toolbar); // Call to parent BaseDrawerActivity
     }
@@ -58,12 +59,12 @@ public abstract class RecipeTabActivity extends BaseDrawerActivity {
                     setToolbarTitle(getPagerAdapter().getPageTitle(position));
                 }
             });
+            setToolbarTitle(getPagerAdapter().getPageTitle(0));
         }
-        setToolbarTitle(getPagerAdapter().getPageTitle(0));
+        tabs.setupWithViewPager(pager);
     }
 
     private void setupTabs() {
-        tabs.setupWithViewPager(pager);
         for (int i = 0; i < tabs.getTabCount(); i++) {
             TabLayout.Tab tab = tabs.getTabAt(i);
             assert tab != null;
@@ -79,10 +80,10 @@ public abstract class RecipeTabActivity extends BaseDrawerActivity {
     }
 
     protected boolean drawTabIcons() {
-        return true;
+        return false;
     }
 
     protected boolean drawTabTitle() {
-        return false;
+        return true;
     }
 }
