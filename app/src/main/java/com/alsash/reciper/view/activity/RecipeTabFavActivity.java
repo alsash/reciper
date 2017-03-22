@@ -1,5 +1,6 @@
 package com.alsash.reciper.view.activity;
 
+import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.view.View;
@@ -17,6 +18,12 @@ public class RecipeTabFavActivity extends BaseTabActivity {
 
     // Adapters
     private RecipeFavPagerAdapter pagerAdapter;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setToolbarTitle(getResources().getString(R.string.drawer_base_nav_recipe_favorite));
+    }
 
     @Nullable
     @Override

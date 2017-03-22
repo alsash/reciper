@@ -45,7 +45,6 @@ public abstract class BaseTabActivity extends BaseDrawerActivity {
     }
 
     private void setupToolbar() {
-        if (drawTabTitle()) toolbar.setTitle(R.string.app_name);
         setSupportActionBar(toolbar);
         setupDrawer(toolbar); // Call to parent BaseDrawerActivity
     }
