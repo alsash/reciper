@@ -27,7 +27,7 @@ public class RecipeListFragment extends Fragment implements RecipeListInteractio
     private List<Recipe> recipes;
 
     // Views
-    private RecyclerView list;
+    private RecyclerView recyclerView;
 
     public static RecipeListFragment newInstance() {
         Bundle args = new Bundle();
@@ -45,7 +45,7 @@ public class RecipeListFragment extends Fragment implements RecipeListInteractio
     @Override
     public void onOpen(Recipe recipe, int position) {
         RecipeDetailActivity.start(getContext(), recipe.getId());
-        list.getAdapter().notifyItemChanged(position);
+        recyclerView.getAdapter().notifyItemChanged(position);
     }
 
     @Override
@@ -69,13 +69,13 @@ public class RecipeListFragment extends Fragment implements RecipeListInteractio
     }
 
     private void bindViews(View layout) {
-        list = (RecyclerView) layout.findViewById(R.id.list);
+        recyclerView = (RecyclerView) layout.findViewById(R.id.list);
     }
 
     private void setupList() {
-        list.setLayoutManager(new GridLayoutManager(getActivity(), getResources()
+        recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), getResources()
                 .getInteger(R.integer.recipe_list_span)));
-        list.setAdapter(new RecipeCardAdapter(this, recipes));
-        list.setItemAnimator(new FlipCardAnimator());
+        recyclerView.setAdapter(new RecipeCardAdapter(this, recipes));
+        recyclerView.setItemAnimator(new FlipCardAnimator());
     }
 }
