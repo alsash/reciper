@@ -28,7 +28,6 @@ public class CategoryDb implements Category {
         return name;
     }
 
-    @Override
     public List<Long> getRecipeIds() {
         return recipeIds;
     }
