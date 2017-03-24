@@ -24,6 +24,10 @@ public class CategoryManager {
         return instance;
     }
 
+    public List<Category> getCategories() {
+        return categories;
+    }
+
     public Category newCategory() {
         long id = categories.size();
         List<Long> recipeIds = new ArrayList<>();

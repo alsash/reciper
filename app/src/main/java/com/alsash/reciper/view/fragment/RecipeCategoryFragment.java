@@ -9,15 +9,15 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.alsash.reciper.R;
-import com.alsash.reciper.model.RecipeManager;
-import com.alsash.reciper.model.models.Recipe;
+import com.alsash.reciper.model.CategoryManager;
+import com.alsash.reciper.model.models.Category;
 
 import java.util.List;
 
 public class RecipeCategoryFragment extends Fragment {
 
     // Model
-    private List<Recipe> recipes;
+    private List<Category> categories;
 
     // Views
     private RecyclerView recyclerView;
@@ -46,7 +46,7 @@ public class RecipeCategoryFragment extends Fragment {
     }
 
     private void bindModel() {
-        recipes = RecipeManager.getInstance().getRecipes();
+        categories = CategoryManager.getInstance().getCategories();
     }
 
     private void bindViews(View layout) {
