@@ -15,14 +15,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class CategoryListAdapter extends RecyclerView.Adapter<CategoryHolder> {
+public class CategoryAdapter extends RecyclerView.Adapter<CategoryHolder> {
 
     private RecipeListInteraction recipeInteraction;
     private Map<Category, List<Recipe>> categoryRecipesMap;
     private List<Category> categories = new ArrayList<>();
 
-    public CategoryListAdapter(RecipeListInteraction recipeInteraction,
-                               Map<Category, List<Recipe>> categoryRecipesMap) {
+    public CategoryAdapter(RecipeListInteraction recipeInteraction,
+                           Map<Category, List<Recipe>> categoryRecipesMap) {
         this.recipeInteraction = recipeInteraction;
         this.categoryRecipesMap = categoryRecipesMap;
         this.categories.addAll(categoryRecipesMap.keySet());
@@ -39,7 +39,7 @@ public class CategoryListAdapter extends RecyclerView.Adapter<CategoryHolder> {
     public void onBindViewHolder(CategoryHolder holder, int position) {
         Category category = categories.get(position);
         List<Recipe> recipes = categoryRecipesMap.get(category);
-        holder.bindCategory(category, recipes);
+        holder.bindCategory(category, recipes, recipeInteraction);
     }
 
     @Override
