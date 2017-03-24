@@ -7,19 +7,25 @@ import android.view.ViewGroup;
 
 import com.alsash.reciper.R;
 import com.alsash.reciper.model.models.Category;
+import com.alsash.reciper.model.models.Recipe;
 import com.alsash.reciper.presenter.interaction.RecipeListInteraction;
 import com.alsash.reciper.view.adapter.holder.CategoryHolder;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class CategoryListAdapter extends RecyclerView.Adapter<CategoryHolder> {
 
-    private final RecipeListInteraction recipeInteraction;
-    private final List<Category> categories;
+    private RecipeListInteraction recipeInteraction;
+    private Map<Category, List<Recipe>> categoryRecipesMap;
+    private List<Category> categories = new ArrayList<>();
 
-    public CategoryListAdapter(RecipeListInteraction recipeInteraction, List<Category> categories) {
+    public CategoryListAdapter(RecipeListInteraction recipeInteraction,
+                               Map<Category, List<Recipe>> categoryRecipesMap) {
         this.recipeInteraction = recipeInteraction;
-        this.categories = categories;
+        this.categoryRecipesMap = categoryRecipesMap;
+        this.categories.addAll(categoryRecipesMap.keySet());
     }
 
     @Override
@@ -31,6 +37,13 @@ public class CategoryListAdapter extends RecyclerView.Adapter<CategoryHolder> {
 
     @Override
     public void onBindViewHolder(CategoryHolder holder, int position) {
+        Category category = categories.get(position);
+        List<Recipe> recipes = categoryRecipesMap.get(category);
+        holder.bindCategory(category, recipes);
+    }
 
+    @Override
+    public int getItemCount() {
+        return categories.size();
     }
 }

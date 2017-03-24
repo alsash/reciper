@@ -8,4 +8,6 @@ public interface Recipe {
     Nutrition getNutrition();
 
     Category getCategory();
+
+    void setCategory(Category category);
 }

@@ -2,20 +2,15 @@ package com.alsash.reciper.model.database;
 
 import com.alsash.reciper.model.models.Category;
 
-import java.util.List;
-
 public class CategoryDb implements Category {
 
     private long id;
 
     private String name;
 
-    private List<Long> recipeIds;
-
-    public CategoryDb(long id, String name, List<Long> recipeIds) {
+    public CategoryDb(long id, String name) {
         this.id = id;
         this.name = name;
-        this.recipeIds = recipeIds;
     }
 
     @Override
@@ -26,9 +21,5 @@ public class CategoryDb implements Category {
     @Override
     public String getName() {
         return name;
-    }
-
-    public List<Long> getRecipeIds() {
-        return recipeIds;
     }
 }

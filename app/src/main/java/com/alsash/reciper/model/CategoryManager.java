@@ -4,14 +4,17 @@ import android.support.annotation.Nullable;
 
 import com.alsash.reciper.model.database.CategoryDb;
 import com.alsash.reciper.model.models.Category;
+import com.alsash.reciper.model.models.Recipe;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class CategoryManager {
     private static CategoryManager instance = new CategoryManager();
 
     private List<Category> categories;
+    private Map<Category, List<Recipe>> categoryRecipesMap;
 
     private CategoryManager() {
         categories = new ArrayList<>();
@@ -28,13 +31,18 @@ public class CategoryManager {
         return categories;
     }
 
+    public Map<Category, List<Recipe>> getCategoryRecipesMap() {
+        if (categoryRecipesMap.size() == 0) {
+            for (Category category : categories) {
+                categoryRecipesMap.put(category, RecipeManager.getInstance().getRecipes(category));
+            }
+        }
+        return categoryRecipesMap;
+    }
+
     public Category newCategory() {
         long id = categories.size();
-        List<Long> recipeIds = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
-            recipeIds.add(id + i);
-        }
-        Category category = new CategoryDb(id, "Category # " + id, recipeIds);
+        Category category = new CategoryDb(id, "Category # " + id);
         categories.add(category);
         return category;
     }

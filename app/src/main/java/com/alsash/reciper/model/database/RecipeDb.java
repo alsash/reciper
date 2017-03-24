@@ -1,11 +1,13 @@
 package com.alsash.reciper.model.database;
 
+import com.alsash.reciper.model.models.Category;
 import com.alsash.reciper.model.models.Nutrition;
 import com.alsash.reciper.model.models.Recipe;
 
 public class RecipeDb implements Recipe, Nutrition {
     private long id;
     private String name;
+    private Category category;
 
     public RecipeDb(long id, String name) {
         this.id = id;
@@ -20,6 +22,16 @@ public class RecipeDb implements Recipe, Nutrition {
     @Override
     public String getName() {
         return name;
+    }
+
+    @Override
+    public Category getCategory() {
+        return category;
+    }
+
+    @Override
+    public void setCategory(Category category) {
+        this.category = category;
     }
 
     @Override
