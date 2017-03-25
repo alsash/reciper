@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 
 import com.alsash.reciper.R;
+import com.alsash.reciper.view.fragment.RecipeCategoryFragment;
 import com.alsash.reciper.view.fragment.RecipeListFragment;
 
 /**
@@ -27,7 +28,9 @@ public class RecipeCatPagerAdapter extends SwipePagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-        return RecipeListFragment.newInstance();
+        return (position == 0) ?
+                RecipeCategoryFragment.newInstance() :
+                RecipeListFragment.newInstance();
     }
 
     @Override
