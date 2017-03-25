@@ -3,6 +3,7 @@ package com.alsash.reciper.view.fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,13 +12,19 @@ import android.view.ViewGroup;
 import com.alsash.reciper.R;
 import com.alsash.reciper.model.CategoryManager;
 import com.alsash.reciper.model.models.Category;
+import com.alsash.reciper.model.models.Recipe;
+import com.alsash.reciper.presenter.interaction.RecipeListInteraction;
+import com.alsash.reciper.view.activity.RecipeDetailActivity;
+import com.alsash.reciper.view.adapter.CategoryAdapter;
+import com.alsash.reciper.view.fragment.dialog.RecipeBottomDialog;
 
 import java.util.List;
+import java.util.Map;
 
-public class RecipeCategoryFragment extends Fragment {
+public class RecipeCategoryFragment extends Fragment implements RecipeListInteraction {
 
     // Model
-    private List<Category> categories;
+    private Map<Category, List<Recipe>> categoryRecipesMap;
 
     // Views
     private RecyclerView recyclerView;
@@ -27,6 +34,18 @@ public class RecipeCategoryFragment extends Fragment {
         RecipeListFragment fragment = new RecipeListFragment();
         fragment.setArguments(args);
         return fragment;
+    }
+
+    @Override
+    public void onExpand(Recipe recipe, int position) {
+        RecipeBottomDialog bottomDialog = RecipeBottomDialog.newInstance(recipe);
+        bottomDialog.show(getActivity().getSupportFragmentManager(), bottomDialog.getTag());
+    }
+
+    @Override
+    public void onOpen(Recipe recipe, int position) {
+        RecipeDetailActivity.start(getContext(), recipe.getId());
+        recyclerView.getAdapter().notifyItemChanged(position);
     }
 
     @Override
@@ -46,7 +65,7 @@ public class RecipeCategoryFragment extends Fragment {
     }
 
     private void bindModel() {
-        categories = CategoryManager.getInstance().getCategories();
+        categoryRecipesMap = CategoryManager.getInstance().getCategoryRecipesMap();
     }
 
     private void bindViews(View layout) {
@@ -54,9 +73,7 @@ public class RecipeCategoryFragment extends Fragment {
     }
 
     private void setupList() {
-//        recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), getResources()
-//                .getInteger(R.integer.recipe_list_span)));
-//        recyclerView.setAdapter(new RecipeCardAdapter(this, recipes));
-//        recyclerView.setItemAnimator(new FlipCardAnimator());
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        recyclerView.setAdapter(new CategoryAdapter(this, categoryRecipesMap));
     }
 }
