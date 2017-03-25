@@ -28,8 +28,10 @@ public class CategoryHolder extends RecyclerView.ViewHolder {
     public void bindCategory(Category category, List<Recipe> recipes,
                              RecipeListInteraction interaction) {
         categoryTitle.setText(category.getName());
-        categoryList.setLayoutManager(new LinearLayoutManager(categoryList.getContext(),
-                LinearLayoutManager.HORIZONTAL, false));
+        LinearLayoutManager layoutManager = new LinearLayoutManager(categoryList.getContext(),
+                LinearLayoutManager.HORIZONTAL, false);
+        layoutManager.setInitialPrefetchItemCount(4);
+        categoryList.setLayoutManager(layoutManager);
         categoryList.setAdapter(new RecipeCardAdapter(interaction, recipes));
         categoryList.setItemAnimator(new FlipCardAnimator());
     }

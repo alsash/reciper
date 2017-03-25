@@ -40,7 +40,7 @@ public class RecipeManager {
             return categories.get(category);
         }
         List<Recipe> categoryRecipes = new ArrayList<>();
-        for (int i = 0; i < category.getId(); i++) {
+        for (int i = 0; i < category.getId() + 1; i++) {
             Recipe recipe = recipes.get(i);
             recipe.setCategory(category);
             categoryRecipes.add(recipe);

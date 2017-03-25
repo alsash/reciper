@@ -7,6 +7,7 @@ import com.alsash.reciper.model.models.Category;
 import com.alsash.reciper.model.models.Recipe;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -14,7 +15,7 @@ public class CategoryManager {
     private static CategoryManager instance = new CategoryManager();
 
     private List<Category> categories;
-    private Map<Category, List<Recipe>> categoryRecipesMap;
+    private Map<Category, List<Recipe>> categoryRecipesMap = new HashMap<>();
 
     private CategoryManager() {
         categories = new ArrayList<>();

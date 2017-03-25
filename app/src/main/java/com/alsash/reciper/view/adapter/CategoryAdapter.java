@@ -12,6 +12,8 @@ import com.alsash.reciper.presenter.interaction.RecipeListInteraction;
 import com.alsash.reciper.view.adapter.holder.CategoryHolder;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 
@@ -26,6 +28,12 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryHolder> {
         this.recipeInteraction = recipeInteraction;
         this.categoryRecipesMap = categoryRecipesMap;
         this.categories.addAll(categoryRecipesMap.keySet());
+        Collections.sort(this.categories, new Comparator<Category>() {
+            @Override
+            public int compare(Category o1, Category o2) {
+                return (int) (o1.getId() - o2.getId());
+            }
+        });
     }
 
     @Override

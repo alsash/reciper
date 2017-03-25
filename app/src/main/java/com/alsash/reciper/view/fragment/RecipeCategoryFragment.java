@@ -29,9 +29,9 @@ public class RecipeCategoryFragment extends Fragment implements RecipeListIntera
     // Views
     private RecyclerView recyclerView;
 
-    public static RecipeListFragment newInstance() {
+    public static RecipeCategoryFragment newInstance() {
         Bundle args = new Bundle();
-        RecipeListFragment fragment = new RecipeListFragment();
+        RecipeCategoryFragment fragment = new RecipeCategoryFragment();
         fragment.setArguments(args);
         return fragment;
     }
@@ -75,5 +75,6 @@ public class RecipeCategoryFragment extends Fragment implements RecipeListIntera
     private void setupList() {
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setAdapter(new CategoryAdapter(this, categoryRecipesMap));
+        recyclerView.setNestedScrollingEnabled(false);
     }
 }
