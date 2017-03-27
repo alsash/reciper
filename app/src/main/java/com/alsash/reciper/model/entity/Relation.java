@@ -1,7 +1,10 @@
 package com.alsash.reciper.model.entity;
 
-public interface Relation {
-    long getParentId();
+import android.support.annotation.Nullable;
 
-    long getChildId();
+public interface Relation<O, S> {
+    O getObject();
+
+    @Nullable
+    S getSubject();
 }

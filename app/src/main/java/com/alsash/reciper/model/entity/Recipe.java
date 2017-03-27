@@ -6,5 +6,4 @@ public interface Recipe {
     String getName();
 
     Nutrition getNutrition();
-
 }
