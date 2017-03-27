@@ -1,4 +1,4 @@
-package com.alsash.reciper.view.xmlview;
+package com.alsash.reciper.view.xml;
 
 import android.animation.ValueAnimator;
 import android.annotation.SuppressLint;
@@ -575,12 +575,6 @@ public class ArcProgressStackView extends View {
         return mTypeface;
     }
 
-    public void setTypeface(final Typeface typeface) {
-        mTypeface = typeface;
-        mTextPaint.setTypeface(typeface);
-        postInvalidate();
-    }
-
     public void setTypeface(final String typeface) {
         Typeface tempTypeface;
         try {
@@ -591,6 +585,12 @@ public class ArcProgressStackView extends View {
         }
 
         setTypeface(tempTypeface);
+    }
+
+    public void setTypeface(final Typeface typeface) {
+        mTypeface = typeface;
+        mTextPaint.setTypeface(typeface);
+        postInvalidate();
     }
 
     public IndicatorOrientation getIndicatorOrientation() {

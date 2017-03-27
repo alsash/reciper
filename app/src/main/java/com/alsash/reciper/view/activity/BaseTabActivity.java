@@ -9,7 +9,7 @@ import android.support.v7.widget.Toolbar;
 
 import com.alsash.reciper.R;
 import com.alsash.reciper.view.adapter.SwipePagerAdapter;
-import com.alsash.reciper.view.xmlview.SwipeViewPager;
+import com.alsash.reciper.view.xml.SwipeViewPager;
 
 /**
  * An abstract Activity that holds tab layout

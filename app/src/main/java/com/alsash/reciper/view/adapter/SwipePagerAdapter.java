@@ -7,7 +7,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 import com.alsash.reciper.view.vector.VectorHelper;
-import com.alsash.reciper.view.xmlview.SwipeViewPager;
+import com.alsash.reciper.view.xml.SwipeViewPager;
 
 import java.lang.ref.WeakReference;
 

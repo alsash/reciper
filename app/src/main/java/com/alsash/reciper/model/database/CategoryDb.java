@@ -1,6 +1,6 @@
 package com.alsash.reciper.model.database;
 
-import com.alsash.reciper.model.models.Category;
+import com.alsash.reciper.model.entity.Category;
 
 public class CategoryDb implements Category {
 

@@ -3,8 +3,8 @@ package com.alsash.reciper.model;
 import android.support.annotation.Nullable;
 
 import com.alsash.reciper.model.database.CategoryDb;
-import com.alsash.reciper.model.models.Category;
-import com.alsash.reciper.model.models.Recipe;
+import com.alsash.reciper.model.entity.Category;
+import com.alsash.reciper.model.entity.Recipe;
 
 import java.util.ArrayList;
 import java.util.HashMap;

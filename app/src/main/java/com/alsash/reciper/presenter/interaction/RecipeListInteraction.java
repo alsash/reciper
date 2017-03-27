@@ -1,6 +1,6 @@
 package com.alsash.reciper.presenter.interaction;
 
-import com.alsash.reciper.model.models.Recipe;
+import com.alsash.reciper.model.entity.Recipe;
 
 public interface RecipeListInteraction {
 

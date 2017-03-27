@@ -1,4 +1,4 @@
-package com.alsash.reciper.model.models;
+package com.alsash.reciper.model.entity;
 
 public interface Nutrition {
 

@@ -1,4 +1,4 @@
-package com.alsash.reciper.view.xmlview;
+package com.alsash.reciper.view.xml;
 
 import android.content.Context;
 import android.content.res.TypedArray;

@@ -9,7 +9,7 @@ import android.view.View;
 import android.widget.Button;
 
 import com.alsash.reciper.R;
-import com.alsash.reciper.model.models.Recipe;
+import com.alsash.reciper.model.entity.Recipe;
 import com.alsash.reciper.view.vector.VectorHelper;
 
 public class RecipeBottomDialog extends BottomSheetDialogFragment
