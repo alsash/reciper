@@ -65,7 +65,7 @@ public class RecipeListFragment extends Fragment implements RecipeListInteractio
     }
 
     private void bindModel() {
-        recipes = RecipeManager.getInstance().getRecipes();
+        recipes = RecipeManager.getInstance().list();
     }
 
     private void bindViews(View layout) {

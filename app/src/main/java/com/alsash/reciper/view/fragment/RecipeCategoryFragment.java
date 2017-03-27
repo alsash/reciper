@@ -13,18 +13,16 @@ import com.alsash.reciper.R;
 import com.alsash.reciper.model.CategoryManager;
 import com.alsash.reciper.model.entity.Category;
 import com.alsash.reciper.model.entity.Recipe;
+import com.alsash.reciper.model.relation.Relations;
 import com.alsash.reciper.presenter.interaction.RecipeListInteraction;
 import com.alsash.reciper.view.activity.RecipeDetailActivity;
 import com.alsash.reciper.view.adapter.CategoryAdapter;
 import com.alsash.reciper.view.fragment.dialog.RecipeBottomDialog;
 
-import java.util.List;
-import java.util.Map;
-
 public class RecipeCategoryFragment extends Fragment implements RecipeListInteraction {
 
     // Model
-    private Map<Category, List<Recipe>> categoryRecipesMap;
+    private Relations<Category, Recipe> relCategories;
 
     // Views
     private RecyclerView recyclerView;
@@ -65,7 +63,7 @@ public class RecipeCategoryFragment extends Fragment implements RecipeListIntera
     }
 
     private void bindModel() {
-        categoryRecipesMap = CategoryManager.getInstance().getCategoryRecipesMap();
+        relCategories = CategoryManager.getInstance().getCategoryRecipesMap();
     }
 
     private void bindViews(View layout) {
@@ -74,7 +72,7 @@ public class RecipeCategoryFragment extends Fragment implements RecipeListIntera
 
     private void setupList() {
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        recyclerView.setAdapter(new CategoryAdapter(this, categoryRecipesMap));
+        recyclerView.setAdapter(new CategoryAdapter(this, relCategories));
         recyclerView.setNestedScrollingEnabled(false);
     }
 }

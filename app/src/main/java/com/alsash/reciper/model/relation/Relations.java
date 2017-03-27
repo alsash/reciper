@@ -1,4 +1,4 @@
-package com.alsash.reciper.model.entity;
+package com.alsash.reciper.model.relation;
 
 import java.util.List;
 

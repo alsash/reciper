@@ -4,7 +4,7 @@ import android.support.annotation.Nullable;
 
 import com.alsash.reciper.model.entity.Category;
 import com.alsash.reciper.model.entity.Recipe;
-import com.alsash.reciper.model.entity.Relations;
+import com.alsash.reciper.model.relation.Relations;
 
 import java.util.Collections;
 import java.util.List;

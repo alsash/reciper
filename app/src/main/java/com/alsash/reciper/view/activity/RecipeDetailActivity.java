@@ -71,7 +71,7 @@ public class RecipeDetailActivity extends BaseDrawerActivity {
 
     private void bindModel() {
         long id = getIntent().getLongExtra(KeyContract.KEY_RECIPE_ID, -1);
-        recipe = RecipeManager.getInstance().getRecipe(id);
+        recipe = RecipeManager.getInstance().search(id);
         assert recipe != null;
     }
 
