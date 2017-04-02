@@ -2,7 +2,7 @@ package com.alsash.reciper.model;
 
 import android.support.annotation.Nullable;
 
-import com.alsash.reciper.model.entity.Entity;
+import com.alsash.reciper.model.entity.BaseEntity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,7 +12,7 @@ import java.util.List;
  *
  * @param <E> entity
  */
-public abstract class BaseEntityManager<E extends Entity> {
+public abstract class BaseEntityManager<E extends BaseEntity> {
     protected List<E> entities;
 
     protected BaseEntityManager(int entityCount) {

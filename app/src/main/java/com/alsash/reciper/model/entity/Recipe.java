@@ -2,7 +2,7 @@ package com.alsash.reciper.model.entity;
 
 import java.util.List;
 
-public interface Recipe extends Entity {
+public interface Recipe extends BaseEntity {
 
     String getName();
 

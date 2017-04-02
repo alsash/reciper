@@ -1,6 +1,6 @@
 package com.alsash.reciper.model.entity;
 
-public interface Entity {
+public interface BaseEntity {
 
     long getId();
 }
