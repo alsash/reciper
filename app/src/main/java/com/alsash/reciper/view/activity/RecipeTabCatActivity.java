@@ -6,18 +6,18 @@ import android.support.design.widget.Snackbar;
 import android.view.View;
 
 import com.alsash.reciper.R;
-import com.alsash.reciper.view.adapter.RecipeCatPagerAdapter;
+import com.alsash.reciper.view.adapter.RecipePagerAdapter;
 import com.alsash.reciper.view.adapter.SwipePagerAdapter;
 
 /**
- * The Activity that represents two tabs with RecipeCatPagerAdapter:
+ * The Activity that represents two tabs with RecipePagerAdapter:
  * Tab one - RecipeCategoriesFragment
- * Tab two - RecipeListFragment
+ * Tab two - RecipeSingleListFragment
  */
 public class RecipeTabCatActivity extends BaseTabActivity {
 
     // Adapters
-    private RecipeCatPagerAdapter pagerAdapter;
+    private RecipePagerAdapter pagerAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +34,7 @@ public class RecipeTabCatActivity extends BaseTabActivity {
     @Override
     protected SwipePagerAdapter getPagerAdapter() {
         if (pagerAdapter == null) {
-            pagerAdapter = new RecipeCatPagerAdapter(this, getSupportFragmentManager());
+            pagerAdapter = new RecipePagerAdapter(this, getSupportFragmentManager());
         }
         return pagerAdapter;
     }

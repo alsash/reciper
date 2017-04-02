@@ -2,9 +2,9 @@ package com.alsash.reciper.model;
 
 import com.alsash.reciper.model.database.LabelDb;
 import com.alsash.reciper.model.database.RecipeDb;
-import com.alsash.reciper.model.entity.Category;
-import com.alsash.reciper.model.entity.Label;
-import com.alsash.reciper.model.entity.Recipe;
+import com.alsash.reciper.presenter.entity.Category;
+import com.alsash.reciper.presenter.entity.Label;
+import com.alsash.reciper.presenter.entity.Recipe;
 
 import java.util.List;
 

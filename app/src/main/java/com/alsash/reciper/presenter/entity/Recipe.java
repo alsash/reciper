@@ -1,4 +1,6 @@
-package com.alsash.reciper.model.entity;
+package com.alsash.reciper.presenter.entity;
+
+import com.alsash.reciper.presenter.relation.Nutrition;
 
 import java.util.List;
 

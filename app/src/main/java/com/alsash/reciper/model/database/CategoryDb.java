@@ -1,7 +1,7 @@
 package com.alsash.reciper.model.database;
 
-import com.alsash.reciper.model.entity.Category;
-import com.alsash.reciper.model.entity.Recipe;
+import com.alsash.reciper.presenter.entity.Category;
+import com.alsash.reciper.presenter.entity.Recipe;
 
 import java.util.ArrayList;
 import java.util.List;

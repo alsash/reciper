@@ -1,7 +1,7 @@
 package com.alsash.reciper.model;
 
 import com.alsash.reciper.model.database.LabelDb;
-import com.alsash.reciper.model.entity.Label;
+import com.alsash.reciper.presenter.entity.Label;
 
 public class LabelManager extends BaseEntityManager<Label> {
     private static LabelManager instance = new LabelManager();

@@ -1,9 +1,9 @@
 package com.alsash.reciper.model.database;
 
-import com.alsash.reciper.model.entity.Category;
-import com.alsash.reciper.model.entity.Label;
-import com.alsash.reciper.model.entity.Nutrition;
-import com.alsash.reciper.model.entity.Recipe;
+import com.alsash.reciper.presenter.entity.Category;
+import com.alsash.reciper.presenter.entity.Label;
+import com.alsash.reciper.presenter.entity.Recipe;
+import com.alsash.reciper.presenter.relation.Nutrition;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -7,17 +7,19 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 
 import com.alsash.reciper.R;
-import com.alsash.reciper.view.fragment.RecipeCategoryFragment;
-import com.alsash.reciper.view.fragment.RecipeListFragment;
+import com.alsash.reciper.view.fragment.RecipeGroupListFragment;
+import com.alsash.reciper.view.fragment.RecipeSingleListFragment;
 
 /**
- * RecipeCatPagerAdapter that represents two tabs:
- * list of recipe categories and
- * list of single recipes
+ * RecipePagerAdapter that represents four tabs:
+ * list of recipe categories,
+ * list of single recipes,
+ * list of labeled recipes,
+ * list of bookmarked recipes
  */
-public class RecipeCatPagerAdapter extends SwipePagerAdapter {
+public class RecipePagerAdapter extends SwipePagerAdapter {
 
-    public RecipeCatPagerAdapter(Context context, FragmentManager fm) {
+    public RecipePagerAdapter(Context context, FragmentManager fm) {
         super(context, fm);
     }
 
@@ -29,8 +31,8 @@ public class RecipeCatPagerAdapter extends SwipePagerAdapter {
     @Override
     public Fragment getItem(int position) {
         return (position == 0) ?
-                RecipeCategoryFragment.newInstance() :
-                RecipeListFragment.newInstance();
+                RecipeGroupListFragment.newInstance() :
+                RecipeSingleListFragment.newInstance();
     }
 
     @Override

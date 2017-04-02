@@ -10,7 +10,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.alsash.reciper.R;
-import com.alsash.reciper.model.entity.Recipe;
+import com.alsash.reciper.presenter.entity.Recipe;
 import com.alsash.reciper.presenter.interaction.RecipeListInteraction;
 import com.alsash.reciper.view.fragment.dialog.RecipeBottomDialog;
 import com.alsash.reciper.view.vector.VectorHelper;
@@ -40,7 +40,7 @@ public class RecipeListActivity extends BaseDrawerActivity implements RecipeList
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_recipe_list); // Include RecipeListFragment
+        setContentView(R.layout.activity_recipe_list); // Include RecipeSingleListFragment
         bindViews();
         setupToolbar();
         setupFab();

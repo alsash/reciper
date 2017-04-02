@@ -1,7 +1,7 @@
 package com.alsash.reciper.model.database;
 
-import com.alsash.reciper.model.entity.Label;
-import com.alsash.reciper.model.entity.Recipe;
+import com.alsash.reciper.presenter.entity.Label;
+import com.alsash.reciper.presenter.entity.Recipe;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,5 +40,10 @@ public class LabelDb implements Label {
 
     public void setRecipes(List<Recipe> recipes) {
         this.recipes = recipes;
+    }
+
+    @Override
+    public List<Recipe> getItems() {
+        return getRecipes();
     }
 }

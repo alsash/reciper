@@ -10,7 +10,7 @@ import com.alsash.reciper.view.adapter.RecipeFavPagerAdapter;
 import com.alsash.reciper.view.adapter.SwipePagerAdapter;
 
 /**
- * The Activity that represents two tabs with RecipeCatPagerAdapter:
+ * The Activity that represents two tabs with RecipePagerAdapter:
  * Tab one - RecipeLabelsFragment
  * Tab two - RecipeBookmarksFragment
  */

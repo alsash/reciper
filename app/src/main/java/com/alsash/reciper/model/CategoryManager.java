@@ -1,7 +1,7 @@
 package com.alsash.reciper.model;
 
 import com.alsash.reciper.model.database.CategoryDb;
-import com.alsash.reciper.model.entity.Category;
+import com.alsash.reciper.presenter.entity.Category;
 
 public class CategoryManager extends BaseEntityManager<Category> {
     private static CategoryManager instance = new CategoryManager();

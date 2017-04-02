@@ -3,35 +3,25 @@ package com.alsash.reciper.view.fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.alsash.reciper.R;
-import com.alsash.reciper.model.CategoryManager;
-import com.alsash.reciper.model.entity.Category;
-import com.alsash.reciper.model.entity.Recipe;
+import com.alsash.reciper.presenter.entity.Recipe;
 import com.alsash.reciper.presenter.interaction.RecipeListInteraction;
 import com.alsash.reciper.view.activity.RecipeDetailActivity;
-import com.alsash.reciper.view.adapter.CategoryAdapter;
 import com.alsash.reciper.view.fragment.dialog.RecipeBottomDialog;
 
-public class RecipeCategoryFragment extends Fragment implements RecipeListInteraction {
-
-    // Model
-    private Relations<Category, Recipe> relCategories;
+public abstract class BaseRecipeListFragment extends Fragment implements RecipeListInteraction {
 
     // Views
-    private RecyclerView recyclerView;
+    protected RecyclerView recyclerView;
 
-    public static RecipeCategoryFragment newInstance() {
-        Bundle args = new Bundle();
-        RecipeCategoryFragment fragment = new RecipeCategoryFragment();
-        fragment.setArguments(args);
-        return fragment;
-    }
+    protected abstract void bindModel();
+
+    protected abstract void setupList();
 
     @Override
     public void onExpand(Recipe recipe, int position) {
@@ -61,17 +51,7 @@ public class RecipeCategoryFragment extends Fragment implements RecipeListIntera
         return layout;
     }
 
-    private void bindModel() {
-        relCategories = CategoryManager.getInstance().getCategoryRecipesMap();
-    }
-
     private void bindViews(View layout) {
         recyclerView = (RecyclerView) layout.findViewById(R.id.list);
-    }
-
-    private void setupList() {
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        recyclerView.setAdapter(new CategoryAdapter(this, relCategories));
-        recyclerView.setNestedScrollingEnabled(false);
     }
 }

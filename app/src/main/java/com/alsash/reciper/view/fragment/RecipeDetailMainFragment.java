@@ -14,7 +14,7 @@ import android.widget.TextView;
 
 import com.alsash.reciper.R;
 import com.alsash.reciper.model.RecipeManager;
-import com.alsash.reciper.model.entity.Recipe;
+import com.alsash.reciper.presenter.entity.Recipe;
 import com.alsash.reciper.view.contract.KeyContract;
 import com.alsash.reciper.view.xml.ArcProgressStackView;
 

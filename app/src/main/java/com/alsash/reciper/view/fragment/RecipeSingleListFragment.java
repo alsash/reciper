@@ -11,17 +11,17 @@ import android.view.ViewGroup;
 
 import com.alsash.reciper.R;
 import com.alsash.reciper.model.RecipeManager;
-import com.alsash.reciper.model.entity.Recipe;
+import com.alsash.reciper.presenter.entity.Recipe;
 import com.alsash.reciper.presenter.interaction.RecipeListInteraction;
 import com.alsash.reciper.view.activity.RecipeDetailActivity;
-import com.alsash.reciper.view.adapter.RecipeCardAdapter;
+import com.alsash.reciper.view.adapter.RecipeSingleCardAdapter;
 import com.alsash.reciper.view.animator.FlipCardAnimator;
 import com.alsash.reciper.view.fragment.dialog.RecipeBottomDialog;
 
 import java.util.List;
 
 
-public class RecipeListFragment extends Fragment implements RecipeListInteraction {
+public class RecipeSingleListFragment extends Fragment implements RecipeListInteraction {
 
     // Model
     private List<Recipe> recipes;
@@ -29,9 +29,9 @@ public class RecipeListFragment extends Fragment implements RecipeListInteractio
     // Views
     private RecyclerView recyclerView;
 
-    public static RecipeListFragment newInstance() {
+    public static RecipeSingleListFragment newInstance() {
         Bundle args = new Bundle();
-        RecipeListFragment fragment = new RecipeListFragment();
+        RecipeSingleListFragment fragment = new RecipeSingleListFragment();
         fragment.setArguments(args);
         return fragment;
     }
@@ -75,7 +75,7 @@ public class RecipeListFragment extends Fragment implements RecipeListInteractio
     private void setupList() {
         recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), getResources()
                 .getInteger(R.integer.recipe_list_span)));
-        recyclerView.setAdapter(new RecipeCardAdapter(this, recipes));
+        recyclerView.setAdapter(new RecipeSingleCardAdapter(this, recipes));
         recyclerView.setItemAnimator(new FlipCardAnimator());
     }
 }

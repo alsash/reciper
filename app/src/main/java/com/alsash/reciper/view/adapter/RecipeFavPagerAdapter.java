@@ -7,7 +7,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 
 import com.alsash.reciper.R;
-import com.alsash.reciper.view.fragment.RecipeListFragment;
+import com.alsash.reciper.view.fragment.RecipeSingleListFragment;
 
 /**
  * RecipeFavPagerAdapter that represents tabs with user's favorite recipes:
@@ -27,7 +27,7 @@ public class RecipeFavPagerAdapter extends SwipePagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-        return RecipeListFragment.newInstance();
+        return RecipeSingleListFragment.newInstance();
     }
 
     @Override

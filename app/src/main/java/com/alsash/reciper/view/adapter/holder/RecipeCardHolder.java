@@ -8,7 +8,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.alsash.reciper.R;
-import com.alsash.reciper.model.entity.Recipe;
+import com.alsash.reciper.presenter.entity.Recipe;
 
 public class RecipeCardHolder extends RecyclerView.ViewHolder {
 

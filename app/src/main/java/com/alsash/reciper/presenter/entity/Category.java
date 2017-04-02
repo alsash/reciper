@@ -1,10 +1,8 @@
-package com.alsash.reciper.model.entity;
+package com.alsash.reciper.presenter.entity;
 
 import java.util.List;
 
 public interface Category extends BaseEntity {
-
-    String getName();
 
     List<Recipe> getRecipes();
 }

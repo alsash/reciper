@@ -23,7 +23,7 @@
 
     <fragment
         android:id="@+id/activity_recipe_list_fragment"
-        android:name="com.alsash.reciper.view.fragment.RecipeListFragment"
+        android:name="com.alsash.reciper.view.fragment.RecipeSingleListFragment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"

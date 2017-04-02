@@ -2,7 +2,7 @@ package com.alsash.reciper.model;
 
 import android.support.annotation.Nullable;
 
-import com.alsash.reciper.model.entity.BaseEntity;
+import com.alsash.reciper.presenter.entity.BaseEntity;
 
 import java.util.ArrayList;
 import java.util.List;

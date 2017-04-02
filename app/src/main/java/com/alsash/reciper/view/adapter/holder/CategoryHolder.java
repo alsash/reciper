@@ -6,13 +6,10 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.alsash.reciper.R;
-import com.alsash.reciper.model.entity.Category;
-import com.alsash.reciper.model.entity.Recipe;
+import com.alsash.reciper.presenter.entity.Category;
 import com.alsash.reciper.presenter.interaction.RecipeListInteraction;
-import com.alsash.reciper.view.adapter.RecipeCardAdapter;
+import com.alsash.reciper.view.adapter.RecipeSingleCardAdapter;
 import com.alsash.reciper.view.animator.FlipCardAnimator;
-
-import java.util.List;
 
 public class CategoryHolder extends RecyclerView.ViewHolder {
 
@@ -25,14 +22,13 @@ public class CategoryHolder extends RecyclerView.ViewHolder {
         categoryList = (RecyclerView) itemView.findViewById(R.id.category_list);
     }
 
-    public void bindCategory(Category category, List<Recipe> recipes,
-                             RecipeListInteraction interaction) {
+    public void bindCategory(Category category, RecipeListInteraction interaction) {
         categoryTitle.setText(category.getName());
         LinearLayoutManager layoutManager = new LinearLayoutManager(categoryList.getContext(),
                 LinearLayoutManager.HORIZONTAL, false);
         layoutManager.setInitialPrefetchItemCount(4);
         categoryList.setLayoutManager(layoutManager);
-        categoryList.setAdapter(new RecipeCardAdapter(interaction, recipes));
+        categoryList.setAdapter(new RecipeSingleCardAdapter(interaction, category.getRecipes()));
         categoryList.setItemAnimator(new FlipCardAnimator());
     }
 }
