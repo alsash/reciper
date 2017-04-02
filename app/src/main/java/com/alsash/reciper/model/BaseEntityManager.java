@@ -2,6 +2,8 @@ package com.alsash.reciper.model;
 
 import android.support.annotation.Nullable;
 
+import com.alsash.reciper.model.entity.Entity;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,15 +12,17 @@ import java.util.List;
  *
  * @param <E> entity
  */
-public abstract class BaseEntityManager<E, K> {
+public abstract class BaseEntityManager<E extends Entity> {
     protected List<E> entities;
 
     protected BaseEntityManager(int entityCount) {
         this.entities = getEmptyList();
         for (int i = 0; i < entityCount; i++) {
-
+            entities.add(newEntity());
         }
     }
+
+    protected abstract E newEntity();
 
     public E create() {
         E entity = newEntity();
@@ -27,10 +31,9 @@ public abstract class BaseEntityManager<E, K> {
     }
 
     @Nullable
-    public E search(K key) {
-        if (key == null) return null;
+    public E search(long id) {
         for (E entity : entities) {
-            if (key.equals(getKey(entity))) return entity;
+            if (entity.getId() == id) return entity;
         }
         return null;
     }
@@ -39,9 +42,21 @@ public abstract class BaseEntityManager<E, K> {
         return entities;
     }
 
-    protected abstract K getKey(E entity);
+    public List<E> list(int limit) {
+        return list(limit, 0);
+    }
 
-    protected abstract E newEntity();
+    public List<E> list(int limit, int offset) {
+        List<E> result = getEmptyList();
+        for (int i = offset; i < offset + limit; i++) {
+            try {
+                result.add(entities.get(i));
+            } catch (IndexOutOfBoundsException e) {
+                break;
+            }
+        }
+        return result;
+    }
 
     protected List<E> getEmptyList() {
         return new ArrayList<>();

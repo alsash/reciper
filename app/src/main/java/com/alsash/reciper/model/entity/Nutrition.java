@@ -9,5 +9,4 @@ public interface Nutrition {
     int getFat();
 
     int getEnergy();
-
 }

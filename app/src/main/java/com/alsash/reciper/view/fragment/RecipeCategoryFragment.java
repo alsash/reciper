@@ -13,7 +13,6 @@ import com.alsash.reciper.R;
 import com.alsash.reciper.model.CategoryManager;
 import com.alsash.reciper.model.entity.Category;
 import com.alsash.reciper.model.entity.Recipe;
-import com.alsash.reciper.model.relation.Relations;
 import com.alsash.reciper.presenter.interaction.RecipeListInteraction;
 import com.alsash.reciper.view.activity.RecipeDetailActivity;
 import com.alsash.reciper.view.adapter.CategoryAdapter;

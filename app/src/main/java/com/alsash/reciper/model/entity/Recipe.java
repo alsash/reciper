@@ -1,9 +1,14 @@
 package com.alsash.reciper.model.entity;
 
-public interface Recipe {
-    long getId();
+import java.util.List;
+
+public interface Recipe extends Entity {
 
     String getName();
 
+    Category getCategory();
+
     Nutrition getNutrition();
+
+    List<Label> getLabels();
 }

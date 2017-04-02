@@ -1,18 +1,18 @@
 package com.alsash.reciper.model.database;
 
-import com.alsash.reciper.model.entity.Category;
+import com.alsash.reciper.model.entity.Label;
 import com.alsash.reciper.model.entity.Recipe;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class CategoryDb implements Category {
+public class LabelDb implements Label {
 
     private long id;
     private String name;
     private List<Recipe> recipes = new ArrayList<>();
 
-    public CategoryDb() {
+    public LabelDb() {
     }
 
     @Override
