@@ -1,10 +1,6 @@
 package com.alsash.reciper.database;
 
 import android.content.Context;
-import android.util.Log;
-
-import com.alsash.reciper.api.database.DaoMaster;
-import com.alsash.reciper.api.database.DaoSession;
 
 import org.greenrobot.greendao.database.Database;
 
@@ -13,12 +9,14 @@ import java.lang.ref.SoftReference;
 /**
  * Single instance for database api
  */
-
 public class ApiDb {
+
+    public static final int VERSION = DaoMaster.SCHEMA_VERSION;
 
     private static final String DATABASE_NAME = "reciper-db";
     private static final ApiDb INSTANCE = new ApiDb();
     private SoftReference<DaoSession> refDaoSession;
+    private boolean created;
 
     private ApiDb() {
     }
@@ -30,16 +28,27 @@ public class ApiDb {
     public synchronized DaoSession getSession(Context context) {
         if (refDaoSession == null || refDaoSession.get() == null) {
             Context appContext = context.getApplicationContext();
-            Database db = new DaoMaster.DevOpenHelper(appContext, DATABASE_NAME).getWritableDb();
+            Database db = new DbOpenHelper(appContext, DATABASE_NAME).getWritableDb();
             refDaoSession = new SoftReference<>(new DaoMaster(db).newSession());
         }
         return refDaoSession.get();
     }
 
-    private void setStartValues(Context context) {
-        Log.i("Reciper", "Setting start database values");
-        // DaoSession session = getSession(context);
+    public synchronized void clearSession() {
+        if (refDaoSession == null || refDaoSession.get() == null) return;
+        refDaoSession.get().clear();
+        refDaoSession = null;
+    }
 
+    /**
+     * Check if database was created
+     *
+     * @return true only once
+     */
+    public synchronized boolean isCreated() {
+        boolean created = this.created;
+        if (created) this.created = false;
+        return created;
     }
 
     private static class DbOpenHelper extends DaoMaster.DevOpenHelper {
@@ -53,7 +62,7 @@ public class ApiDb {
         @Override
         public void onCreate(Database db) {
             super.onCreate(db);
-            ApiDb.getInstance().setStartValues(context);
+            ApiDb.getInstance().created = true;
         }
     }
 }

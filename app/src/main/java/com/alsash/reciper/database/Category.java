@@ -12,43 +12,45 @@ import java.util.List;
 /**
  * Local database table that holds categories of recipes
  */
-@Entity(nameInDb = "category",
-        indexes = {
-                @Index(value = "name", unique = true)
-        })
-public class CategoryDb {
+@Entity(indexes = {@Index(value = "name", unique = true)})
+public class Category {
+
     @Id
-    private long id;
+    private Long id;
+
     private String name;
+
     @ToMany(referencedJoinProperty = "categoryId")
-    private List<RecipeDb> recipes;
+    private List<Recipe> recipes;
+
 // Next will be generated sources
     /**
      * Used to resolve relations
      */
     @Generated(hash = 2040040024)
     private transient DaoSession daoSession;
+
     /**
      * Used for active entity operations.
      */
-    @Generated(hash = 1583176328)
-    private transient CategoryDbDao myDao;
+    @Generated(hash = 40161530)
+    private transient CategoryDao myDao;
 
-    @Generated(hash = 242348237)
-    public CategoryDb(long id, String name) {
+    @Generated(hash = 1003047676)
+    public Category(Long id, String name) {
         this.id = id;
         this.name = name;
     }
 
-    @Generated(hash = 2115872921)
-    public CategoryDb() {
+    @Generated(hash = 1150634039)
+    public Category() {
     }
 
-    public long getId() {
+    public Long getId() {
         return this.id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -64,15 +66,15 @@ public class CategoryDb {
      * To-many relationship, resolved on first access (and after reset).
      * Changes to to-many relations are not persisted, make changes to the target entity.
      */
-    @Generated(hash = 1537893278)
-    public List<RecipeDb> getRecipes() {
+    @Generated(hash = 228945634)
+    public List<Recipe> getRecipes() {
         if (recipes == null) {
             final DaoSession daoSession = this.daoSession;
             if (daoSession == null) {
                 throw new DaoException("Entity is detached from DAO context");
             }
-            RecipeDbDao targetDao = daoSession.getRecipeDbDao();
-            List<RecipeDb> recipesNew = targetDao._queryCategoryDb_Recipes(id);
+            RecipeDao targetDao = daoSession.getRecipeDao();
+            List<Recipe> recipesNew = targetDao._queryCategory_Recipes(id);
             synchronized (this) {
                 if (recipes == null) {
                     recipes = recipesNew;
@@ -129,9 +131,11 @@ public class CategoryDb {
     /**
      * called by internal mechanisms, do not call yourself.
      */
-    @Generated(hash = 1781939201)
+    @Generated(hash = 503476761)
     public void __setDaoSession(DaoSession daoSession) {
         this.daoSession = daoSession;
-        myDao = daoSession != null ? daoSession.getCategoryDbDao() : null;
+        myDao = daoSession != null ? daoSession.getCategoryDao() : null;
     }
+
+// Next will be generated sources
 }

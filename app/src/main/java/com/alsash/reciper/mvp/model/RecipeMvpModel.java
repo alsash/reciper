@@ -1,10 +1,10 @@
 package com.alsash.reciper.mvp.model;
 
-import com.alsash.reciper.database.RecipeDb;
+import com.alsash.reciper.database.Recipe;
 
 /**
  * Created by aldolyna on 4/2/17.
  */
 
-public class RecipeMvpModel extends RecipeDb {
+public class RecipeMvpModel extends Recipe {
 }
