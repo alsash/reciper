@@ -1,6 +1,7 @@
 package com.alsash.reciper.database;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.alsash.reciper.api.database.DaoMaster;
 import com.alsash.reciper.api.database.DaoSession;
@@ -33,5 +34,26 @@ public class ApiDb {
             refDaoSession = new SoftReference<>(new DaoMaster(db).newSession());
         }
         return refDaoSession.get();
+    }
+
+    private void setStartValues(Context context) {
+        Log.i("Reciper", "Setting start database values");
+        // DaoSession session = getSession(context);
+
+    }
+
+    private static class DbOpenHelper extends DaoMaster.DevOpenHelper {
+        private final Context context;
+
+        public DbOpenHelper(Context context, String name) {
+            super(context, name);
+            this.context = context;
+        }
+
+        @Override
+        public void onCreate(Database db) {
+            super.onCreate(db);
+            ApiDb.getInstance().setStartValues(context);
+        }
     }
 }
