@@ -13,7 +13,7 @@ public class ApiDb {
 
     public static final int VERSION = DaoMaster.SCHEMA_VERSION;
 
-    private static final String DATABASE_NAME = "reciper-db";
+    private static final String DATABASE_NAME = "reciper_db";
     private static final ApiDb INSTANCE = new ApiDb();
     private WeakReference<DaoSession> refDaoSession;
     private boolean created;
