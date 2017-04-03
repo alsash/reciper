@@ -12,8 +12,8 @@ import android.view.ViewGroup;
 import com.alsash.reciper.R;
 import com.alsash.reciper.api.RecipeManager;
 import com.alsash.reciper.ui.activity.RecipeDetailActivity;
-import com.alsash.reciper.ui.adapter.RecipeSingleCardAdapter;
-import com.alsash.reciper.ui.animator.FlipCardAnimator;
+import com.alsash.reciper.ui.adapter.RecipeSingleCardListAdapter;
+import com.alsash.reciper.ui.animator.FlipCardListAnimator;
 import com.alsash.reciper.ui.fragment.dialog.RecipeBottomDialog;
 import com.alsash.reciper.ui.presenter.entity.Recipe;
 import com.alsash.reciper.ui.presenter.interaction.RecipeListInteraction;
@@ -75,7 +75,7 @@ public class RecipeSingleListFragment extends Fragment implements RecipeListInte
     private void setupList() {
         recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), getResources()
                 .getInteger(R.integer.recipe_list_span)));
-        recyclerView.setAdapter(new RecipeSingleCardAdapter(this, recipes));
-        recyclerView.setItemAnimator(new FlipCardAnimator());
+        recyclerView.setAdapter(new RecipeSingleCardListAdapter(this, recipes));
+        recyclerView.setItemAnimator(new FlipCardListAnimator());
     }
 }

@@ -34,7 +34,7 @@ public class RecipeListActivity extends BaseDrawerActivity implements RecipeList
     @Nullable
     @Override
     protected Integer getNavItemId() {
-        return R.id.drawer_base_nav_recipe_all;
+        return R.id.navigation_recipes;
     }
 
     @Override

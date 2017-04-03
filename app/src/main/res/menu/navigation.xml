@@ -2,23 +2,19 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <group
-        android:id="@+id/drawer_base_nav_root_recipe"
+        android:id="@+id/navigation_group_recipe"
         android:checkableBehavior="single">
         <item
-            android:id="@+id/drawer_base_nav_recipe_all"
+            android:id="@+id/navigation_recipes"
             android:icon="@drawable/ic_recipe"
-            android:title="@string/drawer_base_nav_recipe_all" />
-        <item
-            android:id="@+id/drawer_base_nav_recipe_favorite"
-            android:icon="@drawable/ic_favorite"
-            android:title="@string/drawer_base_nav_recipe_favorite" />
+            android:title="@string/navigation_recipes" />
     </group>
 
     <group
-        android:id="@+id/drawer_group_cart"
+        android:id="@+id/navigation_group_cart"
         android:checkableBehavior="single">
         <item
-            android:id="@+id/drawer_cart"
+            android:id="@+id/navigation_cart"
             android:icon="@drawable/ic_cart"
             android:title="@string/drawer_menu_cart" />
     </group>

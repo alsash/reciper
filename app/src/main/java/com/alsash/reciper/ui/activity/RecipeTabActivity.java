@@ -14,7 +14,7 @@ import com.alsash.reciper.ui.adapter.SwipePagerAdapter;
  * Tab one - RecipeCategoriesFragment
  * Tab two - RecipeSingleListFragment
  */
-public class RecipeTabCatActivity extends BaseTabActivity {
+public class RecipeTabActivity extends BaseTabActivity {
 
     // Adapters
     private RecipePagerAdapter pagerAdapter;
@@ -22,13 +22,13 @@ public class RecipeTabCatActivity extends BaseTabActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setToolbarTitle(getResources().getString(R.string.drawer_base_nav_recipe_all));
+        setToolbarTitle(getResources().getString(R.string.navigation_recipes));
     }
 
     @Nullable
     @Override
     protected Integer getNavItemId() {
-        return R.id.drawer_base_nav_recipe_all;
+        return R.id.navigation_recipes;
     }
 
     @Override

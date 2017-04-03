@@ -23,8 +23,6 @@ public abstract class SwipePagerAdapter extends FragmentPagerAdapter
         this.vectorHelper = new VectorHelper(context);
     }
 
-    public abstract boolean isSwipeEnabled(int position);
-
     @Nullable
     public abstract Drawable getPageIcon(int position);
 }

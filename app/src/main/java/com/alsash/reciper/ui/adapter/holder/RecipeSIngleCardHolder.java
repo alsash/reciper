@@ -2,15 +2,17 @@ package com.alsash.reciper.ui.adapter.holder;
 
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.alsash.reciper.R;
-import com.alsash.reciper.ui.presenter.entity.Recipe;
+import com.alsash.reciper.mvp.model.Recipe;
 
-public class RecipeCardHolder extends RecyclerView.ViewHolder {
+public class RecipeSIngleCardHolder extends RecyclerView.ViewHolder {
 
     private final CardView frontCard;
     private final ImageView frontImage;
@@ -26,23 +28,24 @@ public class RecipeCardHolder extends RecyclerView.ViewHolder {
     private final ImageButton backExpandButton;
     private final ImageButton backOpenButton;
 
-    public RecipeCardHolder(View rootView) {
-        super(rootView);
+    public RecipeSIngleCardHolder(ViewGroup parent) {
+        super(LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.card_recipe, parent, false));
 
-        frontCard = (CardView) rootView.findViewById(R.id.card_recipe_front);
-        frontImage = (ImageView) rootView.findViewById(R.id.card_recipe_front_image);
-        frontTitle = (TextView) rootView.findViewById(R.id.card_recipe_front_title);
-        frontExpandButton = (ImageButton) rootView.findViewById(R.id.card_recipe_front_expand_button);
-        frontOpenButton = (ImageButton) rootView.findViewById(R.id.card_recipe_front_open_button);
+        frontCard = (CardView) itemView.findViewById(R.id.card_recipe_front);
+        frontImage = (ImageView) itemView.findViewById(R.id.card_recipe_front_image);
+        frontTitle = (TextView) itemView.findViewById(R.id.card_recipe_front_title);
+        frontExpandButton = (ImageButton) itemView.findViewById(R.id.card_recipe_front_expand_button);
+        frontOpenButton = (ImageButton) itemView.findViewById(R.id.card_recipe_front_open_button);
 
-        backCard = (CardView) rootView.findViewById(R.id.card_recipe_back);
-        backAccountImage = (ImageView) rootView.findViewById(R.id.card_recipe_back_account_image);
+        backCard = (CardView) itemView.findViewById(R.id.card_recipe_back);
+        backAccountImage = (ImageView) itemView.findViewById(R.id.card_recipe_back_account_image);
 
-        backAccountTitle = (TextView) rootView.findViewById(R.id.card_recipe_back_account_title);
-        backCreationDate = (TextView) rootView.findViewById(R.id.card_recipe_back_recipe_creation_date);
-        backTitle = (TextView) rootView.findViewById(R.id.card_recipe_back_title);
-        backExpandButton = (ImageButton) rootView.findViewById(R.id.card_recipe_back_expand_button);
-        backOpenButton = (ImageButton) rootView.findViewById(R.id.card_recipe_back_open_button);
+        backAccountTitle = (TextView) itemView.findViewById(R.id.card_recipe_back_account_title);
+        backCreationDate = (TextView) itemView.findViewById(R.id.card_recipe_back_recipe_creation_date);
+        backTitle = (TextView) itemView.findViewById(R.id.card_recipe_back_title);
+        backExpandButton = (ImageButton) itemView.findViewById(R.id.card_recipe_back_expand_button);
+        backOpenButton = (ImageButton) itemView.findViewById(R.id.card_recipe_back_open_button);
 
         setBackVisible(false);
     }

@@ -9,13 +9,12 @@ import android.view.View;
 import android.widget.Button;
 
 import com.alsash.reciper.R;
-import com.alsash.reciper.ui.presenter.entity.Recipe;
 import com.alsash.reciper.ui.vector.VectorHelper;
 
 public class RecipeBottomDialog extends BottomSheetDialogFragment
         implements Toolbar.OnMenuItemClickListener {
 
-    public static RecipeBottomDialog newInstance(Recipe recipe) {
+    public static RecipeBottomDialog newInstance(Long recipeId) {
 
         Bundle args = new Bundle();
 

@@ -17,13 +17,13 @@
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
+                <recipeGroup android:name="android.intent.recipeGroup.LAUNCHER" />
             </intent-filter>
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
+                <recipeGroup android:name="android.intent.recipeGroup.DEFAULT" />
+                <recipeGroup android:name="android.intent.recipeGroup.BROWSABLE" />
 
                 <data
                     android:host="alsash.com/recipes"
@@ -31,7 +31,7 @@
                     android:scheme="http" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.activity.RecipeTabCatActivity" />
+        <activity android:name=".ui.activity.RecipeTabActivity" />
         <activity android:name=".ui.activity.RecipeTabFavActivity" />
         <activity android:name=".ui.activity.RecipeListActivity" />
         <activity android:name=".ui.activity.RecipeDetailActivity" />

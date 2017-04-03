@@ -9,10 +9,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.alsash.reciper.R;
+import com.alsash.reciper.mvp.model.Recipe;
+import com.alsash.reciper.mvp.presenter.interaction.RecipeListInteraction;
 import com.alsash.reciper.ui.activity.RecipeDetailActivity;
 import com.alsash.reciper.ui.fragment.dialog.RecipeBottomDialog;
-import com.alsash.reciper.ui.presenter.entity.Recipe;
-import com.alsash.reciper.ui.presenter.interaction.RecipeListInteraction;
 
 public abstract class BaseRecipeListFragment extends Fragment implements RecipeListInteraction {
 
@@ -25,7 +25,7 @@ public abstract class BaseRecipeListFragment extends Fragment implements RecipeL
 
     @Override
     public void onExpand(Recipe recipe, int position) {
-        RecipeBottomDialog bottomDialog = RecipeBottomDialog.newInstance(recipe);
+        RecipeBottomDialog bottomDialog = RecipeBottomDialog.newInstance(recipe.getId());
         bottomDialog.show(getActivity().getSupportFragmentManager(), bottomDialog.getTag());
     }
 

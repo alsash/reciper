@@ -5,7 +5,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 
 import com.alsash.reciper.api.CategoryManager;
-import com.alsash.reciper.ui.adapter.RecipeGroupCardAdapter;
+import com.alsash.reciper.ui.adapter.RecipeGroupCardListAdapter;
 import com.alsash.reciper.ui.presenter.entity.Recipe;
 import com.alsash.reciper.ui.presenter.interaction.RecipeListInteraction;
 
@@ -29,7 +29,7 @@ public class RecipeGroupListFragment extends Fragment implements RecipeListInter
 
     private void setupList() {
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        recyclerView.setAdapter(new RecipeGroupCardAdapter(this, categories));
+        recyclerView.setAdapter(new RecipeGroupCardListAdapter(this, categories));
         recyclerView.setNestedScrollingEnabled(false);
     }
 }

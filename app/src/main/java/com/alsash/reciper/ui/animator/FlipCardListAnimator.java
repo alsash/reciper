@@ -7,7 +7,7 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.RecyclerView;
 import android.widget.FrameLayout;
 
-import com.alsash.reciper.ui.adapter.holder.RecipeCardHolder;
+import com.alsash.reciper.ui.adapter.holder.RecipeSIngleCardHolder;
 
 import java.util.HashMap;
 import java.util.List;
@@ -16,13 +16,13 @@ import java.util.Map;
 import static com.alsash.reciper.ui.contract.KeyContract.PAYLOAD_FLIP_BACK_TO_FRONT;
 import static com.alsash.reciper.ui.contract.KeyContract.PAYLOAD_FLIP_FRONT_TO_BACK;
 
-public class FlipCardAnimator extends DefaultItemAnimator {
+public class FlipCardListAnimator extends DefaultItemAnimator {
 
     private Map<RecyclerView.ViewHolder, FlipAnimatorHelper> flipAnimationsMap = new HashMap<>();
 
     @Override
     public boolean canReuseUpdatedViewHolder(@NonNull RecyclerView.ViewHolder holder) {
-        return (holder instanceof RecipeCardHolder) || super.canReuseUpdatedViewHolder(holder);
+        return (holder instanceof RecipeSIngleCardHolder) || super.canReuseUpdatedViewHolder(holder);
     }
 
     @NonNull
