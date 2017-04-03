@@ -1,20 +1,17 @@
 package com.alsash.reciper.ui.fragment;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 
-import com.alsash.reciper.api.CategoryManager;
+import com.alsash.reciper.mvp.model.RecipeGroup;
 import com.alsash.reciper.ui.adapter.RecipeGroupCardListAdapter;
-import com.alsash.reciper.ui.presenter.entity.Recipe;
-import com.alsash.reciper.ui.presenter.interaction.RecipeListInteraction;
 
 import java.util.List;
 
-public class RecipeGroupListFragment extends Fragment implements RecipeListInteraction {
+public class RecipeGroupListFragment extends BaseRecipeListFragment {
 
     // Model
-    private List<BaseGroup<Recipe>> groups;
+    private List<RecipeGroup> groups;
 
     public static RecipeGroupListFragment newInstance() {
         Bundle args = new Bundle();
@@ -23,13 +20,15 @@ public class RecipeGroupListFragment extends Fragment implements RecipeListInter
         return fragment;
     }
 
-    private void bindModel() {
-        categories = CategoryManager.getInstance().list();
+    @Override
+    protected void bindModel() {
+
     }
 
-    private void setupList() {
+    @Override
+    protected void setupList() {
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        recyclerView.setAdapter(new RecipeGroupCardListAdapter(this, categories));
+        recyclerView.setAdapter(new RecipeGroupCardListAdapter(this, groups));
         recyclerView.setNestedScrollingEnabled(false);
     }
 }

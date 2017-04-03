@@ -4,7 +4,7 @@ import android.content.Context;
 
 import org.greenrobot.greendao.database.Database;
 
-import java.lang.ref.SoftReference;
+import java.lang.ref.WeakReference;
 
 /**
  * Single instance for database api
@@ -15,7 +15,7 @@ public class ApiDb {
 
     private static final String DATABASE_NAME = "reciper-db";
     private static final ApiDb INSTANCE = new ApiDb();
-    private SoftReference<DaoSession> refDaoSession;
+    private WeakReference<DaoSession> refDaoSession;
     private boolean created;
 
     private ApiDb() {
@@ -29,7 +29,7 @@ public class ApiDb {
         if (refDaoSession == null || refDaoSession.get() == null) {
             Context appContext = context.getApplicationContext();
             Database db = new DbOpenHelper(appContext, DATABASE_NAME).getWritableDb();
-            refDaoSession = new SoftReference<>(new DaoMaster(db).newSession());
+            refDaoSession = new WeakReference<>(new DaoMaster(db).newSession());
         }
         return refDaoSession.get();
     }
@@ -52,11 +52,9 @@ public class ApiDb {
     }
 
     private static class DbOpenHelper extends DaoMaster.DevOpenHelper {
-        private final Context context;
 
         public DbOpenHelper(Context context, String name) {
             super(context, name);
-            this.context = context;
         }
 
         @Override

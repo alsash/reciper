@@ -20,11 +20,10 @@ import android.widget.NumberPicker;
 import android.widget.TextView;
 
 import com.alsash.reciper.R;
-import com.alsash.reciper.api.RecipeManager;
+import com.alsash.reciper.mvp.model.Recipe;
 import com.alsash.reciper.ui.animator.DepthPageTransformer;
 import com.alsash.reciper.ui.contract.KeyContract;
 import com.alsash.reciper.ui.fragment.RecipeDetailMainFragment;
-import com.alsash.reciper.ui.presenter.entity.Recipe;
 import com.alsash.reciper.ui.vector.VectorHelper;
 
 public class RecipeDetailActivity extends BaseDrawerActivity {
@@ -71,7 +70,7 @@ public class RecipeDetailActivity extends BaseDrawerActivity {
 
     private void bindModel() {
         long id = getIntent().getLongExtra(KeyContract.KEY_RECIPE_ID, -1);
-        recipe = RecipeManager.getInstance().search(id);
+        // recipe = RecipeManager.getInstance().search(id);
         assert recipe != null;
     }
 
