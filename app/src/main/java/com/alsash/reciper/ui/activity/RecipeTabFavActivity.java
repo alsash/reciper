@@ -28,7 +28,8 @@ public class RecipeTabFavActivity extends BaseTabActivity {
     @Nullable
     @Override
     protected Integer getNavItemId() {
-        return R.id.drawer_base_nav_recipe_favorite;
+//        return R.id.drawer_base_nav_recipe_favorite;
+        return null;
     }
 
     @Override

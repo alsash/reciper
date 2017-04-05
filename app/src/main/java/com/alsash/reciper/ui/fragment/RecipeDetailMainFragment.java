@@ -13,9 +13,8 @@ import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import com.alsash.reciper.R;
-import com.alsash.reciper.api.RecipeManager;
+import com.alsash.reciper.mvp.model.Recipe;
 import com.alsash.reciper.ui.contract.KeyContract;
-import com.alsash.reciper.ui.presenter.entity.Recipe;
 import com.alsash.reciper.ui.view.ArcProgressStackView;
 
 import java.util.ArrayList;
@@ -57,7 +56,7 @@ public class RecipeDetailMainFragment extends Fragment {
 
     private void bindModel() {
         long id = getArguments().getLong(KeyContract.KEY_RECIPE_ID, -1);
-        recipe = RecipeManager.getInstance().search(id);
+        // recipe = RecipeManager.getInstance().search(id);
         assert recipe != null;
     }
 
@@ -135,9 +134,9 @@ public class RecipeDetailMainFragment extends Fragment {
         int[] colors = getResources().getIntArray(R.array.nutrition_colors);
         int[] backgrounds = getResources().getIntArray(R.array.nutrition_backgrounds);
         int[] values = new int[]{
-                recipe.getNutrition().getCarbohydrate(),
-                recipe.getNutrition().getProtein(),
-                recipe.getNutrition().getFat(),
+                //    recipe.getNutrition().getCarbohydrate(),
+                //    recipe.getNutrition().getProtein(),
+                //    recipe.getNutrition().getFat(),
         };
         int length = backgrounds.length;
         if (length > colors.length) length = colors.length;
@@ -158,14 +157,14 @@ public class RecipeDetailMainFragment extends Fragment {
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
                 float fraction = (float) animation.getAnimatedValue();
-                int energy = (int) (fraction * recipe.getNutrition().getEnergy());
-                int carbohydrate = (int) (fraction * recipe.getNutrition().getCarbohydrate());
-                int protein = (int) (fraction * recipe.getNutrition().getProtein());
-                int fat = (int) (fraction * recipe.getNutrition().getFat());
-                nutritionEnergy.setText(getResources().getString(R.string.nutrition_energy_value, energy));
-                nutritionCarbohydrate.setText(getString(R.string.percent, carbohydrate));
-                nutritionProtein.setText(getString(R.string.percent, protein));
-                nutritionFat.setText(getString(R.string.percent, fat));
+//                int energy = (int) (fraction * recipe.getNutrition().getEnergy());
+//                int carbohydrate = (int) (fraction * recipe.getNutrition().getCarbohydrate());
+//                int protein = (int) (fraction * recipe.getNutrition().getProtein());
+//                int fat = (int) (fraction * recipe.getNutrition().getFat());
+//                nutritionEnergy.setText(getResources().getString(R.string.nutrition_energy_value, energy));
+//                nutritionCarbohydrate.setText(getString(R.string.percent, carbohydrate));
+//                nutritionProtein.setText(getString(R.string.percent, protein));
+//                nutritionFat.setText(getString(R.string.percent, fat));
 
             }
         });

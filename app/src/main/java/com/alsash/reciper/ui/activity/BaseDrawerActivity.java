@@ -134,9 +134,9 @@ public abstract class BaseDrawerActivity extends AppCompatActivity
                 case R.id.navigation_recipes:
                     nextClass = RecipeTabActivity.class;
                     break;
-                case R.id.drawer_base_nav_recipe_favorite:
-                    nextClass = RecipeTabFavActivity.class;
-                    break;
+//                case R.id.drawer_base_nav_recipe_favorite:
+//                    nextClass = RecipeTabFavActivity.class;
+//                    break;
                 case R.id.navigation_cart:
                     break;
                 case R.id.drawer_label:
