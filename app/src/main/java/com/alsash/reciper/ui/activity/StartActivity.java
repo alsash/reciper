@@ -41,6 +41,7 @@ public class StartActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (savedInstanceState != null) return;
         ApiDb.getInstance().createStartupEntriesIfNeed(getApplicationContext());
     }
 
