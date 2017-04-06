@@ -134,10 +134,11 @@
     </string>
     <string name="drawer_base_nav_recipe_all">All recipes</string>
     <string name="drawer_base_nav_recipe_favorite">Favorite recipes</string>
+
     <!--Startup entities. Json array-->
     <string name="startup_entity_recipe">
         [
-            {"id":0,"name":"Recipe # 0","categoryId":0}
+            {"id":0,"name":"Recipe # 0","categoryId":0},
             {"id":1,"name":"Recipe # 1","categoryId":1},
             {"id":2,"name":"Recipe # 2","categoryId":2},
             {"id":3,"name":"Recipe # 3","categoryId":3},
@@ -156,12 +157,12 @@
             {"id":16,"name":"Recipe # 16","categoryId":6},
             {"id":17,"name":"Recipe # 17","categoryId":7},
             {"id":18,"name":"Recipe # 18","categoryId":8},
-            {"id":19,"name":"Recipe # 19","categoryId":9},
+            {"id":19,"name":"Recipe # 19","categoryId":9}
         ]
     </string>
     <string name="startup_entity_category">
         [
-            {"id":0,"name":"Category # 0"}
+            {"id":0,"name":"Category # 0"},
             {"id":1,"name":"Category # 1"},
             {"id":2,"name":"Category # 2"},
             {"id":3,"name":"Category # 3"},
@@ -170,39 +171,39 @@
             {"id":6,"name":"Category # 6"},
             {"id":7,"name":"Category # 7"},
             {"id":8,"name":"Category # 8"},
-            {"id":9,"name":"Category # 9"},
+            {"id":9,"name":"Category # 9"}
         ]
     </string>
     <string name="startup_entity_label">
         [
-            {"id":0,"name":"Label # 0"}
+            {"id":0,"name":"Label # 0"},
             {"id":1,"name":"Label # 1"},
             {"id":2,"name":"Label # 2"},
-            {"id":3,"name":"Label # 3"},
+            {"id":3,"name":"Label # 3"}
         ]
     </string>
     <string name="startup_entity_recipe_label_join">
         [
-            { "id": 1, "recipeId": 1, "labelId": 1 },
-            { "id": 2, "recipeId": 2, "labelId": 2 },
-            { "id": 3, "recipeId": 11, "labelId": 3 },
-            { "id": 4, "recipeId": 12, "labelId": 0 },
-            { "id": 5, "recipeId": 3, "labelId": 1 },
-            { "id": 6, "recipeId": 4, "labelId": 2 },
-            { "id": 7, "recipeId": 13, "labelId": 3 },
-            { "id": 8, "recipeId": 14, "labelId": 0 },
-            { "id": 9, "recipeId": 5, "labelId": 1 },
-            { "id": 10, "recipeId": 6, "labelId": 2 },
-            { "id": 11, "recipeId": 15, "labelId": 3 },
-            { "id": 12, "recipeId": 16, "labelId": 0 },
-            { "id": 13, "recipeId": 7, "labelId": 1 },
-            { "id": 14, "recipeId": 8, "labelId": 2 },
-            { "id": 15, "recipeId": 17, "labelId": 3 },
-            { "id": 16, "recipeId": 18, "labelId": 0 },
-            { "id": 17, "recipeId": 9, "labelId": 1 },
-            { "id": 18, "recipeId": 10, "labelId": 2 },
-            { "id": 19, "recipeId": 19, "labelId": 3 },
-            { "id": 20, "recipeId": 0, "labelId": 0 }
+            {"id":0,"recipeId":0,"labelId":0}
+            {"id":1,"recipeId":1,"labelId":1},
+            {"id":2,"recipeId":2,"labelId":2},
+            {"id":3,"recipeId":3,"labelId":1},
+            {"id":4,"recipeId":4,"labelId":2},
+            {"id":5,"recipeId":5,"labelId":1},
+            {"id":6,"recipeId":6,"labelId":2},
+            {"id":7,"recipeId":7,"labelId":1},
+            {"id":8,"recipeId":8,"labelId":2},
+            {"id":9,"recipeId":9,"labelId":1},
+            {"id":10,"recipeId":10,"labelId":2},
+            {"id":11,"recipeId":11,"labelId":3},
+            {"id":12,"recipeId":12,"labelId":0},
+            {"id":13,"recipeId":13,"labelId":3},
+            {"id":14,"recipeId":14,"labelId":0},
+            {"id":15,"recipeId":15,"labelId":3},
+            {"id":16,"recipeId":16,"labelId":0},
+            {"id":17,"recipeId":17,"labelId":3},
+            {"id":18,"recipeId":18,"labelId":0},
+            {"id":19,"recipeId":19,"labelId":3},
         ]
     </string>
 </resources>
