@@ -2,9 +2,13 @@ package com.alsash.reciper.ui.activity;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+
+import com.alsash.reciper.database.ApiDb;
 
 public class StartActivity extends AppCompatActivity {
 
@@ -33,6 +37,12 @@ public class StartActivity extends AppCompatActivity {
             startActivity(new Intent(StartActivity.this, RecipeTabActivity.class));
         }
     };
+
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        ApiDb.getInstance().createStartupEntriesIfNeed(getApplicationContext());
+    }
 
     @Override
     protected void onResume() {

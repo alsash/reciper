@@ -1,5 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!--ArcProgressStackView. Forked from 'devlight.io:arcprogressstackview:1.0.4'-->
+    <string-array name="apsv_default_preview">
+        <item>#ff670729</item>
+        <item>#ff7a0c2d</item>
+        <item>#ff96092d</item>
+        <item>#ffa10a37</item>
+    </string-array>
+    <!--Nutrition-->
     <integer-array name="nutrition_colors">
         <item>@color/nutrition_carbohydrate</item>
         <item>@color/nutrition_protein</item>
@@ -10,11 +18,4 @@
         <item>@color/nutrition_protein_bg</item>
         <item>@color/nutrition_fat_bg</item>
     </integer-array>
-    <!-- ArcProgressStackView. Forked from 'devlight.io:arcprogressstackview:1.0.4' -->
-    <string-array name="apsv_default_preview">
-        <item>#ff670729</item>
-        <item>#ff7a0c2d</item>
-        <item>#ff96092d</item>
-        <item>#ffa10a37</item>
-    </string-array>
 </resources>

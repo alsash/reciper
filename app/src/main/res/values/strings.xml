@@ -134,4 +134,55 @@
     </string>
     <string name="drawer_base_nav_recipe_all">All recipes</string>
     <string name="drawer_base_nav_recipe_favorite">Favorite recipes</string>
+    <!--Startup entities. Json array-->
+    <string name="startup_entity_recipe">
+        [   {"id":1,"name":"Recipe # 1","categoryId":1},
+            {"id":2,"name":"Recipe # 2","categoryId":2},
+            {"id":3,"name":"Recipe # 3","categoryId":3},
+            {"id":4,"name":"Recipe # 4","categoryId":4},
+            {"id":5,"name":"Recipe # 5","categoryId":5},
+            {"id":6,"name":"Recipe # 6","categoryId":6},
+            {"id":7,"name":"Recipe # 7","categoryId":7},
+            {"id":8,"name":"Recipe # 8","categoryId":8},
+            {"id":9,"name":"Recipe # 9","categoryId":9},
+            {"id":10,"name":"Recipe # 10","categoryId":10},
+            {"id":11,"name":"Recipe # 11","categoryId":1},
+            {"id":12,"name":"Recipe # 12","categoryId":2},
+            {"id":13,"name":"Recipe # 13","categoryId":3},
+            {"id":14,"name":"Recipe # 14","categoryId":4},
+            {"id":15,"name":"Recipe # 15","categoryId":5},
+            {"id":16,"name":"Recipe # 16","categoryId":6},
+            {"id":17,"name":"Recipe # 17","categoryId":7},
+            {"id":18,"name":"Recipe # 18","categoryId":8},
+            {"id":19,"name":"Recipe # 19","categoryId":9},
+            {"id":20,"name":"Recipe # 20","categoryId":10}
+        ]
+    </string>
+    <string name="startup_entity_category">
+        [   {"id":1,"name":"Category # 1"},
+            {"id":2,"name":"Category # 2"},
+            {"id":3,"name":"Category # 3"},
+            {"id":4,"name":"Category # 4"},
+            {"id":5,"name":"Category # 5"},
+            {"id":6,"name":"Category # 6"},
+            {"id":7,"name":"Category # 7"},
+            {"id":8,"name":"Category # 8"},
+            {"id":9,"name":"Category # 9"},
+            {"id":10,"name":"Category # 10"}
+        ]
+    </string>
+    <string name="startup_entity_label">
+        [   {"id":1,"name":"Label # 1"},
+            {"id":2,"name":"Label # 2"},
+            {"id":3,"name":"Label # 3"},
+            {"id":4,"name":"Label # 4"}
+        ]
+    </string>
+    <string name="startup_entity_recipe_label_join">
+        [   {"id":1,"name":"Label # 1"},
+            {"id":2,"name":"Label # 2"},
+            {"id":3,"name":"Label # 3"},
+            {"id":4,"name":"Label # 4"}
+        ]
+    </string>
 </resources>
