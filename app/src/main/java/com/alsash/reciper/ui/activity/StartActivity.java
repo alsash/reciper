@@ -8,7 +8,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
-import com.alsash.reciper.database.ApiDb;
+import com.alsash.reciper.database.ApiDatabase;
 
 public class StartActivity extends AppCompatActivity {
 
@@ -42,7 +42,7 @@ public class StartActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (savedInstanceState != null) return;
-        ApiDb.getInstance().createStartupEntriesIfNeed(getApplicationContext());
+        ApiDatabase.getInstance().createStartupEntriesIfNeed(getApplicationContext());
     }
 
     @Override

@@ -1,6 +1,6 @@
 package com.alsash.reciper.mvp.presenter.interaction;
 
-import com.alsash.reciper.mvp.model.Recipe;
+import com.alsash.reciper.mvp.model.entity.Recipe;
 
 /**
  * Created by aldolyna on 4/3/17.

@@ -3,7 +3,7 @@ package com.alsash.reciper.ui.fragment;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 
-import com.alsash.reciper.mvp.model.RecipeGroup;
+import com.alsash.reciper.mvp.model.entity.RecipeGroup;
 import com.alsash.reciper.ui.adapter.RecipeGroupCardListAdapter;
 
 import java.util.List;

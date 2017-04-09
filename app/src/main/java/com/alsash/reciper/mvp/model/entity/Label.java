@@ -1,4 +1,4 @@
-package com.alsash.reciper.mvp.model;
+package com.alsash.reciper.mvp.model.entity;
 
 import android.support.annotation.Nullable;
 

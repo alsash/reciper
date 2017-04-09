@@ -1,4 +1,4 @@
-package com.alsash.reciper.database;
+package com.alsash.reciper.database.entity;
 
 import org.greenrobot.greendao.DaoException;
 import org.greenrobot.greendao.annotation.Entity;
@@ -7,27 +7,33 @@ import org.greenrobot.greendao.annotation.Id;
 import org.greenrobot.greendao.annotation.Index;
 import org.greenrobot.greendao.annotation.JoinEntity;
 import org.greenrobot.greendao.annotation.ToMany;
+import org.greenrobot.greendao.annotation.ToOne;
 
 import java.util.List;
 
 /**
- * Local database table that holds labels of recipes
+ * Local database table that holds recipes
  */
 @Entity(indexes = {@Index(value = "name", unique = true)})
-public class Label {
+public class Recipe {
 
     @Id
     private Long id;
 
     private String name;
 
+    private Long categoryId;
+
+    @ToOne(joinProperty = "categoryId")
+    private Category category;
+
     @ToMany
     @JoinEntity(
             entity = RecipeLabelJoin.class,
-            sourceProperty = "labelId",
-            targetProperty = "recipeId"
+            sourceProperty = "recipeId",
+            targetProperty = "labelId"
     )
-    private List<Recipe> recipes;
+    private List<Label> labels;
 
 // Next will be generated sources
     /**
@@ -39,17 +45,20 @@ public class Label {
     /**
      * Used for active entity operations.
      */
-    @Generated(hash = 40777009)
-    private transient LabelDao myDao;
+    @Generated(hash = 1947830398)
+    private transient RecipeDao myDao;
+    @Generated(hash = 1372501278)
+    private transient Long category__resolvedKey;
 
-    @Generated(hash = 185181216)
-    public Label(Long id, String name) {
+    @Generated(hash = 688523813)
+    public Recipe(Long id, String name, Long categoryId) {
         this.id = id;
         this.name = name;
+        this.categoryId = categoryId;
     }
 
-    @Generated(hash = 2137109701)
-    public Label() {
+    @Generated(hash = 829032493)
+    public Recipe() {
     }
 
     public Long getId() {
@@ -68,34 +77,75 @@ public class Label {
         this.name = name;
     }
 
+    public Long getCategoryId() {
+        return this.categoryId;
+    }
+
+    public void setCategoryId(Long categoryId) {
+        this.categoryId = categoryId;
+    }
+
     /**
-     * To-many relationship, resolved on first access (and after reset).
-     * Changes to to-many relations are not persisted, make changes to the target entity.
+     * To-one relationship, resolved on first access.
      */
-    @Generated(hash = 10078430)
-    public List<Recipe> getRecipes() {
-        if (recipes == null) {
+    @Generated(hash = 728129201)
+    public Category getCategory() {
+        Long __key = this.categoryId;
+        if (category__resolvedKey == null || !category__resolvedKey.equals(__key)) {
             final DaoSession daoSession = this.daoSession;
             if (daoSession == null) {
                 throw new DaoException("Entity is detached from DAO context");
             }
-            RecipeDao targetDao = daoSession.getRecipeDao();
-            List<Recipe> recipesNew = targetDao._queryLabel_Recipes(id);
+            CategoryDao targetDao = daoSession.getCategoryDao();
+            Category categoryNew = targetDao.load(__key);
             synchronized (this) {
-                if (recipes == null) {
-                    recipes = recipesNew;
+                category = categoryNew;
+                category__resolvedKey = __key;
+            }
+        }
+        return category;
+    }
+
+    /**
+     * called by internal mechanisms, do not call yourself.
+     */
+    @Generated(hash = 1132018243)
+    public void setCategory(Category category) {
+        synchronized (this) {
+            this.category = category;
+            categoryId = category == null ? null : category.getId();
+            category__resolvedKey = categoryId;
+        }
+    }
+
+    /**
+     * To-many relationship, resolved on first access (and after reset).
+     * Changes to to-many relations are not persisted, make changes to the target entity.
+     */
+    @Generated(hash = 1356728064)
+    public List<Label> getLabels() {
+        if (labels == null) {
+            final DaoSession daoSession = this.daoSession;
+            if (daoSession == null) {
+                throw new DaoException("Entity is detached from DAO context");
+            }
+            LabelDao targetDao = daoSession.getLabelDao();
+            List<Label> labelsNew = targetDao._queryRecipe_Labels(id);
+            synchronized (this) {
+                if (labels == null) {
+                    labels = labelsNew;
                 }
             }
         }
-        return recipes;
+        return labels;
     }
 
     /**
      * Resets a to-many relationship, making the next get call to query for a fresh result.
      */
-    @Generated(hash = 2094593178)
-    public synchronized void resetRecipes() {
-        recipes = null;
+    @Generated(hash = 902294403)
+    public synchronized void resetLabels() {
+        labels = null;
     }
 
     /**
@@ -137,10 +187,10 @@ public class Label {
     /**
      * called by internal mechanisms, do not call yourself.
      */
-    @Generated(hash = 692607636)
+    @Generated(hash = 1484851246)
     public void __setDaoSession(DaoSession daoSession) {
         this.daoSession = daoSession;
-        myDao = daoSession != null ? daoSession.getLabelDao() : null;
+        myDao = daoSession != null ? daoSession.getRecipeDao() : null;
     }
 
 // Next will be generated sources

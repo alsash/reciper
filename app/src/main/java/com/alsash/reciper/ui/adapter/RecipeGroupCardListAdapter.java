@@ -3,7 +3,7 @@ package com.alsash.reciper.ui.adapter;
 import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
 
-import com.alsash.reciper.mvp.model.RecipeGroup;
+import com.alsash.reciper.mvp.model.entity.RecipeGroup;
 import com.alsash.reciper.mvp.presenter.interaction.RecipeListInteraction;
 import com.alsash.reciper.ui.adapter.holder.RecipeGroupCardHolder;
 

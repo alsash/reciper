@@ -10,7 +10,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.alsash.reciper.R;
-import com.alsash.reciper.mvp.model.Recipe;
+import com.alsash.reciper.mvp.model.entity.Recipe;
 import com.alsash.reciper.mvp.presenter.interaction.RecipeListInteraction;
 import com.alsash.reciper.ui.fragment.dialog.RecipeBottomDialog;
 import com.alsash.reciper.ui.vector.VectorHelper;

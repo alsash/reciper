@@ -10,7 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.alsash.reciper.R;
-import com.alsash.reciper.mvp.model.Recipe;
+import com.alsash.reciper.mvp.model.entity.Recipe;
 
 public class RecipeSIngleCardHolder extends RecyclerView.ViewHolder {
 

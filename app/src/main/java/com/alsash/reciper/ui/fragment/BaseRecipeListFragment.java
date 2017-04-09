@@ -9,7 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.alsash.reciper.R;
-import com.alsash.reciper.mvp.model.Recipe;
+import com.alsash.reciper.mvp.model.entity.Recipe;
 import com.alsash.reciper.mvp.presenter.interaction.RecipeListInteraction;
 import com.alsash.reciper.ui.activity.RecipeDetailActivity;
 import com.alsash.reciper.ui.fragment.dialog.RecipeBottomDialog;

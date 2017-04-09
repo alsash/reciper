@@ -4,6 +4,10 @@ import android.content.Context;
 import android.content.res.Resources;
 
 import com.alsash.reciper.R;
+import com.alsash.reciper.database.entity.Category;
+import com.alsash.reciper.database.entity.Label;
+import com.alsash.reciper.database.entity.Recipe;
+import com.alsash.reciper.database.entity.RecipeLabelJoin;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -16,19 +20,19 @@ import java.util.List;
 /**
  * Single instance for database api
  */
-public class ApiDb {
+public class ApiDatabase {
 
     public static final int VERSION = DaoMaster.SCHEMA_VERSION;
 
     private static final String DATABASE_NAME = "reciper_db";
-    private static final ApiDb INSTANCE = new ApiDb();
+    private static final ApiDatabase INSTANCE = new ApiDatabase();
     private WeakReference<DaoSession> refDaoSession;
     private boolean created;
 
-    private ApiDb() {
+    private ApiDatabase() {
     }
 
-    public static ApiDb getInstance() {
+    public static ApiDatabase getInstance() {
         return INSTANCE;
     }
 
@@ -121,7 +125,7 @@ public class ApiDb {
         @Override
         public void onCreate(Database db) {
             super.onCreate(db);
-            ApiDb.getInstance().createStartupEntities(context);
+            ApiDatabase.getInstance().createStartupEntities(context);
         }
     }
 }

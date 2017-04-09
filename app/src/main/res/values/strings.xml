@@ -135,6 +135,12 @@
     <string name="drawer_base_nav_recipe_all">All recipes</string>
     <string name="drawer_base_nav_recipe_favorite">Favorite recipes</string>
 
+    <!--Mvp tabs-->
+    <string name="tab_recipe_category">Categories</string>
+    <string name="tab_recipe_all">List</string>
+    <string name="tab_recipe_label">Labels</string>
+    <string name="tab_recipe_bookmark">Bookmarks</string>
+
     <!--Startup entities. Json array-->
     <string name="startup_entity_recipe">
         [

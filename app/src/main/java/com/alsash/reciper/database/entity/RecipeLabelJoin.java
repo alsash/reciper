@@ -1,4 +1,4 @@
-package com.alsash.reciper.database;
+package com.alsash.reciper.database.entity;
 
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Generated;

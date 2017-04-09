@@ -20,7 +20,7 @@ import android.widget.NumberPicker;
 import android.widget.TextView;
 
 import com.alsash.reciper.R;
-import com.alsash.reciper.mvp.model.Recipe;
+import com.alsash.reciper.mvp.model.entity.Recipe;
 import com.alsash.reciper.ui.animator.DepthPageTransformer;
 import com.alsash.reciper.ui.contract.KeyContract;
 import com.alsash.reciper.ui.fragment.RecipeDetailMainFragment;

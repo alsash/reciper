@@ -4,7 +4,7 @@ import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 
 import com.alsash.reciper.R;
-import com.alsash.reciper.mvp.model.Recipe;
+import com.alsash.reciper.mvp.model.entity.Recipe;
 import com.alsash.reciper.ui.adapter.RecipeSingleCardListAdapter;
 import com.alsash.reciper.ui.animator.FlipCardListAnimator;
 
