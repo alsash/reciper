@@ -1,42 +1,113 @@
 package com.alsash.reciper.ui.activity;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.ActionBar;
 import android.view.View;
 
-import com.alsash.reciper.R;
-import com.alsash.reciper.ui.adapter.RecipePagerAdapter;
+import com.alsash.reciper.mvp.model.tab.SwipeTab;
+import com.alsash.reciper.mvp.presenter.RecipeTabPresenter;
+import com.alsash.reciper.mvp.view.RecipeTabView;
 import com.alsash.reciper.ui.adapter.SwipePagerAdapter;
+import com.hannesdorfmann.mosby3.mvp.delegate.ActivityMvpDelegateImpl;
+import com.hannesdorfmann.mosby3.mvp.delegate.MvpDelegateCallback;
 
-/**
- * The Activity that represents two tabs with RecipePagerAdapter:
- * Tab one - RecipeCategoriesFragment
- * Tab two - RecipeSingleListFragment
- */
-public class RecipeTabActivity extends BaseTabActivity {
+import java.util.List;
 
-    // Adapters
-    private RecipePagerAdapter pagerAdapter;
+public class RecipeTabActivity extends BaseSwipeTabActivity {
+
+    // Mvp
+    private RecipeTabPresenter mvpPresenter;
+    private RecipeTabView mvpView;
+    private ActivityMvpDelegateImpl<RecipeTabView, RecipeTabPresenter> mvpDelegate;
+    private MvpDelegateCallback<RecipeTabView, RecipeTabPresenter> mvpCallback;
+
+    // Adapter
+    private SwipePagerAdapter adapter;
+    private List<SwipeTab> tabs;
+    private boolean drawTabTitleOnHeader;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        setupMvpView();
+        setupMvpPresenter();
+        setupMvpCallback();
+        setupMvpDelegate();
+
+        setupAdapter();
         super.onCreate(savedInstanceState);
-        setToolbarTitle(getResources().getString(R.string.navigation_recipes));
+        mvpDelegate.onCreate(savedInstanceState);
+    }
+
+    void setupMvpView() {
+        mvpView = new RecipeTabView() {
+            @Override
+            public void setDrawTabTitleOnHeader(boolean draw) {
+                drawTabTitleOnHeader = draw;
+            }
+
+            @Override
+            public void setTabs(List<SwipeTab> newTabs) {
+                tabs = newTabs;
+            }
+
+            @Override
+            public void showTab(int position, boolean smooth) {
+                pager.setCurrentItem(position, smooth);
+            }
+        };
+    }
+
+    void setupMvpPresenter() {
+        mvpPresenter = new RecipeTabPresenter();
+    }
+
+    void setupMvpCallback() {
+        mvpCallback = new MvpDelegateCallback<RecipeTabView, RecipeTabPresenter>() {
+            @NonNull
+            @Override
+            public RecipeTabPresenter createPresenter() {
+                return mvpPresenter;
+            }
+
+            @Override
+            public RecipeTabPresenter getPresenter() {
+                return mvpPresenter;
+            }
+
+            @Override
+            public void setPresenter(RecipeTabPresenter newPresenter) {
+                mvpPresenter = newPresenter;
+            }
+
+            @Override
+            public RecipeTabView getMvpView() {
+                return mvpView;
+            }
+        };
+    }
+
+    void setupMvpDelegate() {
+        mvpDelegate = new ActivityMvpDelegateImpl<>(this, mvpCallback, false);
+    }
+
+    protected void setToolbarTitle(CharSequence title) {
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar == null) return;
+        actionBar.setTitle(title);
+    }
+
+    @Override
+    protected SwipePagerAdapter getPagerAdapter() {
+        return adapter;
     }
 
     @Nullable
     @Override
     protected Integer getNavItemId() {
-        return R.id.navigation_recipes;
-    }
-
-    @Override
-    protected SwipePagerAdapter getPagerAdapter() {
-        if (pagerAdapter == null) {
-            pagerAdapter = new RecipePagerAdapter(this, getSupportFragmentManager());
-        }
-        return pagerAdapter;
+        return null;
     }
 
     @Override

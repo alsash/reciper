@@ -6,15 +6,13 @@ import android.support.design.widget.Snackbar;
 import android.view.View;
 
 import com.alsash.reciper.R;
-import com.alsash.reciper.ui.adapter.RecipeFavPagerAdapter;
-import com.alsash.reciper.ui.adapter.SwipePagerAdapter;
 
 /**
- * The Activity that represents two tabs with RecipePagerAdapter:
+ * The Activity that represents two tabs with SwipePagerAdapter:
  * Tab one - RecipeLabelsFragment
  * Tab two - RecipeBookmarksFragment
  */
-public class RecipeTabFavActivity extends BaseTabActivity {
+public class RecipeTabFavActivity extends BaseSwipeTabActivity {
 
     // Adapters
     private RecipeFavPagerAdapter pagerAdapter;

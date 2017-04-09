@@ -1,28 +1,61 @@
 package com.alsash.reciper.ui.adapter;
 
-import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.Nullable;
+import android.support.graphics.drawable.VectorDrawableCompat;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import com.alsash.reciper.ui.vector.VectorHelper;
+import com.alsash.reciper.mvp.model.tab.SwipeTab;
 import com.alsash.reciper.ui.view.SwipeViewPager;
 
-import java.lang.ref.WeakReference;
+import java.util.List;
 
-public abstract class SwipePagerAdapter extends FragmentPagerAdapter
+/**
+ * SwipePagerAdapter that represents four tabs:
+ * list of recipe categories,
+ * list of single recipes,
+ * list of labeled recipes,
+ * list of bookmarked recipes
+ */
+public class SwipePagerAdapter extends FragmentPagerAdapter
         implements SwipeViewPager.OnPageSelectListener {
 
-    protected final WeakReference<Context> contextRef;
-    protected final VectorHelper vectorHelper;
+    protected final List<SwipeTab> tabs;
 
-    public SwipePagerAdapter(Context context, FragmentManager fm) {
+    public SwipePagerAdapter(FragmentManager fm, List<SwipeTab> tabs) {
         super(fm);
-        this.contextRef = new WeakReference<>(context);
-        this.vectorHelper = new VectorHelper(context);
+        this.tabs = tabs;
+    }
+
+    @Override
+    public boolean isSwipeEnabled(int position) {
+        return !tabs.get(position).hasNestedViews();
+    }
+
+    @Override
+    public Fragment getItem(int position) {
+        return tabs.get(position).getFragment();
+    }
+
+    @Override
+    public int getCount() {
+        return tabs.size();
     }
 
     @Nullable
-    public abstract Drawable getPageIcon(int position);
+    public String getPageTitle(int position, Resources res) {
+        Integer resId = tabs.get(position).getTitle();
+        if (resId == null) return null;
+        return res.getString(resId);
+    }
+
+    @Nullable
+    public Drawable getPageIcon(int position, Resources res, @Nullable Resources.Theme theme) {
+        Integer resId = tabs.get(position).getIcon();
+        if (resId == null) return null;
+        return VectorDrawableCompat.create(res, resId, theme);
+    }
 }

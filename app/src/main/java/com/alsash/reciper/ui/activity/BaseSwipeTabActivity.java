@@ -3,8 +3,6 @@ package com.alsash.reciper.ui.activity;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
-import android.support.v4.view.ViewPager;
-import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 
 import com.alsash.reciper.R;
@@ -14,13 +12,15 @@ import com.alsash.reciper.ui.view.SwipeViewPager;
 /**
  * An abstract Activity that holds tab layout
  */
-public abstract class BaseTabActivity extends BaseDrawerActivity {
+public abstract class BaseSwipeTabActivity extends BaseDrawerActivity {
 
-    // Views
+    // Layout views
     protected Toolbar toolbar;
     protected SwipeViewPager pager;
     protected TabLayout tabs;
     protected FloatingActionButton fab;
+
+    private SwipePagerAdapter adapter;
 
     protected abstract SwipePagerAdapter getPagerAdapter();
 
@@ -29,7 +29,7 @@ public abstract class BaseTabActivity extends BaseDrawerActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_tab_base);
+        setContentView(R.layout.activity_tab_swipe_base);
         bindViews();
         setupToolbar();
         setupPager();
@@ -49,40 +49,18 @@ public abstract class BaseTabActivity extends BaseDrawerActivity {
         setupDrawer(toolbar); // Call to parent BaseDrawerActivity
     }
 
-    private void setupPager() {
-        pager.setAdapter(getPagerAdapter());
-        if (!drawTabTitle()) {
-            pager.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
-                @Override
-                public void onPageSelected(int position) {
-                    setToolbarTitle(getPagerAdapter().getPageTitle(position));
-                }
-            });
-            setToolbarTitle(getPagerAdapter().getPageTitle(0));
-        }
+    protected void setupPager() {
+        adapter = getPagerAdapter();
+        pager.setAdapter(adapter);
         tabs.setupWithViewPager(pager);
     }
 
-    private void setupTabs() {
+    protected void setupTabs() {
         for (int i = 0; i < tabs.getTabCount(); i++) {
             TabLayout.Tab tab = tabs.getTabAt(i);
             assert tab != null;
-            if (!drawTabTitle()) tab.setText(null); // Icons only
-            if (drawTabIcons()) tab.setIcon(getPagerAdapter().getPageIcon(i));
+            tab.setText(adapter.getPageTitle(i, getResources()));
+            tab.setIcon(adapter.getPageIcon(i, getResources(), getTheme()));
         }
-    }
-
-    protected void setToolbarTitle(CharSequence title) {
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar == null) return;
-        actionBar.setTitle(title);
-    }
-
-    protected boolean drawTabIcons() {
-        return false;
-    }
-
-    protected boolean drawTabTitle() {
-        return true;
     }
 }

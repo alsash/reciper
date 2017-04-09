@@ -80,7 +80,8 @@ public class VectorHelper {
     }
 
     @Nullable
-    public Drawable create(@DrawableRes int resId) {
+    public Drawable create(@DrawableRes Integer resId) {
+        if (resId == null) return null;
         return VectorDrawableCompat.create(contextRef.get().getResources(), resId, themeRef.get());
     }
 
