@@ -23,16 +23,13 @@ public class Category {
     @ToMany(referencedJoinProperty = "categoryId")
     private List<Recipe> recipes;
 
-// Next will be generated sources
     /**
      * Used to resolve relations
      */
     @Generated(hash = 2040040024)
     private transient DaoSession daoSession;
 
-    /**
-     * Used for active entity operations.
-     */
+    /** Used for active entity operations. */
     @Generated(hash = 40161530)
     private transient CategoryDao myDao;
 
@@ -84,9 +81,7 @@ public class Category {
         return recipes;
     }
 
-    /**
-     * Resets a to-many relationship, making the next get call to query for a fresh result.
-     */
+    /** Resets a to-many relationship, making the next get call to query for a fresh result. */
     @Generated(hash = 2094593178)
     public synchronized void resetRecipes() {
         recipes = null;
@@ -128,9 +123,7 @@ public class Category {
         myDao.update(this);
     }
 
-    /**
-     * called by internal mechanisms, do not call yourself.
-     */
+    /** called by internal mechanisms, do not call yourself. */
     @Generated(hash = 503476761)
     public void __setDaoSession(DaoSession daoSession) {
         this.daoSession = daoSession;

@@ -3,7 +3,6 @@
     package="com.alsash.reciper">
 
     <application
-        android:name=".ui.application.ReciperApp"
         android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -32,7 +31,6 @@
             </intent-filter>
         </activity>
         <activity android:name=".ui.activity.RecipeTabActivity" />
-        <activity android:name=".ui.activity.RecipeTabFavActivity" />
         <activity android:name=".ui.activity.RecipeListActivity" />
         <activity android:name=".ui.activity.RecipeDetailActivity" />
     </application>

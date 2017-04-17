@@ -5,6 +5,8 @@ import android.content.res.Resources;
 
 import com.alsash.reciper.R;
 import com.alsash.reciper.database.entity.Category;
+import com.alsash.reciper.database.entity.DaoMaster;
+import com.alsash.reciper.database.entity.DaoSession;
 import com.alsash.reciper.database.entity.Label;
 import com.alsash.reciper.database.entity.Recipe;
 import com.alsash.reciper.database.entity.RecipeLabelJoin;

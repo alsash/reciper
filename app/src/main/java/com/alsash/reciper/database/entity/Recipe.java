@@ -36,15 +36,14 @@ public class Recipe {
     private List<Label> labels;
 
 // Next will be generated sources
+
     /**
      * Used to resolve relations
      */
     @Generated(hash = 2040040024)
     private transient DaoSession daoSession;
 
-    /**
-     * Used for active entity operations.
-     */
+    /** Used for active entity operations. */
     @Generated(hash = 1947830398)
     private transient RecipeDao myDao;
     @Generated(hash = 1372501278)
@@ -85,9 +84,7 @@ public class Recipe {
         this.categoryId = categoryId;
     }
 
-    /**
-     * To-one relationship, resolved on first access.
-     */
+    /** To-one relationship, resolved on first access. */
     @Generated(hash = 728129201)
     public Category getCategory() {
         Long __key = this.categoryId;
@@ -106,9 +103,7 @@ public class Recipe {
         return category;
     }
 
-    /**
-     * called by internal mechanisms, do not call yourself.
-     */
+    /** called by internal mechanisms, do not call yourself. */
     @Generated(hash = 1132018243)
     public void setCategory(Category category) {
         synchronized (this) {
@@ -140,9 +135,7 @@ public class Recipe {
         return labels;
     }
 
-    /**
-     * Resets a to-many relationship, making the next get call to query for a fresh result.
-     */
+    /** Resets a to-many relationship, making the next get call to query for a fresh result. */
     @Generated(hash = 902294403)
     public synchronized void resetLabels() {
         labels = null;
@@ -184,14 +177,10 @@ public class Recipe {
         myDao.update(this);
     }
 
-    /**
-     * called by internal mechanisms, do not call yourself.
-     */
+    /** called by internal mechanisms, do not call yourself. */
     @Generated(hash = 1484851246)
     public void __setDaoSession(DaoSession daoSession) {
         this.daoSession = daoSession;
         myDao = daoSession != null ? daoSession.getRecipeDao() : null;
     }
-
-// Next will be generated sources
 }

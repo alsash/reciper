@@ -6,7 +6,7 @@ import com.hannesdorfmann.mosby3.mvp.MvpView;
 import java.util.List;
 
 /**
- * A simple BaseTabView for BaseSwipeTabActivity
+ * A simple BaseTabView
  */
 public interface BaseTabView<T extends BaseTab> extends MvpView {
 

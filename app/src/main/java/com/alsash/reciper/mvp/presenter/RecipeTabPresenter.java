@@ -5,7 +5,6 @@ import android.support.v4.app.Fragment;
 import com.alsash.reciper.R;
 import com.alsash.reciper.mvp.model.tab.SwipeTab;
 import com.alsash.reciper.mvp.view.RecipeTabView;
-import com.alsash.reciper.ui.fragment.RecipeGroupListFragment;
 import com.alsash.reciper.ui.fragment.RecipeSingleListFragment;
 import com.hannesdorfmann.mosby3.mvp.MvpBasePresenter;
 
@@ -19,11 +18,11 @@ public class RecipeTabPresenter extends MvpBasePresenter<RecipeTabView> {
     private static Fragment getRecipeTabFragment(int position) {
         switch (position) {
             case 0:
-                return RecipeGroupListFragment.newInstance();
+                return new Fragment();
             case 1:
                 return RecipeSingleListFragment.newInstance();
             case 2:
-                return RecipeGroupListFragment.newInstance();
+                return new Fragment();
             case 3:
                 return RecipeSingleListFragment.newInstance();
             default:
@@ -49,7 +48,7 @@ public class RecipeTabPresenter extends MvpBasePresenter<RecipeTabView> {
      *
      * @return list of predefined tabs
      */
-    protected List<SwipeTab> getTabs() {
+    private List<SwipeTab> getTabs() {
         List<SwipeTab> tabs = new ArrayList<>();
         // Tab 0 - Categories list (all recipes)
         tabs.add(new RecipeTab(0,

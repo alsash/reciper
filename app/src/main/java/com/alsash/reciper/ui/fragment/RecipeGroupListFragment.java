@@ -1,6 +1,5 @@
 package com.alsash.reciper.ui.fragment;
 
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 
 import com.alsash.reciper.mvp.model.entity.RecipeGroup;
@@ -12,13 +11,6 @@ public class RecipeGroupListFragment extends BaseRecipeListFragment {
 
     // Model
     private List<RecipeGroup> groups;
-
-    public static RecipeGroupListFragment newInstance() {
-        Bundle args = new Bundle();
-        RecipeGroupListFragment fragment = new RecipeGroupListFragment();
-        fragment.setArguments(args);
-        return fragment;
-    }
 
     @Override
     protected void bindModel() {
