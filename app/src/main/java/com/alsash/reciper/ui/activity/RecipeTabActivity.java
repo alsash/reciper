@@ -27,6 +27,35 @@ public class RecipeTabActivity extends BaseSwipeTabActivity {
     private List<SwipeTab> tabs;
     private boolean drawTabTitleOnHeader;
 
+    // Super implementations
+    @Override
+    protected SwipePagerAdapter getPagerAdapter() {
+        return adapter;
+    }
+
+    @Nullable
+    @Override
+    protected Integer getNavItemId() {
+        return null;
+    }
+
+    @Override
+    protected void setupFab() {
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+            }
+        });
+    }
+
+    @Override
+    protected boolean isDrawTabTitleOnHeader() {
+        return drawTabTitleOnHeader;
+    }
+
+    // This implementations
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setupMvpView();
@@ -34,19 +63,14 @@ public class RecipeTabActivity extends BaseSwipeTabActivity {
         setupMvpCallback();
         setupMvpDelegate();
         mvpDelegate.onCreate(savedInstanceState);
-        mvpPresenter.loadTabs();
         setupAdapter();
         super.onCreate(savedInstanceState);
     }
 
-    @Override
-    protected void onPostCreate(@Nullable Bundle savedInstanceState) {
-        super.onPostCreate(savedInstanceState);
-        mvpPresenter.showTabs();
-    }
-
     protected void setupAdapter() {
+        mvpPresenter.loadTabs();
         adapter = new SwipePagerAdapter(getSupportFragmentManager(), tabs);
+        mvpPresenter.showTabs();
     }
 
     void setupMvpView() {
@@ -101,32 +125,59 @@ public class RecipeTabActivity extends BaseSwipeTabActivity {
         mvpDelegate = new ActivityMvpDelegateImpl<>(this, mvpCallback, false);
     }
 
+    // This delegations
     @Override
-    protected SwipePagerAdapter getPagerAdapter() {
-        return adapter;
-    }
-
-    @Nullable
-    @Override
-    protected Integer getNavItemId() {
-        return null;
+    public void onDestroy() {
+        super.onDestroy();
+        mvpDelegate.onDestroy();
     }
 
     @Override
-    protected void setupFab() {
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+    public void onPause() {
+        super.onPause();
+        mvpDelegate.onPause();
     }
 
     @Override
-    protected boolean isDrawTabTitleOnHeader() {
-        return drawTabTitleOnHeader;
+    public void onResume() {
+        super.onResume();
+        mvpDelegate.onResume();
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        mvpDelegate.onStart();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        mvpDelegate.onStop();
+    }
+
+    @Override
+    public void onRestart() {
+        super.onRestart();
+        mvpDelegate.onRestart();
+    }
+
+    @Override
+    public void onContentChanged() {
+        super.onContentChanged();
+        mvpDelegate.onContentChanged();
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        mvpDelegate.onSaveInstanceState(outState);
+    }
+
+    @Override
+    public void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        mvpDelegate.onPostCreate(savedInstanceState);
+    }
 
 }
