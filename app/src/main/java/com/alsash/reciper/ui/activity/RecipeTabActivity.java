@@ -18,12 +18,11 @@ import java.util.List;
 public class RecipeTabActivity extends BaseSwipeTabActivity {
 
     // Mvp
-    private RecipeTabPresenter mvpPresenter;
     private RecipeTabView mvpView;
-    private ActivityMvpDelegateImpl<RecipeTabView, RecipeTabPresenter> mvpDelegate;
+    private RecipeTabPresenter mvpPresenter;
     private MvpDelegateCallback<RecipeTabView, RecipeTabPresenter> mvpCallback;
+    private ActivityMvpDelegateImpl<RecipeTabView, RecipeTabPresenter> mvpDelegate;
 
-    // Adapter
     private SwipePagerAdapter adapter;
     private List<SwipeTab> tabs;
     private boolean drawTabTitleOnHeader;
