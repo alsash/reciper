@@ -1,6 +1,5 @@
 package com.alsash.reciper.mvp.presenter;
 
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 
 import com.alsash.reciper.R;
@@ -10,7 +9,6 @@ import com.alsash.reciper.ui.fragment.RecipeGroupListFragment;
 import com.alsash.reciper.ui.fragment.RecipeSingleListFragment;
 import com.hannesdorfmann.mosby3.mvp.MvpBasePresenter;
 
-import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,11 +16,31 @@ public class RecipeTabPresenter extends MvpBasePresenter<RecipeTabView> {
 
     private static final int START_TAB_POSITION = 0; // Categories list
 
+    private static Fragment getRecipeTabFragment(int position) {
+        switch (position) {
+            case 0:
+                return RecipeGroupListFragment.newInstance();
+            case 1:
+                return RecipeSingleListFragment.newInstance();
+            case 2:
+                return RecipeGroupListFragment.newInstance();
+            case 3:
+                return RecipeSingleListFragment.newInstance();
+            default:
+                throw new IllegalArgumentException("Tab at " + position + "is unknown");
+        }
+    }
+
     public void loadTabs() {
         RecipeTabView view = getView();
         if (view == null) return;
         view.setDrawTabTitleOnHeader(true);
         view.setTabs(getTabs());
+    }
+
+    public void showTabs() {
+        RecipeTabView view = getView();
+        if (view == null) return;
         view.showTab(START_TAB_POSITION, false);
     }
 
@@ -33,37 +51,37 @@ public class RecipeTabPresenter extends MvpBasePresenter<RecipeTabView> {
      */
     protected List<SwipeTab> getTabs() {
         List<SwipeTab> tabs = new ArrayList<>();
-        // Tab 1 - Categories list (all recipes)
-        tabs.add(new RecipeTab(RecipeGroupListFragment.newInstance(),
+        // Tab 0 - Categories list (all recipes)
+        tabs.add(new RecipeTab(0,
                 R.string.tab_recipe_category,
                 R.drawable.ic_category,
                 false));
-        // Tab 2 - Recipes (cards) list (all recipes)
-        tabs.add(new RecipeTab(RecipeSingleListFragment.newInstance(),
+        // Tab 1 - Recipes (cards) list (all recipes)
+        tabs.add(new RecipeTab(1,
                 R.string.tab_recipe_list,
-                R.drawable.ic_category,
+                R.drawable.ic_all,
                 false));
-        // Tab 3 - Labels list (recipes with labels only)
-        tabs.add(new RecipeTab(RecipeGroupListFragment.newInstance(),
+        // Tab 2 - Labels list (recipes with labels only)
+        tabs.add(new RecipeTab(2,
                 R.string.tab_recipe_label,
-                R.drawable.ic_category,
+                R.drawable.ic_labeled,
                 false));
-        // Tab 4 - Bookmarks list (recipes with bookmarks only)
-        tabs.add(new RecipeTab(RecipeSingleListFragment.newInstance(),
+        // Tab 3 - Bookmarks list (recipes with bookmarks only)
+        tabs.add(new RecipeTab(3,
                 R.string.tab_recipe_bookmark,
-                R.drawable.ic_category,
+                R.drawable.ic_bookmarked,
                 false));
         return tabs;
     }
 
     private static class RecipeTab implements SwipeTab {
-        private final WeakReference<Fragment> fragmentRef;
-        private final Integer titleRes;
-        private final Integer iconRes;
+        private final int fragmentPosition;
+        private final int titleRes;
+        private final int iconRes;
         private final boolean hasNestedViews;
 
-        RecipeTab(Fragment fragment, Integer titleRes, Integer iconRes, boolean hasNestedViews) {
-            this.fragmentRef = new WeakReference<>(fragment);
+        RecipeTab(int fragmentPosition, int titleRes, int iconRes, boolean hasNestedViews) {
+            this.fragmentPosition = fragmentPosition;
             this.titleRes = titleRes;
             this.iconRes = iconRes;
             this.hasNestedViews = hasNestedViews;
@@ -76,16 +94,14 @@ public class RecipeTabPresenter extends MvpBasePresenter<RecipeTabView> {
 
         @Override
         public Fragment getFragment() {
-            return fragmentRef.get();
+            return getRecipeTabFragment(fragmentPosition);
         }
 
-        @Nullable
         @Override
         public Integer getTitle() {
             return titleRes;
         }
 
-        @Nullable
         @Override
         public Integer getIcon() {
             return iconRes;

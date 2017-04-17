@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
-import android.support.v7.app.ActionBar;
 import android.view.View;
 
 import com.alsash.reciper.mvp.model.tab.SwipeTab;
@@ -35,10 +34,20 @@ public class RecipeTabActivity extends BaseSwipeTabActivity {
         setupMvpPresenter();
         setupMvpCallback();
         setupMvpDelegate();
-
+        mvpDelegate.onCreate(savedInstanceState);
+        mvpPresenter.loadTabs();
         setupAdapter();
         super.onCreate(savedInstanceState);
-        mvpDelegate.onCreate(savedInstanceState);
+    }
+
+    @Override
+    protected void onPostCreate(@Nullable Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        mvpPresenter.showTabs();
+    }
+
+    protected void setupAdapter() {
+        adapter = new SwipePagerAdapter(getSupportFragmentManager(), tabs);
     }
 
     void setupMvpView() {
@@ -93,12 +102,6 @@ public class RecipeTabActivity extends BaseSwipeTabActivity {
         mvpDelegate = new ActivityMvpDelegateImpl<>(this, mvpCallback, false);
     }
 
-    protected void setToolbarTitle(CharSequence title) {
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar == null) return;
-        actionBar.setTitle(title);
-    }
-
     @Override
     protected SwipePagerAdapter getPagerAdapter() {
         return adapter;
@@ -120,4 +123,11 @@ public class RecipeTabActivity extends BaseSwipeTabActivity {
             }
         });
     }
+
+    @Override
+    protected boolean isDrawTabTitleOnHeader() {
+        return drawTabTitleOnHeader;
+    }
+
+
 }

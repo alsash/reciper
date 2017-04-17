@@ -3,6 +3,8 @@ package com.alsash.reciper.ui.activity;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
+import android.support.v4.view.ViewPager;
+import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 
 import com.alsash.reciper.R;
@@ -25,6 +27,8 @@ public abstract class BaseSwipeTabActivity extends BaseDrawerActivity {
     protected abstract SwipePagerAdapter getPagerAdapter();
 
     protected abstract void setupFab();
+
+    protected abstract boolean isDrawTabTitleOnHeader();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,14 +57,34 @@ public abstract class BaseSwipeTabActivity extends BaseDrawerActivity {
         adapter = getPagerAdapter();
         pager.setAdapter(adapter);
         tabs.setupWithViewPager(pager);
+        if (isDrawTabTitleOnHeader()) {
+            pager.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
+                @Override
+                public void onPageSelected(int position) {
+                    setToolbarTitle(position);
+                }
+            });
+        }
     }
 
     protected void setupTabs() {
         for (int i = 0; i < tabs.getTabCount(); i++) {
             TabLayout.Tab tab = tabs.getTabAt(i);
             assert tab != null;
-            tab.setText(adapter.getPageTitle(i, getResources()));
+            if (isDrawTabTitleOnHeader()) {
+                tab.setText(null);
+            } else {
+                tab.setText(adapter.getPageTitle(i, getResources()));
+            }
             tab.setIcon(adapter.getPageIcon(i, getResources(), getTheme()));
         }
+    }
+
+    protected void setToolbarTitle(int adapterPosition) {
+        String title = adapter.getPageTitle(adapterPosition, getResources());
+        if (title == null) return;
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar == null) return;
+        actionBar.setTitle(title);
     }
 }

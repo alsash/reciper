@@ -14,11 +14,7 @@ import com.alsash.reciper.ui.view.SwipeViewPager;
 import java.util.List;
 
 /**
- * SwipePagerAdapter that represents four tabs:
- * list of recipe categories,
- * list of single recipes,
- * list of labeled recipes,
- * list of bookmarked recipes
+ * SwipePagerAdapter that represents tabs model from presenter
  */
 public class SwipePagerAdapter extends FragmentPagerAdapter
         implements SwipeViewPager.OnPageSelectListener {
