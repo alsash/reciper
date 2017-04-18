@@ -5,7 +5,6 @@ import android.support.v4.app.Fragment;
 import com.alsash.reciper.R;
 import com.alsash.reciper.mvp.model.tab.SwipeTab;
 import com.alsash.reciper.mvp.view.RecipeTabView;
-import com.alsash.reciper.ui.fragment.RecipeSingleListFragment;
 import com.hannesdorfmann.mosby3.mvp.MvpBasePresenter;
 
 import java.util.ArrayList;

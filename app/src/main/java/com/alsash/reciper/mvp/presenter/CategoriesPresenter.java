@@ -54,7 +54,7 @@ public class CategoriesPresenter extends MvpBasePresenter<CategoriesView> {
     public void showCategories() {
         CategoriesView view = getView();
         if (view == null) return;
-        view.showCategories();
+        view.showContent();
     }
 
     @Override
