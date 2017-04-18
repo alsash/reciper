@@ -14,9 +14,11 @@ import java.util.List;
 public class LabelMvpDb implements Label {
 
     private final com.alsash.reciper.database.entity.Label labelDb;
+    private final List<Recipe> labelRecipes;
 
     public LabelMvpDb(com.alsash.reciper.database.entity.Label labelDb) {
         this.labelDb = labelDb;
+        this.labelRecipes = getRecipes(); // Fetch items from database
     }
 
     @Override
@@ -31,6 +33,7 @@ public class LabelMvpDb implements Label {
 
     @Override
     public List<Recipe> getRecipes() {
+        if (labelRecipes != null) return labelRecipes;
         List<Recipe> recipes = new ArrayList<>();
         for (com.alsash.reciper.database.entity.Recipe recipe : labelDb.getRecipes()) {
             recipes.add(new RecipeMvpDb(recipe));

@@ -53,6 +53,7 @@ public class CategoriesPresenter
                         CategoriesView view = getView();
                         if (view == null) return;
                         view.addCategories(value);
+                        view.showContent();
                     }
 
                     @Override
@@ -65,12 +66,6 @@ public class CategoriesPresenter
 
                     }
                 }));
-    }
-
-    public void showCategories() {
-        CategoriesView view = getView();
-        if (view == null) return;
-        view.showContent();
     }
 
     @Override

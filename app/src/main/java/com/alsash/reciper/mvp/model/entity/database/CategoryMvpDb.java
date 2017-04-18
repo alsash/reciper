@@ -12,9 +12,11 @@ import java.util.List;
  */
 public class CategoryMvpDb implements Category {
     private final com.alsash.reciper.database.entity.Category categoryDb;
+    private final List<Recipe> categoryRecipes;
 
     public CategoryMvpDb(com.alsash.reciper.database.entity.Category categoryDb) {
         this.categoryDb = categoryDb;
+        this.categoryRecipes = getRecipes(); // Fetch items from database
     }
 
     @Override
@@ -29,6 +31,7 @@ public class CategoryMvpDb implements Category {
 
     @Override
     public List<Recipe> getRecipes() {
+        if (categoryRecipes != null) return categoryRecipes;
         List<Recipe> recipes = new ArrayList<>();
         for (com.alsash.reciper.database.entity.Recipe recipe : categoryDb.getRecipes()) {
             recipes.add(new RecipeMvpDb(recipe));
