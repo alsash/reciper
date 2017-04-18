@@ -40,7 +40,7 @@ public class RecipeListActivity extends BaseDrawerActivity implements RecipeList
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_recipe_list); // Include RecipeSingleListFragment
+        setContentView(R.layout.activity_recipe_list); // Include Fragment
         bindViews();
         setupToolbar();
         setupFab();

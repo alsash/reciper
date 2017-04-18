@@ -21,9 +21,10 @@
 
     </android.support.design.widget.AppBarLayout>
 
+    <!--TODO: Change fragment name-->
     <fragment
         android:id="@+id/activity_recipe_list_fragment"
-        android:name="com.alsash.reciper.ui.fragment.RecipeSingleListFragment"
+        android:name="com.alsash.reciper.ui.fragment.RecipeCategoriesFragment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"

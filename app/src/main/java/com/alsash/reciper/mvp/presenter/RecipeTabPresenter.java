@@ -5,6 +5,7 @@ import android.support.v4.app.Fragment;
 import com.alsash.reciper.R;
 import com.alsash.reciper.mvp.model.tab.SwipeTab;
 import com.alsash.reciper.mvp.view.RecipeTabView;
+import com.alsash.reciper.ui.fragment.RecipeCategoriesFragment;
 import com.hannesdorfmann.mosby3.mvp.MvpBasePresenter;
 
 import java.util.ArrayList;
@@ -17,13 +18,13 @@ public class RecipeTabPresenter extends MvpBasePresenter<RecipeTabView> {
     private static Fragment getRecipeTabFragment(int position) {
         switch (position) {
             case 0:
-                return new Fragment();
+                return RecipeCategoriesFragment.newInstance();
             case 1:
-                return RecipeSingleListFragment.newInstance();
+                return new Fragment();
             case 2:
                 return new Fragment();
             case 3:
-                return RecipeSingleListFragment.newInstance();
+                return new Fragment();
             default:
                 throw new IllegalArgumentException("Tab at " + position + "is unknown");
         }

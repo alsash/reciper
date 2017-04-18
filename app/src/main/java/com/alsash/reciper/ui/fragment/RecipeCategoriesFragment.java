@@ -15,12 +15,17 @@ import com.alsash.reciper.ui.adapter.RecipeGroupCardListAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RecipeCategoriesFragment extends BaseRecipesFragment<CategoriesView, CategoriesPresenter>
+public class RecipeCategoriesFragment
+        extends BaseRecipesFragment<CategoriesView, CategoriesPresenter>
         implements CategoriesView {
 
     private CategoriesPresenter presenter;
     private List<Category> categories;
     private RecyclerView list;
+
+    public static RecipeCategoriesFragment newInstance() {
+        return new RecipeCategoriesFragment();
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
