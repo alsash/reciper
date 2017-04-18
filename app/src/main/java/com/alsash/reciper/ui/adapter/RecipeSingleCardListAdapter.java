@@ -6,8 +6,9 @@ import android.view.ViewGroup;
 
 import com.alsash.reciper.mvp.model.entity.Recipe;
 import com.alsash.reciper.mvp.presenter.interaction.RecipeListInteraction;
-import com.alsash.reciper.ui.adapter.holder.RecipeSIngleCardHolder;
+import com.alsash.reciper.ui.adapter.holder.RecipeSingleCardHolder;
 
+import java.lang.ref.WeakReference;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -15,25 +16,25 @@ import java.util.Set;
 import static com.alsash.reciper.ui.contract.KeyContract.PAYLOAD_FLIP_BACK_TO_FRONT;
 import static com.alsash.reciper.ui.contract.KeyContract.PAYLOAD_FLIP_FRONT_TO_BACK;
 
-public class RecipeSingleCardListAdapter extends RecyclerView.Adapter<RecipeSIngleCardHolder> {
+public class RecipeSingleCardListAdapter extends RecyclerView.Adapter<RecipeSingleCardHolder> {
 
-    private final RecipeListInteraction recipeInteraction;
+    private final WeakReference<RecipeListInteraction> interactionRef;
     private final List<Recipe> recipeList;
     private final Set<Integer> backCardPositions;
 
-    public RecipeSingleCardListAdapter(RecipeListInteraction recipeInteraction, List<Recipe> recipeList) {
-        this.recipeInteraction = recipeInteraction;
+    public RecipeSingleCardListAdapter(RecipeListInteraction interaction, List<Recipe> recipeList) {
+        this.interactionRef = new WeakReference<>(interaction);
         this.recipeList = recipeList;
         this.backCardPositions = new HashSet<>();
     }
 
     @Override
-    public RecipeSIngleCardHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new RecipeSIngleCardHolder(parent);
+    public RecipeSingleCardHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        return new RecipeSingleCardHolder(parent);
     }
 
     @Override
-    public void onBindViewHolder(final RecipeSIngleCardHolder holder, int position) {
+    public void onBindViewHolder(final RecipeSingleCardHolder holder, int position) {
 
         holder.bindRecipe(recipeList.get(position));
         holder.setBackVisible(backCardPositions.contains(position));
@@ -58,18 +59,20 @@ public class RecipeSingleCardListAdapter extends RecyclerView.Adapter<RecipeSIng
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        if (interactionRef.get() == null) return;
                         int adapterPosition = holder.getAdapterPosition();
                         Recipe recipe = recipeList.get(adapterPosition);
-                        recipeInteraction.onExpand(recipe, adapterPosition);
+                        interactionRef.get().onExpand(recipe, adapterPosition);
                     }
                 },
                 // Open Listener
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        if (interactionRef.get() == null) return;
                         int adapterPosition = holder.getAdapterPosition();
                         Recipe recipe = recipeList.get(adapterPosition);
-                        recipeInteraction.onOpen(recipe, adapterPosition);
+                        interactionRef.get().onOpen(recipe, adapterPosition);
                     }
                 }
         );

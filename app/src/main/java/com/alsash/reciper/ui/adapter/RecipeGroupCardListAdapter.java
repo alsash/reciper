@@ -7,16 +7,18 @@ import com.alsash.reciper.mvp.model.entity.RecipeGroup;
 import com.alsash.reciper.mvp.presenter.interaction.RecipeListInteraction;
 import com.alsash.reciper.ui.adapter.holder.RecipeGroupCardHolder;
 
+import java.lang.ref.WeakReference;
 import java.util.List;
 
-public class RecipeGroupCardListAdapter extends RecyclerView.Adapter<RecipeGroupCardHolder> {
+public class RecipeGroupCardListAdapter
+        extends RecyclerView.Adapter<RecipeGroupCardHolder> {
 
-    private RecipeListInteraction recipeInteraction;
-    private List<RecipeGroup> groups;
+    private final WeakReference<RecipeListInteraction> interactionRef;
+    private final List<? extends RecipeGroup> groups;
 
     public RecipeGroupCardListAdapter(RecipeListInteraction recipeInteraction,
-                                      List<RecipeGroup> groups) {
-        this.recipeInteraction = recipeInteraction;
+                                      List<? extends RecipeGroup> groups) {
+        this.interactionRef = new WeakReference<>(recipeInteraction);
         this.groups = groups;
     }
 
@@ -28,7 +30,9 @@ public class RecipeGroupCardListAdapter extends RecyclerView.Adapter<RecipeGroup
     @Override
     public void onBindViewHolder(RecipeGroupCardHolder holder, int position) {
         RecipeGroup group = groups.get(position);
-        holder.bindGroup(group, recipeInteraction);
+        RecipeListInteraction interaction = interactionRef.get();
+        if (interaction == null) return;
+        holder.bindGroup(group, interaction);
     }
 
     @Override

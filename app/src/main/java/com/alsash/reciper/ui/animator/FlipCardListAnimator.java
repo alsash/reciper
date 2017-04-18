@@ -7,7 +7,7 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.RecyclerView;
 import android.widget.FrameLayout;
 
-import com.alsash.reciper.ui.adapter.holder.RecipeSIngleCardHolder;
+import com.alsash.reciper.ui.adapter.holder.RecipeSingleCardHolder;
 
 import java.util.HashMap;
 import java.util.List;
@@ -22,7 +22,7 @@ public class FlipCardListAnimator extends DefaultItemAnimator {
 
     @Override
     public boolean canReuseUpdatedViewHolder(@NonNull RecyclerView.ViewHolder holder) {
-        return (holder instanceof RecipeSIngleCardHolder) || super.canReuseUpdatedViewHolder(holder);
+        return (holder instanceof RecipeSingleCardHolder) || super.canReuseUpdatedViewHolder(holder);
     }
 
     @NonNull

@@ -15,15 +15,12 @@ import com.alsash.reciper.ui.adapter.RecipeGroupCardListAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by alsash on 4/18/17.
- */
-
 public class RecipeCategoriesFragment extends BaseRecipesFragment<CategoriesView, CategoriesPresenter>
         implements CategoriesView {
 
     private CategoriesPresenter presenter;
     private List<Category> categories;
+    private RecyclerView list;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -40,19 +37,20 @@ public class RecipeCategoriesFragment extends BaseRecipesFragment<CategoriesView
 
     @Override
     public void addCategories(List<Category> categories) {
-
+        this.categories.addAll(categories);
     }
 
     @Override
     public void showContent() {
-
+        this.list.getAdapter().notifyDataSetChanged();
     }
 
     @Override
     protected void setupList(RecyclerView list) {
         list.setLayoutManager(new LinearLayoutManager(getActivity()));
-        list.setAdapter(new RecipeGroupCardListAdapter(this, categories));
+        list.setAdapter(new RecipeGroupCardListAdapter(presenter, categories));
         list.setNestedScrollingEnabled(false);
+        this.list = list;
     }
 
     @Override

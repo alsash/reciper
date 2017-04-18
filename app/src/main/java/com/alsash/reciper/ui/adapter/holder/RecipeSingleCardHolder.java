@@ -12,7 +12,7 @@ import android.widget.TextView;
 import com.alsash.reciper.R;
 import com.alsash.reciper.mvp.model.entity.Recipe;
 
-public class RecipeSIngleCardHolder extends RecyclerView.ViewHolder {
+public class RecipeSingleCardHolder extends RecyclerView.ViewHolder {
 
     private final CardView frontCard;
     private final ImageView frontImage;
@@ -28,7 +28,7 @@ public class RecipeSIngleCardHolder extends RecyclerView.ViewHolder {
     private final ImageButton backExpandButton;
     private final ImageButton backOpenButton;
 
-    public RecipeSIngleCardHolder(ViewGroup parent) {
+    public RecipeSingleCardHolder(ViewGroup parent) {
         super(LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.card_recipe, parent, false));
 

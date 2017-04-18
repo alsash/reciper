@@ -2,7 +2,9 @@ package com.alsash.reciper.mvp.presenter;
 
 import com.alsash.reciper.database.entity.DaoSession;
 import com.alsash.reciper.mvp.model.entity.Category;
+import com.alsash.reciper.mvp.model.entity.Recipe;
 import com.alsash.reciper.mvp.model.entity.database.CategoryMvpDb;
+import com.alsash.reciper.mvp.presenter.interaction.RecipeListInteraction;
 import com.alsash.reciper.mvp.view.CategoriesView;
 import com.hannesdorfmann.mosby3.mvp.MvpBasePresenter;
 
@@ -18,13 +20,27 @@ import io.reactivex.observers.DisposableObserver;
 import io.reactivex.schedulers.Schedulers;
 
 
-public class CategoriesPresenter extends MvpBasePresenter<CategoriesView> {
+public class CategoriesPresenter
+        extends MvpBasePresenter<CategoriesView>
+        implements RecipeListInteraction {
 
     private final CompositeDisposable disposables = new CompositeDisposable();
     private final DaoSession session;
 
     public CategoriesPresenter(DaoSession session) {
         this.session = session;
+    }
+
+    @Override
+    public void onExpand(Recipe recipe, int position) {
+        if (getView() == null) return;
+        getView().showDetails(recipe);
+    }
+
+    @Override
+    public void onOpen(Recipe recipe, int position) {
+        if (getView() == null) return;
+        getView().showRecipe(recipe);
     }
 
     public void loadCategories() {
