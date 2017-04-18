@@ -34,7 +34,7 @@ public class StartActivity extends AppCompatActivity {
     private Runnable startMainActivity = new Runnable() {
         @Override
         public void run() {
-            startActivity(new Intent(StartActivity.this, RecipeTabActivity.class));
+            startActivity(new Intent(StartActivity.this, RecipeListActivity.class));
         }
     };
 

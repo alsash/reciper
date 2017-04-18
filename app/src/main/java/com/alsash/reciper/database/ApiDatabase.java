@@ -101,15 +101,15 @@ public class ApiDatabase {
         Runnable backgroundInsert = new Runnable() {
             @Override
             public void run() {
-                // Moves the current Thread into the background
-                android.os.Process.setThreadPriority(android.os.Process.THREAD_PRIORITY_BACKGROUND);
-                // Do in background
-                DaoSession session = getSession(context);
-                session.getRecipeDao().insertInTx(recipes);
-                session.getCategoryDao().insertInTx(categories);
-                session.getLabelDao().insertInTx(labels);
-                session.getRecipeLabelJoinDao().insertInTx(recipeLabels);
-                clearSession(); // Reset all caches
+//                // Moves the current Thread into the background
+//                android.os.Process.setThreadPriority(android.os.Process.THREAD_PRIORITY_BACKGROUND);
+//                // Do in background
+//                DaoSession session = getSession(context);
+//                session.getRecipeDao().insertInTx(recipes);
+//                session.getCategoryDao().insertInTx(categories);
+//                session.getLabelDao().insertInTx(labels);
+//                session.getRecipeLabelJoinDao().insertInTx(recipeLabels);
+//                clearSession(); // Reset all caches
             }
         };
         backgroundInsert.run();
