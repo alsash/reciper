@@ -17,8 +17,6 @@ public class RecipeLabelJoin {
 
     private Long labelId;
 
-    // Next will be generated sources
-
     @Generated(hash = 1589061011)
     public RecipeLabelJoin(Long id, Long recipeId, Long labelId) {
         this.id = id;
@@ -53,6 +51,4 @@ public class RecipeLabelJoin {
     public void setLabelId(Long labelId) {
         this.labelId = labelId;
     }
-
-// Next will be generated sources
 }

@@ -129,6 +129,4 @@ public class Category {
         this.daoSession = daoSession;
         myDao = daoSession != null ? daoSession.getCategoryDao() : null;
     }
-
-// Next will be generated sources
 }

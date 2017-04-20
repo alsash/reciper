@@ -135,6 +135,4 @@ public class Label {
         this.daoSession = daoSession;
         myDao = daoSession != null ? daoSession.getLabelDao() : null;
     }
-
-// Next will be generated sources
 }

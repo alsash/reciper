@@ -35,8 +35,6 @@ public class Recipe {
     )
     private List<Label> labels;
 
-// Next will be generated sources
-
     /**
      * Used to resolve relations
      */

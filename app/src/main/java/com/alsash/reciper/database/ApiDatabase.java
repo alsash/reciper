@@ -2,7 +2,6 @@ package com.alsash.reciper.database;
 
 import android.content.Context;
 import android.content.res.Resources;
-import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 import com.alsash.reciper.R;
@@ -68,17 +67,17 @@ public class ApiDatabase {
      * Create entries if needed
      */
     public void createStartupEntriesIfNeed(final Context context, final Runnable callback) {
-        if (popFirstCreated()) {
+//        if (refDaoSession == null) getSession(context);
+//        if (popFirstCreated()) {
             createStartupEntities(context, callback);
-        } else {
-            callback.run();
-        }
+//        } else {
+//            callback.run();
+//        }
     }
 
     /**
      * Persist entities to database in background.
      * Entities will insert with nested transactions.
-     * See {@link SQLiteDatabase#beginTransaction()} for details.
      */
     void createStartupEntities(final Context context, final Runnable callback) {
         final DaoSession session = getSession(context);
