@@ -12,8 +12,8 @@ import com.alsash.reciper.database.ApiDatabase;
 
 public class StartActivity extends AppCompatActivity {
 
-    private static final long UI_DELAY_FULLSCREEN_MS = 100;
-    private static final long UI_DELAY_START_MS = 2000;
+    // private static final long UI_DELAY_FULLSCREEN_MS = 100;
+    // private static final long UI_DELAY_START_MS = 2000;
 
     private Handler handler = new Handler();
 
@@ -42,20 +42,21 @@ public class StartActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (savedInstanceState != null) return;
-        ApiDatabase.getInstance().createStartupEntriesIfNeed(getApplicationContext());
+        setFullscreenVisibility.run();
+        ApiDatabase.getInstance().createStartupEntriesIfNeed(this, startMainActivity);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        handler.postDelayed(setFullscreenVisibility, UI_DELAY_FULLSCREEN_MS);
-        handler.postDelayed(startMainActivity, UI_DELAY_START_MS);
+        //   handler.postDelayed(setFullscreenVisibility, UI_DELAY_FULLSCREEN_MS);
+        //   handler.postDelayed(startMainActivity, UI_DELAY_START_MS);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        handler.removeCallbacks(setFullscreenVisibility);
-        handler.removeCallbacks(startMainActivity);
+        //  handler.removeCallbacks(setFullscreenVisibility);
+        //  handler.removeCallbacks(startMainActivity);
     }
 }
