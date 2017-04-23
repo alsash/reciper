@@ -3,6 +3,7 @@ package com.alsash.reciper.ui.activity;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -11,10 +12,10 @@ import com.alsash.reciper.database.ApiDatabase;
 
 public class StartActivity extends AppCompatActivity {
 
-    // private static final long UI_DELAY_FULLSCREEN_MS = 100;
-    // private static final long UI_DELAY_START_MS = 2000;
+    private static final long UI_DELAY_FULLSCREEN_MS = 100;
+    private static final long UI_DELAY_START_MS = 2000;
 
-    // private Handler handler = new Handler();
+    private Handler handler = new Handler();
 
     private Runnable setFullscreenVisibility = new Runnable() {
         @SuppressLint("InlinedApi")
@@ -42,20 +43,20 @@ public class StartActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         if (savedInstanceState != null) return;
         setFullscreenVisibility.run();
-        ApiDatabase.getInstance().createStartupEntriesIfNeed(this, startMainActivity);
+        ApiDatabase.getInstance().createStartupEntriesIfNeed(this, null);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         //   handler.postDelayed(setFullscreenVisibility, UI_DELAY_FULLSCREEN_MS);
-        //   handler.postDelayed(startMainActivity, UI_DELAY_START_MS);
+        handler.postDelayed(startMainActivity, UI_DELAY_START_MS);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
         //  handler.removeCallbacks(setFullscreenVisibility);
-        //  handler.removeCallbacks(startMainActivity);
+        handler.removeCallbacks(startMainActivity);
     }
 }

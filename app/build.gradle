@@ -51,4 +51,5 @@ dependencies {
     compile 'io.reactivex.rxjava2:rxjava:2.0.1'
     compile 'com.hannesdorfmann.mosby3:mvp:3.0.2'
     compile 'de.hdodenhof:circleimageview:2.1.0'
+    compile 'com.facebook.stetho:stetho:1.5.0' // For debugging
 }
