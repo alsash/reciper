@@ -18,7 +18,8 @@ public class LabelMvpDb implements Label {
 
     public LabelMvpDb(com.alsash.reciper.database.entity.Label labelDb) {
         this.labelDb = labelDb;
-        this.labelRecipes = getRecipes(); // Fetch items from database
+        // Fetch items from database
+        this.labelRecipes = getRecipes();
     }
 
     @Override

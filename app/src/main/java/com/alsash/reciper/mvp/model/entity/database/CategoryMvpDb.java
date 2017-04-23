@@ -11,12 +11,14 @@ import java.util.List;
  * delegation to Category entity stored in database
  */
 public class CategoryMvpDb implements Category {
+
     private final com.alsash.reciper.database.entity.Category categoryDb;
     private final List<Recipe> categoryRecipes;
 
     public CategoryMvpDb(com.alsash.reciper.database.entity.Category categoryDb) {
         this.categoryDb = categoryDb;
-        this.categoryRecipes = getRecipes(); // Fetch items from database
+        // Fetch items from database
+        this.categoryRecipes = getRecipes();
     }
 
     @Override
