@@ -28,7 +28,7 @@ public class ApiDatabase {
     private static final ApiDatabase INSTANCE = new ApiDatabase();
     private static final String DATABASE_NAME = "reciper_db";
     private WeakReference<DaoSession> refDaoSession;
-    private Boolean firstCreated = null;
+    private Boolean firstCreated;
 
     private ApiDatabase() {
     }
@@ -53,13 +53,12 @@ public class ApiDatabase {
     }
 
     public synchronized void createStartupEntriesIfNeed(final Context context) {
-        if (firstCreated == null) {
-            getSession(context).getRecipeDao().load(0L); // Run onCreate(db);
-        }
-        if (firstCreated) {
-            firstCreated = false;
-            createStartupEntities(context);
-        }
+        // Trying to set firstCreated in DbOpenHelper.onCreate(db)
+        if (firstCreated == null) getSession(context).getRecipeDao().load(0L);
+        // Check if DbOpenHelper.onCreate(db) has been called
+        if (firstCreated != null && firstCreated) createStartupEntities(context);
+        // Set firstCreated marker for future calls
+        firstCreated = false;
     }
 
     /**

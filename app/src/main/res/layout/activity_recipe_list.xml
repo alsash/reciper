@@ -21,14 +21,14 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <!--TODO: Change fragment name-->
-    <fragment
-        android:id="@+id/activity_recipe_list_fragment"
-        android:name="com.alsash.reciper.ui.fragment.RecipeCategoriesFragment"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        tools:layout="@layout/view_list" />
+    <!--    &lt;!&ndash;TODO: Change fragment name&ndash;&gt;
+        <fragment
+            android:id="@+id/activity_recipe_list_fragment"
+            android:name=""
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            tools:layout="@layout/view_list" />-->
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/activity_recipe_list_fab"

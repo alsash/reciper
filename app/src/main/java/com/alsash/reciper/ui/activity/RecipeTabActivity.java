@@ -63,8 +63,8 @@ public class RecipeTabActivity extends BaseSwipeTabActivity {
         setupMvpCallback();
         setupMvpDelegate();
         mvpDelegate.onCreate(savedInstanceState);
-        setupAdapter();
         super.onCreate(savedInstanceState);
+        setupAdapter();
     }
 
     protected void setupAdapter() {
