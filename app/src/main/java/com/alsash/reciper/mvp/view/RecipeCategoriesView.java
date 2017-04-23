@@ -4,6 +4,6 @@ import com.alsash.reciper.mvp.model.entity.Category;
 
 import java.util.List;
 
-public interface CategoriesView extends BaseRecipesView {
+public interface RecipeCategoriesView extends BaseRecipesView {
     void addCategories(List<Category> categories);
 }

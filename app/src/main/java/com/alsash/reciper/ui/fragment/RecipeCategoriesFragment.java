@@ -8,30 +8,26 @@ import android.view.View;
 
 import com.alsash.reciper.database.ApiDatabase;
 import com.alsash.reciper.mvp.model.entity.Category;
-import com.alsash.reciper.mvp.presenter.CategoriesPresenter;
-import com.alsash.reciper.mvp.view.CategoriesView;
+import com.alsash.reciper.mvp.presenter.RecipeCategoriesPresenter;
+import com.alsash.reciper.mvp.view.RecipeCategoriesView;
 import com.alsash.reciper.ui.adapter.RecipeGroupCardListAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class RecipeCategoriesFragment
-        extends BaseRecipesFragment<CategoriesView, CategoriesPresenter>
-        implements CategoriesView {
+        extends BaseRecipesFragment<RecipeCategoriesView, RecipeCategoriesPresenter>
+        implements RecipeCategoriesView {
 
-    private CategoriesPresenter presenter;
-    private List<Category> categories;
+    private RecipeCategoriesPresenter presenter = new RecipeCategoriesPresenter(
+            ApiDatabase.getInstance().getSession(getContext()));
+
+    private List<Category> categories = new ArrayList<>();
+
     private RecyclerView list;
 
     public static RecipeCategoriesFragment newInstance() {
         return new RecipeCategoriesFragment();
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        presenter = new CategoriesPresenter(ApiDatabase.getInstance().getSession(getContext()));
-        categories = new ArrayList<>();
     }
 
     @Override
@@ -41,25 +37,26 @@ public class RecipeCategoriesFragment
     }
 
     @Override
-    public void addCategories(List<Category> categories) {
-        this.categories.addAll(categories);
+    public void addCategories(List<Category> newCategories) {
+        categories.addAll(newCategories);
+        list.getAdapter().notifyDataSetChanged();
     }
 
     @Override
     public void showContent() {
-        this.list.getAdapter().notifyDataSetChanged();
+        list.getAdapter().notifyDataSetChanged();
     }
 
     @Override
-    protected void setupList(RecyclerView list) {
+    protected void setupList(RecyclerView parentList) {
+        this.list = parentList;
         list.setLayoutManager(new LinearLayoutManager(getActivity()));
         list.setAdapter(new RecipeGroupCardListAdapter(presenter, categories));
         list.setNestedScrollingEnabled(false);
-        this.list = list;
     }
 
     @Override
-    public CategoriesPresenter createPresenter() {
+    public RecipeCategoriesPresenter createPresenter() {
         return presenter;
     }
 }

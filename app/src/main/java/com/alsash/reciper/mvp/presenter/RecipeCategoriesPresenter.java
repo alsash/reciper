@@ -5,20 +5,20 @@ import com.alsash.reciper.mvp.model.entity.Category;
 import com.alsash.reciper.mvp.model.entity.Recipe;
 import com.alsash.reciper.mvp.model.entity.database.CategoryMvpDb;
 import com.alsash.reciper.mvp.presenter.interaction.RecipeListInteraction;
-import com.alsash.reciper.mvp.view.CategoriesView;
+import com.alsash.reciper.mvp.view.RecipeCategoriesView;
 import com.hannesdorfmann.mosby3.mvp.MvpBasePresenter;
 
 import java.util.ArrayList;
 import java.util.List;
 
 
-public class CategoriesPresenter
-        extends MvpBasePresenter<CategoriesView>
+public class RecipeCategoriesPresenter
+        extends MvpBasePresenter<RecipeCategoriesView>
         implements RecipeListInteraction {
 
     private final DaoSession session;
 
-    public CategoriesPresenter(DaoSession session) {
+    public RecipeCategoriesPresenter(DaoSession session) {
         this.session = session;
     }
 
