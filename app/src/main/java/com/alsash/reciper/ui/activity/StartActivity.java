@@ -19,13 +19,13 @@ import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 import rx.subscriptions.CompositeSubscription;
 
+/**
+ * An activity with startup splash set in styles.xml
+ */
 public class StartActivity extends AppCompatActivity {
 
     private static final long UI_DELAY_FULLSCREEN_MS = 100; // PreLollipop only
     private static final long UI_DELAY_START_MS = 100;
-
-    private Observable<Long> fullscreenVisibilityDelay;
-    private Observable<Void> startupEntityIfNeedMaker;
 
     private Runnable setFullscreenVisibility = new Runnable() {
         @SuppressLint("InlinedApi")
@@ -56,12 +56,13 @@ public class StartActivity extends AppCompatActivity {
         }
     };
 
+    private Observable<Long> fullscreenVisibilityDelay;
+    private Observable<Void> startupEntityIfNeedMaker;
     private CompositeSubscription compositeSubscription;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (savedInstanceState != null) return;
         makeObservables();
     }
 
@@ -75,6 +76,12 @@ public class StartActivity extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
         clearSubscriptions(false); // Set compositeSubscription to null
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        clearObservables();
     }
 
     private void makeObservables() {
@@ -124,5 +131,10 @@ public class StartActivity extends AppCompatActivity {
         } else {
             compositeSubscription = null;
         }
+    }
+
+    private void clearObservables() {
+        fullscreenVisibilityDelay = null;
+        startupEntityIfNeedMaker = null;
     }
 }
