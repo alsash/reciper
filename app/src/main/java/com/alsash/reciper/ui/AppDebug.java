@@ -6,7 +6,6 @@ import com.facebook.stetho.Stetho;
 
 /**
  * Debugging tools. Don't forget remove this class from manifest on develops finish
- * Created by alsash on 4/23/17.
  */
 
 public class AppDebug extends Application {

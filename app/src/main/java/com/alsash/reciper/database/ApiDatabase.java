@@ -14,9 +14,6 @@ import com.alsash.reciper.database.entity.RecipeLabelJoin;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
-import org.greenrobot.greendao.async.AsyncOperation;
-import org.greenrobot.greendao.async.AsyncOperationListener;
-import org.greenrobot.greendao.async.AsyncSession;
 import org.greenrobot.greendao.database.Database;
 
 import java.lang.ref.WeakReference;
@@ -28,12 +25,10 @@ import java.util.List;
  */
 public class ApiDatabase {
 
-    public static final int VERSION = DaoMaster.SCHEMA_VERSION;
-
-    private static final String DATABASE_NAME = "reciper_db";
     private static final ApiDatabase INSTANCE = new ApiDatabase();
+    private static final String DATABASE_NAME = "reciper_db";
     private WeakReference<DaoSession> refDaoSession;
-    private boolean firstCreated;
+    private Boolean firstCreated = null;
 
     private ApiDatabase() {
     }
@@ -57,75 +52,61 @@ public class ApiDatabase {
         refDaoSession = null;
     }
 
-    boolean popFirstCreated() {
-        boolean firstCreated = this.firstCreated;
-        if (firstCreated) this.firstCreated = false;
-        return firstCreated;
+    public synchronized void createStartupEntriesIfNeed(final Context context) {
+        if (firstCreated == null) {
+            getSession(context).getRecipeDao().load(0L); // Run onCreate(db);
+        }
+        if (firstCreated) {
+            firstCreated = false;
+            createStartupEntities(context);
+        }
     }
 
     /**
-     * Create entries if needed
-     */
-    public void createStartupEntriesIfNeed(final Context context, final Runnable callback) {
-//        if (refDaoSession == null) getSession(context);
-//        if (popFirstCreated()) {
-            createStartupEntities(context, callback);
-//        } else {
-//            callback.run();
-//        }
-    }
-
-    /**
-     * Persist entities to database in background.
+     * Persist entities to database.
      * Entities will insert with nested transactions.
+     * Consider call to this method in background.
      */
-    void createStartupEntities(final Context context, final Runnable callback) {
+    void createStartupEntities(final Context context) {
+
+        // Fetch Json arrays
+        Resources res = context.getResources();
+        String recipesJson = res.getString(R.string.startup_entity_recipe);
+        String categoriesJson = res.getString(R.string.startup_entity_category);
+        String labelsJson = res.getString(R.string.startup_entity_label);
+        String recipeLabelsJson = res.getString(R.string.startup_entity_recipe_label_join);
+
+        // Prepare serializer
+        Gson gson = new Gson();
+        Type recipesType = new TypeToken<List<Recipe>>() {
+        }.getType();
+        Type categoriesType = new TypeToken<List<Category>>() {
+        }.getType();
+        Type labelsType = new TypeToken<List<Label>>() {
+        }.getType();
+        Type recipeLabelJoinType = new TypeToken<List<RecipeLabelJoin>>() {
+        }.getType();
+
+        // Deserialization Json arrays to entities
+        final List<Recipe> recipes = gson.fromJson(recipesJson, recipesType);
+        final List<Category> categories = gson.fromJson(categoriesJson, categoriesType);
+        final List<Label> labels = gson.fromJson(labelsJson, labelsType);
+        final List<RecipeLabelJoin> recipeLabelJoins = gson.fromJson(recipeLabelsJson,
+                recipeLabelJoinType);
+
+        // Insert entities with nested transactions (outer transaction will provide final commit)
         final DaoSession session = getSession(context);
-        final Resources res = context.getResources();
-        Runnable backgroundInsert = new Runnable() {
+        session.runInTx(new Runnable() {
             @Override
             public void run() {
-                // Fetch Json arrays
-                String recipesJson = res.getString(R.string.startup_entity_recipe);
-                String categoriesJson = res.getString(R.string.startup_entity_category);
-                String labelsJson = res.getString(R.string.startup_entity_label);
-                String recipeLabelsJson = res.getString(R.string.startup_entity_recipe_label_join);
-
-                // Prepare serializer
-                Gson gson = new Gson();
-                Type recipesType = new TypeToken<List<Recipe>>() {
-                }.getType();
-                Type categoriesType = new TypeToken<List<Category>>() {
-                }.getType();
-                Type labelsType = new TypeToken<List<Label>>() {
-                }.getType();
-                Type recipeLabelJoinType = new TypeToken<List<RecipeLabelJoin>>() {
-                }.getType();
-
-                // Deserialization Json arrays to entities
-                final List<Recipe> recipes = gson.fromJson(recipesJson, recipesType);
-                final List<Category> categories = gson.fromJson(categoriesJson, categoriesType);
-                final List<Label> labels = gson.fromJson(labelsJson, labelsType);
-                final List<RecipeLabelJoin> recipeLabelJoins = gson.fromJson(recipeLabelsJson,
-                        recipeLabelJoinType);
-
-                // Insert entities
-                session.getRecipeDao().insertInTx(recipes);
-                session.getCategoryDao().insertInTx(categories);
-                session.getLabelDao().insertInTx(labels);
-                session.getRecipeLabelJoinDao().insertInTx(recipeLabelJoins);
-            }
-        };
-        // Run in background
-        AsyncSession asyncSession = session.startAsyncSession();
-        asyncSession.setListenerMainThread(new AsyncOperationListener() {
-            @Override
-            public void onAsyncOperationCompleted(AsyncOperation operation) {
-                clearSession();
-                if (callback != null) callback.run();
+                session.getRecipeDao().insertOrReplaceInTx(recipes, false);
+                session.getCategoryDao().insertOrReplaceInTx(categories, false);
+                session.getLabelDao().insertOrReplaceInTx(labels, false);
+                session.getRecipeLabelJoinDao().insertOrReplaceInTx(recipeLabelJoins, false);
             }
         });
-        asyncSession.runInTx(backgroundInsert);
+
+        clearSession();
     }
 
     private static class DbOpenHelper extends DaoMaster.OpenHelper {
