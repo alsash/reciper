@@ -6,14 +6,12 @@ import com.alsash.reciper.mvp.model.entity.Recipe;
 import com.alsash.reciper.mvp.model.entity.database.CategoryMvpDb;
 import com.alsash.reciper.mvp.presenter.interaction.RecipeListInteraction;
 import com.alsash.reciper.mvp.view.RecipeCategoriesView;
-import com.hannesdorfmann.mosby3.mvp.MvpBasePresenter;
 
 import java.util.ArrayList;
 import java.util.List;
 
 
-public class RecipeCategoriesPresenter
-        extends MvpBasePresenter<RecipeCategoriesView>
+public class RecipeCategoriesPresenter extends BasePresenter<RecipeCategoriesView>
         implements RecipeListInteraction {
 
     private final DaoSession session;
@@ -36,12 +34,6 @@ public class RecipeCategoriesPresenter
 
     public void loadCategories() {
 
-    }
-
-
-    @Override
-    public void detachView(boolean retainInstance) {
-        super.detachView(retainInstance);
     }
 
     private List<Category> getCategories() {

@@ -1,8 +1,8 @@
 package com.alsash.reciper.ui.fragment;
 
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,14 +13,8 @@ import com.alsash.reciper.mvp.model.entity.Recipe;
 import com.alsash.reciper.mvp.view.BaseRecipesView;
 import com.alsash.reciper.ui.activity.RecipeDetailActivity;
 import com.alsash.reciper.ui.fragment.dialog.RecipeBottomDialog;
-import com.hannesdorfmann.mosby3.mvp.MvpFragment;
-import com.hannesdorfmann.mosby3.mvp.MvpPresenter;
-import com.hannesdorfmann.mosby3.mvp.delegate.FragmentMvpDelegate;
-import com.hannesdorfmann.mosby3.mvp.delegate.FragmentMvpDelegateImpl;
 
-public abstract class BaseRecipesFragment<V extends BaseRecipesView, P extends MvpPresenter<V>>
-        extends MvpFragment<V, P>
-        implements BaseRecipesView {
+public abstract class BaseRecipesFragment extends Fragment implements BaseRecipesView {
 
     private RecyclerView recyclerView;
 
@@ -49,14 +43,5 @@ public abstract class BaseRecipesFragment<V extends BaseRecipesView, P extends M
 
     private void bindViews(View layout) {
         recyclerView = (RecyclerView) layout.findViewById(R.id.list);
-    }
-
-    @NonNull
-    @Override
-    protected FragmentMvpDelegate<V, P> getMvpDelegate() {
-        if (mvpDelegate == null) {
-            mvpDelegate = new FragmentMvpDelegateImpl<>(this, this, false, false);
-        }
-        return mvpDelegate;
     }
 }

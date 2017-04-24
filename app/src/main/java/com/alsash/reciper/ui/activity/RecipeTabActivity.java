@@ -1,7 +1,6 @@
 package com.alsash.reciper.ui.activity;
 
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.view.View;
@@ -10,21 +9,13 @@ import com.alsash.reciper.mvp.model.tab.SwipeTab;
 import com.alsash.reciper.mvp.presenter.RecipeTabPresenter;
 import com.alsash.reciper.mvp.view.RecipeTabView;
 import com.alsash.reciper.ui.adapter.SwipePagerAdapter;
-import com.hannesdorfmann.mosby3.mvp.delegate.ActivityMvpDelegateImpl;
-import com.hannesdorfmann.mosby3.mvp.delegate.MvpDelegateCallback;
 
 import java.util.List;
 
-public class RecipeTabActivity extends BaseSwipeTabActivity {
+public class RecipeTabActivity extends BaseSwipeTabActivity implements RecipeTabView {
 
-    // Mvp
-    private RecipeTabView mvpView;
-    private RecipeTabPresenter mvpPresenter;
-    private MvpDelegateCallback<RecipeTabView, RecipeTabPresenter> mvpCallback;
-    private ActivityMvpDelegateImpl<RecipeTabView, RecipeTabPresenter> mvpDelegate;
-
+    private RecipeTabPresenter presenter;
     private SwipePagerAdapter adapter;
-    private List<SwipeTab> tabs;
     private boolean drawTabTitleOnHeader;
 
     // Super implementations
@@ -55,129 +46,41 @@ public class RecipeTabActivity extends BaseSwipeTabActivity {
         return drawTabTitleOnHeader;
     }
 
+    // Interfaces implementations
+    @Override
+    public void setDrawTabTitleOnHeader(boolean drawTabTitleOnHeader) {
+        this.drawTabTitleOnHeader = drawTabTitleOnHeader;
+    }
+
+    @Override
+    public void setTabs(List<SwipeTab> tabs) {
+        adapter = new SwipePagerAdapter(getSupportFragmentManager(), tabs);
+    }
+
+    @Override
+    public void showTab(int position) {
+        pager.setCurrentItem(position);
+    }
+
     // This implementations
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        setupMvpView();
-        setupMvpPresenter();
-        setupMvpCallback();
-        setupMvpDelegate();
-        mvpDelegate.onCreate(savedInstanceState);
-        super.onCreate(savedInstanceState);
-        setupAdapter();
-    }
-
-    protected void setupAdapter() {
-        mvpPresenter.loadTabs();
-        adapter = new SwipePagerAdapter(getSupportFragmentManager(), tabs);
-        mvpPresenter.showTabs();
-    }
-
-    void setupMvpView() {
-        mvpView = new RecipeTabView() {
-            @Override
-            public void setDrawTabTitleOnHeader(boolean draw) {
-                drawTabTitleOnHeader = draw;
-            }
-
-            @Override
-            public void setTabs(List<SwipeTab> newTabs) {
-                tabs = newTabs;
-            }
-
-            @Override
-            public void showTab(int position, boolean smooth) {
-                pager.setCurrentItem(position, smooth);
-            }
-        };
-    }
-
-    void setupMvpPresenter() {
-        mvpPresenter = new RecipeTabPresenter();
-    }
-
-    void setupMvpCallback() {
-        mvpCallback = new MvpDelegateCallback<RecipeTabView, RecipeTabPresenter>() {
-            @NonNull
-            @Override
-            public RecipeTabPresenter createPresenter() {
-                return mvpPresenter;
-            }
-
-            @Override
-            public RecipeTabPresenter getPresenter() {
-                return mvpPresenter;
-            }
-
-            @Override
-            public void setPresenter(RecipeTabPresenter newPresenter) {
-                mvpPresenter = newPresenter;
-            }
-
-            @Override
-            public RecipeTabView getMvpView() {
-                return mvpView;
-            }
-        };
-    }
-
-    void setupMvpDelegate() {
-        mvpDelegate = new ActivityMvpDelegateImpl<>(this, mvpCallback, false);
-    }
-
-    // This delegations
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        mvpDelegate.onDestroy();
+        presenter = new RecipeTabPresenter();
+        presenter.setView(this); // Attach view
+        presenter.initView(); // This initialization - call to setters on the view interface
+        super.onCreate(savedInstanceState); // Patent initialization - views binding
+        presenter.completeView(); // Enable to use parent views
     }
 
     @Override
-    public void onPause() {
-        super.onPause();
-        mvpDelegate.onPause();
-    }
-
-    @Override
-    public void onResume() {
+    protected void onResume() {
         super.onResume();
-        mvpDelegate.onResume();
+        presenter.setView(this);
     }
 
     @Override
-    public void onStart() {
-        super.onStart();
-        mvpDelegate.onStart();
+    protected void onPause() {
+        super.onPause();
+        presenter.setView(null);
     }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        mvpDelegate.onStop();
-    }
-
-    @Override
-    public void onRestart() {
-        super.onRestart();
-        mvpDelegate.onRestart();
-    }
-
-    @Override
-    public void onContentChanged() {
-        super.onContentChanged();
-        mvpDelegate.onContentChanged();
-    }
-
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        mvpDelegate.onSaveInstanceState(outState);
-    }
-
-    @Override
-    public void onPostCreate(Bundle savedInstanceState) {
-        super.onPostCreate(savedInstanceState);
-        mvpDelegate.onPostCreate(savedInstanceState);
-    }
-
 }

@@ -28,7 +28,9 @@ public abstract class BaseSwipeTabActivity extends BaseDrawerActivity {
 
     protected abstract void setupFab();
 
-    protected abstract boolean isDrawTabTitleOnHeader();
+    protected boolean isDrawTabTitleOnHeader() {
+        return false;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
