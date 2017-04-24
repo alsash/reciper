@@ -49,7 +49,6 @@ dependencies {
     compile 'org.greenrobot:greendao:3.2.0'
     compile 'io.reactivex:rxandroid:1.2.1'
     compile 'io.reactivex:rxjava:1.2.9'
-    compile 'com.hannesdorfmann.mosby3:mvp:3.0.2'
     compile 'de.hdodenhof:circleimageview:2.1.0'
     compile 'com.facebook.stetho:stetho:1.5.0' // For debugging
 }
