@@ -3,7 +3,6 @@ package com.alsash.reciper.mvp.model.entity.database;
 import com.alsash.reciper.mvp.model.entity.Category;
 import com.alsash.reciper.mvp.model.entity.Recipe;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -12,32 +11,28 @@ import java.util.List;
  */
 public class CategoryMvpDb implements Category {
 
-    private final com.alsash.reciper.database.entity.Category categoryDb;
-    private final List<Recipe> categoryRecipes;
+    private final Long id;
+    private final String name;
+    private final List<Recipe> recipes;
 
-    public CategoryMvpDb(com.alsash.reciper.database.entity.Category categoryDb) {
-        this.categoryDb = categoryDb;
-        // Fetch items from database
-        this.categoryRecipes = getRecipes();
+    public CategoryMvpDb(Long id, String name, List<Recipe> recipes) {
+        this.id = id;
+        this.name = name;
+        this.recipes = recipes;
     }
 
     @Override
     public Long getId() {
-        return categoryDb.getId();
+        return id;
     }
 
     @Override
     public String getName() {
-        return categoryDb.getName();
+        return name;
     }
 
     @Override
     public List<Recipe> getRecipes() {
-        if (categoryRecipes != null) return categoryRecipes;
-        List<Recipe> recipes = new ArrayList<>();
-        for (com.alsash.reciper.database.entity.Recipe recipe : categoryDb.getRecipes()) {
-            recipes.add(new RecipeMvpDb(recipe));
-        }
         return recipes;
     }
 }

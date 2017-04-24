@@ -4,7 +4,6 @@ import com.alsash.reciper.mvp.model.entity.Category;
 import com.alsash.reciper.mvp.model.entity.Label;
 import com.alsash.reciper.mvp.model.entity.Recipe;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -13,44 +12,35 @@ import java.util.List;
  */
 public class RecipeMvpDb implements Recipe {
 
-    private final com.alsash.reciper.database.entity.Recipe recipeDb;
-    private final Category recipeCategory;
-    private final List<Label> recipeLabels;
+    private final Long id;
+    private final String name;
+    private final Category category;
+    private final List<Label> labels;
 
-    /**
-     * Constructor will prefetch database items, it must be running in the background thread
-     *
-     * @param recipeDb Database entity
-     */
-    public RecipeMvpDb(com.alsash.reciper.database.entity.Recipe recipeDb) {
-        this.recipeDb = recipeDb;
-        // Fetch items from database
-        this.recipeCategory = getCategory();
-        this.recipeLabels = getLabels();
+    public RecipeMvpDb(Long id, String name, Category category, List<Label> labels) {
+        this.id = id;
+        this.name = name;
+        this.category = category;
+        this.labels = labels;
     }
 
     @Override
     public Long getId() {
-        return recipeDb.getId();
+        return id;
     }
 
     @Override
     public String getName() {
-        return recipeDb.getName();
+        return name;
     }
 
     @Override
     public Category getCategory() {
-        return recipeCategory != null ? recipeCategory : new CategoryMvpDb(recipeDb.getCategory());
+        return category;
     }
 
     @Override
     public List<Label> getLabels() {
-        if (recipeLabels != null) return recipeLabels;
-        List<Label> labels = new ArrayList<>();
-        for (com.alsash.reciper.database.entity.Label label : recipeDb.getLabels()) {
-            labels.add(new LabelMvpDb(label));
-        }
         return labels;
     }
 }

@@ -4,7 +4,11 @@ import android.support.annotation.Nullable;
 
 import com.alsash.reciper.database.entity.DaoSession;
 import com.alsash.reciper.mvp.model.entity.Category;
+import com.alsash.reciper.mvp.model.entity.Label;
+import com.alsash.reciper.mvp.model.entity.Recipe;
 import com.alsash.reciper.mvp.model.entity.database.CategoryMvpDb;
+import com.alsash.reciper.mvp.model.entity.database.LabelMvpDb;
+import com.alsash.reciper.mvp.model.entity.database.RecipeMvpDb;
 import com.alsash.reciper.mvp.view.RecipeCategoriesView;
 
 import java.util.ArrayList;
@@ -72,9 +76,26 @@ public class RecipeCategoriesPresenter extends BaseRecipesPresenter<RecipeCatego
         if (categories.size() > 0) return categories;
         List<com.alsash.reciper.database.entity.Category> dbCategories =
                 session.getCategoryDao().queryBuilder().build().forCurrentThread().list();
+
         for (com.alsash.reciper.database.entity.Category categoryDb : dbCategories) {
-            CategoryMvpDb categoryMvpDb = new CategoryMvpDb(categoryDb); // Will prefetch items
-            categories.add(categoryMvpDb);
+            List<Recipe> categoryRecipes = new ArrayList<>();
+            categories.add(new CategoryMvpDb(categoryDb.getId(), categoryDb.getName(),
+                    categoryRecipes));
+
+            for (com.alsash.reciper.database.entity.Recipe recipeDb : categoryDb.getRecipes()) {
+
+                List<Label> recipeLabels = new ArrayList<>();
+                categoryRecipes.add(new RecipeMvpDb(recipeDb.getId(), recipeDb.getName(),
+                        categories.get(categories.size() - 1), recipeLabels));
+
+                for (com.alsash.reciper.database.entity.Label labelDb : recipeDb.getLabels()) {
+                    recipeLabels.add(new LabelMvpDb(labelDb.getId(), labelDb.getName(),
+                            new ArrayList<Recipe>())); // Labels without inner recipes
+                }
+
+            }
+
+
         }
         return categories;
     }

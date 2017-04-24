@@ -4,7 +4,6 @@ package com.alsash.reciper.mvp.model.entity.database;
 import com.alsash.reciper.mvp.model.entity.Label;
 import com.alsash.reciper.mvp.model.entity.Recipe;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -13,32 +12,28 @@ import java.util.List;
  */
 public class LabelMvpDb implements Label {
 
-    private final com.alsash.reciper.database.entity.Label labelDb;
-    private final List<Recipe> labelRecipes;
+    private final Long id;
+    private final String name;
+    private final List<Recipe> recipes;
 
-    public LabelMvpDb(com.alsash.reciper.database.entity.Label labelDb) {
-        this.labelDb = labelDb;
-        // Fetch items from database
-        this.labelRecipes = getRecipes();
+    public LabelMvpDb(Long id, String name, List<Recipe> recipes) {
+        this.id = id;
+        this.name = name;
+        this.recipes = recipes;
     }
 
     @Override
     public Long getId() {
-        return labelDb.getId();
+        return id;
     }
 
     @Override
     public String getName() {
-        return labelDb.getName();
+        return name;
     }
 
     @Override
     public List<Recipe> getRecipes() {
-        if (labelRecipes != null) return labelRecipes;
-        List<Recipe> recipes = new ArrayList<>();
-        for (com.alsash.reciper.database.entity.Recipe recipe : labelDb.getRecipes()) {
-            recipes.add(new RecipeMvpDb(recipe));
-        }
         return recipes;
     }
 }
