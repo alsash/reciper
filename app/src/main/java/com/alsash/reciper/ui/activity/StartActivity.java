@@ -25,7 +25,7 @@ import rx.subscriptions.CompositeSubscription;
 public class StartActivity extends AppCompatActivity {
 
     private static final long UI_DELAY_FULLSCREEN_MS = 100; // PreLollipop only
-    private static final long UI_DELAY_START_MS = 100;
+    private static final long UI_DELAY_START_MS = 500; // Splash is so beautiful :)
 
     private Runnable setFullscreenVisibility = new Runnable() {
         @SuppressLint("InlinedApi")
