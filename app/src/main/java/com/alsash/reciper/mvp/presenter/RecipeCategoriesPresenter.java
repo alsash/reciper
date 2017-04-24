@@ -75,7 +75,7 @@ public class RecipeCategoriesPresenter extends BaseRecipesPresenter<RecipeCatego
     private synchronized List<Category> getCategories() {
         if (categories.size() > 0) return categories;
         List<com.alsash.reciper.database.entity.Category> dbCategories =
-                session.getCategoryDao().queryBuilder().build().forCurrentThread().list();
+                session.getCategoryDao().loadAll();
 
         for (com.alsash.reciper.database.entity.Category categoryDb : dbCategories) {
             List<Recipe> categoryRecipes = new ArrayList<>();
@@ -92,10 +92,7 @@ public class RecipeCategoriesPresenter extends BaseRecipesPresenter<RecipeCatego
                     recipeLabels.add(new LabelMvpDb(labelDb.getId(), labelDb.getName(),
                             new ArrayList<Recipe>())); // Labels without inner recipes
                 }
-
             }
-
-
         }
         return categories;
     }
