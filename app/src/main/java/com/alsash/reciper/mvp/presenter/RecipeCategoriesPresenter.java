@@ -15,6 +15,7 @@ public class RecipeCategoriesPresenter extends BasePresenter<RecipeCategoriesVie
         implements RecipeListInteraction {
 
     private final DaoSession session;
+    private final List<Category> categories = new ArrayList<>();
 
     public RecipeCategoriesPresenter(DaoSession session) {
         this.session = session;
@@ -36,15 +37,14 @@ public class RecipeCategoriesPresenter extends BasePresenter<RecipeCategoriesVie
 
     }
 
-    private List<Category> getCategories() {
-        List<Category> mvpCategories = new ArrayList<>();
+    private synchronized List<Category> getCategories() {
+        if (categories.size() > 0) return categories;
         List<com.alsash.reciper.database.entity.Category> dbCategories =
-                session.getCategoryDao().queryBuilder()
-                        .build().forCurrentThread().list();
+                session.getCategoryDao().queryBuilder().build().forCurrentThread().list();
         for (com.alsash.reciper.database.entity.Category categoryDb : dbCategories) {
-            CategoryMvpDb categoryMvpDb = new CategoryMvpDb(categoryDb);
-            mvpCategories.add(categoryMvpDb);
+            CategoryMvpDb categoryMvpDb = new CategoryMvpDb(categoryDb); // Will prefetch items
+            categories.add(categoryMvpDb);
         }
-        return mvpCategories;
+        return categories;
     }
 }
