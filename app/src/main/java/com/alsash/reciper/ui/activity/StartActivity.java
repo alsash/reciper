@@ -125,9 +125,12 @@ public class StartActivity extends AppCompatActivity {
     }
 
     private void clearSubscriptions(boolean recreate) {
-        if (compositeSubscription != null) compositeSubscription.unsubscribe();
+        if (compositeSubscription != null) {
+            compositeSubscription.unsubscribe();
+            compositeSubscription.clear();
+        }
         if (recreate) {
-            compositeSubscription = new CompositeSubscription(); // Enable adding new Subscriptions
+            compositeSubscription = new CompositeSubscription(); // Remove memory leaks if exist
         } else {
             compositeSubscription = null;
         }
