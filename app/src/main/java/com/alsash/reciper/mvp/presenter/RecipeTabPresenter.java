@@ -36,6 +36,7 @@ public class RecipeTabPresenter extends BasePresenter<RecipeTabView> {
         }
     }
 
+    @Override
     public void initView() {
         RecipeTabView view = getView();
         if (view == null) return;
@@ -43,6 +44,7 @@ public class RecipeTabPresenter extends BasePresenter<RecipeTabView> {
         view.setTabs(getTabs());
     }
 
+    @Override
     public void completeView() {
         RecipeTabView view = getView();
         if (view == null) return;

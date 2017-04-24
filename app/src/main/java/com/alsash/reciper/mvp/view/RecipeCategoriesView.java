@@ -6,6 +6,8 @@ import java.util.List;
 
 public interface RecipeCategoriesView extends BaseRecipesView {
 
+    void setCategories(List<Category> categories);
+
     void addCategories(List<Category> categories);
 
     void showCategories();

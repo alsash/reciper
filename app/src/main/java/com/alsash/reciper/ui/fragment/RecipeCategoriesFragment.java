@@ -36,9 +36,14 @@ public class RecipeCategoriesFragment extends BaseRecipesFragment implements Rec
 
     // Interfaces implementations
     @Override
-    public void addCategories(List<Category> newCategories) {
-        categories.addAll(newCategories);
-        listView.getAdapter().notifyDataSetChanged();
+    public void setCategories(List<Category> categories) {
+        this.categories.clear();
+        this.categories.addAll(categories);
+    }
+
+    @Override
+    public void addCategories(List<Category> categories) {
+        this.categories.addAll(categories);
     }
 
     @Override
@@ -54,13 +59,14 @@ public class RecipeCategoriesFragment extends BaseRecipesFragment implements Rec
                 ApiDatabase.getInstance().getSession(getContext())
         );
         presenter.setView(this); // Init view
-        presenter.loadCategories();
+        presenter.initView();
     }
 
     @Override
     public void onResume() {
         super.onResume();
         presenter.setView(this); // Attach view
+        presenter.completeView();
     }
 
     @Override

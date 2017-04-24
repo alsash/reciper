@@ -13,6 +13,10 @@ public abstract class BasePresenter<V> {
 
     private WeakReference<V> viewRef;
 
+    public abstract void initView();
+
+    public abstract void completeView();
+
     @UiThread
     @Nullable
     public V getView() {
