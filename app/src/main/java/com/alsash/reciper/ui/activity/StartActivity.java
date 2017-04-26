@@ -24,8 +24,8 @@ import rx.subscriptions.CompositeSubscription;
  */
 public class StartActivity extends AppCompatActivity {
 
-    private static final long UI_DELAY_FULLSCREEN_MS = 100; // PreLollipop only
-    private static final long UI_DELAY_START_MS = 500; // Splash is so beautiful :)
+    private static final long UI_DELAY_FULLSCREEN_MS = 1000; // PreLollipop only
+    private static final long UI_DELAY_START_MS = 5000; // Not less than fullscreen delay
 
     private Runnable setFullscreenVisibility = new Runnable() {
         @SuppressLint("InlinedApi")
@@ -64,52 +64,50 @@ public class StartActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         makeObservables();
+        makeSubscriptions();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        makeSubscriptions();
+        makeSubscriptions(); // Return if has been already made
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        clearSubscriptions(false); // Set compositeSubscription to null
+        clearSubscriptions();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        clearSubscriptions();
         clearObservables();
     }
 
     private void makeObservables() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            fullscreenVisibilityDelay = Observable
-                    .fromCallable(new Callable<Long>() {
-                        @Override
-                        public Long call() throws Exception {
-                            return 0L;
-                        }
-                    })
-                    .observeOn(Schedulers.computation())
-                    .subscribeOn(AndroidSchedulers.mainThread());
-        } else {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
             fullscreenVisibilityDelay = Observable
                     .timer(UI_DELAY_FULLSCREEN_MS, TimeUnit.MILLISECONDS)
-                    .subscribeOn(AndroidSchedulers.mainThread());
+                    .observeOn(AndroidSchedulers.mainThread());
+        } else {
+            fullscreenVisibilityDelay = Observable
+                    .just(0L)
+                    .observeOn(AndroidSchedulers.mainThread());
         }
 
         startupEntityIfNeedMaker = Observable
                 .fromCallable(makeEntitiesIfNeed)
-                .observeOn(Schedulers.io())
                 .delaySubscription(UI_DELAY_START_MS, TimeUnit.MILLISECONDS)
-                .subscribeOn(AndroidSchedulers.mainThread());
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
     }
 
     private void makeSubscriptions() {
-        clearSubscriptions(true); // Recreate compositeSubscription
+        if (compositeSubscription != null && !compositeSubscription.isUnsubscribed()) return;
+        if (compositeSubscription == null) compositeSubscription = new CompositeSubscription();
+
         compositeSubscription.add(fullscreenVisibilityDelay.subscribe(new Action1<Long>() {
             @Override
             public void call(Long aLong) {
@@ -124,14 +122,10 @@ public class StartActivity extends AppCompatActivity {
         }));
     }
 
-    private void clearSubscriptions(boolean recreate) {
+    private void clearSubscriptions() {
         if (compositeSubscription != null) {
             compositeSubscription.unsubscribe();
             compositeSubscription.clear();
-        }
-        if (recreate) {
-            compositeSubscription = new CompositeSubscription(); // Remove memory leaks if exist
-        } else {
             compositeSubscription = null;
         }
     }
