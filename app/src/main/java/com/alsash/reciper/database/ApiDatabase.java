@@ -20,43 +20,39 @@ import java.lang.ref.WeakReference;
 import java.lang.reflect.Type;
 import java.util.List;
 
+import javax.inject.Singleton;
+
 /**
  * Single instance for database api
  */
+@Singleton
 public class ApiDatabase {
 
-    private static final ApiDatabase INSTANCE = new ApiDatabase();
     private static final String DATABASE_NAME = "reciper_db";
-    private WeakReference<DaoSession> refDaoSession;
-    private Boolean firstCreated;
+    private static Boolean firstCreated;
+    private final WeakReference<DaoSession> refDaoSession;
+    private final WeakReference<Resources> resourcesRef;
 
-    private ApiDatabase() {
+    public ApiDatabase(Context appContext) {
+        Database db = new DbOpenHelper(appContext, DATABASE_NAME).getWritableDb();
+        refDaoSession = new WeakReference<>(new DaoMaster(db).newSession());
+        resourcesRef = new WeakReference<Resources>(appContext.getResources());
     }
 
-    public static ApiDatabase getInstance() {
-        return INSTANCE;
-    }
-
-    public synchronized DaoSession getSession(Context context) {
-        if (refDaoSession == null || refDaoSession.get() == null) {
-            Context appContext = context.getApplicationContext();
-            Database db = new DbOpenHelper(appContext, DATABASE_NAME).getWritableDb();
-            refDaoSession = new WeakReference<>(new DaoMaster(db).newSession());
-        }
+    public synchronized DaoSession getSession() {
         return refDaoSession.get();
     }
 
     public synchronized void clearSession() {
-        if (refDaoSession == null || refDaoSession.get() == null) return;
+        if (refDaoSession.get() == null) return;
         refDaoSession.get().clear();
-        refDaoSession = null;
     }
 
-    public synchronized void createStartupEntriesIfNeed(final Context context) {
+    public synchronized void createStartupEntriesIfNeed(Resources res) {
         // Trying to set firstCreated in DbOpenHelper.onCreate(db)
-        if (firstCreated == null) getSession(context).getRecipeDao().load(0L);
+        if (firstCreated == null) getSession().getRecipeDao().load(0L);
         // Check if DbOpenHelper.onCreate(db) has been called
-        if (firstCreated != null && firstCreated) createStartupEntities(context);
+        if (firstCreated != null && firstCreated) createStartupEntities(res);
         // Set firstCreated marker for future calls
         firstCreated = false;
     }
@@ -66,10 +62,8 @@ public class ApiDatabase {
      * Entities will insert with nested transactions.
      * Consider call to this method in background.
      */
-    void createStartupEntities(final Context context) {
-
+    void createStartupEntities(Resources res) {
         // Fetch Json arrays
-        Resources res = context.getResources();
         String recipesJson = res.getString(R.string.startup_entity_recipe);
         String categoriesJson = res.getString(R.string.startup_entity_category);
         String labelsJson = res.getString(R.string.startup_entity_label);
@@ -94,7 +88,7 @@ public class ApiDatabase {
                 recipeLabelJoinType);
 
         // Insert entities with nested transactions (outer transaction will provide final commit)
-        final DaoSession session = getSession(context);
+        final DaoSession session = getSession();
         session.runInTx(new Runnable() {
             @Override
             public void run() {
@@ -117,7 +111,7 @@ public class ApiDatabase {
         @Override
         public void onCreate(Database db) {
             super.onCreate(db);
-            ApiDatabase.getInstance().firstCreated = true;
+            ApiDatabase.firstCreated = true;
         }
 
         @Override

@@ -32,11 +32,7 @@ greendao {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    testCompile 'junit:junit:4.12'
-    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
-        exclude group: 'com.android.support', module: 'support-annotations'
-    })
+    // App
     compile 'com.android.support:appcompat-v7:25.3.1'
     compile 'com.android.support:design:25.3.1'
     compile 'com.android.support:support-v4:25.3.1'
@@ -51,4 +47,13 @@ dependencies {
     compile 'io.reactivex:rxjava:1.2.10'
     compile 'de.hdodenhof:circleimageview:2.1.0'
     compile 'com.facebook.stetho:stetho:1.5.0' // For debugging
+    compile 'com.google.dagger:dagger-android:2.10' // Dagger 2 for Android. Stable version
+    compile 'com.google.dagger:dagger-android-support:2.10'
+    annotationProcessor 'com.google.dagger:dagger-android-processor:2.10'
+    // Test frameworks
+    testCompile 'junit:junit:4.12'
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    androidTestCompile 'com.google.code.findbugs:jsr305:3.0.1' // For resolving Dagger 2 conflicts
 }
