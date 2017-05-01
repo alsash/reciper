@@ -67,7 +67,7 @@ public class RecipeTabActivity extends BaseSwipeTabActivity implements RecipeTab
     protected void onCreate(Bundle savedInstanceState) {
         presenter = new RecipeTabPresenter();
         presenter.setView(this); // Attach view
-        presenter.initView(); // This initialization - call to setters on the view interface
+        presenter.init(); // This initialization - call to setters on the view interface
         super.onCreate(savedInstanceState); // Patent initialization - views binding
         presenter.completeView(); // Enable to use parent views
     }

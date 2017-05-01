@@ -6,8 +6,8 @@ import com.alsash.reciper.mvp.model.entity.Recipe;
 import java.util.List;
 
 /**
- * Category class that represents Category MVP interface with
- * delegation to Category entity stored in database
+ * CategoryTable class that represents CategoryTable MVP interface with
+ * delegation to CategoryTable entity stored in database
  */
 public class CategoryMvpDb implements Category {
 

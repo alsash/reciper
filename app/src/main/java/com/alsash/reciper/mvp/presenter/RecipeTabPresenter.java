@@ -37,7 +37,7 @@ public class RecipeTabPresenter extends BasePresenter<RecipeTabView> {
     }
 
     @Override
-    public void initView() {
+    public void init() {
         RecipeTabView view = getView();
         if (view == null) return;
         view.setDrawTabTitleOnHeader(DRAW_TAB_TITLE_ON_HEADER);

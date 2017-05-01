@@ -7,8 +7,8 @@ import com.alsash.reciper.mvp.model.entity.Recipe;
 import java.util.List;
 
 /**
- * Recipe class that represents Recipe MVP interface with
- * delegation to Recipe entity stored in database
+ * RecipeTable class that represents RecipeTable MVP interface with
+ * delegation to RecipeTable entity stored in database
  */
 public class RecipeMvpDb implements Recipe {
 

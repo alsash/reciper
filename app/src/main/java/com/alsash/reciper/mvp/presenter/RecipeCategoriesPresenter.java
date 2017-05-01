@@ -2,7 +2,10 @@ package com.alsash.reciper.mvp.presenter;
 
 import android.support.annotation.Nullable;
 
-import com.alsash.reciper.database.entity.DaoSession;
+import com.alsash.reciper.api.storage.local.database.table.CategoryTable;
+import com.alsash.reciper.api.storage.local.database.table.DaoSession;
+import com.alsash.reciper.api.storage.local.database.table.LabelTable;
+import com.alsash.reciper.api.storage.local.database.table.RecipeTable;
 import com.alsash.reciper.mvp.model.entity.Category;
 import com.alsash.reciper.mvp.model.entity.Label;
 import com.alsash.reciper.mvp.model.entity.Recipe;
@@ -33,7 +36,7 @@ public class RecipeCategoriesPresenter extends BaseRecipesPresenter<RecipeCatego
     }
 
     @Override
-    public void initView() {
+    public void init() {
         if (getView() == null) return;
         loadCategories();
     }
@@ -74,21 +77,20 @@ public class RecipeCategoriesPresenter extends BaseRecipesPresenter<RecipeCatego
 
     private synchronized List<Category> getCategories() {
         if (categories.size() > 0) return categories;
-        List<com.alsash.reciper.database.entity.Category> dbCategories =
-                session.getCategoryDao().loadAll();
+        List<CategoryTable> dbCategories = session.getCategoryTableDao().loadAll();
 
-        for (com.alsash.reciper.database.entity.Category categoryDb : dbCategories) {
+        for (CategoryTable categoryDb : dbCategories) {
             List<Recipe> categoryRecipes = new ArrayList<>();
             categories.add(new CategoryMvpDb(categoryDb.getId(), categoryDb.getName(),
                     categoryRecipes));
 
-            for (com.alsash.reciper.database.entity.Recipe recipeDb : categoryDb.getRecipes()) {
+            for (RecipeTable recipeDb : categoryDb.getRecipes()) {
 
                 List<Label> recipeLabels = new ArrayList<>();
                 categoryRecipes.add(new RecipeMvpDb(recipeDb.getId(), recipeDb.getName(),
                         categories.get(categories.size() - 1), recipeLabels));
 
-                for (com.alsash.reciper.database.entity.Label labelDb : recipeDb.getLabels()) {
+                for (LabelTable labelDb : recipeDb.getLabels()) {
                     recipeLabels.add(new LabelMvpDb(labelDb.getId(), labelDb.getName(),
                             new ArrayList<Recipe>())); // Labels without inner recipes
                 }

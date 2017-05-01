@@ -55,10 +55,10 @@ public class RecipeCategoriesFragment extends BaseRecipesFragment implements Rec
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 //        presenter = new RecipeCategoriesPresenter(
-//                ApiDatabase.getInstance().getSession(getContext())
+//                DatabaseApi.getInstance().getSession(getContext())
 //        );
         presenter.setView(this); // Init view
-        presenter.initView();
+        presenter.init();
     }
 
     @Override

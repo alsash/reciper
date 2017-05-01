@@ -1,6 +1,6 @@
 package com.alsash.reciper.di.module;
 
-import com.alsash.reciper.database.ApiDatabase;
+import com.alsash.reciper.api.StorageApi;
 import com.alsash.reciper.di.scope.StartScope;
 import com.alsash.reciper.mvp.presenter.StartPresenter;
 
@@ -15,7 +15,7 @@ public abstract class StartModule {
 
     @Provides
     @StartScope
-    static StartPresenter provideStartPresenter(ApiDatabase apiDatabase) {
-        return new StartPresenter(apiDatabase.getSession());
+    static StartPresenter provideStartPresenter(StorageApi storageApi) {
+        return new StartPresenter(storageApi);
     }
 }

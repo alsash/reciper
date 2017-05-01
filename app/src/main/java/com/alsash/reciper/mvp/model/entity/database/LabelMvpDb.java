@@ -7,8 +7,8 @@ import com.alsash.reciper.mvp.model.entity.Recipe;
 import java.util.List;
 
 /**
- * Label class that represents Label MVP interface with
- * delegation to Label entity stored in database
+ * LabelTable class that represents LabelTable MVP interface with
+ * delegation to LabelTable entity stored in database
  */
 public class LabelMvpDb implements Label {
 

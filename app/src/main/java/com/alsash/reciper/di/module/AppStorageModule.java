@@ -2,7 +2,7 @@ package com.alsash.reciper.di.module;
 
 import android.content.Context;
 
-import com.alsash.reciper.database.ApiDatabase;
+import com.alsash.reciper.api.StorageApi;
 
 import javax.inject.Singleton;
 
@@ -13,11 +13,11 @@ import dagger.Provides;
  * DI Module that provides Data Api
  */
 @Module
-public abstract class AppDataModule {
+public abstract class AppStorageModule {
 
     @Provides
     @Singleton
-    static ApiDatabase provideApiDatabase(Context context) {
-        return new ApiDatabase(context);
+    static StorageApi provideStorageApi(Context context) {
+        return new StorageApi(context);
     }
 }
