@@ -51,10 +51,8 @@ public abstract class BasePresenter<V> {
     public void setView(@Nullable V view) {
         if (view != null) {
             // Attach view
-            if (viewRef == null || viewRef.get() == null || !viewRef.get().equals(view)) {
-                viewRef = new WeakReference<>(view);
-                init();
-            }
+            if (viewRef == null) init();
+            viewRef = new WeakReference<>(view);
         } else {
             // Detach view
             if (viewRef != null) {
