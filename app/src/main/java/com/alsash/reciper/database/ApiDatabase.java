@@ -36,7 +36,7 @@ public class ApiDatabase {
     public ApiDatabase(Context appContext) {
         Database db = new DbOpenHelper(appContext, DATABASE_NAME).getWritableDb();
         refDaoSession = new WeakReference<>(new DaoMaster(db).newSession());
-        resourcesRef = new WeakReference<Resources>(appContext.getResources());
+        resourcesRef = new WeakReference<>(appContext.getResources());
     }
 
     public synchronized DaoSession getSession() {
@@ -48,11 +48,11 @@ public class ApiDatabase {
         refDaoSession.get().clear();
     }
 
-    public synchronized void createStartupEntriesIfNeed(Resources res) {
+    public synchronized void createStartupEntriesIfNeed() {
         // Trying to set firstCreated in DbOpenHelper.onCreate(db)
         if (firstCreated == null) getSession().getRecipeDao().load(0L);
         // Check if DbOpenHelper.onCreate(db) has been called
-        if (firstCreated != null && firstCreated) createStartupEntities(res);
+        if (firstCreated != null && firstCreated) createStartupEntities();
         // Set firstCreated marker for future calls
         firstCreated = false;
     }
@@ -62,7 +62,8 @@ public class ApiDatabase {
      * Entities will insert with nested transactions.
      * Consider call to this method in background.
      */
-    void createStartupEntities(Resources res) {
+    void createStartupEntities() {
+        Resources res = resourcesRef.get();
         // Fetch Json arrays
         String recipesJson = res.getString(R.string.startup_entity_recipe);
         String categoriesJson = res.getString(R.string.startup_entity_category);

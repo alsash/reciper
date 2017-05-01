@@ -5,7 +5,6 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
-import com.alsash.reciper.database.ApiDatabase;
 import com.alsash.reciper.mvp.model.entity.Category;
 import com.alsash.reciper.mvp.presenter.RecipeCategoriesPresenter;
 import com.alsash.reciper.mvp.view.RecipeCategoriesView;
@@ -55,9 +54,9 @@ public class RecipeCategoriesFragment extends BaseRecipesFragment implements Rec
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        presenter = new RecipeCategoriesPresenter(
-                ApiDatabase.getInstance().getSession(getContext())
-        );
+//        presenter = new RecipeCategoriesPresenter(
+//                ApiDatabase.getInstance().getSession(getContext())
+//        );
         presenter.setView(this); // Init view
         presenter.initView();
     }

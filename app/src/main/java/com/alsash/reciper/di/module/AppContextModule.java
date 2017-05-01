@@ -4,8 +4,6 @@ import android.app.Application;
 import android.content.Context;
 import android.support.annotation.NonNull;
 
-import java.lang.ref.WeakReference;
-
 import javax.inject.Singleton;
 
 import dagger.Module;
@@ -17,17 +15,17 @@ import dagger.Provides;
 @Module
 public class AppContextModule {
 
-    private final WeakReference<Context> appContextRef;
+    private final Context appContext;
 
     public AppContextModule(@NonNull Application application) {
         Context appContext = application.getApplicationContext();
         assert appContext != null;
-        this.appContextRef = new WeakReference<>(appContext);
+        this.appContext = appContext;
     }
 
     @Provides
     @Singleton
-    public Context provideAppContext() {
-        return appContextRef.get();
+    Context provideAppContext() {
+        return appContext;
     }
 }

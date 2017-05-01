@@ -10,14 +10,14 @@ import dagger.Module;
 import dagger.Provides;
 
 /**
- * DI Module that provides Database Api
+ * DI Module that provides Data Api
  */
 @Module
-public class DataApiModule {
+public abstract class AppDataModule {
 
     @Provides
     @Singleton
-    public static ApiDatabase provideApiDatabase(Context context) {
+    static ApiDatabase provideApiDatabase(Context context) {
         return new ApiDatabase(context);
     }
 }

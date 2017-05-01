@@ -8,10 +8,13 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
-import com.alsash.reciper.database.ApiDatabase;
+import com.alsash.reciper.mvp.presenter.StartPresenter;
+import com.alsash.reciper.ui.application.ReciperApplication;
 
 import java.util.concurrent.Callable;
 import java.util.concurrent.TimeUnit;
+
+import javax.inject.Inject;
 
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
@@ -26,7 +29,8 @@ public class StartActivity extends AppCompatActivity {
 
     private static final long UI_DELAY_FULLSCREEN_MS = 1000; // PreLollipop only
     private static final long UI_DELAY_START_MS = 5000; // Not less than fullscreen delay
-
+    @Inject
+    StartPresenter presenter;
     private Runnable setFullscreenVisibility = new Runnable() {
         @SuppressLint("InlinedApi")
         @Override
@@ -40,22 +44,19 @@ public class StartActivity extends AppCompatActivity {
                             | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
         }
     };
-
     private Runnable startMainActivity = new Runnable() {
         @Override
         public void run() {
             startActivity(new Intent(StartActivity.this, RecipeTabActivity.class));
         }
     };
-
     private Callable<Void> makeEntitiesIfNeed = new Callable<Void>() {
         @Override
         public Void call() throws Exception {
-            ApiDatabase.getInstance().createStartupEntriesIfNeed(StartActivity.this);
+
             return null;
         }
     };
-
     private Observable<Long> fullscreenVisibilityDelay;
     private Observable<Void> startupEntityIfNeedMaker;
     private CompositeSubscription compositeSubscription;
@@ -63,6 +64,12 @@ public class StartActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        ((ReciperApplication) getApplicationContext())
+                .getAppComponent()
+                .getStartComponentBuilder()
+                .build()
+                .inject(this);
+
         makeObservables();
         makeSubscriptions();
     }
