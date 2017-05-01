@@ -23,8 +23,6 @@ public class StartPresenter extends BasePresenter<StartView> {
 
     private final StorageApi storageApi;
 
-    private Subscription startMainActivitySubscription;
-
     private Callable<Void> makeEntitiesIfNeed = new Callable<Void>() {
         @Override
         public Void call() throws Exception {
@@ -32,6 +30,7 @@ public class StartPresenter extends BasePresenter<StartView> {
             return null;
         }
     };
+    private Subscription startMainActivitySubscription;
 
     public StartPresenter(StorageApi storageApi) {
         this.storageApi = storageApi;
