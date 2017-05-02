@@ -19,7 +19,7 @@ import java.util.List;
 public class SwipePagerAdapter extends FragmentPagerAdapter
         implements SwipeViewPager.OnPageSelectListener {
 
-    protected final List<SwipeTab> tabs;
+    private final List<SwipeTab> tabs;
 
     public SwipePagerAdapter(FragmentManager fm, List<SwipeTab> tabs) {
         super(fm);
@@ -28,7 +28,7 @@ public class SwipePagerAdapter extends FragmentPagerAdapter
 
     @Override
     public boolean isSwipeEnabled(int position) {
-        return !tabs.get(position).hasNestedViews();
+        return tabs.get(position).isSwiped();
     }
 
     @Override

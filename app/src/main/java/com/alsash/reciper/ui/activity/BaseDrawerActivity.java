@@ -10,7 +10,6 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -23,7 +22,7 @@ import com.alsash.reciper.R;
 /**
  * An abstract activity that implements main Navigation Drawer
  */
-public abstract class BaseDrawerActivity extends AppCompatActivity
+public abstract class BaseDrawerActivity extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private static final int NAV_STARTER_POST_DELAY_MS = 150;

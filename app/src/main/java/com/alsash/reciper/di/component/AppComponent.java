@@ -1,8 +1,5 @@
 package com.alsash.reciper.di.component;
 
-import android.content.Context;
-
-import com.alsash.reciper.api.StorageApi;
 import com.alsash.reciper.di.module.AppContextModule;
 import com.alsash.reciper.di.module.AppStorageModule;
 
@@ -19,7 +16,5 @@ public interface AppComponent {
 
     StartComponent.Builder getStartComponentBuilder();
 
-    Context getAppContext();
-
-    StorageApi getStorageApi();
+    RecipeTabComponent.Builder getRecipeTabComponentBuilder();
 }

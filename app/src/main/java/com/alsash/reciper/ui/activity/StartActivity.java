@@ -2,12 +2,10 @@ package com.alsash.reciper.ui.activity;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.os.Bundle;
 import android.os.Handler;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
+import com.alsash.reciper.mvp.presenter.BasePresenter;
 import com.alsash.reciper.mvp.presenter.StartPresenter;
 import com.alsash.reciper.mvp.view.StartView;
 import com.alsash.reciper.ui.application.ReciperApplication;
@@ -20,7 +18,7 @@ import static android.os.Build.VERSION_CODES.LOLLIPOP;
 /**
  * An activity with startup splash set in styles.xml
  */
-public class StartActivity extends AppCompatActivity implements StartView {
+public class StartActivity extends BaseActivity implements StartView {
 
     private static final boolean FULLSCREEN_DELAYED = SDK_INT < LOLLIPOP;
     private static final long FULLSCREEN_DELAY_MS = 1000;
@@ -52,20 +50,19 @@ public class StartActivity extends AppCompatActivity implements StartView {
     }
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    protected BasePresenter setupPresenter() {
         ((ReciperApplication) getApplicationContext())
                 .getAppComponent()
                 .getStartComponentBuilder()
                 .build()
                 .inject(this);
         presenter.setView(this);
+        return presenter; // Presenter will be embedded in activity life cycle
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        presenter.setInForeground(true);
         if (FULLSCREEN_DELAYED) {
             fullscreenHandler.postDelayed(fullscreenSetter, FULLSCREEN_DELAY_MS);
         }
@@ -74,15 +71,12 @@ public class StartActivity extends AppCompatActivity implements StartView {
     @Override
     protected void onPause() {
         super.onPause();
-        presenter.setInForeground(false);
         if (FULLSCREEN_DELAYED) fullscreenHandler.removeCallbacks(fullscreenSetter);
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        presenter.setView(null);
+        if (FULLSCREEN_DELAYED) fullscreenHandler = null;
     }
-
-
 }

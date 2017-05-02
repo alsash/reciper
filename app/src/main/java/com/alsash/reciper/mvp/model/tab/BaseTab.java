@@ -7,13 +7,25 @@ import android.support.v4.app.Fragment;
 /**
  * A simple holder for representing tabs in Activity
  */
-public interface BaseTab {
+public abstract class BaseTab {
 
-    Fragment getFragment();
+    private final Integer title;
+    private final Integer icon;
+
+    public BaseTab(Integer title, Integer icon) {
+        this.title = title;
+        this.icon = icon;
+    }
+
+    public abstract Fragment getFragment();
 
     @StringRes
-    Integer getTitle();
+    public Integer getTitle() {
+        return title;
+    }
 
     @DrawableRes
-    Integer getIcon();
+    public Integer getIcon() {
+        return icon;
+    }
 }

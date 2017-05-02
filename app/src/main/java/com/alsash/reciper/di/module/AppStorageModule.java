@@ -10,7 +10,7 @@ import dagger.Module;
 import dagger.Provides;
 
 /**
- * DI Module that provides Data Api
+ * DI Module that provide the Storage Api
  */
 @Module
 public abstract class AppStorageModule {

@@ -8,13 +8,17 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 
 import com.alsash.reciper.R;
+import com.alsash.reciper.mvp.model.tab.SwipeTab;
+import com.alsash.reciper.mvp.view.SwipeTabView;
 import com.alsash.reciper.ui.adapter.SwipePagerAdapter;
 import com.alsash.reciper.ui.view.SwipeViewPager;
+
+import java.util.List;
 
 /**
  * An abstract Activity that holds tab layout
  */
-public abstract class BaseSwipeTabActivity extends BaseDrawerActivity {
+public abstract class BaseSwipeTabActivity extends BaseDrawerActivity implements SwipeTabView {
 
     // Layout views
     protected Toolbar toolbar;
@@ -23,13 +27,23 @@ public abstract class BaseSwipeTabActivity extends BaseDrawerActivity {
     protected FloatingActionButton fab;
 
     private SwipePagerAdapter adapter;
-
-    protected abstract SwipePagerAdapter getPagerAdapter();
+    private boolean drawTabTitleOnHeader;
 
     protected abstract void setupFab();
 
-    protected boolean isDrawTabTitleOnHeader() {
-        return false;
+    @Override
+    public void setDrawTabTitleOnHeader(boolean drawTabTitleOnHeader) {
+        this.drawTabTitleOnHeader = drawTabTitleOnHeader;
+    }
+
+    @Override
+    public void setTabs(List<SwipeTab> tabs) {
+        adapter = getPagerAdapter(tabs);
+    }
+
+    @Override
+    public void showTab(int position) {
+        pager.setCurrentItem(position);
     }
 
     @Override
@@ -41,6 +55,10 @@ public abstract class BaseSwipeTabActivity extends BaseDrawerActivity {
         setupPager();
         setupTabs();
         setupFab();
+    }
+
+    protected SwipePagerAdapter getPagerAdapter(List<SwipeTab> tabs) {
+        return new SwipePagerAdapter(getSupportFragmentManager(), tabs);
     }
 
     private void bindViews() {
@@ -56,10 +74,9 @@ public abstract class BaseSwipeTabActivity extends BaseDrawerActivity {
     }
 
     protected void setupPager() {
-        adapter = getPagerAdapter();
         pager.setAdapter(adapter);
         tabs.setupWithViewPager(pager);
-        if (isDrawTabTitleOnHeader()) {
+        if (drawTabTitleOnHeader) {
             pager.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
                 @Override
                 public void onPageSelected(int position) {
@@ -73,7 +90,7 @@ public abstract class BaseSwipeTabActivity extends BaseDrawerActivity {
         for (int i = 0; i < tabs.getTabCount(); i++) {
             TabLayout.Tab tab = tabs.getTabAt(i);
             assert tab != null;
-            if (isDrawTabTitleOnHeader()) {
+            if (drawTabTitleOnHeader) {
                 tab.setText(null);
             } else {
                 tab.setText(adapter.getPageTitle(i, getResources()));

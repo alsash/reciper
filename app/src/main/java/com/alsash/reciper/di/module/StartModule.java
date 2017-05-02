@@ -8,7 +8,7 @@ import dagger.Module;
 import dagger.Provides;
 
 /**
- * DI Module that provides StartPresenter
+ * DI Module that provide StartPresenter
  */
 @Module
 public abstract class StartModule {

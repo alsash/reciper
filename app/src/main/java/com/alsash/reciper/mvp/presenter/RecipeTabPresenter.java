@@ -4,114 +4,120 @@ import android.support.v4.app.Fragment;
 
 import com.alsash.reciper.R;
 import com.alsash.reciper.mvp.model.tab.SwipeTab;
-import com.alsash.reciper.mvp.view.RecipeTabView;
-import com.alsash.reciper.ui.fragment.RecipeCategoriesFragment;
+import com.alsash.reciper.mvp.view.SwipeTabView;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
-public class RecipeTabPresenter extends BasePresenter<RecipeTabView> {
+public class RecipeTabPresenter extends BasePresenter<SwipeTabView> {
 
-    private static final int START_TAB_POSITION = 0; // Categories list
-    private static final boolean DRAW_TAB_TITLE_ON_HEADER = true;
+    private static final int CATEGORIES_TAB_POSITION = 0;
+    private static final int GRID_TAB_POSITION = 1;
+    private static final int LABELS_TAB_POSITION = 2;
+    private static final int BOOKMARKS_TAB_POSITION = 3;
+    private static final int[] TAB_POSITIONS = new int[]{
+            CATEGORIES_TAB_POSITION,
+            GRID_TAB_POSITION,
+            LABELS_TAB_POSITION,
+            BOOKMARKS_TAB_POSITION
+    };
+    private static final List<SwipeTab> tabs = new ArrayList<>();
 
-    private final List<SwipeTab> tabs = new ArrayList<>();
+    static {
+        Arrays.sort(TAB_POSITIONS);
+    }
+
+    private boolean firstTabShown;
 
     public RecipeTabPresenter() {
-        // Empty constructor
     }
 
     private static Fragment getRecipeTabFragment(int position) {
         switch (position) {
-            case 0:
-                return RecipeCategoriesFragment.newInstance();
-            case 1:
+            case CATEGORIES_TAB_POSITION:
                 return new Fragment();
-            case 2:
+            case GRID_TAB_POSITION:
                 return new Fragment();
-            case 3:
+            case LABELS_TAB_POSITION:
+                return new Fragment();
+            case BOOKMARKS_TAB_POSITION:
                 return new Fragment();
             default:
                 throw new IllegalArgumentException("Tab at " + position + "is unknown");
         }
     }
 
-    @Override
-    public void init() {
-        RecipeTabView view = getView();
-        if (view == null) return;
-        view.setDrawTabTitleOnHeader(DRAW_TAB_TITLE_ON_HEADER);
-        view.setTabs(getTabs());
-    }
-
-    @Override
-    public void completeView() {
-        RecipeTabView view = getView();
-        if (view == null) return;
-        view.showTab(START_TAB_POSITION);
-    }
-
     /**
-     * Define four tabs for RecipeTabView
+     * Define four tabs for SwipeTabView
      *
      * @return list of predefined tabs
      */
-    private List<SwipeTab> getTabs() {
+    private static List<SwipeTab> getTabs() {
         if (tabs.size() > 0) return tabs;
-        // Tab 0 - Categories list (all recipes)
-        tabs.add(new RecipeTab(0,
-                R.string.tab_recipe_category,
-                R.drawable.ic_category,
-                true));
-        // Tab 1 - Recipes (cards) list (all recipes)
-        tabs.add(new RecipeTab(1,
-                R.string.tab_recipe_list,
-                R.drawable.ic_all,
-                false));
-        // Tab 2 - Labels list (recipes with labels only)
-        tabs.add(new RecipeTab(2,
-                R.string.tab_recipe_label,
-                R.drawable.ic_labeled,
-                true));
-        // Tab 3 - Bookmarks list (recipes with bookmarks only)
-        tabs.add(new RecipeTab(3,
-                R.string.tab_recipe_bookmark,
-                R.drawable.ic_bookmarked,
-                false));
+        for (int i : TAB_POSITIONS) {
+            switch (i) {
+                case CATEGORIES_TAB_POSITION:
+                    tabs.add(new RecipeTab(
+                            R.string.tab_recipe_category,
+                            R.drawable.ic_category,
+                            false, i));
+                    continue;
+                case GRID_TAB_POSITION:
+                    tabs.add(new RecipeTab(
+                            R.string.tab_recipe_list,
+                            R.drawable.ic_all,
+                            true, i));
+                    continue;
+                case LABELS_TAB_POSITION:
+                    tabs.add(new RecipeTab(
+                            R.string.tab_recipe_label,
+                            R.drawable.ic_labeled,
+                            false, i));
+                    continue;
+                case BOOKMARKS_TAB_POSITION:
+                    tabs.add(new RecipeTab(
+                            R.string.tab_recipe_bookmark,
+                            R.drawable.ic_bookmarked,
+                            true, 3));
+            }
+        }
         return tabs;
     }
 
-    private static class RecipeTab implements SwipeTab {
-        private final int fragmentPosition;
-        private final int titleRes;
-        private final int iconRes;
-        private final boolean hasNestedViews;
+    @Override
+    protected void init() {
+        if (getView() == null) return;
+        getView().setDrawTabTitleOnHeader(true);
+        getView().setTabs(getTabs());
+        setInitialized(true);
+    }
 
-        RecipeTab(int fragmentPosition, int titleRes, int iconRes, boolean hasNestedViews) {
-            this.fragmentPosition = fragmentPosition;
-            this.titleRes = titleRes;
-            this.iconRes = iconRes;
-            this.hasNestedViews = hasNestedViews;
+    @Override
+    protected void show() {
+        if (getView() == null) return;
+        if (!firstTabShown) {
+            getView().showTab(TAB_POSITIONS[0]);
+            firstTabShown = true;
         }
+    }
 
-        @Override
-        public boolean hasNestedViews() {
-            return hasNestedViews;
+    @Override
+    protected void clear() {
+        firstTabShown = false;
+    }
+
+    private static class RecipeTab extends SwipeTab {
+        private final int fragmentPosition;
+
+        public RecipeTab(Integer title, Integer icon, boolean isSwiped, int fragmentPosition) {
+            super(title, icon, isSwiped);
+            this.fragmentPosition = fragmentPosition;
         }
 
         @Override
         public Fragment getFragment() {
             return getRecipeTabFragment(fragmentPosition);
-        }
-
-        @Override
-        public Integer getTitle() {
-            return titleRes;
-        }
-
-        @Override
-        public Integer getIcon() {
-            return iconRes;
         }
     }
 }

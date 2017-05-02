@@ -3,7 +3,16 @@ package com.alsash.reciper.mvp.model.tab;
 /**
  * A simple holder for representing tabs in Activity with SwipeViewPager
  */
-public interface SwipeTab extends BaseTab {
+public abstract class SwipeTab extends BaseTab {
 
-    boolean hasNestedViews();
+    private boolean isSwiped;
+
+    public SwipeTab(Integer title, Integer icon, boolean isSwiped) {
+        super(title, icon);
+        this.isSwiped = isSwiped;
+    }
+
+    public boolean isSwiped() {
+        return isSwiped;
+    }
 }
