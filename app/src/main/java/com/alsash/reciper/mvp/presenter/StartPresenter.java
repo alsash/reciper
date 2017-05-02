@@ -1,7 +1,5 @@
 package com.alsash.reciper.mvp.presenter;
 
-import android.support.annotation.Nullable;
-
 import com.alsash.reciper.api.StorageApi;
 import com.alsash.reciper.mvp.view.StartView;
 
@@ -37,15 +35,9 @@ public class StartPresenter extends BasePresenter<StartView> {
     }
 
     @Override
-    public void setView(@Nullable StartView view) {
-        super.setView(view);
-        if (view != null) view.setFullscreenVisibility();
-    }
-
-    @Override
     protected void init() {
-        if (getView() != null) getView().setFullscreenVisibility(); // No need to wait init()
-        if (startSubscription == null) {
+        if (getView() != null) getView().setFullscreenVisibility(); // No need to wait background
+        if (startSubscription == null && !isInitialized()) {        // Run startInBackground
             startSubscription = Observable
                     .fromCallable(startInBackground)
                     .subscribeOn(Schedulers.io())
@@ -54,7 +46,7 @@ public class StartPresenter extends BasePresenter<StartView> {
                     .subscribe(new Action1<Void>() {
                         @Override
                         public void call(Void aVoid) {
-                            setInitialized(true); // Call to show() if view in foreground
+                            setInitialized(true);                   // Call to show() in foreground
                         }
                     });
         }
