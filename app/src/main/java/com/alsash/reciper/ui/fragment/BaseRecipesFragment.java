@@ -11,7 +11,6 @@ import android.view.ViewGroup;
 import com.alsash.reciper.R;
 import com.alsash.reciper.mvp.model.entity.Recipe;
 import com.alsash.reciper.mvp.view.BaseRecipesView;
-import com.alsash.reciper.ui.activity.RecipeDetailActivity;
 import com.alsash.reciper.ui.fragment.dialog.RecipeBottomDialog;
 
 public abstract class BaseRecipesFragment extends Fragment implements BaseRecipesView {
@@ -28,7 +27,7 @@ public abstract class BaseRecipesFragment extends Fragment implements BaseRecipe
 
     @Override
     public void showRecipe(Recipe recipe) {
-        RecipeDetailActivity.start(getContext(), recipe.getId());
+        // RecipeDetailActivity.start(getContext(), recipe.getId());
     }
 
     @Nullable

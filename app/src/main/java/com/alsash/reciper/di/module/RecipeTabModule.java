@@ -1,6 +1,5 @@
 package com.alsash.reciper.di.module;
 
-import com.alsash.reciper.api.StorageApi;
 import com.alsash.reciper.di.scope.RecipeTabScope;
 import com.alsash.reciper.mvp.presenter.RecipeTabPresenter;
 
@@ -15,7 +14,7 @@ public abstract class RecipeTabModule {
 
     @Provides
     @RecipeTabScope
-    static RecipeTabPresenter provideRecipeTabPresenter(StorageApi storageApi) {
+    static RecipeTabPresenter provideRecipeTabPresenter() {
         return new RecipeTabPresenter();
     }
 }

@@ -1,23 +1,10 @@
 package com.alsash.reciper.ui.activity;
 
-import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
+import android.support.v7.app.AppCompatActivity;
 
-import com.alsash.reciper.R;
-import com.alsash.reciper.mvp.model.entity.Recipe;
-import com.alsash.reciper.mvp.presenter.interaction.RecipeListInteraction;
-import com.alsash.reciper.ui.fragment.dialog.RecipeBottomDialog;
-import com.alsash.reciper.ui.vector.VectorHelper;
+public class RecipeListActivity extends AppCompatActivity {
 
-public class RecipeListActivity extends BaseDrawerActivity implements RecipeListInteraction {
-
-    private Toolbar toolbar;
+/*    private Toolbar toolbar;
     private FloatingActionButton fab;
 
     @Override
@@ -149,5 +136,5 @@ public class RecipeListActivity extends BaseDrawerActivity implements RecipeList
             case R.id.filter_rating:
             case R.id.filter_time:
         }
-    }
+    }*/
 }

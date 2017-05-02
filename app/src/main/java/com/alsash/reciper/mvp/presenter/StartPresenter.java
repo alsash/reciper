@@ -17,7 +17,7 @@ import rx.schedulers.Schedulers;
  */
 public class StartPresenter extends BasePresenter<StartView> {
 
-    private static final long START_DELAY_MS = 5000; // For debug
+    private static final long START_DELAY_MS = 1000; // For debug
 
     private final StorageApi storageApi;
 

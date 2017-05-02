@@ -26,7 +26,9 @@
             android:id="@+id/activity_tab_tabs"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:tabIndicatorColor="@color/white" />
+            app:tabGravity="fill"
+            app:tabIndicatorColor="@color/white"
+            app:tabMode="fixed" />
 
     </android.support.design.widget.AppBarLayout>
 

@@ -8,7 +8,6 @@ import android.support.v7.widget.RecyclerView;
 import com.alsash.reciper.mvp.model.entity.Category;
 import com.alsash.reciper.mvp.presenter.RecipeCategoriesPresenter;
 import com.alsash.reciper.mvp.view.RecipeCategoriesView;
-import com.alsash.reciper.ui.adapter.RecipeGroupCardListAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,8 +28,8 @@ public class RecipeCategoriesFragment extends BaseRecipesFragment implements Rec
     protected void setupList(RecyclerView parentList) {
         listView = parentList;
         listView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        listView.setAdapter(new RecipeGroupCardListAdapter(presenter, categories));
-        listView.setNestedScrollingEnabled(false);
+        // listView.setAdapter(new RecipeGroupCardListAdapter(presenter, categories));
+        //  listView.setNestedScrollingEnabled(false);
     }
 
     // Interfaces implementations
@@ -57,20 +56,20 @@ public class RecipeCategoriesFragment extends BaseRecipesFragment implements Rec
 //        presenter = new RecipeCategoriesPresenter(
 //                DatabaseApi.getInstance().getSession(getContext())
 //        );
-        presenter.setView(this); // Init view
-        presenter.init();
+        //   presenter.setView(this); // Init view
+        //   presenter.init();
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        presenter.setView(this); // Attach view
-        presenter.completeView();
+        //   presenter.setView(this); // Attach view
+        //   presenter.completeView();
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        presenter.setView(null); // Detach view
+        //  presenter.setView(null); // Detach view
     }
 }

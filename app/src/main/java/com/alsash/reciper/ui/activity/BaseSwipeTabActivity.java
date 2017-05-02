@@ -43,7 +43,16 @@ public abstract class BaseSwipeTabActivity extends BaseDrawerActivity implements
 
     @Override
     public void showTab(int position) {
-        pager.setCurrentItem(position);
+        if (pager.getCurrentItem() != position) {
+            pager.setCurrentItem(position); // Title set by listener
+        } else if (drawTabTitleOnHeader) {
+            setToolbarTitle(position);      // Title set manually
+        }
+    }
+
+    @Override
+    public int shownTab() {
+        return pager.getCurrentItem();
     }
 
     @Override

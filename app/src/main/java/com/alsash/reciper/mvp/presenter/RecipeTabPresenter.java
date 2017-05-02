@@ -3,6 +3,7 @@ package com.alsash.reciper.mvp.presenter;
 import android.support.v4.app.Fragment;
 
 import com.alsash.reciper.R;
+import com.alsash.reciper.di.scope.RecipeTabScope;
 import com.alsash.reciper.mvp.model.tab.SwipeTab;
 import com.alsash.reciper.mvp.view.SwipeTabView;
 
@@ -10,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+@RecipeTabScope
 public class RecipeTabPresenter extends BasePresenter<SwipeTabView> {
 
     private static final int CATEGORIES_TAB_POSITION = 0;
@@ -28,10 +30,8 @@ public class RecipeTabPresenter extends BasePresenter<SwipeTabView> {
         Arrays.sort(TAB_POSITIONS);
     }
 
-    private boolean firstTabShown;
-
-    public RecipeTabPresenter() {
-    }
+    private int currentTabPosition = TAB_POSITIONS[0];
+    private boolean currentTabShown;
 
     private static Fragment getRecipeTabFragment(int position) {
         switch (position) {
@@ -60,25 +60,25 @@ public class RecipeTabPresenter extends BasePresenter<SwipeTabView> {
                 case CATEGORIES_TAB_POSITION:
                     tabs.add(new RecipeTab(
                             R.string.tab_recipe_category,
-                            R.drawable.ic_category,
+                            R.drawable.tab_recipe_category,
                             false, i));
                     continue;
                 case GRID_TAB_POSITION:
                     tabs.add(new RecipeTab(
-                            R.string.tab_recipe_list,
-                            R.drawable.ic_all,
+                            R.string.tab_recipe_grid,
+                            R.drawable.tab_recipe_grid,
                             true, i));
                     continue;
                 case LABELS_TAB_POSITION:
                     tabs.add(new RecipeTab(
                             R.string.tab_recipe_label,
-                            R.drawable.ic_labeled,
+                            R.drawable.tab_recipe_label,
                             false, i));
                     continue;
                 case BOOKMARKS_TAB_POSITION:
                     tabs.add(new RecipeTab(
                             R.string.tab_recipe_bookmark,
-                            R.drawable.ic_bookmarked,
+                            R.drawable.tab_recipe_bookmark,
                             true, 3));
             }
         }
@@ -96,15 +96,16 @@ public class RecipeTabPresenter extends BasePresenter<SwipeTabView> {
     @Override
     protected void show() {
         if (getView() == null) return;
-        if (!firstTabShown) {
-            getView().showTab(TAB_POSITIONS[0]);
-            firstTabShown = true;
+        if (!currentTabShown) {
+            getView().showTab(currentTabPosition);
+            currentTabShown = true;
         }
     }
 
     @Override
     protected void clear() {
-        firstTabShown = false;
+        currentTabShown = false;
+        if (getView() != null) currentTabPosition = getView().shownTab();
     }
 
     private static class RecipeTab extends SwipeTab {

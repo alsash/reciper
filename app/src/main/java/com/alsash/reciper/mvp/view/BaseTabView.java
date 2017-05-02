@@ -12,4 +12,6 @@ public interface BaseTabView<T extends BaseTab> {
     void setTabs(List<T> tabs);
 
     void showTab(int position);
+
+    int shownTab();
 }

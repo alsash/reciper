@@ -1,33 +1,9 @@
 package com.alsash.reciper.ui.activity;
 
-import android.content.Context;
-import android.content.Intent;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.ViewPager;
-import android.support.v7.app.ActionBar;
-import android.support.v7.widget.Toolbar;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.NumberPicker;
-import android.widget.TextView;
+import android.support.v7.app.AppCompatActivity;
 
-import com.alsash.reciper.R;
-import com.alsash.reciper.mvp.model.entity.Recipe;
-import com.alsash.reciper.ui.animator.DepthPageTransformer;
-import com.alsash.reciper.ui.contract.KeyContract;
-import com.alsash.reciper.ui.fragment.RecipeDetailMainFragment;
-import com.alsash.reciper.ui.vector.VectorHelper;
-
-public class RecipeDetailActivity extends BaseDrawerActivity {
-
+public class RecipeDetailActivity extends AppCompatActivity {
+/*
     // Model
     private Recipe recipe;
 
@@ -183,5 +159,5 @@ public class RecipeDetailActivity extends BaseDrawerActivity {
                                  @Nullable Bundle savedInstanceState) {
             return inflater.inflate(R.layout.fragment_scrolling_text, container, false);
         }
-    }
+    }*/
 }

@@ -1,32 +1,7 @@
 package com.alsash.reciper.mvp.presenter;
 
-import android.support.annotation.Nullable;
-
-import com.alsash.reciper.api.storage.local.database.table.CategoryTable;
-import com.alsash.reciper.api.storage.local.database.table.DaoSession;
-import com.alsash.reciper.api.storage.local.database.table.LabelTable;
-import com.alsash.reciper.api.storage.local.database.table.RecipeTable;
-import com.alsash.reciper.mvp.model.entity.Category;
-import com.alsash.reciper.mvp.model.entity.Label;
-import com.alsash.reciper.mvp.model.entity.Recipe;
-import com.alsash.reciper.mvp.model.entity.database.CategoryMvpDb;
-import com.alsash.reciper.mvp.model.entity.database.LabelMvpDb;
-import com.alsash.reciper.mvp.model.entity.database.RecipeMvpDb;
-import com.alsash.reciper.mvp.view.RecipeCategoriesView;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.Callable;
-
-import rx.Observable;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
-import rx.schedulers.Schedulers;
-import rx.subscriptions.CompositeSubscription;
-
-
-public class RecipeCategoriesPresenter extends BaseRecipesPresenter<RecipeCategoriesView> {
-
+public class RecipeCategoriesPresenter {
+/*
     private final DaoSession session;
     private final List<Category> categories = new ArrayList<>();
     private final CompositeSubscription compositeSubscription = new CompositeSubscription();
@@ -97,5 +72,5 @@ public class RecipeCategoriesPresenter extends BaseRecipesPresenter<RecipeCatego
             }
         }
         return categories;
-    }
+    }*/
 }
