@@ -3,7 +3,7 @@
     package="com.alsash.reciper">
 
     <application
-        android:name=".ui.application.ReciperApplication"
+        android:name=".app.ReciperApp"
         android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"

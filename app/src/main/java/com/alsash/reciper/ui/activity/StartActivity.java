@@ -5,10 +5,10 @@ import android.content.Intent;
 import android.os.Handler;
 import android.view.View;
 
+import com.alsash.reciper.app.ReciperApp;
 import com.alsash.reciper.mvp.presenter.BasePresenter;
 import com.alsash.reciper.mvp.presenter.StartPresenter;
 import com.alsash.reciper.mvp.view.StartView;
-import com.alsash.reciper.ui.application.ReciperApplication;
 
 import javax.inject.Inject;
 
@@ -51,10 +51,8 @@ public class StartActivity extends BaseActivity implements StartView {
 
     @Override
     protected BasePresenter setupPresenter() {
-        ((ReciperApplication) getApplicationContext())
-                .getAppComponent()
-                .getStartComponentBuilder()
-                .build()
+        ((ReciperApp) getApplicationContext())
+                .getStartComponent()
                 .inject(this);
         presenter.setView(this);
         return presenter; // Presenter will be embedded in activity life cycle

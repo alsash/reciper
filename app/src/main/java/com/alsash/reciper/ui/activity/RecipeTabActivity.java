@@ -5,9 +5,9 @@ import android.support.design.widget.Snackbar;
 import android.view.View;
 
 import com.alsash.reciper.R;
+import com.alsash.reciper.app.ReciperApp;
 import com.alsash.reciper.mvp.presenter.BasePresenter;
 import com.alsash.reciper.mvp.presenter.RecipeTabPresenter;
-import com.alsash.reciper.ui.application.ReciperApplication;
 
 import javax.inject.Inject;
 
@@ -18,10 +18,8 @@ public class RecipeTabActivity extends BaseSwipeTabActivity {
 
     @Override
     protected BasePresenter setupPresenter() {
-        ((ReciperApplication) getApplicationContext())
-                .getAppComponent()
-                .getRecipeTabComponentBuilder()
-                .build()
+        ((ReciperApp) getApplicationContext())
+                .getRecipeTabComponent()
                 .inject(this);
         presenter.setView(this); // Parent Activity implements SwipeTabView
         return presenter; // Presenter will be embedded in activity lifecycle
