@@ -19,18 +19,18 @@ import rx.schedulers.Schedulers;
  */
 public class StartPresenter extends BasePresenter<StartView> {
 
-    private static final long UI_DELAY_START_MS = 5000; // Not less than fullscreen delay
+    private static final long START_DELAY_MS = 5000; // For debug
 
     private final StorageApi storageApi;
 
-    private Callable<Void> makeEntitiesIfNeed = new Callable<Void>() {
+    private Callable<Void> startInBackground = new Callable<Void>() {
         @Override
         public Void call() throws Exception {
             storageApi.getDatabaseApi().createStartupEntriesIfNeed();
             return null;
         }
     };
-    private Subscription startMainActivitySubscription;
+    private Subscription startSubscription;
 
     public StartPresenter(StorageApi storageApi) {
         this.storageApi = storageApi;
@@ -44,11 +44,12 @@ public class StartPresenter extends BasePresenter<StartView> {
 
     @Override
     protected void init() {
-        if (startMainActivitySubscription == null) {
-            startMainActivitySubscription = Observable
-                    .fromCallable(makeEntitiesIfNeed)
+        if (getView() != null) getView().setFullscreenVisibility(); // No need to wait init()
+        if (startSubscription == null) {
+            startSubscription = Observable
+                    .fromCallable(startInBackground)
                     .subscribeOn(Schedulers.io())
-                    .delay(UI_DELAY_START_MS, TimeUnit.MILLISECONDS)
+                    .delay(START_DELAY_MS, TimeUnit.MILLISECONDS)
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(new Action1<Void>() {
                         @Override
@@ -66,9 +67,9 @@ public class StartPresenter extends BasePresenter<StartView> {
 
     @Override
     protected void clear() {
-        if (startMainActivitySubscription != null) {
-            startMainActivitySubscription.unsubscribe();
-            startMainActivitySubscription = null;
+        if (startSubscription != null) {
+            startSubscription.unsubscribe();
+            startSubscription = null;
         }
     }
 }

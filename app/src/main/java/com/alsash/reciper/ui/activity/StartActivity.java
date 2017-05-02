@@ -65,7 +65,7 @@ public class StartActivity extends AppCompatActivity implements StartView {
     @Override
     protected void onResume() {
         super.onResume();
-        presenter.setForeground(true);
+        presenter.setInForeground(true);
         if (FULLSCREEN_DELAYED) {
             fullscreenHandler.postDelayed(fullscreenSetter, FULLSCREEN_DELAY_MS);
         }
@@ -74,7 +74,7 @@ public class StartActivity extends AppCompatActivity implements StartView {
     @Override
     protected void onPause() {
         super.onPause();
-        presenter.setForeground(false);
+        presenter.setInForeground(false);
         if (FULLSCREEN_DELAYED) fullscreenHandler.removeCallbacks(fullscreenSetter);
     }
 

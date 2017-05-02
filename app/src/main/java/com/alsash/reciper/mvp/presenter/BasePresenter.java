@@ -6,33 +6,38 @@ import android.support.annotation.UiThread;
 import java.lang.ref.WeakReference;
 
 /**
- * Base presenter
+ * The base presenter of any View's instance
  */
 public abstract class BasePresenter<V> {
 
     private WeakReference<V> viewRef;
-    private boolean foreground;
+    private boolean inForeground;
     private boolean initialized;
 
     /**
-     * Initialize presenter. Called when views is attached at first time
+     * Initialize the new view.
+     * Called when the view is attached to this presenter.
      */
     protected abstract void init();
 
     /**
-     * Show data on view. Called when view is in foreground and presenter is initialized
+     * Show data on the view.
+     * Called when the view {@link #isInForeground()}
+     * and this presenter {@link #isInitialized()}.
+     * Any of that's two events can call this method.
      */
     protected abstract void show();
 
     /**
-     * Clear presenter. Called when view is detached from presenter
+     * Clear previously attached view.
+     * Called when the view is detached from  this presenter.
      */
     protected abstract void clear();
 
     /**
-     * Getter for view that has been set in setView {@link #setView(V)}
+     * Getter for the view that attached by {@link #setView(V)}
      *
-     * @return view instance or null
+     * @return the view's instance or null
      */
     @UiThread
     @Nullable
@@ -41,53 +46,58 @@ public abstract class BasePresenter<V> {
     }
 
     /**
-     * Attach or detach view from presenter
+     * Attach or detach view to presenter.
      *
-     * @param view concrete view (Activity, Fragment, etc.),
-     *             if not null, the view will be attached to the presenter
-     *             Otherwise, the view will be detached.
+     * @param view is the concrete view (Activity, Fragment, etc.),
+     *             that implement view's interface.
+     *             If not null, the view will be attached to the presenter,
+     *             otherwise, the view will be detached.
      */
     @UiThread
     public void setView(@Nullable V view) {
         if (view != null) {
             // Attach view
             viewRef = new WeakReference<>(view);
-            if (!isInitialized()) init();
+            init();
         } else {
             // Detach view
+            clear();
             if (viewRef != null) {
                 viewRef.clear();
                 viewRef = null;
-                clear();
             }
         }
     }
 
     /**
-     * Check if current view is in foreground
+     * Check if current view is in inForeground
      *
-     * @return - true if foreground was set
+     * @return true if view can show data
      */
     @UiThread
-    public boolean isForeground() {
-        return foreground;
+    public boolean isInForeground() {
+        return inForeground;
     }
 
     /**
-     * Set visibility of current view and show data if it is ready and view is in foreground
+     * Set visibility of the current view.
+     * After set, will be called to {@link #show()} if this presenter {@link #isInitialized()}
+     * and attached view is {@link #isInForeground()}
      *
-     * @param foreground - true if view can show data
+     * @param inForeground - true if view can show data
      */
     @UiThread
-    public void setForeground(boolean foreground) {
-        this.foreground = foreground;
-        if (isInitialized() && isForeground()) show();
+    public void setInForeground(boolean inForeground) {
+        this.inForeground = inForeground;
+        if (isInitialized() && isInForeground()) show();
     }
 
     /**
-     * Check if presentation data is initialized and can be shown
+     * Check if presentation data is initialized in {@link #init()}
+     * and {@link #setInitialized(boolean)} has been called and can be shown
      *
-     * @return - true if data can be shown
+     * @return true if data can be shown
+     *
      */
     @UiThread
     protected boolean isInitialized() {
@@ -95,13 +105,15 @@ public abstract class BasePresenter<V> {
     }
 
     /**
-     * Set result of initialize and show data if view is in foreground
+     * Set result of initialize and show data if view is in inForeground
+     * After set, will be called to {@link #show()} if this presenter {@link #isInitialized()}
+     * and attached view is {@link #isInForeground()}
      *
      * @param initialized - true if data can be shown
      */
     @UiThread
     protected void setInitialized(boolean initialized) {
         this.initialized = initialized;
-        if (isInitialized() && isForeground()) show();
+        if (isInitialized() && isInForeground()) show();
     }
 }
