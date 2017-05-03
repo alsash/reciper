@@ -3,7 +3,7 @@ package com.alsash.reciper.mvp.presenter.interaction;
 import com.alsash.reciper.mvp.model.entity.Recipe;
 
 /**
- * Created by aldolyna on 4/3/17.
+ * An Recipe list view interaction listener
  */
 public interface RecipeListInteraction {
     void onExpand(Recipe recipe, int position);

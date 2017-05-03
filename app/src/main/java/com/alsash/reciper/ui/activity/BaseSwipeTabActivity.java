@@ -51,7 +51,7 @@ public abstract class BaseSwipeTabActivity extends BaseDrawerActivity implements
     }
 
     @Override
-    public int shownTab() {
+    public int getShownTab() {
         return pager.getCurrentItem();
     }
 

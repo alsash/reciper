@@ -137,7 +137,7 @@
 
     <!--Recipe tabs-->
     <string name="tab_recipe_category">Categories</string>
-    <string name="tab_recipe_grid">List</string>
+    <string name="tab_recipe_grid">Grid</string>
     <string name="tab_recipe_label">Labels</string>
     <string name="tab_recipe_bookmark">Bookmarks</string>
 

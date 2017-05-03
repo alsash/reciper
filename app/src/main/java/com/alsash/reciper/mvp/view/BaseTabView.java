@@ -13,5 +13,5 @@ public interface BaseTabView<T extends BaseTab> {
 
     void showTab(int position);
 
-    int shownTab();
+    int getShownTab();
 }

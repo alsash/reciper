@@ -1,20 +1,20 @@
-package com.alsash.reciper.ui.activity;
+package com.alsash.reciper.ui.fragment;
 
-import android.os.Bundle;
+import android.content.Context;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v4.app.Fragment;
 
 import com.alsash.reciper.mvp.presenter.BasePresenter;
 
 /**
- * An root Activity with single BasePresenter
+ * An root Fragment with single BasePresenter
  */
-public abstract class BaseActivity extends AppCompatActivity {
+public abstract class BaseFragment extends Fragment {
 
     private BasePresenter presenter;
 
     /**
-     * Called in {@link #onCreate(Bundle)} before super.onCreate() and any other methods.
+     * Called in {@link #onAttach(Context)} before super.onAttach() and any other methods.
      *
      * @return BasePresenter inheritor for embedding in the activity life cycle
      */
@@ -22,30 +22,30 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected abstract BasePresenter setupPresenter();
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onAttach(Context context) {
         presenter = setupPresenter();
-        super.onCreate(savedInstanceState);
+        super.onAttach(context);
     }
 
     @Override
-    protected void onResume() {
+    public void onResume() {
         super.onResume();
         if (presenter != null) presenter.setInForeground(true);
     }
 
     @Override
-    protected void onPause() {
+    public void onPause() {
         super.onPause();
         if (presenter != null) presenter.setInForeground(false);
     }
 
     @SuppressWarnings("unchecked")
     @Override
-    protected void onDestroy() {
+    public void onDetach() {
         if (presenter != null) {
             presenter.setView(null);
             presenter = null;
         }
-        super.onDestroy();
+        super.onDetach();
     }
 }

@@ -31,7 +31,7 @@ public class RecipeTabPresenter extends BasePresenter<SwipeTabView> {
     }
 
     private int currentTabPosition = TAB_POSITIONS[0];
-    private boolean currentTabShown;
+    private boolean currentTabWasShown;
 
     private static Fragment getRecipeTabFragment(int position) {
         switch (position) {
@@ -96,16 +96,16 @@ public class RecipeTabPresenter extends BasePresenter<SwipeTabView> {
     @Override
     protected void show() {
         if (getView() == null) return;
-        if (!currentTabShown) {
+        if (!currentTabWasShown) {
             getView().showTab(currentTabPosition);
-            currentTabShown = true;
+            currentTabWasShown = true;
         }
     }
 
     @Override
     protected void clear() {
-        currentTabShown = false;
-        if (getView() != null) currentTabPosition = getView().shownTab();
+        currentTabWasShown = false;
+        if (getView() != null) currentTabPosition = getView().getShownTab();
     }
 
     private static class RecipeTab extends SwipeTab {

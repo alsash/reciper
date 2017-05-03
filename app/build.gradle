@@ -23,7 +23,7 @@ android {
 
 repositories {
     maven {
-        url "https://jitpack.io" // For CircleImageView
+        url "https://jitpack.io"                                        // For CircleImageView
     }
 }
 
