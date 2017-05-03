@@ -1,21 +1,10 @@
 package com.alsash.reciper.ui.fragment;
 
-import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
-import com.alsash.reciper.R;
-import com.alsash.reciper.mvp.model.entity.Recipe;
-import com.alsash.reciper.mvp.view.BaseRecipesView;
-import com.alsash.reciper.ui.fragment.dialog.RecipeBottomDialog;
+public abstract class BaseRecipeListFragment extends Fragment {
 
-public abstract class BaseRecipesFragment extends Fragment implements BaseRecipesView {
-
-    private RecyclerView recyclerView;
+/*    protected RecyclerView recyclerView;
 
     protected abstract void setupList(RecyclerView list);
 
@@ -42,5 +31,5 @@ public abstract class BaseRecipesFragment extends Fragment implements BaseRecipe
 
     private void bindViews(View layout) {
         recyclerView = (RecyclerView) layout.findViewById(R.id.list);
-    }
+    }*/
 }

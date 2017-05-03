@@ -3,7 +3,7 @@ package com.alsash.reciper.mvp.presenter;
 import android.support.v4.app.Fragment;
 
 import com.alsash.reciper.R;
-import com.alsash.reciper.di.scope.RecipeTabScope;
+import com.alsash.reciper.di.scope.RecipeListScope;
 import com.alsash.reciper.mvp.model.tab.SwipeTab;
 import com.alsash.reciper.mvp.view.SwipeTabView;
 
@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-@RecipeTabScope
+@RecipeListScope
 public class RecipeTabPresenter extends BasePresenter<SwipeTabView> {
 
     private static final int CATEGORIES_TAB_POSITION = 0;

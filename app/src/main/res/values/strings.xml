@@ -1,9 +1,15 @@
 <resources>
     <string name="app_name">Recipes</string>
-    <string name="drawer_open">Open navigation drawer</string>
-    <string name="drawer_close">Close navigation drawer</string>
+
+    <!--Recipe tabs-->
+    <string name="tab_recipe_category">Categories</string>
+    <string name="tab_recipe_grid">Grid</string>
+    <string name="tab_recipe_label">Labels</string>
+    <string name="tab_recipe_bookmark">Bookmarks</string>
 
     <!--Navigation-->
+    <string name="drawer_open">Open navigation drawer</string>
+    <string name="drawer_close">Close navigation drawer</string>
     <string name="navigation_recipes">Recipes</string>
     <string name="navigation_cart">Cart</string>
 
@@ -134,12 +140,6 @@
     </string>
     <string name="drawer_base_nav_recipe_all">All recipes</string>
     <string name="drawer_base_nav_recipe_favorite">Favorite recipes</string>
-
-    <!--Recipe tabs-->
-    <string name="tab_recipe_category">Categories</string>
-    <string name="tab_recipe_grid">Grid</string>
-    <string name="tab_recipe_label">Labels</string>
-    <string name="tab_recipe_bookmark">Bookmarks</string>
 
     <!--Startup entities. Json array-->
     <string name="startup_entity_recipe">

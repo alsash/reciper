@@ -5,10 +5,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.alsash.reciper.mvp.model.entity.Recipe;
-import com.alsash.reciper.mvp.presenter.interaction.RecipeListInteraction;
 import com.alsash.reciper.ui.adapter.holder.RecipeSingleCardHolder;
+import com.alsash.reciper.ui.adapter.interaction.RecipeListInteraction;
 
-import java.lang.ref.WeakReference;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -18,12 +17,13 @@ import static com.alsash.reciper.ui.contract.KeyContract.PAYLOAD_FLIP_FRONT_TO_B
 
 public class RecipeSingleCardListAdapter extends RecyclerView.Adapter<RecipeSingleCardHolder> {
 
-    private final WeakReference<RecipeListInteraction> interactionRef;
-    private final List<Recipe> recipeList;
+    private final RecipeListInteraction interaction;
+    private final List<? extends Recipe> recipeList;
     private final Set<Integer> backCardPositions;
 
-    public RecipeSingleCardListAdapter(RecipeListInteraction interaction, List<Recipe> recipeList) {
-        this.interactionRef = new WeakReference<>(interaction);
+    public RecipeSingleCardListAdapter(RecipeListInteraction interaction,
+                                       List<? extends Recipe> recipeList) {
+        this.interaction = interaction;
         this.recipeList = recipeList;
         this.backCardPositions = new HashSet<>();
     }
@@ -35,10 +35,8 @@ public class RecipeSingleCardListAdapter extends RecyclerView.Adapter<RecipeSing
 
     @Override
     public void onBindViewHolder(final RecipeSingleCardHolder holder, int position) {
-
         holder.bindRecipe(recipeList.get(position));
         holder.setBackVisible(backCardPositions.contains(position));
-
         holder.setListeners(
                 // Flip Listener
                 new View.OnClickListener() {
@@ -59,20 +57,18 @@ public class RecipeSingleCardListAdapter extends RecyclerView.Adapter<RecipeSing
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if (interactionRef.get() == null) return;
                         int adapterPosition = holder.getAdapterPosition();
                         Recipe recipe = recipeList.get(adapterPosition);
-                        interactionRef.get().onExpand(recipe, adapterPosition);
+                        interaction.onExpand(recipe, adapterPosition);
                     }
                 },
                 // Open Listener
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if (interactionRef.get() == null) return;
                         int adapterPosition = holder.getAdapterPosition();
                         Recipe recipe = recipeList.get(adapterPosition);
-                        interactionRef.get().onOpen(recipe, adapterPosition);
+                        interaction.onOpen(recipe, adapterPosition);
                     }
                 }
         );

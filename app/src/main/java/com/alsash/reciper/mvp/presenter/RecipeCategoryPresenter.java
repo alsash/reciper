@@ -1,15 +1,51 @@
 package com.alsash.reciper.mvp.presenter;
 
-public class RecipeCategoriesPresenter {
-/*
-    private final DaoSession session;
-    private final List<Category> categories = new ArrayList<>();
-    private final CompositeSubscription compositeSubscription = new CompositeSubscription();
+import android.content.Context;
 
-    public RecipeCategoriesPresenter(DaoSession session) {
+import com.alsash.reciper.api.storage.local.database.table.DaoSession;
+import com.alsash.reciper.mvp.model.entity.Recipe;
+import com.alsash.reciper.mvp.view.RecipeCategoryView;
+import com.alsash.reciper.ui.adapter.interaction.RecipeListInteraction;
+
+public class RecipeCategoryPresenter extends BasePresenter<RecipeCategoryView>
+        implements RecipeListInteraction {
+
+    private final Context context;
+    private final DaoSession session;
+//    private final List<Category> categories = new ArrayList<>();
+//    private final CompositeSubscription compositeSubscription = new CompositeSubscription();
+
+    public RecipeCategoryPresenter(Context context, DaoSession session) {
+        this.context = context;
         this.session = session;
     }
 
+    @Override
+    public void onExpand(Recipe recipe, int position) {
+
+    }
+
+    @Override
+    public void onOpen(Recipe recipe, int position) {
+
+    }
+
+    @Override
+    protected void init() {
+
+    }
+
+    @Override
+    protected void show() {
+
+    }
+
+    @Override
+    protected void clear() {
+
+    }
+
+    /*
     @Override
     public void init() {
         if (getView() == null) return;
@@ -24,7 +60,7 @@ public class RecipeCategoriesPresenter {
     }
 
     @Override
-    public void setView(@Nullable RecipeCategoriesView view) {
+    public void setView(@Nullable RecipeCategoryView view) {
         super.setView(view);
         if (view == null) { // DetachView
             compositeSubscription.unsubscribe();

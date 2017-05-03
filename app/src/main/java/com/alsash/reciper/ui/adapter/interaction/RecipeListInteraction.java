@@ -1,4 +1,4 @@
-package com.alsash.reciper.mvp.presenter.interaction;
+package com.alsash.reciper.ui.adapter.interaction;
 
 import com.alsash.reciper.mvp.model.entity.Recipe;
 

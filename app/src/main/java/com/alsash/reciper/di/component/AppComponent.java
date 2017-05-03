@@ -16,5 +16,5 @@ public interface AppComponent {
 
     StartComponent.Builder getStartComponentBuilder();
 
-    RecipeTabComponent.Builder getRecipeTabComponentBuilder();
+    RecipeListComponent.Builder getRecipeTabComponentBuilder();
 }

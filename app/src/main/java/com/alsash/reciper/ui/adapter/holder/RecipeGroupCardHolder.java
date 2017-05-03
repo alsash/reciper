@@ -8,8 +8,8 @@ import android.widget.TextView;
 
 import com.alsash.reciper.R;
 import com.alsash.reciper.mvp.model.entity.RecipeGroup;
-import com.alsash.reciper.mvp.presenter.interaction.RecipeListInteraction;
 import com.alsash.reciper.ui.adapter.RecipeSingleCardListAdapter;
+import com.alsash.reciper.ui.adapter.interaction.RecipeListInteraction;
 import com.alsash.reciper.ui.animator.FlipCardListAnimator;
 
 public class RecipeGroupCardHolder extends RecyclerView.ViewHolder {

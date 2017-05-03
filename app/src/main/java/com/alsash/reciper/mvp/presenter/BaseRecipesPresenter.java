@@ -1,10 +1,9 @@
 package com.alsash.reciper.mvp.presenter;
 
 import com.alsash.reciper.mvp.model.entity.Recipe;
-import com.alsash.reciper.mvp.presenter.interaction.RecipeListInteraction;
-import com.alsash.reciper.mvp.view.BaseRecipesView;
+import com.alsash.reciper.ui.adapter.interaction.RecipeListInteraction;
 
-public abstract class BaseRecipesPresenter<V extends BaseRecipesView> extends BasePresenter<V>
+public abstract class BaseRecipesPresenter<V extends BaseRecipeListView> extends BasePresenter<V>
         implements RecipeListInteraction {
 
     @Override
