@@ -25,7 +25,7 @@ import javax.inject.Inject;
 public class RecipeCategoryFragment extends BaseFragment implements RecipeCategoryView {
 
     @Inject
-    private RecipeCategoryPresenter presenter;
+    RecipeCategoryPresenter presenter;
 
     private SwipeRefreshLayout refreshIndicator;
     private RecyclerView list;
