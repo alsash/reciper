@@ -3,12 +3,12 @@ package com.alsash.reciper.mvp.presenter;
 import com.alsash.reciper.api.StorageApi;
 import com.alsash.reciper.mvp.view.StartView;
 
-import java.util.concurrent.Callable;
 import java.util.concurrent.TimeUnit;
 
-import rx.Observable;
+import rx.Completable;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action0;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 
@@ -21,13 +21,6 @@ public class StartPresenter extends BasePresenter<StartView> {
 
     private final StorageApi storageApi;
 
-    private Callable<Void> startInBackground = new Callable<Void>() {
-        @Override
-        public Void call() throws Exception {
-            storageApi.getDatabaseApi().createStartupEntriesIfNeed();
-            return null;
-        }
-    };
     private Subscription startSubscription;
 
     public StartPresenter(StorageApi storageApi) {
@@ -37,16 +30,26 @@ public class StartPresenter extends BasePresenter<StartView> {
     @Override
     protected void init() {
         if (getView() != null) getView().setFullscreenVisibility(); // No need to wait background
-        if (startSubscription == null && !isInitialized()) {        // Run startInBackground
-            startSubscription = Observable
-                    .fromCallable(startInBackground)
+        if (startSubscription == null && !isInitialized()) {        // Run in background
+            startSubscription = Completable
+                    .fromAction(new Action0() {
+                        @Override
+                        public void call() {
+                            storageApi.getDatabaseApi().createStartupEntriesIfNeed();
+                        }
+                    })
                     .subscribeOn(Schedulers.io())
                     .delay(START_DELAY_MS, TimeUnit.MILLISECONDS)
                     .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(new Action1<Void>() {
+                    .subscribe(new Action0() {
                         @Override
-                        public void call(Void aVoid) {
+                        public void call() {
                             setInitialized(true);                   // Call to show() in foreground
+                        }
+                    }, new Action1<Throwable>() {
+                        @Override
+                        public void call(Throwable throwable) {
+                            // Do nothing
                         }
                     });
         }

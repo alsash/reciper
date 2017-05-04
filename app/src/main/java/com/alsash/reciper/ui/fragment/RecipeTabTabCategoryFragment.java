@@ -13,8 +13,8 @@ import com.alsash.reciper.app.ReciperApp;
 import com.alsash.reciper.mvp.model.entity.Category;
 import com.alsash.reciper.mvp.model.entity.Recipe;
 import com.alsash.reciper.mvp.presenter.BasePresenter;
-import com.alsash.reciper.mvp.presenter.RecipeCategoryPresenter;
-import com.alsash.reciper.mvp.view.RecipeCategoryView;
+import com.alsash.reciper.mvp.presenter.RecipeTabCategoryPresenter;
+import com.alsash.reciper.mvp.view.RecipeTabCategoryView;
 import com.alsash.reciper.ui.adapter.RecipeGroupCardListAdapter;
 import com.alsash.reciper.ui.fragment.dialog.RecipeBottomDialog;
 
@@ -22,26 +22,26 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-public class RecipeCategoryFragment extends BaseFragment implements RecipeCategoryView {
+public class RecipeTabTabCategoryFragment extends BaseFragment implements RecipeTabCategoryView {
 
     @Inject
-    RecipeCategoryPresenter presenter;
+    RecipeTabCategoryPresenter presenter;
 
     private SwipeRefreshLayout refreshIndicator;
     private RecyclerView list;
     private RecipeGroupCardListAdapter adapter;
 
-    public static RecipeCategoryFragment newInstance() {
-        return new RecipeCategoryFragment();
+    public static RecipeTabTabCategoryFragment newInstance() {
+        return new RecipeTabTabCategoryFragment();
     }
 
     @Override
     protected BasePresenter setupPresenter() {
         ((ReciperApp) getActivity().getApplicationContext())
-                .getRecipeListComponent()
+                .getRecipeTabComponent()
                 .inject(this);
         presenter.setView(this);
-        return presenter; // Presenter will be embedded in activity lifecycle
+        return presenter; // Presenter will be embedded in fragment lifecycle
     }
 
     @Override

@@ -3,7 +3,7 @@ package com.alsash.reciper.mvp.presenter;
 import android.support.v4.app.Fragment;
 
 import com.alsash.reciper.R;
-import com.alsash.reciper.di.scope.RecipeListScope;
+import com.alsash.reciper.di.scope.RecipeTabScope;
 import com.alsash.reciper.mvp.model.tab.SwipeTab;
 import com.alsash.reciper.mvp.view.SwipeTabView;
 
@@ -11,18 +11,18 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-@RecipeListScope
+@RecipeTabScope
 public class RecipeTabPresenter extends BasePresenter<SwipeTabView> {
 
-    private static final int CATEGORIES_TAB_POSITION = 0;
-    private static final int GRID_TAB_POSITION = 1;
-    private static final int LABELS_TAB_POSITION = 2;
-    private static final int BOOKMARKS_TAB_POSITION = 3;
+    private static final int TAB_POSITION_CATEGORY = 0;
+    private static final int TAB_POSITION_GRID = 1;
+    private static final int TAB_POSITION_LABEL = 2;
+    private static final int TAB_POSITION_BOOKMARK = 3;
     private static final int[] TAB_POSITIONS = new int[]{
-            CATEGORIES_TAB_POSITION,
-            GRID_TAB_POSITION,
-            LABELS_TAB_POSITION,
-            BOOKMARKS_TAB_POSITION
+            TAB_POSITION_CATEGORY,
+            TAB_POSITION_GRID,
+            TAB_POSITION_LABEL,
+            TAB_POSITION_BOOKMARK
     };
     private static final List<SwipeTab> tabs = new ArrayList<>();
 
@@ -35,13 +35,13 @@ public class RecipeTabPresenter extends BasePresenter<SwipeTabView> {
 
     private static Fragment getRecipeTabFragment(int position) {
         switch (position) {
-            case CATEGORIES_TAB_POSITION:
+            case TAB_POSITION_CATEGORY:
                 return new Fragment();
-            case GRID_TAB_POSITION:
+            case TAB_POSITION_GRID:
                 return new Fragment();
-            case LABELS_TAB_POSITION:
+            case TAB_POSITION_LABEL:
                 return new Fragment();
-            case BOOKMARKS_TAB_POSITION:
+            case TAB_POSITION_BOOKMARK:
                 return new Fragment();
             default:
                 throw new IllegalArgumentException("Tab at " + position + "is unknown");
@@ -57,25 +57,25 @@ public class RecipeTabPresenter extends BasePresenter<SwipeTabView> {
         if (tabs.size() > 0) return tabs;
         for (int i : TAB_POSITIONS) {
             switch (i) {
-                case CATEGORIES_TAB_POSITION:
+                case TAB_POSITION_CATEGORY:
                     tabs.add(new RecipeTab(
                             R.string.tab_recipe_category,
                             R.drawable.tab_recipe_category,
                             false, i));
                     continue;
-                case GRID_TAB_POSITION:
+                case TAB_POSITION_GRID:
                     tabs.add(new RecipeTab(
                             R.string.tab_recipe_grid,
                             R.drawable.tab_recipe_grid,
                             true, i));
                     continue;
-                case LABELS_TAB_POSITION:
+                case TAB_POSITION_LABEL:
                     tabs.add(new RecipeTab(
                             R.string.tab_recipe_label,
                             R.drawable.tab_recipe_label,
                             false, i));
                     continue;
-                case BOOKMARKS_TAB_POSITION:
+                case TAB_POSITION_BOOKMARK:
                     tabs.add(new RecipeTab(
                             R.string.tab_recipe_bookmark,
                             R.drawable.tab_recipe_bookmark,

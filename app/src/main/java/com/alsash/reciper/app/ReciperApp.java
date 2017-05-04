@@ -5,7 +5,7 @@ import android.app.Application;
 import com.alsash.reciper.BuildConfig;
 import com.alsash.reciper.di.component.AppComponent;
 import com.alsash.reciper.di.component.DaggerAppComponent;
-import com.alsash.reciper.di.component.RecipeListComponent;
+import com.alsash.reciper.di.component.RecipeTabComponent;
 import com.alsash.reciper.di.component.StartComponent;
 import com.alsash.reciper.di.module.AppContextModule;
 import com.facebook.stetho.Stetho;
@@ -16,7 +16,7 @@ import com.facebook.stetho.Stetho;
 public class ReciperApp extends Application {
 
     private StartComponent startComponent;
-    private RecipeListComponent recipeListComponent;
+    private RecipeTabComponent recipeTabComponent;
 
     @Override
     public void onCreate() {
@@ -29,8 +29,8 @@ public class ReciperApp extends Application {
         startComponent = appComponent
                 .getStartComponentBuilder()
                 .build();
-        recipeListComponent = appComponent
-                .getRecipeListComponentBuilder()
+        recipeTabComponent = appComponent
+                .getRecipeTabComponentBuilder()
                 .build();
 
         // Facebook Stetho initialization
@@ -41,7 +41,7 @@ public class ReciperApp extends Application {
         return startComponent;
     }
 
-    public RecipeListComponent getRecipeListComponent() {
-        return recipeListComponent;
+    public RecipeTabComponent getRecipeTabComponent() {
+        return recipeTabComponent;
     }
 }

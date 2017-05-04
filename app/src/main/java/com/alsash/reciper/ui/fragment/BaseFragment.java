@@ -16,7 +16,7 @@ public abstract class BaseFragment extends Fragment {
     /**
      * Called in {@link #onAttach(Context)} before super.onAttach() and any other methods.
      *
-     * @return BasePresenter inheritor for embedding in the activity life cycle
+     * @return BasePresenter inheritor for embedding in the fragment life cycle
      */
     @Nullable
     protected abstract BasePresenter setupPresenter();
