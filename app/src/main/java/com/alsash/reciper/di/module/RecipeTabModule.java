@@ -1,7 +1,5 @@
 package com.alsash.reciper.di.module;
 
-import android.content.Context;
-
 import com.alsash.reciper.api.StorageApi;
 import com.alsash.reciper.di.scope.RecipeTabScope;
 import com.alsash.reciper.mvp.presenter.RecipeTabCategoryPresenter;
@@ -24,9 +22,7 @@ public abstract class RecipeTabModule {
 
     @Provides
     @RecipeTabScope
-    static RecipeTabCategoryPresenter provideRecipeCategoryPresenter(Context context,
-                                                                     StorageApi storageApi) {
-        return new RecipeTabCategoryPresenter(context, storageApi.getDatabaseApi().getSession());
+    static RecipeTabCategoryPresenter provideRecipeCategoryPresenter(StorageApi storageApi) {
+        return new RecipeTabCategoryPresenter(storageApi.getDatabaseApi().getSession());
     }
-
 }

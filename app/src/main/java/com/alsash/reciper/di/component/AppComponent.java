@@ -8,7 +8,7 @@ import javax.inject.Singleton;
 import dagger.Component;
 
 /**
- * DI Component that build bridge between Application and its dependencies
+ * DI Component that build bridge between Application and its components
  */
 @Singleton // Scope
 @Component(modules = {AppContextModule.class, AppStorageModule.class})
