@@ -12,52 +12,56 @@ import com.alsash.reciper.R;
 import com.alsash.reciper.app.ReciperApp;
 import com.alsash.reciper.mvp.model.entity.Category;
 import com.alsash.reciper.mvp.model.entity.Recipe;
-import com.alsash.reciper.mvp.presenter.BaseWeakPresenter;
-import com.alsash.reciper.mvp.presenter.RecipeTabCategoryWeakPresenter;
+import com.alsash.reciper.mvp.presenter.BasePresenter;
+import com.alsash.reciper.mvp.presenter.RecipeTabCategoryPresenter;
 import com.alsash.reciper.mvp.view.RecipeTabCategoryView;
 import com.alsash.reciper.ui.adapter.RecipeGroupCardListAdapter;
-import com.alsash.reciper.ui.fragment.dialog.RecipeBottomDialog;
+import com.alsash.reciper.ui.adapter.interaction.RecipeListInteraction;
 
 import java.util.List;
 
 import javax.inject.Inject;
 
-public class RecipeTabTabCategoryFragment extends BaseFragment implements RecipeTabCategoryView {
+public class RecipeTabCategoryFragment extends BaseFragment<RecipeTabCategoryView>
+        implements RecipeTabCategoryView {
 
     @Inject
-    RecipeTabCategoryWeakPresenter presenter;
+    RecipeTabCategoryPresenter presenter;
 
     private SwipeRefreshLayout refreshIndicator;
     private RecyclerView list;
     private RecipeGroupCardListAdapter adapter;
 
-    public static RecipeTabTabCategoryFragment newInstance() {
-        return new RecipeTabTabCategoryFragment();
+    public static RecipeTabCategoryFragment newInstance() {
+        return new RecipeTabCategoryFragment();
     }
 
     @Override
-    protected BaseWeakPresenter setupPresenter() {
+    protected BasePresenter<RecipeTabCategoryView> inject() {
         ((ReciperApp) getActivity().getApplicationContext())
                 .getRecipeTabComponent()
                 .inject(this);
-        presenter.setView(this);
         return presenter; // BasePresenter will be embedded in fragment lifecycle
     }
 
     @Override
     public void setCategories(List<Category> categories) {
-        adapter = new RecipeGroupCardListAdapter(presenter, categories);
+        adapter = new RecipeGroupCardListAdapter(categories, new RecipeListInteraction() {
+            @Override
+            public void onExpand(Recipe recipe) {
+                presenter.onRecipeExpand(getActivity().getSupportFragmentManager(), recipe);
+            }
+
+            @Override
+            public void onOpen(Recipe recipe) {
+                presenter.onRecipeOpen(getActivity().getApplicationContext(), recipe);
+            }
+        });
     }
 
     @Override
     public void showCategories() {
         adapter.notifyDataSetChanged();
-    }
-
-    @Override
-    public void showRecipeDetails(Recipe recipe) {
-        RecipeBottomDialog bottomDialog = RecipeBottomDialog.newInstance(recipe.getId());
-        bottomDialog.show(getActivity().getSupportFragmentManager(), bottomDialog.getTag());
     }
 
     @Override
@@ -76,20 +80,21 @@ public class RecipeTabTabCategoryFragment extends BaseFragment implements Recipe
     }
 
     private void bindViews(View layout) {
-        refreshIndicator = (SwipeRefreshLayout) layout.findViewById(R.id.refresh_indicator);
-        list = (RecyclerView) layout.findViewById(R.id.refresh_list);
+        refreshIndicator = (SwipeRefreshLayout) layout.findViewById(R.id.list_refresh_indicator);
+        list = (RecyclerView) layout.findViewById(R.id.list_refresh_rv);
     }
 
     private void setupList() {
-        LinearLayoutManager layoutManager = new LinearLayoutManager(list.getContext());
-        list.setLayoutManager(layoutManager);
+        list.setLayoutManager(new LinearLayoutManager(list.getContext()));
         list.setAdapter(adapter); // Created at setCategories()
         list.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                ((LinearLayoutManager) recyclerView.getLayoutManager()).findLastVisibleItemPosition();
-            });
-
+                int position = ((LinearLayoutManager) recyclerView.getLayoutManager())
+                        .findLastVisibleItemPosition();
+                presenter.onScroll(getThisView(), position);
+            }
+        });
     }
 
     private void setupRefresh() {

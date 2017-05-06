@@ -8,17 +8,18 @@ import com.alsash.reciper.R;
 import com.alsash.reciper.app.ReciperApp;
 import com.alsash.reciper.mvp.presenter.BasePresenter;
 import com.alsash.reciper.mvp.presenter.RecipeTabPresenter;
-import com.alsash.reciper.mvp.view.SwipeTabView;
+import com.alsash.reciper.mvp.view.RecipeTabView;
 
 import javax.inject.Inject;
 
-public class RecipeTabActivity extends BaseSwipeTabActivity<SwipeTabView> {
+public class RecipeTabActivity extends BaseSwipeTabActivity<RecipeTabView>
+        implements RecipeTabView {
 
     @Inject
     RecipeTabPresenter presenter; // Parent BaseSwipeTabActivity implements SwipeTabView
 
     @Override
-    protected BasePresenter<SwipeTabView> inject() {
+    protected BasePresenter<RecipeTabView> inject() {
         ((ReciperApp) getApplicationContext())
                 .getRecipeTabComponent()
                 .inject(this);
@@ -30,10 +31,14 @@ public class RecipeTabActivity extends BaseSwipeTabActivity<SwipeTabView> {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                presenter.onFabClick(getThisView());
             }
         });
+    }
+
+    @Override
+    public void showNotification(String notification) {
+        Snackbar.make(coordinator, notification, Snackbar.LENGTH_LONG).show();
     }
 
     @Nullable

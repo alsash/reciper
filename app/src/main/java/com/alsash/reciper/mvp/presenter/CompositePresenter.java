@@ -8,7 +8,7 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 
 /**
- * An abstract Composite presenter that implement Composite pattern
+ * An Composite presenter that implement Composite pattern
  */
 public abstract class CompositePresenter<V extends BaseView> implements BasePresenter<V> {
 

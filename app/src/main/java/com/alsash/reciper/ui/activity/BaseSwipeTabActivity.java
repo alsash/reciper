@@ -1,6 +1,7 @@
 package com.alsash.reciper.ui.activity;
 
 import android.os.Bundle;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
@@ -22,6 +23,7 @@ public abstract class BaseSwipeTabActivity<V extends SwipeTabView> extends BaseD
         implements SwipeTabView {
 
     // Layout views
+    protected CoordinatorLayout coordinator;
     protected Toolbar toolbar;
     protected SwipeViewPager pager;
     protected TabLayout tabs;
@@ -38,15 +40,13 @@ public abstract class BaseSwipeTabActivity<V extends SwipeTabView> extends BaseD
     }
 
     @Override
-    public void setTabs(List<SwipeTab> tabs) {
+    public void setTabs(List<? extends SwipeTab> tabs) {
         adapter = getPagerAdapter(tabs);
     }
 
     @Override
     public void showTab(int position) {
-        if (pager.getCurrentItem() != position) {
-            pager.setCurrentItem(position); // Title set by listener
-        }
+        if (pager.getCurrentItem() != position) pager.setCurrentItem(position);
     }
 
     @Override
@@ -57,7 +57,7 @@ public abstract class BaseSwipeTabActivity<V extends SwipeTabView> extends BaseD
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_tab_swipe_base);
+        setContentView(R.layout.activity_base_swipe_tab);
         bindViews();
         setupToolbar();
         setupPager();
@@ -66,10 +66,11 @@ public abstract class BaseSwipeTabActivity<V extends SwipeTabView> extends BaseD
     }
 
     private void bindViews() {
-        toolbar = (Toolbar) findViewById(R.id.activity_tab_toolbar);
-        pager = (SwipeViewPager) findViewById(R.id.activity_tab_svp);
-        tabs = (TabLayout) findViewById(R.id.activity_tab_tabs);
-        fab = (FloatingActionButton) findViewById(R.id.activity_tab_fab);
+        coordinator = (CoordinatorLayout) findViewById(R.id.base_swipe_tab_coordinator);
+        toolbar = (Toolbar) findViewById(R.id.base_swipe_tab_toolbar);
+        pager = (SwipeViewPager) findViewById(R.id.base_swipe_tab_pager);
+        tabs = (TabLayout) findViewById(R.id.base_swipe_tab_tabs);
+        fab = (FloatingActionButton) findViewById(R.id.base_swipe_tab_fab);
     }
 
     private void setupToolbar() {
@@ -104,7 +105,7 @@ public abstract class BaseSwipeTabActivity<V extends SwipeTabView> extends BaseD
         }
     }
 
-    protected SwipePagerAdapter getPagerAdapter(List<SwipeTab> tabs) {
+    protected SwipePagerAdapter getPagerAdapter(List<? extends SwipeTab> tabs) {
         return new SwipePagerAdapter(getSupportFragmentManager(), tabs);
     }
 

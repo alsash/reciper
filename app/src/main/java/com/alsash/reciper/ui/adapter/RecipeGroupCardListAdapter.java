@@ -14,10 +14,10 @@ public class RecipeGroupCardListAdapter extends RecyclerView.Adapter<RecipeGroup
     private final RecipeListInteraction interaction;
     private final List<? extends RecipeGroup> groups;
 
-    public RecipeGroupCardListAdapter(RecipeListInteraction recipeInteraction,
-                                      List<? extends RecipeGroup> groups) {
-        this.interaction = recipeInteraction;
+    public RecipeGroupCardListAdapter(List<? extends RecipeGroup> groups,
+                                      RecipeListInteraction recipeInteraction) {
         this.groups = groups;
+        this.interaction = recipeInteraction;
     }
 
     @Override

@@ -5,6 +5,7 @@ import android.util.Log;
 import com.alsash.reciper.api.StorageApi;
 import com.alsash.reciper.mvp.view.StartView;
 
+import java.lang.ref.WeakReference;
 import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Completable;
@@ -54,10 +55,10 @@ public class StartPresenter implements BasePresenter<StartView> {
     public void detach() {
         if (composite.isDisposed()) return;
         composite.dispose(); // set Observers to null, so they are not holds any shadow references
-        composite.clear();   // in v.2.1.0 - same as dispose(), but no set isDispose()
+        composite.clear();   // in v.2.1.0 - same as dispose(), but without set isDispose()
     }
 
-    private void fetch(final StartView view) {
+    private void fetch(StartView view) {
         composite.add(Completable
                 .fromAction(new Action() {
                     @Override
@@ -71,18 +72,25 @@ public class StartPresenter implements BasePresenter<StartView> {
                 .delay(START_DELAY_MS, TimeUnit.MILLISECONDS)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(new DisposableCompletableObserver() {
+                    private WeakReference<StartView> viewRef;
+
                     @Override
                     public void onComplete() {
                         // This method called on Main Thread, so access is thread-safe
                         fetched = true;
-                        // view is an shadow reference - copy in an anonymous class
-                        if (view.isVisible()) visible(view);
+                        if (viewRef.get() == null) return;
+                        if (viewRef.get().isViewVisible()) visible(viewRef.get());
                     }
 
                     @Override
                     public void onError(@NonNull Throwable e) {
                         Log.e(TAG, e.getMessage(), e);
                     }
-                }));
+
+                    public DisposableCompletableObserver setView(StartView v) {
+                        viewRef = new WeakReference<>(v);
+                        return this;
+                    }
+                }.setView(view)));
     }
 }

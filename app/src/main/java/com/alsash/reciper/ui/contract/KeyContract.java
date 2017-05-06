@@ -1,7 +1,7 @@
 package com.alsash.reciper.ui.contract;
 
 /**
- * Public keys for UI processing
+ * Public keys for UI elements
  */
 public class KeyContract {
 

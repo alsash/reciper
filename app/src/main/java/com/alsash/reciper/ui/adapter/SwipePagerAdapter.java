@@ -19,9 +19,9 @@ import java.util.List;
 public class SwipePagerAdapter extends FragmentPagerAdapter
         implements SwipeViewPager.OnPageSelectListener {
 
-    private final List<SwipeTab> tabs;
+    private final List<? extends SwipeTab> tabs;
 
-    public SwipePagerAdapter(FragmentManager fm, List<SwipeTab> tabs) {
+    public SwipePagerAdapter(FragmentManager fm, List<? extends SwipeTab> tabs) {
         super(fm);
         this.tabs = tabs;
     }
@@ -44,14 +44,12 @@ public class SwipePagerAdapter extends FragmentPagerAdapter
     @Nullable
     public String getPageTitle(int position, Resources res) {
         Integer resId = tabs.get(position).getTitle();
-        if (resId == null) return null;
-        return res.getString(resId);
+        return (resId == null) ? null : res.getString(resId);
     }
 
     @Nullable
     public Drawable getPageIcon(int position, Resources res, @Nullable Resources.Theme theme) {
         Integer resId = tabs.get(position).getIcon();
-        if (resId == null) return null;
-        return VectorDrawableCompat.create(res, resId, theme);
+        return (resId == null) ? null : VectorDrawableCompat.create(res, resId, theme);
     }
 }

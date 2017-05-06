@@ -3,10 +3,11 @@ package com.alsash.reciper.ui.adapter.interaction;
 import com.alsash.reciper.mvp.model.entity.Recipe;
 
 /**
- * An Recipe list view interaction listener
+ * A Recipe list view interaction listener
  */
 public interface RecipeListInteraction {
-    void onExpand(Recipe recipe, int position);
 
-    void onOpen(Recipe recipe, int position);
+    void onExpand(Recipe recipe);
+
+    void onOpen(Recipe recipe);
 }

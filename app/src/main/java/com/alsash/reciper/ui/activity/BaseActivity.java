@@ -23,14 +23,14 @@ public abstract class BaseActivity<V extends BaseView> extends AppCompatActivity
     protected abstract BasePresenter<V> inject();
 
     @Override
-    public synchronized boolean isVisible() {
+    public synchronized boolean isViewVisible() {
         return visible;
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         presenter = inject();
-        presenter.attach(getView());
+        presenter.attach(getThisView());
         super.onCreate(savedInstanceState);
     }
 
@@ -38,13 +38,13 @@ public abstract class BaseActivity<V extends BaseView> extends AppCompatActivity
     protected void onStart() {
         super.onStart();
         visible = true;
-        presenter.visible(getView());
+        presenter.visible(getThisView());
     }
 
     @Override
     protected void onStop() {
         visible = false;
-        presenter.invisible(getView());
+        presenter.invisible(getThisView());
         super.onStop();
     }
 
@@ -56,7 +56,7 @@ public abstract class BaseActivity<V extends BaseView> extends AppCompatActivity
     }
 
     @SuppressWarnings("unchecked")
-    protected V getView() {
+    protected V getThisView() {
         return (V) this;
     }
 }
