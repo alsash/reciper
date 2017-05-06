@@ -92,7 +92,7 @@ public class RecipeTabCategoryFragment extends BaseFragment<RecipeTabCategoryVie
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 int position = ((LinearLayoutManager) recyclerView.getLayoutManager())
                         .findLastVisibleItemPosition();
-                presenter.onScroll(getThisView(), position);
+                presenter.onScroll(position);
             }
         });
     }
