@@ -1,10 +1,9 @@
 package com.alsash.reciper.mvp.view;
 
 /**
- * Created by alsash on 4/30/17.
+ * A Start View with fullscreen splash
  */
-
-public interface StartView {
+public interface StartView extends BaseView {
     void setFullscreenVisibility();
 
     void startMainActivity();

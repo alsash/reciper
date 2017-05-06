@@ -1,51 +1,62 @@
 package com.alsash.reciper.ui.activity;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
 import com.alsash.reciper.mvp.presenter.BasePresenter;
+import com.alsash.reciper.mvp.view.BaseView;
 
 /**
- * An root Activity with single BasePresenter
+ * An injection-ready BaseActivity with single presenter
  */
-public abstract class BaseActivity extends AppCompatActivity {
+public abstract class BaseActivity<V extends BaseView> extends AppCompatActivity
+        implements BaseView {
 
-    private BasePresenter presenter;
+    private BasePresenter<V> presenter;
+    private boolean visible;
 
     /**
      * Called in {@link #onCreate(Bundle)} before super.onCreate() and any other methods.
      *
-     * @return BasePresenter inheritor for embedding in the activity life cycle
+     * @return presenter instance for embedding in the activity life cycle
      */
-    @Nullable
-    protected abstract BasePresenter setupPresenter();
+    protected abstract BasePresenter<V> inject();
+
+    @Override
+    public synchronized boolean isVisible() {
+        return visible;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        presenter = setupPresenter();
+        presenter = inject();
+        presenter.attach(getView());
         super.onCreate(savedInstanceState);
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
-        if (presenter != null) presenter.setInForeground(true);
+    protected void onStart() {
+        super.onStart();
+        visible = true;
+        presenter.visible(getView());
     }
 
     @Override
-    protected void onPause() {
-        super.onPause();
-        if (presenter != null) presenter.setInForeground(false);
+    protected void onStop() {
+        visible = false;
+        presenter.invisible(getView());
+        super.onStop();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        presenter.detach();
+        presenter = null;
     }
 
     @SuppressWarnings("unchecked")
-    @Override
-    protected void onDestroy() {
-        if (presenter != null) {
-            presenter.setView(null);
-            presenter = null;
-        }
-        super.onDestroy();
+    protected V getView() {
+        return (V) this;
     }
 }

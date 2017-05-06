@@ -107,9 +107,9 @@ public class RecipeDetailActivity extends AppCompatActivity {
     }
 
     private void setupFab() {
-        fab.setOnClickListener(new View.OnClickListener() {
+        fab.setOnClickListener(new IView.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(IView view) {
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
@@ -154,7 +154,7 @@ public class RecipeDetailActivity extends AppCompatActivity {
 
         @Nullable
         @Override
-        public View onCreateView(LayoutInflater inflater,
+        public IView onCreateView(LayoutInflater inflater,
                                  @Nullable ViewGroup container,
                                  @Nullable Bundle savedInstanceState) {
             return inflater.inflate(R.layout.fragment_scrolling_text, container, false);

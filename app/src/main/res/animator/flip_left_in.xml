@@ -8,7 +8,7 @@
         android:valueFrom="1.0"
         android:valueTo="0.0" />
 
-    <!-- and visibility to View.GONE. -->
+    <!-- and visibility to IView.GONE. -->
     <objectAnimator
         android:duration="0"
         android:propertyName="visibility"
@@ -32,7 +32,7 @@
         android:valueFrom="0.0"
         android:valueTo="1.0" />
 
-    <!-- And visibility to View.VISIBLE. -->
+    <!-- And visibility to IView.VISIBLE. -->
     <objectAnimator
         android:duration="0"
         android:propertyName="visibility"

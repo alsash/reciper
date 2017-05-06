@@ -1,7 +1,7 @@
 package com.alsash.reciper.mvp.model.tab;
 
 /**
- * A simple holder for representing tabs in Activity with SwipeViewPager
+ * A simple holder for representing tabs in BaseActivity with SwipeViewPager
  */
 public abstract class SwipeTab extends BaseTab {
 

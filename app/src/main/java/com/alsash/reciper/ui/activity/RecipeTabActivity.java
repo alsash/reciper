@@ -8,21 +8,21 @@ import com.alsash.reciper.R;
 import com.alsash.reciper.app.ReciperApp;
 import com.alsash.reciper.mvp.presenter.BasePresenter;
 import com.alsash.reciper.mvp.presenter.RecipeTabPresenter;
+import com.alsash.reciper.mvp.view.SwipeTabView;
 
 import javax.inject.Inject;
 
-public class RecipeTabActivity extends BaseSwipeTabActivity {
+public class RecipeTabActivity extends BaseSwipeTabActivity<SwipeTabView> {
 
     @Inject
-    RecipeTabPresenter presenter;
+    RecipeTabPresenter presenter; // Parent BaseSwipeTabActivity implements SwipeTabView
 
     @Override
-    protected BasePresenter setupPresenter() {
+    protected BasePresenter<SwipeTabView> inject() {
         ((ReciperApp) getApplicationContext())
                 .getRecipeTabComponent()
                 .inject(this);
-        presenter.setView(this); // Parent Activity implements SwipeTabView
-        return presenter; // Presenter will be embedded in the activity lifecycle
+        return presenter; // BasePresenter will be embedded in the activity lifecycle
     }
 
     @Override

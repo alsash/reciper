@@ -5,13 +5,13 @@ import com.alsash.reciper.mvp.model.tab.BaseTab;
 import java.util.List;
 
 /**
- * A simple BaseTabView
+ * A Tab View that draw tabs by model
  */
-public interface BaseTabView<T extends BaseTab> {
+public interface TabView<T extends BaseTab> extends BaseView {
 
     void setTabs(List<T> tabs);
 
     void showTab(int position);
 
-    int getShownTab();
+    int shownTab();
 }

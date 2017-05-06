@@ -44,9 +44,9 @@ public class RecipeListActivity extends AppCompatActivity {
     }
 
     private void setupFab() {
-        fab.setOnClickListener(new View.OnClickListener() {
+        fab.setOnClickListener(new IView.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(IView view) {
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
@@ -67,7 +67,7 @@ public class RecipeListActivity extends AppCompatActivity {
         int itemId = item.getItemId();
         switch (itemId) {
             case R.id.search:
-                // Call to Search Activity;
+                // Call to Search BaseActivity;
                 return true;
             case R.id.search_clear:
                 clearSearchPrevious();

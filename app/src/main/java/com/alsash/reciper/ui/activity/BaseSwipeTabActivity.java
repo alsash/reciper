@@ -16,9 +16,10 @@ import com.alsash.reciper.ui.view.SwipeViewPager;
 import java.util.List;
 
 /**
- * An abstract Activity that holds tab layout
+ * An abstract BaseActivity that holds tab layout
  */
-public abstract class BaseSwipeTabActivity extends BaseDrawerActivity implements SwipeTabView {
+public abstract class BaseSwipeTabActivity<V extends SwipeTabView> extends BaseDrawerActivity<V>
+        implements SwipeTabView {
 
     // Layout views
     protected Toolbar toolbar;
@@ -45,13 +46,11 @@ public abstract class BaseSwipeTabActivity extends BaseDrawerActivity implements
     public void showTab(int position) {
         if (pager.getCurrentItem() != position) {
             pager.setCurrentItem(position); // Title set by listener
-        } else if (drawTabTitleOnHeader) {
-            setToolbarTitle(position);      // Title set manually
         }
     }
 
     @Override
-    public int getShownTab() {
+    public int shownTab() {
         return pager.getCurrentItem();
     }
 
@@ -64,10 +63,6 @@ public abstract class BaseSwipeTabActivity extends BaseDrawerActivity implements
         setupPager();
         setupTabs();
         setupFab();
-    }
-
-    protected SwipePagerAdapter getPagerAdapter(List<SwipeTab> tabs) {
-        return new SwipePagerAdapter(getSupportFragmentManager(), tabs);
     }
 
     private void bindViews() {
@@ -92,6 +87,7 @@ public abstract class BaseSwipeTabActivity extends BaseDrawerActivity implements
                     setToolbarTitle(position);
                 }
             });
+            setToolbarTitle(pager.getCurrentItem());
         }
     }
 
@@ -108,8 +104,12 @@ public abstract class BaseSwipeTabActivity extends BaseDrawerActivity implements
         }
     }
 
-    protected void setToolbarTitle(int adapterPosition) {
-        String title = adapter.getPageTitle(adapterPosition, getResources());
+    protected SwipePagerAdapter getPagerAdapter(List<SwipeTab> tabs) {
+        return new SwipePagerAdapter(getSupportFragmentManager(), tabs);
+    }
+
+    protected void setToolbarTitle(int position) {
+        String title = adapter.getPageTitle(position, getResources());
         if (title == null) return;
         ActionBar actionBar = getSupportActionBar();
         if (actionBar == null) return;

@@ -1,70 +1,88 @@
 package com.alsash.reciper.mvp.presenter;
 
+import android.util.Log;
+
 import com.alsash.reciper.api.StorageApi;
 import com.alsash.reciper.mvp.view.StartView;
 
 import java.util.concurrent.TimeUnit;
 
-import rx.Completable;
-import rx.Subscription;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action0;
-import rx.functions.Action1;
-import rx.schedulers.Schedulers;
+import io.reactivex.Completable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.annotations.NonNull;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.functions.Action;
+import io.reactivex.observers.DisposableCompletableObserver;
+import io.reactivex.schedulers.Schedulers;
 
 /**
  * Start view presenter
  */
-public class StartPresenter extends BasePresenter<StartView> {
+public class StartPresenter implements BasePresenter<StartView> {
 
     private static final long START_DELAY_MS = 1000; // For debug
+    private static final String TAG = "StartPresenter";
 
+    private final CompositeDisposable composite = new CompositeDisposable();
     private final StorageApi storageApi;
-
-    private Subscription startSubscription;
+    private boolean fetched;
+    private boolean started;
 
     public StartPresenter(StorageApi storageApi) {
         this.storageApi = storageApi;
     }
 
     @Override
-    protected void init() {
-        if (getView() != null) getView().setFullscreenVisibility(); // No need to wait background
-        if (startSubscription == null && !isInitialized()) {        // Run in background
-            startSubscription = Completable
-                    .fromAction(new Action0() {
-                        @Override
-                        public void call() {
-                            storageApi.getDatabaseApi().createStartupEntriesIfNeed();
-                        }
-                    })
-                    .subscribeOn(Schedulers.io())
-                    .delay(START_DELAY_MS, TimeUnit.MILLISECONDS)
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(new Action0() {
-                        @Override
-                        public void call() {
-                            setInitialized(true);                   // Call to show() in foreground
-                        }
-                    }, new Action1<Throwable>() {
-                        @Override
-                        public void call(Throwable throwable) {
-                            // Do nothing
-                        }
-                    });
-        }
+    public void attach(StartView view) {
+        view.setFullscreenVisibility();
+        if (!fetched) fetch(view);
     }
 
     @Override
-    protected void show() {
-        if (getView() != null) getView().startMainActivity();
+    public void visible(StartView view) {
+        if (!fetched || started) return;
+        started = true;
+        view.startMainActivity();
     }
 
     @Override
-    protected void clear() {
-        if (startSubscription != null) {
-            startSubscription.unsubscribe();
-            startSubscription = null;
-        }
+    public void invisible(StartView view) {
+        started = false;
+    }
+
+    @Override
+    public void detach() {
+        if (composite.isDisposed()) return;
+        composite.dispose(); // set Observers to null, so they are not holds any shadow references
+        composite.clear();   // in v.2.1.0 - same as dispose(), but no set isDispose()
+    }
+
+    private void fetch(final StartView view) {
+        composite.add(Completable
+                .fromAction(new Action() {
+                    @Override
+                    public void run() throws Exception {
+                        storageApi
+                                .getDatabaseApi()
+                                .createStartupEntriesIfNeed();
+                    }
+                })
+                .subscribeOn(Schedulers.newThread())
+                .delay(START_DELAY_MS, TimeUnit.MILLISECONDS)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(new DisposableCompletableObserver() {
+                    @Override
+                    public void onComplete() {
+                        // This method called on Main Thread, so access is thread-safe
+                        fetched = true;
+                        // view is an shadow reference - copy in an anonymous class
+                        if (view.isVisible()) visible(view);
+                    }
+
+                    @Override
+                    public void onError(@NonNull Throwable e) {
+                        Log.e(TAG, e.getMessage(), e);
+                    }
+                }));
     }
 }

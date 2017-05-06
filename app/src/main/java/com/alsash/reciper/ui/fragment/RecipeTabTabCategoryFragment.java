@@ -12,8 +12,8 @@ import com.alsash.reciper.R;
 import com.alsash.reciper.app.ReciperApp;
 import com.alsash.reciper.mvp.model.entity.Category;
 import com.alsash.reciper.mvp.model.entity.Recipe;
-import com.alsash.reciper.mvp.presenter.BasePresenter;
-import com.alsash.reciper.mvp.presenter.RecipeTabCategoryPresenter;
+import com.alsash.reciper.mvp.presenter.BaseWeakPresenter;
+import com.alsash.reciper.mvp.presenter.RecipeTabCategoryWeakPresenter;
 import com.alsash.reciper.mvp.view.RecipeTabCategoryView;
 import com.alsash.reciper.ui.adapter.RecipeGroupCardListAdapter;
 import com.alsash.reciper.ui.fragment.dialog.RecipeBottomDialog;
@@ -25,7 +25,7 @@ import javax.inject.Inject;
 public class RecipeTabTabCategoryFragment extends BaseFragment implements RecipeTabCategoryView {
 
     @Inject
-    RecipeTabCategoryPresenter presenter;
+    RecipeTabCategoryWeakPresenter presenter;
 
     private SwipeRefreshLayout refreshIndicator;
     private RecyclerView list;
@@ -36,12 +36,12 @@ public class RecipeTabTabCategoryFragment extends BaseFragment implements Recipe
     }
 
     @Override
-    protected BasePresenter setupPresenter() {
+    protected BaseWeakPresenter setupPresenter() {
         ((ReciperApp) getActivity().getApplicationContext())
                 .getRecipeTabComponent()
                 .inject(this);
         presenter.setView(this);
-        return presenter; // Presenter will be embedded in fragment lifecycle
+        return presenter; // BasePresenter will be embedded in fragment lifecycle
     }
 
     @Override
@@ -81,8 +81,15 @@ public class RecipeTabTabCategoryFragment extends BaseFragment implements Recipe
     }
 
     private void setupList() {
-        list.setLayoutManager(new LinearLayoutManager(list.getContext()));
+        LinearLayoutManager layoutManager = new LinearLayoutManager(list.getContext());
+        list.setLayoutManager(layoutManager);
         list.setAdapter(adapter); // Created at setCategories()
+        list.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                ((LinearLayoutManager) recyclerView.getLayoutManager()).findLastVisibleItemPosition();
+            });
+
     }
 
     private void setupRefresh() {

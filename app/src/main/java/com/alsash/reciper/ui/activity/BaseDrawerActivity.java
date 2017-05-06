@@ -18,11 +18,12 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 
 import com.alsash.reciper.R;
+import com.alsash.reciper.mvp.view.BaseView;
 
 /**
  * An abstract activity that implements main Navigation Drawer
  */
-public abstract class BaseDrawerActivity extends BaseActivity
+public abstract class BaseDrawerActivity<V extends BaseView> extends BaseActivity<V>
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private static final int NAV_STARTER_POST_DELAY_MS = 150;

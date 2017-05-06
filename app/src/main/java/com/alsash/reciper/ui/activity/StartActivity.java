@@ -16,16 +16,15 @@ import static android.os.Build.VERSION.SDK_INT;
 import static android.os.Build.VERSION_CODES.LOLLIPOP;
 
 /**
- * An activity with startup splash set in styles.xml
+ * An activity with startup splash that set in styles
  */
-public class StartActivity extends BaseActivity implements StartView {
+public class StartActivity extends BaseActivity<StartView> implements StartView {
 
     private static final boolean FULLSCREEN_DELAYED = SDK_INT < LOLLIPOP;
-    private static final long FULLSCREEN_DELAY_MS = 1000;
-    @Inject
-    StartPresenter presenter;
-    private Handler fullscreenHandler = FULLSCREEN_DELAYED ? new Handler() : null;
-    private Runnable fullscreenSetter = new Runnable() {
+    private static final long FULLSCREEN_DELAY_MS = 100;
+
+    private final Handler fullscreenHandler = FULLSCREEN_DELAYED ? new Handler() : null;
+    private final Runnable fullscreenSetter = new Runnable() {
         @SuppressLint("InlinedApi")
         @Override
         public void run() {
@@ -39,6 +38,17 @@ public class StartActivity extends BaseActivity implements StartView {
         }
     };
 
+    @Inject
+    StartPresenter presenter;
+
+    @Override
+    protected BasePresenter<StartView> inject() {
+        ((ReciperApp) getApplicationContext())
+                .getStartComponent()
+                .inject(this);
+        return presenter;
+    }
+
     @Override
     public void setFullscreenVisibility() {
         if (!FULLSCREEN_DELAYED) fullscreenSetter.run(); // Else - implemented with Handler
@@ -50,31 +60,22 @@ public class StartActivity extends BaseActivity implements StartView {
     }
 
     @Override
-    protected BasePresenter setupPresenter() {
-        ((ReciperApp) getApplicationContext())
-                .getStartComponent()
-                .inject(this);
-        presenter.setView(this);
-        return presenter; // Presenter will be embedded in activity life cycle
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
+    protected void onStart() {
+        super.onStart();
         if (FULLSCREEN_DELAYED) {
             fullscreenHandler.postDelayed(fullscreenSetter, FULLSCREEN_DELAY_MS);
         }
     }
 
     @Override
-    protected void onPause() {
-        super.onPause();
+    protected void onStop() {
+        super.onStop();
         if (FULLSCREEN_DELAYED) fullscreenHandler.removeCallbacks(fullscreenSetter);
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (FULLSCREEN_DELAYED) fullscreenHandler = null;
+        presenter = null;
     }
 }

@@ -5,7 +5,7 @@ import android.support.annotation.StringRes;
 import android.support.v4.app.Fragment;
 
 /**
- * A simple holder for representing tabs in Activity
+ * A simple holder for representing tabs in BaseActivity
  */
 public abstract class BaseTab {
 

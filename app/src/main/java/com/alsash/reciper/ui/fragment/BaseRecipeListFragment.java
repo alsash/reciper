@@ -21,15 +21,15 @@ public abstract class BaseRecipeListFragment extends Fragment {
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
+    public IView onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        View layout = inflater.inflate(R.layout.view_list, container, false);
+        IView layout = inflater.inflate(R.layout.view_list, container, false);
         bindViews(layout);
         setupList(recyclerView);
         return layout;
     }
 
-    private void bindViews(View layout) {
+    private void bindViews(IView layout) {
         recyclerView = (RecyclerView) layout.findViewById(R.id.list);
     }*/
 }

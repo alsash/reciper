@@ -5,7 +5,7 @@ import com.alsash.reciper.mvp.model.entity.Recipe;
 
 import java.util.List;
 
-public interface RecipeTabCategoryView {
+public interface RecipeTabCategoryView extends BaseView {
 
     void setCategories(List<Category> categories);
 
