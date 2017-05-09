@@ -26,7 +26,7 @@ public class LabelTable {
 
     @Unique
     @Convert(converter = GuidConverter.class, columnType = String.class)
-    private UUID guid;
+    private UUID uuid;
 
     private String name;
 
@@ -48,17 +48,15 @@ public class LabelTable {
     @Generated(hash = 2040040024)
     private transient DaoSession daoSession;
 
-    /**
-     * Used for active entity operations.
-     */
+    /** Used for active entity operations. */
     @Generated(hash = 2034547187)
     private transient LabelTableDao myDao;
 
-    @Generated(hash = 669370399)
-    public LabelTable(Long id, UUID guid, String name, Date creationDate,
+    @Generated(hash = 1487967186)
+    public LabelTable(Long id, UUID uuid, String name, Date creationDate,
                       Date changeDate) {
         this.id = id;
-        this.guid = guid;
+        this.uuid = uuid;
         this.name = name;
         this.creationDate = creationDate;
         this.changeDate = changeDate;
@@ -76,12 +74,12 @@ public class LabelTable {
         this.id = id;
     }
 
-    public UUID getGuid() {
-        return this.guid;
+    public UUID getUuid() {
+        return this.uuid;
     }
 
-    public void setGuid(UUID guid) {
-        this.guid = guid;
+    public void setUuid(UUID uuid) {
+        this.uuid = uuid;
     }
 
     public String getName() {
@@ -130,9 +128,7 @@ public class LabelTable {
         return recipes;
     }
 
-    /**
-     * Resets a to-many relationship, making the next get call to query for a fresh result.
-     */
+    /** Resets a to-many relationship, making the next get call to query for a fresh result. */
     @Generated(hash = 2094593178)
     public synchronized void resetRecipes() {
         recipes = null;
@@ -174,9 +170,7 @@ public class LabelTable {
         myDao.update(this);
     }
 
-    /**
-     * called by internal mechanisms, do not call yourself.
-     */
+    /** called by internal mechanisms, do not call yourself. */
     @Generated(hash = 111975173)
     public void __setDaoSession(DaoSession daoSession) {
         this.daoSession = daoSession;

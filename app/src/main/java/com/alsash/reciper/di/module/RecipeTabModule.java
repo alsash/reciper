@@ -23,6 +23,6 @@ public abstract class RecipeTabModule {
     @Provides
     @RecipeTabScope
     static RecipeTabCategoryPresenter provideRecipeCategoryPresenter(StorageApi storageApi) {
-        return new RecipeTabCategoryPresenter(storageApi.getDatabaseApi().getSession());
+        return new RecipeTabCategoryPresenter(storageApi);
     }
 }

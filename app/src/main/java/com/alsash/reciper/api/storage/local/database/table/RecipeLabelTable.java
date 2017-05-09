@@ -22,29 +22,29 @@ public class RecipeLabelTable {
 
     @Unique
     @Convert(converter = GuidConverter.class, columnType = String.class)
-    private UUID guid;
+    private UUID uuid;
 
     @Index
     private Long recipeId;
 
     @Convert(converter = GuidConverter.class, columnType = String.class)
-    private UUID recipeGuid;
+    private UUID recipeUuid;
 
     @Index
     private Long labelId;
 
     @Convert(converter = GuidConverter.class, columnType = String.class)
-    private UUID labelGuid;
+    private UUID labelUuid;
 
-    @Generated(hash = 735888301)
-    public RecipeLabelTable(Long id, UUID guid, Long recipeId, UUID recipeGuid,
-                            Long labelId, UUID labelGuid) {
+    @Generated(hash = 1263246042)
+    public RecipeLabelTable(Long id, UUID uuid, Long recipeId, UUID recipeUuid,
+                            Long labelId, UUID labelUuid) {
         this.id = id;
-        this.guid = guid;
+        this.uuid = uuid;
         this.recipeId = recipeId;
-        this.recipeGuid = recipeGuid;
+        this.recipeUuid = recipeUuid;
         this.labelId = labelId;
-        this.labelGuid = labelGuid;
+        this.labelUuid = labelUuid;
     }
 
     @Generated(hash = 2053410462)
@@ -59,12 +59,12 @@ public class RecipeLabelTable {
         this.id = id;
     }
 
-    public UUID getGuid() {
-        return this.guid;
+    public UUID getUuid() {
+        return this.uuid;
     }
 
-    public void setGuid(UUID guid) {
-        this.guid = guid;
+    public void setUuid(UUID uuid) {
+        this.uuid = uuid;
     }
 
     public Long getRecipeId() {
@@ -75,12 +75,12 @@ public class RecipeLabelTable {
         this.recipeId = recipeId;
     }
 
-    public UUID getRecipeGuid() {
-        return this.recipeGuid;
+    public UUID getRecipeUuid() {
+        return this.recipeUuid;
     }
 
-    public void setRecipeGuid(UUID recipeGuid) {
-        this.recipeGuid = recipeGuid;
+    public void setRecipeUuid(UUID recipeUuid) {
+        this.recipeUuid = recipeUuid;
     }
 
     public Long getLabelId() {
@@ -91,11 +91,12 @@ public class RecipeLabelTable {
         this.labelId = labelId;
     }
 
-    public UUID getLabelGuid() {
-        return this.labelGuid;
+    public UUID getLabelUuid() {
+        return this.labelUuid;
     }
 
-    public void setLabelGuid(UUID labelGuid) {
-        this.labelGuid = labelGuid;
+    public void setLabelUuid(UUID labelUuid) {
+        this.labelUuid = labelUuid;
     }
+
 }

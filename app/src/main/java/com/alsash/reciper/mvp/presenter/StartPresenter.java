@@ -63,9 +63,7 @@ public class StartPresenter implements BasePresenter<StartView> {
                 .fromAction(new Action() {
                     @Override
                     public void run() throws Exception {
-                        storageApi
-                                .getDatabaseApi()
-                                .createStartupEntriesIfNeed();
+                        storageApi.createStartupEntriesIfNeed();
                     }
                 })
                 .subscribeOn(Schedulers.newThread())

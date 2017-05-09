@@ -1,7 +1,7 @@
 package com.alsash.reciper.mvp.view;
 
 /**
- * A BaseView interface, that can attach to BasePresenter.
+ * A BaseView interface, which can be attached to BasePresenter.
  */
 public interface BaseView {
 

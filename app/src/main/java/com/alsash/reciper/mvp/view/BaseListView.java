@@ -1,0 +1,15 @@
+package com.alsash.reciper.mvp.view;
+
+import java.util.List;
+
+/**
+ * A BaseListView interface, that represents Model of data, which can be attached to BaseListPresenter.
+ */
+public interface BaseListView<M> extends BaseView {
+
+    void setContainer(List<M> container);
+
+    void showLoading(boolean loading);
+
+    void showInsert(int insertPosition);
+}

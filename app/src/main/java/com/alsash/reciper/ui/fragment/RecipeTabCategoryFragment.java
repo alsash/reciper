@@ -45,8 +45,8 @@ public class RecipeTabCategoryFragment extends BaseFragment<RecipeTabCategoryVie
     }
 
     @Override
-    public void setCategories(List<Category> categories) {
-        adapter = new RecipeGroupCardListAdapter(categories, new RecipeListInteraction() {
+    public void setContainer(List<Category> container) {
+        adapter = new RecipeGroupCardListAdapter(container, new RecipeListInteraction() {
             @Override
             public void onExpand(Recipe recipe) {
                 presenter.onRecipeExpand(getActivity().getSupportFragmentManager(), recipe);
@@ -60,13 +60,15 @@ public class RecipeTabCategoryFragment extends BaseFragment<RecipeTabCategoryVie
     }
 
     @Override
-    public void showCategories() {
-        adapter.notifyDataSetChanged();
+    public void showLoading(boolean loading) {
+        if (refreshIndicator.isRefreshing() != loading) {
+            refreshIndicator.setRefreshing(loading);
+        }
     }
 
     @Override
-    public void showLoading(Boolean isLoading) {
-        refreshIndicator.setRefreshing(isLoading);
+    public void showInsert(int insertPosition) {
+        adapter.notifyItemInserted(insertPosition);
     }
 
     @Override

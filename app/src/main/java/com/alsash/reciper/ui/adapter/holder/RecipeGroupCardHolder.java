@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.alsash.reciper.R;
-import com.alsash.reciper.mvp.model.entity.RecipeGroup;
+import com.alsash.reciper.mvp.model.entity.BaseRecipeGroup;
 import com.alsash.reciper.ui.adapter.RecipeSingleCardListAdapter;
 import com.alsash.reciper.ui.adapter.interaction.RecipeListInteraction;
 import com.alsash.reciper.ui.animator.FlipCardListAnimator;
@@ -27,7 +27,7 @@ public class RecipeGroupCardHolder extends RecyclerView.ViewHolder {
         groupList = (RecyclerView) itemView.findViewById(R.id.group_list);
     }
 
-    public void bindGroup(RecipeGroup group, RecipeListInteraction interaction) {
+    public void bindGroup(BaseRecipeGroup group, RecipeListInteraction interaction) {
         groupTitle.setText(group.getName());
         LinearLayoutManager layoutManager = new LinearLayoutManager(groupList.getContext(),
                 LinearLayoutManager.HORIZONTAL, false);
