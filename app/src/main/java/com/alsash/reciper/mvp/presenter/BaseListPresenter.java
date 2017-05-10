@@ -197,4 +197,8 @@ public abstract class BaseListPresenter<V extends BaseListView<M>, M> implements
     protected void setFetched(boolean fetched) {
         this.fetched = fetched;
     }
+
+    public List<M> getModels() {
+        return models;
+    }
 }

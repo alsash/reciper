@@ -61,6 +61,7 @@ public class StorageApi {
                             null) // No related recipes for labels with recipes in categories
                     );
                 }
+                recipeDb.resetLabels();
                 category.getRecipes().add(entityFactory.getRecipe(
                         recipeDb.getId(),
                         recipeDb.getUuid(),
@@ -70,6 +71,7 @@ public class StorageApi {
                         category,
                         labels));
             }
+            categoryDb.resetRecipes();
         }
 
         checkCache();
