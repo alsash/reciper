@@ -1,6 +1,5 @@
 package com.alsash.reciper.mvp.presenter;
 
-import android.support.annotation.Nullable;
 import android.support.annotation.UiThread;
 import android.support.annotation.WorkerThread;
 import android.util.Log;
@@ -73,60 +72,18 @@ public abstract class BaseListPresenter<V extends BaseListView<M>, M> implements
         scrollSubject.onNext(scrollPosition);
     }
 
-    @UiThread
-    protected void addNext(List<M> models, @Nullable V view) {
-        int insertPosition = this.models.size();
-        this.models.addAll(models);
-        if (view == null) return;
-        if (view.isViewVisible()) view.showInsert(insertPosition);
-    }
-
-    @UiThread
-    protected boolean doLoading(int scrollPosition, @Nullable V view) {
-        return models.size() < scrollPosition * 2;
-    }
-
-    @UiThread
-    protected boolean isLoading() {
-        return loading;
-    }
-
-    @UiThread
-    protected void setLoading(boolean loading, @Nullable V view) {
-        this.loading = loading;
-        if (view == null) return;
-        if (view.isViewVisible()) view.showLoading(loading);
-    }
-
-    @UiThread
-    protected boolean isFetched() {
-        return fetched;
-    }
-
-    @UiThread
-    protected void setFetched(boolean fetched, @Nullable V view) {
-        this.fetched = fetched;
-    }
-
-    private void fetch(V view) {
+    protected void fetch(V view) {
         composite.add(scrollSubject
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .distinctUntilChanged()
                 .map(new Function<Integer, Boolean>() {
-                            private WeakReference<V> viewRef;
-
-                            public Function<Integer, Boolean> setView(V view) {
-                                viewRef = new WeakReference<>(view);
-                                return this;
-                            }
-
-                            @Override
-                            public Boolean apply(@NonNull Integer scrollPosition) throws Exception {
-                                return (!isFetched())
-                                        && (!isLoading())
-                                        && doLoading(scrollPosition, viewRef.get());
-                            }
-                        }.setView(view)
+                         @Override
+                         public Boolean apply(@NonNull Integer scrollPosition) throws Exception {
+                             return (!isFetched())
+                                     && (!isLoading())
+                                     && doLoading(scrollPosition);
+                         }
+                     }
                 )
                 .distinctUntilChanged()
                 .skipWhile(new Predicate<Boolean>() {
@@ -145,7 +102,10 @@ public abstract class BaseListPresenter<V extends BaseListView<M>, M> implements
 
                             @Override
                             public void accept(@NonNull Boolean needLoading) throws Exception {
-                                setLoading(true, viewRef.get()); // needLoading is always true
+                                setLoading(true); // needLoading is always true
+                                if (viewRef.get() != null && viewRef.get().isViewVisible()) {
+                                    viewRef.get().showLoading(true);
+                                }
                             }
                         }.setView(view)
                 )
@@ -178,8 +138,11 @@ public abstract class BaseListPresenter<V extends BaseListView<M>, M> implements
 
                             @Override
                             public void onNext(List<M> nextModels) {
-                                setLoading(false, viewRef.get());
-                                addNext(nextModels, viewRef.get());
+                                setLoading(false);
+                                int insertPosition = addNext(nextModels);
+                                if (viewRef.get() != null && viewRef.get().isViewVisible()) {
+                                    viewRef.get().showInsert(insertPosition);
+                                }
                             }
 
                             @Override
@@ -189,7 +152,7 @@ public abstract class BaseListPresenter<V extends BaseListView<M>, M> implements
 
                             @Override
                             public void onComplete() {
-                                setFetched(true, viewRef.get());
+                                setFetched(true);
                                 dispose();
                             }
                         }.setView(view)
@@ -199,5 +162,37 @@ public abstract class BaseListPresenter<V extends BaseListView<M>, M> implements
         if ((!isFetched()) && (!isLoading()) && models.size() == initialSize) {
             scrollSubject.onNext(initialSize);
         }
+    }
+
+    /**
+     * Add next data to container
+     *
+     * @param models next data
+     * @return insert position
+     */
+    protected int addNext(List<M> models) {
+        int insertPosition = this.models.size();
+        this.models.addAll(models);
+        return insertPosition;
+    }
+
+    protected boolean doLoading(int scrollPosition) {
+        return models.size() < scrollPosition * 2;
+    }
+
+    protected boolean isLoading() {
+        return loading;
+    }
+
+    protected void setLoading(boolean loading) {
+        this.loading = loading;
+    }
+
+    protected boolean isFetched() {
+        return fetched;
+    }
+
+    protected void setFetched(boolean fetched) {
+        this.fetched = fetched;
     }
 }

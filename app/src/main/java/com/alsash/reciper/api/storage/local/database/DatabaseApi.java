@@ -2,21 +2,24 @@ package com.alsash.reciper.api.storage.local.database;
 
 import android.content.Context;
 import android.content.res.Resources;
-import android.util.Log;
+import android.support.annotation.WorkerThread;
 
 import com.alsash.reciper.R;
 import com.alsash.reciper.api.storage.local.database.table.CategoryTable;
+import com.alsash.reciper.api.storage.local.database.table.CategoryTableDao;
 import com.alsash.reciper.api.storage.local.database.table.DaoMaster;
 import com.alsash.reciper.api.storage.local.database.table.DaoSession;
 import com.alsash.reciper.api.storage.local.database.table.LabelTable;
 import com.alsash.reciper.api.storage.local.database.table.RecipeLabelTable;
 import com.alsash.reciper.api.storage.local.database.table.RecipeTable;
+import com.alsash.reciper.api.storage.local.database.table.RecipeTableDao;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import org.greenrobot.greendao.database.Database;
 
 import java.lang.reflect.Type;
+import java.util.Collections;
 import java.util.List;
 
 import javax.inject.Singleton;
@@ -28,36 +31,72 @@ import javax.inject.Singleton;
 public class DatabaseApi {
 
     private static final String DATABASE_NAME = "reciper_db";
-    private static Boolean firstCreated;
-    private final Database database;
+    static Boolean firstCreated; // Set from Helper
     private final DaoSession daoSession;
     private final Resources resources;
 
-    public DatabaseApi(Context appContext) {
-        database = new DbOpenHelper(appContext, DATABASE_NAME).getWritableDb();
+    public DatabaseApi(Context context) {
+        Database database = new DatabaseOpenHelper(context, DATABASE_NAME).getWritableDb();
         daoSession = new DaoMaster(database).newSession();
-        resources = appContext.getResources();
+        resources = context.getResources();
     }
 
-    public synchronized DaoSession getSession() {
-        return daoSession;
+    public void clearCache() {
+        daoSession.clear();
+    }
+
+    @WorkerThread
+    public List<CategoryTable> getCategories(int offset, int limit, int relationsLimit) {
+        // Loading Categories with limit and offset.
+        List<CategoryTable> categoriesTable = daoSession
+                .getCategoryTableDao()
+                .queryBuilder()
+                .limit(limit)
+                .offset(offset)
+                .orderDesc(CategoryTableDao.Properties.ChangeDate)
+                .orderDesc(CategoryTableDao.Properties.CreationDate)
+                .build()
+                .list();
+        // Loading Recipes manually because their relation may be too long.
+        for (CategoryTable categoryTable : categoriesTable) {
+            if (relationsLimit == 0) {
+                categoryTable.setRecipes(Collections.<RecipeTable>emptyList());
+                continue;
+            }
+            List<RecipeTable> relatedRecipesTable = daoSession
+                    .getRecipeTableDao()
+                    .queryBuilder()
+                    .limit(relationsLimit)
+                    .where(RecipeTableDao.Properties.CategoryId.eq(categoryTable.getId()))
+                    .orderDesc(RecipeTableDao.Properties.ChangeDate)
+                    .orderDesc(RecipeTableDao.Properties.CreationDate)
+                    .build()
+                    .list();
+            // Loading labels automatically because their count may be strict.
+            for (RecipeTable recipeTable : relatedRecipesTable) {
+                recipeTable.getLabels();
+            }
+            categoryTable.setRecipes(relatedRecipesTable);
+        }
+        return categoriesTable;
     }
 
     public synchronized void createStartupEntriesIfNeed() {
-        // Trying to set firstCreated in DbOpenHelper.onCreate(db)
-        if (firstCreated == null) getSession().getRecipeTableDao().load(0L);
-        // Check if DbOpenHelper.onCreate(db) has been called
+        // Trying to set firstCreated in DatabaseOpenHelper.onCreate(db)
+        if (firstCreated == null) daoSession.getRecipeTableDao().load(0L);
+        // Check if DatabaseOpenHelper.onCreate(db) has been called
         if (firstCreated != null && firstCreated) createStartupEntities();
         // Set firstCreated marker for future calls
         firstCreated = false;
     }
 
     /**
-     * Persist entities to database.
+     * Persist entities to the database.
      * Entities will insert with nested transactions.
-     * Consider call to this method in background.
+     * Call to this method must be in the background.
      */
-    void createStartupEntities() {
+    @WorkerThread
+    private void createStartupEntities() {
         // Fetch Json arrays
         String recipesJson = resources.getString(R.string.startup_entity_recipe);
         String categoriesJson = resources.getString(R.string.startup_entity_category);
@@ -83,37 +122,15 @@ public class DatabaseApi {
                 recipeLabelJoinType);
 
         // Insert entities with nested transactions (outer transaction will provide final commit)
-        final DaoSession session = getSession();
-        session.runInTx(new Runnable() {
+        daoSession.runInTx(new Runnable() {
             @Override
             public void run() {
-                session.getRecipeTableDao().insertOrReplaceInTx(recipes, false);
-                session.getCategoryTableDao().insertOrReplaceInTx(categories, false);
-                session.getLabelTableDao().insertOrReplaceInTx(labels, false);
-                session.getRecipeLabelTableDao().insertOrReplaceInTx(recipeLabelTables, false);
+                daoSession.getRecipeTableDao().insertOrReplaceInTx(recipes, false);
+                daoSession.getCategoryTableDao().insertOrReplaceInTx(categories, false);
+                daoSession.getLabelTableDao().insertOrReplaceInTx(labels, false);
+                daoSession.getRecipeLabelTableDao().insertOrReplaceInTx(recipeLabelTables, false);
             }
         });
-        session.clear();
-    }
-
-    private static class DbOpenHelper extends DaoMaster.OpenHelper {
-
-        public DbOpenHelper(Context context, String name) {
-            super(context, name);
-        }
-
-        @Override
-        public void onCreate(Database db) {
-            super.onCreate(db);
-            DatabaseApi.firstCreated = true;
-        }
-
-        @Override
-        public void onUpgrade(Database db, int oldVersion, int newVersion) {
-            Log.i("DatabaseApi", "Upgrading schema from version " + oldVersion +
-                    " to " + newVersion + " by dropping all tables");
-            DaoMaster.dropAllTables(db, true);
-            onCreate(db);
-        }
+        daoSession.clear();
     }
 }

@@ -12,8 +12,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import static com.alsash.reciper.ui.contract.KeyContract.PAYLOAD_FLIP_BACK_TO_FRONT;
-import static com.alsash.reciper.ui.contract.KeyContract.PAYLOAD_FLIP_FRONT_TO_BACK;
+import static com.alsash.reciper.app.AppContract.PAYLOAD_FLIP_BACK_TO_FRONT;
+import static com.alsash.reciper.app.AppContract.PAYLOAD_FLIP_FRONT_TO_BACK;
 
 public class RecipeSingleCardListAdapter extends RecyclerView.Adapter<RecipeSingleCardHolder> {
 

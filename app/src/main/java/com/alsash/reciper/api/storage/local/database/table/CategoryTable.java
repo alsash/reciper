@@ -42,7 +42,9 @@ public class CategoryTable {
     @Generated(hash = 2040040024)
     private transient DaoSession daoSession;
 
-    /** Used for active entity operations. */
+    /**
+     * Used for active entity operations.
+     */
     @Generated(hash = 940999369)
     private transient CategoryTableDao myDao;
 
@@ -123,7 +125,13 @@ public class CategoryTable {
         return recipes;
     }
 
-    /** Resets a to-many relationship, making the next get call to query for a fresh result. */
+    public void setRecipes(List<RecipeTable> recipes) {
+        this.recipes = recipes;
+    }
+
+    /**
+     * Resets a to-many relationship, making the next get call to query for a fresh result.
+     */
     @Generated(hash = 2094593178)
     public synchronized void resetRecipes() {
         recipes = null;

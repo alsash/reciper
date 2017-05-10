@@ -12,6 +12,9 @@ import java.util.List;
  */
 public class RecipeTabCategoryPresenter extends BaseRecipeListPresenter<RecipeTabCategoryView, Category> {
 
+    private static final int PAGINATION_LIMIT = 10;
+    private static final int RELATIONS_LIMIT = 5;
+
     private final StorageApi storage;
     private final List<Category> categories = new ArrayList<>();
 
@@ -32,6 +35,6 @@ public class RecipeTabCategoryPresenter extends BaseRecipeListPresenter<RecipeTa
 
     @Override
     protected List<Category> loadNext() {
-        return storage.getCategories(10, categories.size(), 15);
+        return storage.getCategories(categories.size(), PAGINATION_LIMIT, RELATIONS_LIMIT);
     }
 }

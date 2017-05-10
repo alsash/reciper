@@ -13,8 +13,8 @@ import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import com.alsash.reciper.R;
+import com.alsash.reciper.app.AppContract;
 import com.alsash.reciper.mvp.model.entity.Recipe;
-import com.alsash.reciper.ui.contract.KeyContract;
 import com.alsash.reciper.ui.view.ArcProgressStackView;
 
 import java.util.ArrayList;
@@ -41,7 +41,7 @@ public class RecipeDetailMainFragment extends Fragment {
 
     public static RecipeDetailMainFragment newInstance(long recipeId) {
         Bundle args = new Bundle();
-        args.putLong(KeyContract.KEY_RECIPE_ID, recipeId);
+        args.putLong(AppContract.KEY_RECIPE_ID, recipeId);
         RecipeDetailMainFragment fragment = new RecipeDetailMainFragment();
         fragment.setArguments(args);
         return fragment;
@@ -55,7 +55,7 @@ public class RecipeDetailMainFragment extends Fragment {
     }
 
     private void bindModel() {
-        long id = getArguments().getLong(KeyContract.KEY_RECIPE_ID, -1);
+        long id = getArguments().getLong(AppContract.KEY_RECIPE_ID, -1);
         // recipe = RecipeManager.getInstance().search(id);
         assert recipe != null;
     }
