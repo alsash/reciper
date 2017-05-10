@@ -148,10 +148,12 @@ public abstract class BaseListPresenter<V extends BaseListView<M>, M> implements
                             @Override
                             public void onError(Throwable t) {
                                 Log.d(TAG, t.getMessage(), t);
+                                onComplete();
                             }
 
                             @Override
                             public void onComplete() {
+                                setLoading(false);
                                 setFetched(true);
                                 dispose();
                             }

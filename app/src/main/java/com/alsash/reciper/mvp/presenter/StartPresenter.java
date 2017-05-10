@@ -83,6 +83,7 @@ public class StartPresenter implements BasePresenter<StartView> {
                     @Override
                     public void onError(@NonNull Throwable e) {
                         Log.e(TAG, e.getMessage(), e);
+                        onComplete();
                     }
 
                     public DisposableCompletableObserver setView(StartView v) {
