@@ -50,10 +50,19 @@ public abstract class BaseListPresenter<V extends BaseListView<M>, M> implements
     @WorkerThread
     protected abstract List<M> loadNext();
 
+    /**
+     * Return data obtained in {@link #getStart()}
+     *
+     * @return data container
+     */
+    public List<M> getModels() {
+        return models;
+    }
+
     @Override
     public void attach(V view) {
         view.setContainer(models);
-        if (!isFetched()) fetch(view);
+        if (!isFetched()) fetch(new WeakReference<>(view));
     }
 
     @Override
@@ -72,7 +81,7 @@ public abstract class BaseListPresenter<V extends BaseListView<M>, M> implements
         scrollSubject.onNext(scrollPosition);
     }
 
-    protected void fetch(V view) {
+    protected void fetch(final WeakReference<V> viewRef) {
         composite.add(scrollSubject
                 .distinctUntilChanged()
                 .map(new Function<Integer, Boolean>() {
@@ -92,13 +101,6 @@ public abstract class BaseListPresenter<V extends BaseListView<M>, M> implements
                     }
                 })
                 .doOnNext(new Consumer<Boolean>() {
-                            private WeakReference<V> viewRef;
-
-                            public Consumer<Boolean> setView(V view) {
-                                viewRef = new WeakReference<>(view);
-                                return this;
-                            }
-
                             @Override
                             public void accept(@NonNull Boolean needLoading) throws Exception {
                                 setLoading(true); // needLoading is always true
@@ -106,7 +108,7 @@ public abstract class BaseListPresenter<V extends BaseListView<M>, M> implements
                                     viewRef.get().showLoading(true);
                                 }
                             }
-                        }.setView(view)
+                          }
                 )
                 .toFlowable(BackpressureStrategy.DROP)
                 .subscribeOn(AndroidSchedulers.mainThread())
@@ -129,13 +131,6 @@ public abstract class BaseListPresenter<V extends BaseListView<M>, M> implements
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(new DisposableSubscriber<List<M>>() {
-                            private WeakReference<V> viewRef;
-
-                            public DisposableSubscriber<List<M>> setView(V view) {
-                                viewRef = new WeakReference<>(view);
-                                return this;
-                            }
-
                             @Override
                             public void onNext(List<M> nextModels) {
                                 setLoading(false);
@@ -157,7 +152,7 @@ public abstract class BaseListPresenter<V extends BaseListView<M>, M> implements
                                 setFetched(true);
                                 dispose();
                             }
-                        }.setView(view)
+                               }
                 ));
 
         // Start loading without scroll
@@ -196,9 +191,5 @@ public abstract class BaseListPresenter<V extends BaseListView<M>, M> implements
 
     protected void setFetched(boolean fetched) {
         this.fetched = fetched;
-    }
-
-    public List<M> getModels() {
-        return models;
     }
 }
