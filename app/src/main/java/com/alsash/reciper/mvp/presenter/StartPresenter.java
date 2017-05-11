@@ -44,15 +44,16 @@ public class StartPresenter implements BasePresenter<StartView> {
 
     @Override
     public void visible(StartView view) {
-        if (!fetched || started) return;
-        started = true;
-        navigator.toMainView();
+        if (!isFetched() || isStarted()) return;
+        setStarted(true);
         view.finishView();
+        detach();
+        navigator.toMainView();
     }
 
     @Override
     public void invisible(StartView view) {
-        started = false;
+        setStarted(false);
     }
 
     @Override
@@ -76,7 +77,7 @@ public class StartPresenter implements BasePresenter<StartView> {
                     @Override
                     public void onComplete() {
                         // This method called on Main Thread, so access is thread-safe
-                        fetched = true;
+                        setFetched(true);
                         if (viewRef.get() == null) return;
                         if (viewRef.get().isViewVisible()) visible(viewRef.get());
                     }
@@ -86,5 +87,21 @@ public class StartPresenter implements BasePresenter<StartView> {
                         Log.e(TAG, e.getMessage(), e);
                     }
                 }));
+    }
+
+    protected boolean isFetched() {
+        return fetched;
+    }
+
+    protected void setFetched(boolean fetched) {
+        this.fetched = fetched;
+    }
+
+    protected boolean isStarted() {
+        return started;
+    }
+
+    protected void setStarted(boolean started) {
+        this.started = started;
     }
 }

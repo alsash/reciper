@@ -50,15 +50,6 @@ public abstract class BaseListPresenter<V extends BaseListView<M>, M> implements
     @WorkerThread
     protected abstract List<M> loadNext();
 
-    /**
-     * Return data obtained in {@link #getStart()}
-     *
-     * @return data container
-     */
-    public List<M> getModels() {
-        return models;
-    }
-
     @Override
     public void attach(V view) {
         view.setContainer(models);
@@ -83,6 +74,7 @@ public abstract class BaseListPresenter<V extends BaseListView<M>, M> implements
 
     protected void fetch(final WeakReference<V> viewRef) {
         composite.add(scrollSubject
+                .subscribeOn(AndroidSchedulers.mainThread()) // Position in the chain doesn't matter
                 .distinctUntilChanged()
                 .map(new Function<Integer, Boolean>() {
                          @Override
@@ -101,17 +93,17 @@ public abstract class BaseListPresenter<V extends BaseListView<M>, M> implements
                     }
                 })
                 .doOnNext(new Consumer<Boolean>() {
-                            @Override
-                            public void accept(@NonNull Boolean needLoading) throws Exception {
-                                setLoading(true); // needLoading is always true
-                                if (viewRef.get() != null && viewRef.get().isViewVisible()) {
-                                    viewRef.get().showLoading(true);
-                                }
-                            }
+                    @Override
+                    public void accept(@NonNull Boolean needLoading) throws Exception {
+                        setLoading(true); // needLoading is always true
+                        if (viewRef.get() != null && viewRef.get().isViewVisible()) {
+                            viewRef.get().showLoading(true);
+                        }
+                    }
                           }
                 )
+                .observeOn(Schedulers.io()) // Next operations will be done on background thread
                 .toFlowable(BackpressureStrategy.DROP)
-                .subscribeOn(AndroidSchedulers.mainThread())
                 .concatMap(new Function<Boolean, Publisher<List<M>>>() {
                     @Override
                     public Publisher<List<M>> apply(@NonNull Boolean aBoolean) throws Exception {
@@ -128,34 +120,30 @@ public abstract class BaseListPresenter<V extends BaseListView<M>, M> implements
                         };
                     }
                 })
-                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(new DisposableSubscriber<List<M>>() {
-                            @Override
-                            public void onNext(List<M> nextModels) {
-                                setLoading(false);
-                                int insertPosition = addNext(nextModels);
-                                if (viewRef.get() != null && viewRef.get().isViewVisible()) {
-                                    viewRef.get().showInsert(insertPosition);
-                                }
-                            }
+                    @Override
+                    public void onNext(List<M> nextModels) {
+                        setLoading(false);
+                        int insertPosition = addNext(nextModels);
+                        if (viewRef.get() != null && viewRef.get().isViewVisible()) {
+                            viewRef.get().showInsert(insertPosition);
+                        }
+                    }
 
-                            @Override
-                            public void onError(Throwable t) {
-                                Log.d(TAG, t.getMessage(), t);
-                                onComplete();
-                            }
+                    @Override
+                    public void onError(Throwable t) {
+                        Log.d(TAG, t.getMessage(), t);
+                    }
 
-                            @Override
-                            public void onComplete() {
-                                setLoading(false);
-                                setFetched(true);
-                                dispose();
-                            }
+                    @Override
+                    public void onComplete() {
+                        setLoading(false);
+                        setFetched(true);
+                    }
                                }
                 ));
-
-        // Start loading without scroll
+        // Start first loading
         if ((!isFetched()) && (!isLoading()) && models.size() == initialSize) {
             scrollSubject.onNext(initialSize);
         }
@@ -171,6 +159,15 @@ public abstract class BaseListPresenter<V extends BaseListView<M>, M> implements
         int insertPosition = this.models.size();
         this.models.addAll(models);
         return insertPosition;
+    }
+
+    /**
+     * Return data obtained in {@link #getStart()}
+     *
+     * @return data container
+     */
+    protected List<M> getModels() {
+        return models;
     }
 
     protected boolean doLoading(int scrollPosition) {
