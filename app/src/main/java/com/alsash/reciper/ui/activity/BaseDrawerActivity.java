@@ -163,7 +163,7 @@ public abstract class BaseDrawerActivity<V extends BaseView> extends BaseActivit
             public void run() {
                 startActivity(starter);
                 finish();
-                overridePendingTransition(0, 0); // No animation on finish
+                overridePendingTransition(0, 0); // No animation on finishView
                 navStarter = null;
             }
 

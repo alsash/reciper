@@ -74,7 +74,6 @@ public abstract class BaseListPresenter<V extends BaseListView<M>, M> implements
 
     protected void fetch(V view) {
         composite.add(scrollSubject
-                .subscribeOn(AndroidSchedulers.mainThread())
                 .distinctUntilChanged()
                 .map(new Function<Integer, Boolean>() {
                          @Override
@@ -110,7 +109,7 @@ public abstract class BaseListPresenter<V extends BaseListView<M>, M> implements
                         }.setView(view)
                 )
                 .toFlowable(BackpressureStrategy.DROP)
-                .subscribeOn(Schedulers.io())
+                .subscribeOn(AndroidSchedulers.mainThread())
                 .concatMap(new Function<Boolean, Publisher<List<M>>>() {
                     @Override
                     public Publisher<List<M>> apply(@NonNull Boolean aBoolean) throws Exception {
@@ -127,6 +126,7 @@ public abstract class BaseListPresenter<V extends BaseListView<M>, M> implements
                         };
                     }
                 })
+                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(new DisposableSubscriber<List<M>>() {
                             private WeakReference<V> viewRef;

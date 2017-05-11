@@ -1,7 +1,6 @@
 package com.alsash.reciper.ui.activity;
 
 import android.annotation.SuppressLint;
-import android.content.Intent;
 import android.os.Handler;
 import android.view.View;
 
@@ -55,8 +54,8 @@ public class StartActivity extends BaseActivity<StartView> implements StartView 
     }
 
     @Override
-    public void startMainActivity() {
-        startActivity(new Intent(StartActivity.this, RecipeTabActivity.class));
+    public void finishView() {
+        finish(); //Actually no need to finish, because this activity has noHistory tag in manifest
     }
 
     @Override

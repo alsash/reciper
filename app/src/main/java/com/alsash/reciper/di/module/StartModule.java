@@ -1,6 +1,7 @@
 package com.alsash.reciper.di.module;
 
 import com.alsash.reciper.api.StorageApi;
+import com.alsash.reciper.app.AppNavigator;
 import com.alsash.reciper.di.scope.StartScope;
 import com.alsash.reciper.mvp.presenter.StartPresenter;
 
@@ -15,7 +16,7 @@ public abstract class StartModule {
 
     @Provides
     @StartScope
-    static StartPresenter provideStartPresenter(StorageApi storageApi) {
-        return new StartPresenter(storageApi);
+    static StartPresenter provideStartPresenter(StorageApi storageApi, AppNavigator appNavigator) {
+        return new StartPresenter(storageApi, appNavigator);
     }
 }

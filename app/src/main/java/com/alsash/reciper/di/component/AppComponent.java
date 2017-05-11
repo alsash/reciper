@@ -1,6 +1,7 @@
 package com.alsash.reciper.di.component;
 
 import com.alsash.reciper.di.module.AppContextModule;
+import com.alsash.reciper.di.module.AppNavigatorModule;
 import com.alsash.reciper.di.module.AppStorageModule;
 
 import javax.inject.Singleton;
@@ -11,7 +12,7 @@ import dagger.Component;
  * DI Component that build bridge between Application and its components
  */
 @Singleton // Scope
-@Component(modules = {AppContextModule.class, AppStorageModule.class})
+@Component(modules = {AppContextModule.class, AppStorageModule.class, AppNavigatorModule.class})
 public interface AppComponent {
 
     StartComponent.Builder getStartComponentBuilder();

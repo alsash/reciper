@@ -7,5 +7,5 @@ public interface StartView extends BaseView {
 
     void setFullscreenVisibility();
 
-    void startMainActivity();
+    void finishView();
 }
