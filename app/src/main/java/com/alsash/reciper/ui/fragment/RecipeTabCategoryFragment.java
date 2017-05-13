@@ -61,8 +61,12 @@ public class RecipeTabCategoryFragment extends BaseFragment<RecipeTabCategoryVie
 
     @Override
     public void showLoading(boolean loading) {
-        if (refreshIndicator.isRefreshing() != loading) {
-            refreshIndicator.setRefreshing(loading);
+        if (loading) {
+            refreshIndicator.setEnabled(true);
+            refreshIndicator.setRefreshing(true);
+        } else {
+            refreshIndicator.setRefreshing(false);
+            refreshIndicator.setEnabled(false);
         }
     }
 
@@ -104,5 +108,6 @@ public class RecipeTabCategoryFragment extends BaseFragment<RecipeTabCategoryVie
                 R.color.nutrition_carbohydrate,
                 R.color.nutrition_fat,
                 R.color.nutrition_protein);
+        showLoading(false);
     }
 }

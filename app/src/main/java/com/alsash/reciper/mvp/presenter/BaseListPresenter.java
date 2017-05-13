@@ -125,6 +125,7 @@ public abstract class BaseListPresenter<V extends BaseListView<M>, M> implements
                         setLoading(false);
                         int insertPosition = addNext(nextModels);
                         if (viewRef.get() != null && viewRef.get().isViewVisible()) {
+                            viewRef.get().showLoading(false);
                             viewRef.get().showInsert(insertPosition);
                         }
                     }
@@ -138,6 +139,9 @@ public abstract class BaseListPresenter<V extends BaseListView<M>, M> implements
                     public void onComplete() {
                         setLoading(false);
                         setFetched(true);
+                        if (viewRef.get() != null && viewRef.get().isViewVisible()) {
+                            viewRef.get().showLoading(false);
+                        }
                         dispose();
                     }
                 }));
