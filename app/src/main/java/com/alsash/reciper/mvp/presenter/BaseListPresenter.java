@@ -6,22 +6,21 @@ import android.util.Log;
 
 import com.alsash.reciper.mvp.view.BaseListView;
 
-import org.reactivestreams.Publisher;
-import org.reactivestreams.Subscriber;
-
 import java.lang.ref.WeakReference;
 import java.util.List;
 
-import io.reactivex.BackpressureStrategy;
+import io.reactivex.Observable;
+import io.reactivex.ObservableSource;
+import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
 import io.reactivex.functions.Predicate;
+import io.reactivex.observers.DisposableObserver;
 import io.reactivex.schedulers.Schedulers;
 import io.reactivex.subjects.PublishSubject;
-import io.reactivex.subscribers.DisposableSubscriber;
 
 /**
  * Base List Presenter, that fetch a data, represented by Model,
@@ -74,8 +73,8 @@ public abstract class BaseListPresenter<V extends BaseListView<M>, M> implements
 
     protected void fetch(final WeakReference<V> viewRef) {
         composite.add(scrollSubject
-                .subscribeOn(AndroidSchedulers.mainThread()) // Position in the chain doesn't matter
-                .distinctUntilChanged()
+                .subscribeOn(AndroidSchedulers.mainThread()) // Operate on the mainThread by default
+                .startWith(-1) // Start the first load without scroll event. -1 means empty list
                 .map(new Function<Integer, Boolean>() {
                          @Override
                          public Boolean apply(@NonNull Integer scrollPosition) throws Exception {
@@ -103,25 +102,24 @@ public abstract class BaseListPresenter<V extends BaseListView<M>, M> implements
                           }
                 )
                 .observeOn(Schedulers.io()) // Next operations will be done on background thread
-                .toFlowable(BackpressureStrategy.DROP)
-                .concatMap(new Function<Boolean, Publisher<List<M>>>() {
+                .concatMap(new Function<Boolean, ObservableSource<List<M>>>() {
                     @Override
-                    public Publisher<List<M>> apply(@NonNull Boolean aBoolean) throws Exception {
-                        return new Publisher<List<M>>() {
+                    public ObservableSource<List<M>> apply(@NonNull Boolean b) throws Exception {
+                        return new Observable<List<M>>() {
                             @Override
-                            public void subscribe(Subscriber<? super List<M>> s) {
+                            protected void subscribeActual(Observer<? super List<M>> observer) {
                                 List<M> nextModels = loadNext();
                                 if (nextModels.size() > 0) {
-                                    s.onNext(nextModels);
+                                    observer.onNext(nextModels);
                                 } else {
-                                    s.onComplete();
+                                    observer.onComplete();
                                 }
                             }
                         };
                     }
                 })
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeWith(new DisposableSubscriber<List<M>>() {
+                .observeOn(AndroidSchedulers.mainThread()) // Observe results on the mainThread
+                .subscribeWith(new DisposableObserver<List<M>>() {
                     @Override
                     public void onNext(List<M> nextModels) {
                         setLoading(false);
@@ -140,13 +138,9 @@ public abstract class BaseListPresenter<V extends BaseListView<M>, M> implements
                     public void onComplete() {
                         setLoading(false);
                         setFetched(true);
+                        dispose();
                     }
-                               }
-                ));
-        // Start first loading
-        if ((!isFetched()) && (!isLoading()) && models.size() == initialSize) {
-            scrollSubject.onNext(initialSize);
-        }
+                }));
     }
 
     /**
@@ -170,8 +164,15 @@ public abstract class BaseListPresenter<V extends BaseListView<M>, M> implements
         return models;
     }
 
+    /**
+     * The decision whether to load a new pack of items.
+     *
+     * @param scrollPosition - current max visible position of items.
+     *                       -1 when there are no items
+     * @return true if the load is needed.
+     */
     protected boolean doLoading(int scrollPosition) {
-        return models.size() < scrollPosition * 2;
+        return models.size() <= (scrollPosition + 1) * 2;
     }
 
     protected boolean isLoading() {

@@ -21,12 +21,6 @@ android {
     }
 }
 
-repositories {
-    maven {
-        url "https://jitpack.io"                                        // For CircleImageView
-    }
-}
-
 greendao {
     schemaVersion 1
 }
