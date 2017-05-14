@@ -11,13 +11,15 @@ import android.widget.Button;
 import com.alsash.reciper.R;
 import com.alsash.reciper.ui.vector.VectorHelper;
 
+import static com.alsash.reciper.app.AppContract.KEY_RECIPE_ID;
+
 public class RecipeBottomDialog extends BottomSheetDialogFragment
         implements Toolbar.OnMenuItemClickListener {
 
     public static RecipeBottomDialog newInstance(Long recipeId) {
 
         Bundle args = new Bundle();
-
+        args.putLong(KEY_RECIPE_ID, recipeId);
         RecipeBottomDialog fragment = new RecipeBottomDialog();
         fragment.setArguments(args);
         return fragment;
@@ -37,7 +39,7 @@ public class RecipeBottomDialog extends BottomSheetDialogFragment
                 R.color.black_a054);
         bottomToolbar.setOnMenuItemClickListener(this);
         bottomToolbar.setLogo(R.mipmap.ic_launcher);
-        bottomToolbar.setTitle(" RecipeEntityTable name");
+        bottomToolbar.setTitle("Recipe id " + getArguments().getLong(KEY_RECIPE_ID));
 
         // Button label
         Button button = (Button) contentView.findViewById(R.id.recipe_label_button);

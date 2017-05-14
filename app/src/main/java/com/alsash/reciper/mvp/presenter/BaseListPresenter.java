@@ -6,21 +6,23 @@ import android.util.Log;
 
 import com.alsash.reciper.mvp.view.BaseListView;
 
+import org.reactivestreams.Publisher;
+
 import java.lang.ref.WeakReference;
 import java.util.List;
 
-import io.reactivex.Observable;
-import io.reactivex.ObservableSource;
-import io.reactivex.Observer;
+import io.reactivex.BackpressureStrategy;
+import io.reactivex.Flowable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.functions.BooleanSupplier;
 import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
 import io.reactivex.functions.Predicate;
-import io.reactivex.observers.DisposableObserver;
 import io.reactivex.schedulers.Schedulers;
 import io.reactivex.subjects.PublishSubject;
+import io.reactivex.subscribers.DisposableSubscriber;
 
 /**
  * Base List Presenter, that fetch a data, represented by Model,
@@ -33,14 +35,14 @@ public abstract class BaseListPresenter<V extends BaseListView<M>, M> implements
     private final PublishSubject<Integer> scrollSubject = PublishSubject.create();
     private final CompositeDisposable composite = new CompositeDisposable();
     private final List<M> models;
-    private final int initialSize;
+    private final int initialPosition;
 
+    private Boolean fetched;
     private boolean loading;
-    private boolean fetched;
 
     public BaseListPresenter() {
         this.models = getStart();
-        this.initialSize = models.size();
+        this.initialPosition = models.size() - 1;
     }
 
     @UiThread
@@ -52,7 +54,10 @@ public abstract class BaseListPresenter<V extends BaseListView<M>, M> implements
     @Override
     public void attach(V view) {
         view.setContainer(models);
-        if (!isFetched()) fetch(new WeakReference<>(view));
+        if (!isFetched()) {
+            view.startPagination();
+            fetch(new WeakReference<>(view));
+        }
     }
 
     @Override
@@ -66,97 +71,89 @@ public abstract class BaseListPresenter<V extends BaseListView<M>, M> implements
         composite.clear();   // in v.2.1.0 - same as dispose(), but without set isDispose()
     }
 
-    public void onScroll(int scrollPosition) {
-        if (!scrollSubject.hasObservers() || scrollSubject.hasComplete()) return;
-        scrollSubject.onNext(scrollPosition);
+    public void onPagination(int maxVisiblePosition) {
+        scrollSubject.onNext(maxVisiblePosition);
     }
 
     protected void fetch(final WeakReference<V> viewRef) {
         composite.add(scrollSubject
-                .subscribeOn(AndroidSchedulers.mainThread()) // Operate on the mainThread by default
-                .startWith(-1) // Start the first load without scroll event. -1 means empty list
+                .subscribeOn(AndroidSchedulers.mainThread()) // Run on the main thread by default
+                .startWith(initialPosition) // Start the first load without scroll event
+                .distinctUntilChanged()
                 .map(new Function<Integer, Boolean>() {
                          @Override
-                         public Boolean apply(@NonNull Integer scrollPosition) throws Exception {
+                         public Boolean apply(@NonNull Integer visiblePosition) throws Exception {
                              return (!isFetched())
                                      && (!isLoading())
-                                     && doLoading(scrollPosition);
+                                     && doLoading(visiblePosition);
                          }
                      }
                 )
-                .distinctUntilChanged()
-                .skipWhile(new Predicate<Boolean>() {
+                .filter(new Predicate<Boolean>() {
                     @Override
                     public boolean test(@NonNull Boolean needLoading) throws Exception {
-                        return !needLoading;
+                        return needLoading;
                     }
                 })
+                .toFlowable(BackpressureStrategy.DROP)
                 .doOnNext(new Consumer<Boolean>() {
                     @Override
                     public void accept(@NonNull Boolean needLoading) throws Exception {
-                        setLoading(true); // needLoading is always true
-                        if (viewRef.get() != null && viewRef.get().isViewVisible()) {
-                            viewRef.get().showLoading(true);
-                        }
-                    }
-                          }
-                )
-                .observeOn(Schedulers.io()) // Next operations will be done on background thread
-                .concatMap(new Function<Boolean, ObservableSource<List<M>>>() {
-                    @Override
-                    public ObservableSource<List<M>> apply(@NonNull Boolean b) throws Exception {
-                        return new Observable<List<M>>() {
-                            @Override
-                            protected void subscribeActual(Observer<? super List<M>> observer) {
-                                List<M> nextModels = loadNext();
-                                if (nextModels.size() > 0) {
-                                    observer.onNext(nextModels);
-                                } else {
-                                    observer.onComplete();
-                                }
-                            }
-                        };
+                        setLoading(true, viewRef); // needLoading is always true
                     }
                 })
-                .observeOn(AndroidSchedulers.mainThread()) // Observe results on the mainThread
-                .subscribeWith(new DisposableObserver<List<M>>() {
+                .observeOn(Schedulers.io()) // Do loading on the background thread
+                .concatMap(new Function<Boolean, Publisher<List<M>>>() {
                     @Override
-                    public void onNext(List<M> nextModels) {
-                        setLoading(false);
-                        int insertPosition = addNext(nextModels);
-                        if (viewRef.get() != null && viewRef.get().isViewVisible()) {
-                            viewRef.get().showLoading(false);
-                            viewRef.get().showInsert(insertPosition);
-                        }
+                    public Publisher<List<M>> apply(@NonNull Boolean needLoading) throws Exception {
+                        return Flowable.just(loadNext());
                     }
+                })
+                .repeatUntil(new BooleanSupplier() {
+                    @Override
+                    public boolean getAsBoolean() throws Exception {
+                        return !isFetched();
+                    }
+                })
+                .observeOn(AndroidSchedulers.mainThread()) // Observe results on the main thread
+                .subscribeWith(new DisposableSubscriber<List<M>>() {
+                                   @Override
+                                   public void onNext(List<M> models) {
+                                       setLoading(false, viewRef);
+                                       if (models.size() > 0) {
+                                           addNext(models, viewRef);
+                                       } else {
+                                           setFetched(true, viewRef);
+                                       }
+                                   }
 
-                    @Override
-                    public void onError(Throwable t) {
-                        Log.d(TAG, t.getMessage(), t);
-                    }
+                                   @Override
+                                   public void onError(Throwable t) {
+                                       Log.d(TAG, t.getMessage(), t);
+                                       setLoading(false, viewRef);
+                                   }
 
-                    @Override
-                    public void onComplete() {
-                        setLoading(false);
-                        setFetched(true);
-                        if (viewRef.get() != null && viewRef.get().isViewVisible()) {
-                            viewRef.get().showLoading(false);
-                        }
-                        dispose();
-                    }
-                }));
+                                   @Override
+                                   public void onComplete() {
+                                       setLoading(false, viewRef);
+                                   }
+                               }
+                ));
     }
 
     /**
-     * Add next data to container
+     * Add next data to the container and notify view about it.
      *
-     * @param models next data
-     * @return insert position
+     * @param models  - next data, size > 0.
+     * @param viewRef - view that attached to this presenter
      */
-    protected int addNext(List<M> models) {
+    @NonNull
+    protected void addNext(List<M> models, WeakReference<V> viewRef) {
         int insertPosition = this.models.size();
         this.models.addAll(models);
-        return insertPosition;
+        if (viewRef.get() != null && viewRef.get().isViewVisible()) {
+            viewRef.get().showInsert(insertPosition);
+        }
     }
 
     /**
@@ -171,27 +168,38 @@ public abstract class BaseListPresenter<V extends BaseListView<M>, M> implements
     /**
      * The decision whether to load a new pack of items.
      *
-     * @param scrollPosition - current max visible position of items.
-     *                       -1 when there are no items
+     * @param visiblePosition - current max visible position of items.
      * @return true if the load is needed.
      */
-    protected boolean doLoading(int scrollPosition) {
-        return models.size() <= (scrollPosition + 1) * 2;
+    protected boolean doLoading(int visiblePosition) {
+        return ((visiblePosition + 1) * 2) >= models.size();
     }
 
     protected boolean isLoading() {
         return loading;
     }
 
-    protected void setLoading(boolean loading) {
+    protected void setLoading(boolean loading, WeakReference<V> viewRef) {
+        if (this.loading == loading) return;
         this.loading = loading;
+        if (viewRef.get() != null && viewRef.get().isViewVisible()) {
+            viewRef.get().showLoading(loading);
+        }
     }
 
     protected boolean isFetched() {
-        return fetched;
+        return (fetched == null) ? false : fetched;
     }
 
-    protected void setFetched(boolean fetched) {
+    protected void setFetched(boolean fetched, WeakReference<V> viewRef) {
+        if (this.fetched != null && this.fetched == fetched) return;
         this.fetched = fetched;
+        if (viewRef.get() != null) {
+            if (fetched) {
+                viewRef.get().stopPagination();
+            } else {
+                viewRef.get().startPagination();
+            }
+        }
     }
 }

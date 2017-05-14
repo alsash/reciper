@@ -22,6 +22,8 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import static android.support.v7.widget.RecyclerView.SCROLL_STATE_SETTLING;
+
 public class RecipeTabCategoryFragment extends BaseFragment<RecipeTabCategoryView>
         implements RecipeTabCategoryView {
 
@@ -31,6 +33,7 @@ public class RecipeTabCategoryFragment extends BaseFragment<RecipeTabCategoryVie
     private SwipeRefreshLayout refreshIndicator;
     private RecyclerView list;
     private RecipeGroupCardListAdapter adapter;
+    private RecyclerView.OnScrollListener paginationListener;
 
     public static RecipeTabCategoryFragment newInstance() {
         return new RecipeTabCategoryFragment();
@@ -60,14 +63,28 @@ public class RecipeTabCategoryFragment extends BaseFragment<RecipeTabCategoryVie
     }
 
     @Override
+    public void startPagination() {
+        if (paginationListener != null) return;
+        paginationListener = new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                if (newState != SCROLL_STATE_SETTLING) return;
+                int lastVisiblePosition = ((LinearLayoutManager) recyclerView.getLayoutManager())
+                        .findLastVisibleItemPosition();
+                presenter.onPagination(lastVisiblePosition);
+            }
+        };
+    }
+
+    @Override
+    public void stopPagination() {
+        list.removeOnScrollListener(paginationListener);
+    }
+
+    @Override
     public void showLoading(boolean loading) {
-        if (loading) {
-            refreshIndicator.setEnabled(true);
-            refreshIndicator.setRefreshing(true);
-        } else {
-            refreshIndicator.setRefreshing(false);
-            refreshIndicator.setEnabled(false);
-        }
+        refreshIndicator.setEnabled(loading);
+        refreshIndicator.setRefreshing(loading);
     }
 
     @Override
@@ -92,15 +109,10 @@ public class RecipeTabCategoryFragment extends BaseFragment<RecipeTabCategoryVie
 
     private void setupList() {
         list.setLayoutManager(new LinearLayoutManager(list.getContext()));
-        list.setAdapter(adapter); // Created at setCategories()
-        list.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                int position = ((LinearLayoutManager) recyclerView.getLayoutManager())
-                        .findLastVisibleItemPosition();
-                presenter.onScroll(position);
-            }
-        });
+        // An Adapter has been created at setCategories()
+        list.setAdapter(adapter);
+        // A PaginationListener has been created at startPagination()
+        if (paginationListener != null) list.addOnScrollListener(paginationListener);
     }
 
     private void setupRefresh() {

@@ -9,6 +9,10 @@ public interface BaseListView<M> extends BaseView {
 
     void setContainer(List<M> container);
 
+    void startPagination();
+
+    void stopPagination();
+
     void showLoading(boolean loading);
 
     void showInsert(int insertPosition);

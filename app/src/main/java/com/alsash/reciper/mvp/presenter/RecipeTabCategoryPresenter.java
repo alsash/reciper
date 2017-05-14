@@ -12,12 +12,13 @@ import java.util.List;
  */
 public class RecipeTabCategoryPresenter extends BaseRecipeListPresenter<RecipeTabCategoryView, Category> {
 
-    private static final int PAGINATION_LIMIT = 20;
-    private static final int RELATION_LIMIT = 15; // Limit for related entities
+    private static final int PAGINATION_LIMIT = 5;
+    private static final int RELATION_LIMIT = 10; // Limit for related entities
 
     private final StorageApi storage;
     private final List<Category> categories = getModels(); // see getStart()
 
+    private int count;
 
     public RecipeTabCategoryPresenter(StorageApi storage) {
         this.storage = storage;
