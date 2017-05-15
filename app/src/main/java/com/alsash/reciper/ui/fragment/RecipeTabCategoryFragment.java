@@ -109,10 +109,8 @@ public class RecipeTabCategoryFragment extends BaseFragment<RecipeTabCategoryVie
 
     private void setupList() {
         list.setLayoutManager(new LinearLayoutManager(list.getContext()));
-        // An Adapter has been created at setCategories()
-        list.setAdapter(adapter);
-        // A PaginationListener has been created at startPagination()
-        if (paginationListener != null) list.addOnScrollListener(paginationListener);
+        list.setAdapter(adapter); // Created in setCategories() at onAttach()
+        list.addOnScrollListener(paginationListener); // Created in startPagination() at onAttach()
     }
 
     private void setupRefresh() {

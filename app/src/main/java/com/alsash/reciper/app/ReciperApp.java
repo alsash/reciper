@@ -35,6 +35,7 @@ public class ReciperApp extends Application {
 
         // Facebook Stetho initialization
         if (BuildConfig.DEBUG) Stetho.initializeWithDefaults(this);
+
     }
 
     public StartComponent getStartComponent() {

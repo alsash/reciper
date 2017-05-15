@@ -9,6 +9,8 @@ import java.util.UUID;
  */
 public class Category extends BaseRecipeGroup {
 
+    Photo photo;
+
     Category() {
     }
 
@@ -17,8 +19,10 @@ public class Category extends BaseRecipeGroup {
              String name,
              Date creationDate,
              Date changeDate,
-             List<Recipe> recipes) {
+             List<Recipe> recipes,
+             Photo photo) {
         super(id, uuid, name, creationDate, changeDate, recipes);
+        this.photo = photo;
     }
 
     @Override
@@ -32,5 +36,10 @@ public class Category extends BaseRecipeGroup {
     @Override
     public int hashCode() {
         return uuid != null ? uuid.hashCode() : 0;
+    }
+
+    @Override
+    int getSize() {
+        return super.getSize() + ((photo == null) ? 0 : 4); // photo link
     }
 }

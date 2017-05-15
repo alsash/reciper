@@ -33,4 +33,9 @@ public class Label extends BaseRecipeGroup {
     public int hashCode() {
         return uuid != null ? uuid.hashCode() : 0;
     }
+
+    @Override
+    int getSize() {
+        return super.getSize();
+    }
 }

@@ -30,6 +30,7 @@ public class StorageApi {
     public StorageApi(DatabaseApi databaseApi, CacheEntityFactory entityFactory) {
         this.databaseApi = databaseApi;
         this.entityFactory = entityFactory;
+
     }
 
     @WorkerThread
@@ -85,7 +86,7 @@ public class StorageApi {
     }
 
     private void checkCache() {
-        if (entityFactory.getRelativeCacheSize() > AppContract.CACHE_MAX_ENTITIES * 0.90D) {
+        if (entityFactory.getSize() > AppContract.CACHE_SIZE_BYTE * 0.90D) {
             entityFactory.clearCache();
             databaseApi.clearCache();
         }

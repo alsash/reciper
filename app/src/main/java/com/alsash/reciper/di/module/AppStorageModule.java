@@ -33,6 +33,6 @@ public abstract class AppStorageModule {
     @Provides
     @Singleton
     static CacheEntityFactory provideCacheEntityFactory() {
-        return new CacheEntityFactory(AppContract.CACHE_MAX_ENTITIES);
+        return new CacheEntityFactory(AppContract.CACHE_SIZE_BYTE);
     }
 }

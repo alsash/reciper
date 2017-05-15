@@ -45,4 +45,15 @@ public abstract class BaseEntity {
     public Date getChangeDate() {
         return changeDate;
     }
+
+    /**
+     * Approximate size of this entity without related entities
+     *
+     * @return size in bits
+     */
+    int getSize() {
+        return 3 * Long.SIZE                                    // id, uuid
+                + ((name == null) ? 0 : name.getBytes().length) // name
+                + 2 * (Long.SIZE + 4);                          // dates
+    }
 }

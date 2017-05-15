@@ -11,6 +11,7 @@ public class Recipe extends BaseEntity {
 
     Category category;
     List<Label> labels;
+    Photo photo;
 
     Recipe() {
     }
@@ -21,10 +22,12 @@ public class Recipe extends BaseEntity {
            Date creationDate,
            Date changeDate,
            Category category,
-           List<Label> labels) {
+           List<Label> labels,
+           Photo photo) {
         super(id, uuid, name, creationDate, changeDate);
         this.category = category;
         this.labels = labels;
+        this.photo = photo;
     }
 
     public Category getCategory() {
@@ -33,6 +36,10 @@ public class Recipe extends BaseEntity {
 
     public List<Label> getLabels() {
         return labels;
+    }
+
+    public Photo getPhoto() {
+        return photo;
     }
 
     @Override
@@ -46,5 +53,13 @@ public class Recipe extends BaseEntity {
     @Override
     public int hashCode() {
         return uuid != null ? uuid.hashCode() : 0;
+    }
+
+    @Override
+    int getSize() {
+        return super.getSize()
+                + ((category == null) ? 0 : 4)
+                + ((labels == null) ? 0 : 4)
+                + ((photo == null) ? 0 : 4);
     }
 }

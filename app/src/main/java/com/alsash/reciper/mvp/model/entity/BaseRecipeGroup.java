@@ -27,4 +27,9 @@ public abstract class BaseRecipeGroup extends BaseEntity {
     public List<Recipe> getRecipes() {
         return recipes;
     }
+
+    @Override
+    int getSize() {
+        return super.getSize() + ((recipes == null) ? 0 : 4); // recipes link
+    }
 }

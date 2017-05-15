@@ -5,7 +5,7 @@ package com.alsash.reciper.app;
  */
 public class AppContract {
 
-    public static final int CACHE_MAX_ENTITIES = 1000;
+    public static final int CACHE_SIZE_BYTE = 100 * 1024 * 1024; // 100 Mebibytes (honest Megabytes)
 
     private static final String TAG = AppContract.class.getCanonicalName();
 

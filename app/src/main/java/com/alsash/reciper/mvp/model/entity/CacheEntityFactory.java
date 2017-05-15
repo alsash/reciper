@@ -1,5 +1,6 @@
 package com.alsash.reciper.mvp.model.entity;
 
+import android.graphics.Bitmap;
 import android.util.LruCache;
 
 import java.util.ArrayList;
@@ -20,24 +21,31 @@ public class CacheEntityFactory {
     private static final String INITIAL_STRING = "";
     private static final Date INITIAL_DATE = new Date(0);
 
-    private final LruCache<UUID, Category> categoriesCache;
-    private final LruCache<UUID, Recipe> recipesCache;
-    private final LruCache<UUID, Label> labelsCache;
+    private final LruEntityByteCache<Category> categoriesCache;
+    private final LruEntityByteCache<Label> labelsCache;
+    private final LruEntityByteCache<Recipe> recipesCache;
+    private final LruEntityByteCache<Photo> photosCache;
 
-    public CacheEntityFactory(int relativeCacheSize) {
-        this.categoriesCache = new LruCache<>((int) (relativeCacheSize * 0.25D));
-        this.recipesCache = new LruCache<>((int) (relativeCacheSize * 0.50D));
-        this.labelsCache = new LruCache<>((int) (relativeCacheSize * 0.25D));
+    public CacheEntityFactory(int cacheSizeByte) {
+        this.categoriesCache = new LruEntityByteCache<>((int) (cacheSizeByte * 0.05D));
+        this.recipesCache = new LruEntityByteCache<>((int) (cacheSizeByte * 0.05D));
+        this.labelsCache = new LruEntityByteCache<>((int) (cacheSizeByte * 0.05D));
+        this.photosCache = new LruEntityByteCache<>((int) (cacheSizeByte * 0.85D));
     }
 
-    public int getRelativeCacheSize() {
-        return categoriesCache.size() + recipesCache.size() + labelsCache.size();
+
+    public int getSize() {
+        return categoriesCache.size()
+                + labelsCache.size()
+                + recipesCache.size()
+                + photosCache.size();
     }
 
     public void clearCache() {
         categoriesCache.evictAll();
         recipesCache.evictAll();
         labelsCache.evictAll();
+        photosCache.evictAll();
     }
 
     public boolean isInitial(BaseEntity entity) {
@@ -133,6 +141,37 @@ public class CacheEntityFactory {
         return recipe;
     }
 
+    public Photo getPhoto() {
+        return getPhoto(null, null, null, null, null, null, null, null);
+    }
+
+    public Photo getPhoto(Long id,
+                          UUID uuid,
+                          String name,
+                          Date creationDate,
+                          Date changeDate,
+                          String url,
+                          String path,
+                          Bitmap data) {
+        Photo photo;
+        if (isInitial(id, uuid)) {
+            photo = new Photo();
+        } else {
+            synchronized (photosCache) {
+                photo = photosCache.get(uuid);
+                if (photo == null) {
+                    photo = new Photo();
+                    photosCache.put(uuid, photo);
+                }
+            }
+        }
+        getBaseEntity(photo, id, uuid, name, creationDate, changeDate);
+        photo.url = (url == null) ? INITIAL_STRING : url;
+        photo.path = (path == null) ? INITIAL_STRING : path;
+        photo.data = data;
+        return photo;
+    }
+
     private void getBaseRecipeGroup(BaseRecipeGroup group,
                                     Long id,
                                     UUID uuid,
@@ -155,5 +194,17 @@ public class CacheEntityFactory {
         entity.name = (name == null) ? INITIAL_STRING : name;
         entity.creationDate = (creationDate == null) ? (Date) INITIAL_DATE.clone() : creationDate;
         entity.changeDate = (changeDate == null) ? (Date) INITIAL_DATE.clone() : changeDate;
+    }
+
+    private static class LruEntityByteCache<V extends BaseEntity> extends LruCache<UUID, V> {
+
+        public LruEntityByteCache(int maxSize) {
+            super(maxSize);
+        }
+
+        @Override
+        protected int sizeOf(UUID key, V value) {
+            return (2 * (Long.SIZE / Byte.SIZE)) + (value.getSize() / Byte.SIZE);
+        }
     }
 }
