@@ -15,12 +15,12 @@
             android:noHistory="true"
             android:theme="@style/StartTheme">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+                <actionSubject android:name="android.intent.actionSubject.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
             <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
+                <actionSubject android:name="android.intent.actionSubject.VIEW" />
 
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />

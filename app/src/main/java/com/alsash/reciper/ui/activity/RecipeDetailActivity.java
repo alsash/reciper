@@ -111,7 +111,7 @@ public class RecipeDetailActivity extends AppCompatActivity {
             @Override
             public void onClick(IView view) {
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                        .setActionSubject("Action", null).show();
             }
         });
     }
