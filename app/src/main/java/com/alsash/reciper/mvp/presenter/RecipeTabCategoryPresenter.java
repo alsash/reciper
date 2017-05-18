@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * A Presenter that represents collection of Recipes grouped by Categories
  */
-public class RecipeTabCategoryPresenter extends BaseRecipeListPresenter<RecipeTabCategoryView, Category> {
+public class RecipeTabCategoryPresenter implements BasePresenter<RecipeTabCategoryView> {
 
     private static final int PAGINATION_LIMIT = 5;
     private static final int RELATION_LIMIT = 10; // Limit for related entities

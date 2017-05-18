@@ -9,7 +9,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.alsash.reciper.R;
+import com.alsash.reciper.app.AppNavigator;
 import com.alsash.reciper.app.ReciperApp;
+import com.alsash.reciper.mvp.model.entity.BaseRecipeGroup;
 import com.alsash.reciper.mvp.model.entity.Category;
 import com.alsash.reciper.mvp.model.entity.Recipe;
 import com.alsash.reciper.mvp.presenter.BasePresenter;
@@ -18,6 +20,7 @@ import com.alsash.reciper.mvp.view.RecipeTabCategoryView;
 import com.alsash.reciper.ui.adapter.RecipeGroupCardListAdapter;
 import com.alsash.reciper.ui.adapter.interaction.RecipeGroupInteraction;
 import com.alsash.reciper.ui.adapter.interaction.RecipeSingleInteraction;
+import com.alsash.reciper.ui.fragment.dialog.RecipeBottomDialog;
 
 import java.util.List;
 
@@ -31,15 +34,16 @@ public class RecipeTabCategoryFragment extends BaseFragment<RecipeTabCategoryVie
     @Inject
     RecipeTabCategoryPresenter presenter;
 
+    @Inject
+    AppNavigator navigator;
+
     private SwipeRefreshLayout refreshIndicator;
     private RecyclerView list;
     private RecipeGroupCardListAdapter adapter;
-    private RecyclerView.OnScrollListener paginationListener;
 
     public static RecipeTabCategoryFragment newInstance() {
         return new RecipeTabCategoryFragment();
     }
-
 
     @Override
     protected BasePresenter<RecipeTabCategoryView> inject() {
@@ -50,48 +54,34 @@ public class RecipeTabCategoryFragment extends BaseFragment<RecipeTabCategoryVie
     }
 
     @Override
-    public void setContainer(List<Category> container) {
-        adapter = new RecipeGroupCardListAdapter(container, new RecipeSingleInteraction() {
-            @Override
-            public void onRecipeExpand(Recipe recipe) {
-                presenter.onRecipeExpand(getActivity().getSupportFragmentManager(), recipe);
-            }
-
-            @Override
-            public void onRecipeOpen(Recipe recipe) {
-                presenter.onRecipeOpen(getActivity().getApplicationContext(), recipe);
-            }
-        });
+    public void setCategories(List<Category> categories) {
+        adapter = new RecipeGroupCardListAdapter(categories, this, this);
     }
 
     @Override
-    public void startPagination() {
-        if (paginationListener != null) return;
-        paginationListener = new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                if (newState != SCROLL_STATE_SETTLING) return;
-                int lastVisiblePosition = ((LinearLayoutManager) recyclerView.getLayoutManager())
-                        .findLastVisibleItemPosition();
-                presenter.onPagination(lastVisiblePosition);
-            }
-        };
+    public void onRecipeExpand(Recipe recipe) {
+        RecipeBottomDialog bottomDialog = RecipeBottomDialog.newInstance(recipe.getId());
+        bottomDialog.show(getActivity().getSupportFragmentManager(), bottomDialog.getTag());
     }
 
     @Override
-    public void stopPagination() {
-        list.removeOnScrollListener(paginationListener);
+    public void onRecipeOpen(Recipe recipe) {
+        navigator.toRecipeView(recipe.getId());
     }
 
     @Override
-    public void showLoading(boolean loading) {
-        refreshIndicator.setEnabled(loading);
-        refreshIndicator.setRefreshing(loading);
+    public void showCategoriesLoading(boolean loading) {
+
     }
 
     @Override
-    public void showInsert(int insertPosition) {
-        adapter.notifyItemInserted(insertPosition);
+    public void showRecipesLoading(int categoryPosition, boolean loading) {
+
+    }
+
+    @Override
+    public boolean onRecipesScroll(BaseRecipeGroup recipeGroup, int lastVisibleRecipe) {
+        return presenter.onRecipesScroll(recipeGroup, lastVisibleRecipe);
     }
 
     @Override
@@ -112,7 +102,16 @@ public class RecipeTabCategoryFragment extends BaseFragment<RecipeTabCategoryVie
     private void setupList() {
         list.setLayoutManager(new LinearLayoutManager(list.getContext()));
         list.setAdapter(adapter); // Created in setCategories() at onAttach()
-        list.addOnScrollListener(paginationListener); // Created in startPagination() at onAttach()
+        list.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                if (newState != SCROLL_STATE_SETTLING) return;
+                int lastVisiblePosition = ((LinearLayoutManager) recyclerView.getLayoutManager())
+                        .findLastVisibleItemPosition();
+                boolean stop = presenter.onCategoriesScroll(lastVisiblePosition);
+                if (stop) recyclerView.removeOnScrollListener(this);
+            }
+        });
     }
 
     private void setupRefresh() {
@@ -120,6 +119,5 @@ public class RecipeTabCategoryFragment extends BaseFragment<RecipeTabCategoryVie
                 R.color.nutrition_carbohydrate,
                 R.color.nutrition_fat,
                 R.color.nutrition_protein);
-        showLoading(false);
     }
 }

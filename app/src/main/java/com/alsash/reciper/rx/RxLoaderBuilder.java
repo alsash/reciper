@@ -20,7 +20,7 @@ import io.reactivex.subscribers.DisposableSubscriber;
  */
 public class RxLoaderBuilder<A, D> {
 
-    private final RxLoader<A, D> loader;
+    protected final RxLoader<A, D> loader;
 
     public RxLoaderBuilder() {
         loader = new RxLoader<>();

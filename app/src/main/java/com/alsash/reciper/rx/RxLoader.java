@@ -40,6 +40,10 @@ public class RxLoader<A, D> {
     RxLoader() {
     }
 
+    public synchronized void nextAction(A action) {
+        actionSubject.onNext(action);
+    }
+
     public synchronized boolean isFetched() {
         return fetched;
     }

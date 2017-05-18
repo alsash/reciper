@@ -18,8 +18,6 @@ public class RecipeTabCategoryPresenter2 implements BasePresenter<RecipeTabCateg
     @Override
     public void attach(RecipeTabCategoryView view) {
         view.setCategories(categories);
-        view.setCategoriesFetched(categoriesFetched);
-        view.setRecipesFetched(0, false);
     }
 
     @Override
@@ -36,4 +34,6 @@ public class RecipeTabCategoryPresenter2 implements BasePresenter<RecipeTabCateg
     public void detach() {
 
     }
+
+
 }

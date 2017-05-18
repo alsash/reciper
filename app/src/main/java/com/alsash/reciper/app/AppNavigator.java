@@ -22,4 +22,8 @@ public class AppNavigator {
     public void toMainView() {
         context.startActivity(new Intent(context, RecipeTabActivity.class));
     }
+
+    public void toRecipeView(long recipeId) {
+
+    }
 }
