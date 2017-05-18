@@ -30,7 +30,7 @@ import io.reactivex.subscribers.DisposableSubscriber;
  */
 public abstract class BaseListPresenter<V extends BaseListView<M>, M> implements BasePresenter<V> {
 
-    private static final String TAG = BaseListPresenter.class.getCanonicalName();
+    private static final String TAG = "BaseListPresenter";
 
     private final PublishSubject<Integer> scrollSubject = PublishSubject.create();
     private final CompositeDisposable composite = new CompositeDisposable();
@@ -78,7 +78,7 @@ public abstract class BaseListPresenter<V extends BaseListView<M>, M> implements
     protected void fetch(final WeakReference<V> viewRef) {
         composite.add(scrollSubject
                 .subscribeOn(AndroidSchedulers.mainThread()) // Run on the main thread by default
-                .startWith(initialPosition) // Start the first load without scroll event
+                .startWith(initialPosition) // Start the start load without scroll event
                 .distinctUntilChanged()
                 .map(new Function<Integer, Boolean>() {
                          @Override

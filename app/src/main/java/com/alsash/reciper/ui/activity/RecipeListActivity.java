@@ -8,13 +8,13 @@ public class RecipeListActivity extends AppCompatActivity {
     private FloatingActionButton fab;
 
     @Override
-    public void onExpand(Recipe recipe, int position) {
+    public void onRecipeExpand(Recipe recipe, int position) {
         RecipeBottomDialog bottomDialog = RecipeBottomDialog.newInstance(recipe.getId());
         bottomDialog.show(getSupportFragmentManager(), bottomDialog.getTag());
     }
 
     @Override
-    public void onOpen(Recipe recipe, int position) {
+    public void onRecipeOpen(Recipe recipe, int position) {
         RecipeDetailActivity.start(RecipeListActivity.this, recipe.getId());
     }
 

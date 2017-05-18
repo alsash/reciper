@@ -6,7 +6,7 @@ import android.view.ViewGroup;
 
 import com.alsash.reciper.mvp.model.entity.Recipe;
 import com.alsash.reciper.ui.adapter.holder.RecipeSingleCardHolder;
-import com.alsash.reciper.ui.adapter.interaction.RecipeListInteraction;
+import com.alsash.reciper.ui.adapter.interaction.RecipeSingleInteraction;
 
 import java.util.HashSet;
 import java.util.List;
@@ -17,11 +17,11 @@ import static com.alsash.reciper.app.AppContract.PAYLOAD_FLIP_FRONT_TO_BACK;
 
 public class RecipeSingleCardListAdapter extends RecyclerView.Adapter<RecipeSingleCardHolder> {
 
-    private final RecipeListInteraction interaction;
+    private final RecipeSingleInteraction interaction;
     private final List<? extends Recipe> recipeList;
     private final Set<Integer> backCardPositions;
 
-    public RecipeSingleCardListAdapter(RecipeListInteraction interaction,
+    public RecipeSingleCardListAdapter(RecipeSingleInteraction interaction,
                                        List<? extends Recipe> recipeList) {
         this.interaction = interaction;
         this.recipeList = recipeList;
@@ -57,14 +57,14 @@ public class RecipeSingleCardListAdapter extends RecyclerView.Adapter<RecipeSing
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        interaction.onExpand(recipeList.get(holder.getAdapterPosition()));
+                        interaction.onRecipeExpand(recipeList.get(holder.getAdapterPosition()));
                     }
                 },
                 // Open Listener
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        interaction.onOpen(recipeList.get(holder.getAdapterPosition()));
+                        interaction.onRecipeOpen(recipeList.get(holder.getAdapterPosition()));
                     }
                 }
         );

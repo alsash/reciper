@@ -9,6 +9,7 @@ import io.reactivex.BackpressureStrategy;
 import io.reactivex.Notification;
 import io.reactivex.Scheduler;
 import io.reactivex.annotations.NonNull;
+import io.reactivex.annotations.Nullable;
 import io.reactivex.functions.BooleanSupplier;
 import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
@@ -20,9 +21,11 @@ import io.reactivex.subjects.PublishSubject;
  */
 public class RxLoader<A, D> {
 
-    PublishSubject<A> actionSubject = PublishSubject.create();
+    PublishSubject<A> actionSubject;
     BackpressureStrategy actionStrategy;
+    @Nullable
     Predicate<A> actionFiler;
+    @Nullable
     Consumer<A> actionConsumer;
     Scheduler actionScheduler;
     A startAction;
@@ -31,45 +34,10 @@ public class RxLoader<A, D> {
     Subscriber<List<D>> dataSubscriber;
     Scheduler dataScheduler;
 
-    boolean fetched;
-    boolean loading;
+    private boolean fetched;
+    private boolean loading;
 
     RxLoader() {
-    }
-
-    public RxLoader(BackpressureStrategy actionStrategy,
-                    Predicate<A> actionFiler,
-                    Consumer<A> actionConsumer,
-                    Scheduler actionScheduler,
-                    A startAction,
-                    Publisher<List<D>> dataLoader,
-                    Subscriber<List<D>> dataSubscriber,
-                    Scheduler dataScheduler) {
-        this.actionStrategy = (actionStrategy != null) ? actionStrategy :
-                BackpressureStrategy.DROP;
-        this.actionFiler = (actionFiler != null) ? actionFiler :
-                new Predicate<A>() {
-                    @Override
-                    public boolean test(@NonNull A a) throws Exception {
-                        return true;
-                    }
-                };
-        this.actionConsumer = (actionConsumer != null) ? actionConsumer :
-                new Consumer<A>() {
-                    @Override
-                    public void accept(@NonNull A a) throws Exception {
-                        // do nothing
-                    }
-                };
-        this.actionScheduler = actionScheduler;
-        this.startAction = startAction;
-        this.dataLoader = dataLoader;
-        this.dataSubscriber = dataSubscriber;
-        this.dataScheduler = dataScheduler;
-    }
-
-    public static <A, D> RxLoaderBuilder<A, D> builder() {
-        return new RxLoaderBuilder<>();
     }
 
     public synchronized boolean isFetched() {
@@ -92,23 +60,24 @@ public class RxLoader<A, D> {
     private void start() {
         actionSubject
                 .subscribeOn(actionScheduler) // Run on the main thread by default
-                .startWith(startAction) // Start the first load without event
+                .startWith(startAction) // Start the start load without event
                 .distinctUntilChanged()
                 .filter(new Predicate<A>() {
                     @Override
                     public boolean test(@NonNull A action) throws Exception {
-                        return !fetched && !loading;
+                        boolean doLoading = !fetched && !loading;
+                        if (doLoading && actionFiler != null) doLoading = actionFiler.test(action);
+                        return doLoading;
                     }
                 })
-                .filter(actionFiler)
                 .toFlowable(actionStrategy)
                 .doOnNext(new Consumer<A>() {
                     @Override
                     public void accept(@NonNull A action) throws Exception {
                         loading = true;
+                        if (actionConsumer != null) actionConsumer.accept(action);
                     }
                 })
-                .doOnNext(actionConsumer)
                 .observeOn(dataScheduler) // Load on the background thread by default
                 .concatMap(new Function<A, Publisher<List<D>>>() { // Convert Hot to Cold observable
                     @Override
@@ -132,10 +101,4 @@ public class RxLoader<A, D> {
                 })
                 .subscribe(dataSubscriber);
     }
-
-
-    public class Builder {
-
-    }
-
 }

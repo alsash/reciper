@@ -126,7 +126,7 @@ public class RecipeTable {
     }
 
     /**
-     * To-one relationship, resolved on first access.
+     * To-one relationship, resolved on init access.
      */
     @Generated(hash = 803105998)
     public CategoryTable getCategory() {
@@ -159,7 +159,7 @@ public class RecipeTable {
     }
 
     /**
-     * To-many relationship, resolved on first access (and after reset).
+     * To-many relationship, resolved on init access (and after reset).
      * Changes to to-many relations are not persisted, make changes to the target entity.
      */
     @Generated(hash = 4833725)

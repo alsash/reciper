@@ -16,7 +16,8 @@ import com.alsash.reciper.mvp.presenter.BasePresenter;
 import com.alsash.reciper.mvp.presenter.RecipeTabCategoryPresenter;
 import com.alsash.reciper.mvp.view.RecipeTabCategoryView;
 import com.alsash.reciper.ui.adapter.RecipeGroupCardListAdapter;
-import com.alsash.reciper.ui.adapter.interaction.RecipeListInteraction;
+import com.alsash.reciper.ui.adapter.interaction.RecipeGroupInteraction;
+import com.alsash.reciper.ui.adapter.interaction.RecipeSingleInteraction;
 
 import java.util.List;
 
@@ -25,7 +26,7 @@ import javax.inject.Inject;
 import static android.support.v7.widget.RecyclerView.SCROLL_STATE_SETTLING;
 
 public class RecipeTabCategoryFragment extends BaseFragment<RecipeTabCategoryView>
-        implements RecipeTabCategoryView {
+        implements RecipeTabCategoryView, RecipeGroupInteraction, RecipeSingleInteraction {
 
     @Inject
     RecipeTabCategoryPresenter presenter;
@@ -39,6 +40,7 @@ public class RecipeTabCategoryFragment extends BaseFragment<RecipeTabCategoryVie
         return new RecipeTabCategoryFragment();
     }
 
+
     @Override
     protected BasePresenter<RecipeTabCategoryView> inject() {
         ((ReciperApp) getActivity().getApplicationContext())
@@ -49,14 +51,14 @@ public class RecipeTabCategoryFragment extends BaseFragment<RecipeTabCategoryVie
 
     @Override
     public void setContainer(List<Category> container) {
-        adapter = new RecipeGroupCardListAdapter(container, new RecipeListInteraction() {
+        adapter = new RecipeGroupCardListAdapter(container, new RecipeSingleInteraction() {
             @Override
-            public void onExpand(Recipe recipe) {
+            public void onRecipeExpand(Recipe recipe) {
                 presenter.onRecipeExpand(getActivity().getSupportFragmentManager(), recipe);
             }
 
             @Override
-            public void onOpen(Recipe recipe) {
+            public void onRecipeOpen(Recipe recipe) {
                 presenter.onRecipeOpen(getActivity().getApplicationContext(), recipe);
             }
         });
