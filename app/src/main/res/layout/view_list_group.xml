@@ -11,10 +11,18 @@
         android:id="@+id/group_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp"
+        android:layout_margin="8dp"
         android:text="Group Name"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         tools:ignore="RtlHardcoded" />
+
+    <ProgressBar
+        android:id="@+id/group_progress"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="4dp"
+        android:layout_marginBottom="4dp"
+        android:indeterminate="true" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/group_list"
@@ -23,12 +31,5 @@
         android:orientation="horizontal"
         android:scrollbars="none"
         app:layoutManager="LinearLayoutManager" />
-
-    <ProgressBar
-        android:id="@+id/progressBar"
-        style="?android:attr/progressBarStyleHorizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:indeterminate="true" />
 
 </LinearLayout>

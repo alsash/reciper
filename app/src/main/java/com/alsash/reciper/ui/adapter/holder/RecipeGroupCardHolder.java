@@ -39,15 +39,17 @@ public class RecipeGroupCardHolder extends RecyclerView.ViewHolder {
         groupList.setAdapter(new RecipeSingleCardListAdapter(singleInteraction,
                 group.getRecipes()));
         groupList.setItemAnimator(new FlipCardListAnimator());
-        groupList.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                if (newState != SCROLL_STATE_SETTLING) return;
-                int lastVisiblePosition = ((LinearLayoutManager) recyclerView.getLayoutManager())
-                        .findLastVisibleItemPosition();
-                boolean stop = groupInteraction.onRecipesScroll(group, lastVisiblePosition);
-                if (stop) recyclerView.removeOnScrollListener(this);
-            }
-        });
+        groupList.clearOnScrollListeners();
+        if (groupInteraction.doRecipesScroll(getAdapterPosition())) {
+            groupList.addOnScrollListener(new RecyclerView.OnScrollListener() {
+                @Override
+                public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                    if (newState != SCROLL_STATE_SETTLING) return;
+                    int lastVisiblePosition = ((LinearLayoutManager) recyclerView.getLayoutManager())
+                            .findLastVisibleItemPosition();
+                    groupInteraction.onRecipesScroll(group, lastVisiblePosition);
+                }
+            });
+        }
     }
 }

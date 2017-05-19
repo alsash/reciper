@@ -2,6 +2,7 @@ package com.alsash.reciper.app;
 
 import android.content.Context;
 import android.content.Intent;
+import android.widget.Toast;
 
 import com.alsash.reciper.ui.activity.RecipeTabActivity;
 
@@ -24,6 +25,6 @@ public class AppNavigator {
     }
 
     public void toRecipeView(long recipeId) {
-
+        Toast.makeText(context, "Recipe id = " + recipeId, Toast.LENGTH_LONG).show();
     }
 }

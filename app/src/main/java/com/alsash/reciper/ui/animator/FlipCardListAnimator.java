@@ -16,6 +16,9 @@ import java.util.Map;
 import static com.alsash.reciper.app.AppContract.PAYLOAD_FLIP_BACK_TO_FRONT;
 import static com.alsash.reciper.app.AppContract.PAYLOAD_FLIP_FRONT_TO_BACK;
 
+/**
+ * Flip animator for Recipe Cards
+ */
 public class FlipCardListAnimator extends DefaultItemAnimator {
 
     private Map<RecyclerView.ViewHolder, FlipAnimatorHelper> flipAnimationsMap = new HashMap<>();

@@ -8,7 +8,11 @@ public interface RecipeTabCategoryView extends BaseView {
 
     void setCategories(List<Category> categories);
 
+    void setCategoriesScroll(boolean scroll);
+
     void showCategoriesLoading(boolean loading);
+
+    void setRecipesScroll(int categoryPosition, boolean scroll);
 
     void showRecipesLoading(int categoryPosition, boolean loading);
 }

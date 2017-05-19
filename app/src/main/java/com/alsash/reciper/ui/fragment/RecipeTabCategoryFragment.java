@@ -11,7 +11,6 @@ import android.view.ViewGroup;
 import com.alsash.reciper.R;
 import com.alsash.reciper.app.AppNavigator;
 import com.alsash.reciper.app.ReciperApp;
-import com.alsash.reciper.mvp.model.entity.BaseRecipeGroup;
 import com.alsash.reciper.mvp.model.entity.Category;
 import com.alsash.reciper.mvp.model.entity.Recipe;
 import com.alsash.reciper.mvp.presenter.BasePresenter;
@@ -33,13 +32,22 @@ public class RecipeTabCategoryFragment extends BaseFragment<RecipeTabCategoryVie
 
     @Inject
     RecipeTabCategoryPresenter presenter;
-
     @Inject
     AppNavigator navigator;
 
     private SwipeRefreshLayout refreshIndicator;
     private RecyclerView list;
     private RecipeGroupCardListAdapter adapter;
+
+    private RecyclerView.OnScrollListener categoriesScroll = new RecyclerView.OnScrollListener() {
+        @Override
+        public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+            if (newState != SCROLL_STATE_SETTLING) return;
+            int lastVisibleCategory = ((LinearLayoutManager) recyclerView.getLayoutManager())
+                    .findLastVisibleItemPosition();
+            presenter.onCategoriesScroll(lastVisibleCategory);
+        }
+    };
 
     public static RecipeTabCategoryFragment newInstance() {
         return new RecipeTabCategoryFragment();
@@ -54,11 +62,6 @@ public class RecipeTabCategoryFragment extends BaseFragment<RecipeTabCategoryVie
     }
 
     @Override
-    public void setCategories(List<Category> categories) {
-        adapter = new RecipeGroupCardListAdapter(categories, this, this);
-    }
-
-    @Override
     public void onRecipeExpand(Recipe recipe) {
         RecipeBottomDialog bottomDialog = RecipeBottomDialog.newInstance(recipe.getId());
         bottomDialog.show(getActivity().getSupportFragmentManager(), bottomDialog.getTag());
@@ -69,19 +72,46 @@ public class RecipeTabCategoryFragment extends BaseFragment<RecipeTabCategoryVie
         navigator.toRecipeView(recipe.getId());
     }
 
+
+    @Override
+    public void onRecipesScroll(int categoryPosition, int lastVisibleRecipe) {
+        presenter.onRecipesScroll(categoryPosition, lastVisibleRecipe);
+    }
+
+    @Override
+    public boolean doRecipesScroll(int categoryPosition) {
+        return presenter.doRecipesScroll(categoryPosition);
+    }
+
+    @Override
+    public void setCategories(List<Category> categories) {
+        adapter = new RecipeGroupCardListAdapter(categories, this, this);
+    }
+
+    @Override
+    public void setCategoriesScroll(boolean scroll) {
+        if (list == null) return;
+        if (scroll) {
+            list.addOnScrollListener(categoriesScroll);
+        } else {
+            list.clearOnScrollListeners();
+        }
+    }
+
+    @Override
+    public void setRecipesScroll(int categoryPosition, boolean scroll) {
+        adapter.notifyItemChanged(categoryPosition); // will be checked at doRecipesScroll(int)
+    }
+
     @Override
     public void showCategoriesLoading(boolean loading) {
-
+        refreshIndicator.setEnabled(loading);
+        refreshIndicator.setRefreshing(loading);
     }
 
     @Override
     public void showRecipesLoading(int categoryPosition, boolean loading) {
 
-    }
-
-    @Override
-    public boolean onRecipesScroll(BaseRecipeGroup recipeGroup, int lastVisibleRecipe) {
-        return presenter.onRecipesScroll(recipeGroup, lastVisibleRecipe);
     }
 
     @Override
@@ -100,18 +130,16 @@ public class RecipeTabCategoryFragment extends BaseFragment<RecipeTabCategoryVie
     }
 
     private void setupList() {
-        list.setLayoutManager(new LinearLayoutManager(list.getContext()));
-        list.setAdapter(adapter); // Created in setCategories() at onAttach()
-        list.addOnScrollListener(new RecyclerView.OnScrollListener() {
+        list.setLayoutManager(new LinearLayoutManager(list.getContext()) {
             @Override
-            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                if (newState != SCROLL_STATE_SETTLING) return;
-                int lastVisiblePosition = ((LinearLayoutManager) recyclerView.getLayoutManager())
-                        .findLastVisibleItemPosition();
-                boolean stop = presenter.onCategoriesScroll(lastVisiblePosition);
-                if (stop) recyclerView.removeOnScrollListener(this);
+            public boolean supportsPredictiveItemAnimations() {
+                return true;
             }
         });
+        list.setAdapter(adapter);
+        if (presenter.doCategoriesScroll()) {
+            list.addOnScrollListener(categoriesScroll);
+        }
     }
 
     private void setupRefresh() {
