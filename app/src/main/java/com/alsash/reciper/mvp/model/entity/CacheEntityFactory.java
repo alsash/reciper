@@ -1,6 +1,5 @@
 package com.alsash.reciper.mvp.model.entity;
 
-import android.graphics.Bitmap;
 import android.util.LruCache;
 
 import java.util.ArrayList;
@@ -11,7 +10,7 @@ import java.util.UUID;
 import javax.inject.Singleton;
 
 /**
- * An Entity Factory with cache in entity units for controlling the usage of entities
+ * An Entity Factory with cache for controlling the usage of entities and prevent NPE on UI
  */
 @Singleton
 public class CacheEntityFactory {
@@ -26,6 +25,8 @@ public class CacheEntityFactory {
     private final LruEntityByteCache<Recipe> recipesCache;
     private final LruEntityByteCache<Photo> photosCache;
 
+    private boolean createNewEntities;
+
     public CacheEntityFactory(int cacheSizeByte) {
         this.categoriesCache = new LruEntityByteCache<>((int) (cacheSizeByte * 0.05D));
         this.recipesCache = new LruEntityByteCache<>((int) (cacheSizeByte * 0.05D));
@@ -33,6 +34,9 @@ public class CacheEntityFactory {
         this.photosCache = new LruEntityByteCache<>((int) (cacheSizeByte * 0.85D));
     }
 
+    public void setCreateNewEntities(boolean createNewEntities) {
+        this.createNewEntities = createNewEntities;
+    }
 
     public int getSize() {
         return categoriesCache.size()
@@ -52,13 +56,6 @@ public class CacheEntityFactory {
         return (entity == null) || isInitial(entity.getId(), entity.getUuid());
     }
 
-    public boolean isInitial(Long id, UUID uuid) {
-        return (id == null)
-                || (uuid == null)
-                || id.equals(INITIAL_ID)
-                || uuid.equals(INITIAL_UUID);
-    }
-
     public Category getCategory() {
         return getCategory(null, null, null, null, null, null);
     }
@@ -68,7 +65,7 @@ public class CacheEntityFactory {
                                 String name,
                                 Date creationDate,
                                 Date changeDate,
-                                List<Recipe> recipes) {
+                                Photo photo) {
         Category category;
         if (isInitial(id, uuid)) {
             category = new Category();
@@ -81,20 +78,20 @@ public class CacheEntityFactory {
                 }
             }
         }
-        getBaseRecipeGroup(category, id, uuid, name, creationDate, changeDate, recipes);
+        getBaseEntity(category, id, uuid, name, creationDate, changeDate);
+        category.photo = (photo == null) ? getPhoto() : photo;
         return category;
     }
 
     public Label getLabel() {
-        return getLabel(null, null, null, null, null, null);
+        return getLabel(null, null, null, null, null);
     }
 
     public Label getLabel(Long id,
                           UUID uuid,
                           String name,
                           Date creationDate,
-                          Date changeDate,
-                          List<Recipe> recipes) {
+                          Date changeDate) {
         Label label;
 
         if (isInitial(id, uuid)) {
@@ -108,7 +105,7 @@ public class CacheEntityFactory {
                 }
             }
         }
-        getBaseRecipeGroup(label, id, uuid, name, creationDate, changeDate, recipes);
+        getBaseEntity(label, id, uuid, name, creationDate, changeDate);
         return label;
     }
 
@@ -142,7 +139,7 @@ public class CacheEntityFactory {
     }
 
     public Photo getPhoto() {
-        return getPhoto(null, null, null, null, null, null, null, null);
+        return getPhoto(null, null, null, null, null, null, null);
     }
 
     public Photo getPhoto(Long id,
@@ -151,8 +148,7 @@ public class CacheEntityFactory {
                           Date creationDate,
                           Date changeDate,
                           String url,
-                          String path,
-                          Bitmap data) {
+                          String path) {
         Photo photo;
         if (isInitial(id, uuid)) {
             photo = new Photo();
@@ -168,19 +164,7 @@ public class CacheEntityFactory {
         getBaseEntity(photo, id, uuid, name, creationDate, changeDate);
         photo.url = (url == null) ? INITIAL_STRING : url;
         photo.path = (path == null) ? INITIAL_STRING : path;
-        photo.data = data;
         return photo;
-    }
-
-    private void getBaseRecipeGroup(BaseRecipeGroup group,
-                                    Long id,
-                                    UUID uuid,
-                                    String name,
-                                    Date creationDate,
-                                    Date changeDate,
-                                    List<Recipe> recipes) {
-        getBaseEntity(group, id, uuid, name, creationDate, changeDate);
-        group.recipes = (recipes == null) ? new ArrayList<Recipe>() : recipes;
     }
 
     private void getBaseEntity(BaseEntity entity,
@@ -189,11 +173,23 @@ public class CacheEntityFactory {
                                String name,
                                Date creationDate,
                                Date changeDate) {
-        entity.id = (id == null) ? INITIAL_ID : id;
-        entity.uuid = (uuid == null) ? INITIAL_UUID : uuid;
+        if (createNewEntities) {
+            entity.id = (id == null) ? 0 : id;
+            entity.uuid = (uuid == null) ? UUID.randomUUID() : uuid;
+        } else {
+            entity.id = (id == null) ? INITIAL_ID : id;
+            entity.uuid = (uuid == null) ? INITIAL_UUID : uuid;
+        }
         entity.name = (name == null) ? INITIAL_STRING : name;
         entity.creationDate = (creationDate == null) ? (Date) INITIAL_DATE.clone() : creationDate;
         entity.changeDate = (changeDate == null) ? (Date) INITIAL_DATE.clone() : changeDate;
+    }
+
+    private boolean isInitial(Long id, UUID uuid) {
+        return (id == null)
+                || (uuid == null)
+                || id.equals(INITIAL_ID)
+                || uuid.equals(INITIAL_UUID);
     }
 
     private static class LruEntityByteCache<V extends BaseEntity> extends LruCache<UUID, V> {

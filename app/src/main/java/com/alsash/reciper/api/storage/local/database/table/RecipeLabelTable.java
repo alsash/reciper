@@ -16,23 +16,17 @@ import java.util.UUID;
  */
 @Entity(nameInDb = "RECIPE_LABEL")
 public class RecipeLabelTable {
-
     @Id
     private Long id;
-
     @Unique
     @Convert(converter = GuidConverter.class, columnType = String.class)
     private UUID uuid;
-
     @Index
     private Long recipeId;
-
     @Convert(converter = GuidConverter.class, columnType = String.class)
     private UUID recipeUuid;
-
     @Index
     private Long labelId;
-
     @Convert(converter = GuidConverter.class, columnType = String.class)
     private UUID labelUuid;
 

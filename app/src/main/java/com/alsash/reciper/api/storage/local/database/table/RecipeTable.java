@@ -21,25 +21,17 @@ import java.util.UUID;
  */
 @Entity(nameInDb = "RECIPE")
 public class RecipeTable {
-
     @Id
     private Long id;
-
     @Unique
     @Convert(converter = GuidConverter.class, columnType = String.class)
     private UUID uuid;
-
     private String name;
-
     private Date creationDate;
-
     private Date changeDate;
-
     private Long categoryId;
-
     @ToOne(joinProperty = "categoryId")
     private CategoryTable category;
-
     @ToMany
     @JoinEntity(
             entity = RecipeLabelTable.class,
@@ -47,30 +39,34 @@ public class RecipeTable {
             targetProperty = "labelId"
     )
     private List<LabelTable> labels;
+    private Long photoId;
+    @ToOne(joinProperty = "photoId")
+    private PhotoTable photo;
 
     /**
      * Used to resolve relations
      */
     @Generated(hash = 2040040024)
     private transient DaoSession daoSession;
-
     /** Used for active entity operations. */
     @Generated(hash = 1210201788)
     private transient RecipeTableDao myDao;
     @Generated(hash = 1372501278)
     private transient Long category__resolvedKey;
+    @Generated(hash = 1137958716)
+    private transient Long photo__resolvedKey;
 
-    @Generated(hash = 83583392)
+    @Generated(hash = 1288168263)
     public RecipeTable(Long id, UUID uuid, String name, Date creationDate,
-                       Date changeDate, Long categoryId) {
+                       Date changeDate, Long categoryId, Long photoId) {
         this.id = id;
         this.uuid = uuid;
         this.name = name;
         this.creationDate = creationDate;
         this.changeDate = changeDate;
         this.categoryId = categoryId;
+        this.photoId = photoId;
     }
-
     @Generated(hash = 1656289545)
     public RecipeTable() {
     }
@@ -123,6 +119,14 @@ public class RecipeTable {
         this.categoryId = categoryId;
     }
 
+    public Long getPhotoId() {
+        return this.photoId;
+    }
+
+    public void setPhotoId(Long photoId) {
+        this.photoId = photoId;
+    }
+
     /** To-one relationship, resolved on first access. */
     @Generated(hash = 803105998)
     public CategoryTable getCategory() {
@@ -153,6 +157,38 @@ public class RecipeTable {
     }
 
     /**
+     * To-one relationship, resolved on first access.
+     */
+    @Generated(hash = 2099343229)
+    public PhotoTable getPhoto() {
+        Long __key = this.photoId;
+        if (photo__resolvedKey == null || !photo__resolvedKey.equals(__key)) {
+            final DaoSession daoSession = this.daoSession;
+            if (daoSession == null) {
+                throw new DaoException("Entity is detached from DAO context");
+            }
+            PhotoTableDao targetDao = daoSession.getPhotoTableDao();
+            PhotoTable photoNew = targetDao.load(__key);
+            synchronized (this) {
+                photo = photoNew;
+                photo__resolvedKey = __key;
+            }
+        }
+        return photo;
+    }
+
+    /**
+     * called by internal mechanisms, do not call yourself.
+     */
+    @Generated(hash = 1794974770)
+    public void setPhoto(PhotoTable photo) {
+        synchronized (this) {
+            this.photo = photo;
+            photoId = photo == null ? null : photo.getId();
+            photo__resolvedKey = photoId;
+        }
+    }
+    /**
      * To-many relationship, resolved on first access (and after reset).
      * Changes to to-many relations are not persisted, make changes to the target entity.
      */
@@ -173,13 +209,11 @@ public class RecipeTable {
         }
         return labels;
     }
-
     /** Resets a to-many relationship, making the next get call to query for a fresh result. */
     @Generated(hash = 902294403)
     public synchronized void resetLabels() {
         labels = null;
     }
-
     /**
      * Convenient call for {@link org.greenrobot.greendao.AbstractDao#delete(Object)}.
      * Entity must attached to an entity context.
@@ -191,7 +225,6 @@ public class RecipeTable {
         }
         myDao.delete(this);
     }
-
     /**
      * Convenient call for {@link org.greenrobot.greendao.AbstractDao#refresh(Object)}.
      * Entity must attached to an entity context.
@@ -203,7 +236,6 @@ public class RecipeTable {
         }
         myDao.refresh(this);
     }
-
     /**
      * Convenient call for {@link org.greenrobot.greendao.AbstractDao#update(Object)}.
      * Entity must attached to an entity context.
@@ -215,7 +247,6 @@ public class RecipeTable {
         }
         myDao.update(this);
     }
-
     /** called by internal mechanisms, do not call yourself. */
     @Generated(hash = 173120018)
     public void __setDaoSession(DaoSession daoSession) {

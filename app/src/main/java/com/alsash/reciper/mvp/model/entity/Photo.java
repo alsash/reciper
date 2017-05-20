@@ -1,10 +1,8 @@
 package com.alsash.reciper.mvp.model.entity;
 
-import android.graphics.Bitmap;
-import android.support.annotation.Nullable;
-
 import java.util.Date;
 import java.util.UUID;
+
 
 /**
  * A Photo model
@@ -13,7 +11,6 @@ public class Photo extends BaseEntity {
 
     String url;
     String path;
-    Bitmap data;
 
     Photo() {
     }
@@ -24,12 +21,10 @@ public class Photo extends BaseEntity {
           Date creationDate,
           Date changeDate,
           String url,
-          String path,
-          Bitmap data) {
+          String path) {
         super(id, uuid, name, creationDate, changeDate);
         this.url = url;
         this.path = path;
-        this.data = data;
     }
 
     public String getUrl() {
@@ -38,11 +33,6 @@ public class Photo extends BaseEntity {
 
     public String getPath() {
         return path;
-    }
-
-    @Nullable
-    public Bitmap getData() {
-        return data;
     }
 
     @Override
@@ -62,7 +52,6 @@ public class Photo extends BaseEntity {
     int getSize() {
         return super.getSize()
                 + ((url == null) ? 0 : url.getBytes().length)
-                + ((path == null) ? 0 : path.getBytes().length)
-                + ((data == null) ? 0 : data.getByteCount());
+                + ((path == null) ? 0 : path.getBytes().length);
     }
 }

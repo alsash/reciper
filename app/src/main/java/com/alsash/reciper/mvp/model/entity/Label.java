@@ -1,24 +1,22 @@
 package com.alsash.reciper.mvp.model.entity;
 
 import java.util.Date;
-import java.util.List;
 import java.util.UUID;
 
 /**
  * A Label model
  */
-public class Label extends BaseRecipeGroup {
+public class Label extends BaseEntity {
 
     Label() {
     }
 
-    Label(Long id,
-          UUID uuid,
-          String name,
-          Date creationDate,
-          Date changeDate,
-          List<Recipe> recipes) {
-        super(id, uuid, name, creationDate, changeDate, recipes);
+    public Label(Long id,
+                 UUID uuid,
+                 String name,
+                 Date creationDate,
+                 Date changeDate) {
+        super(id, uuid, name, creationDate, changeDate);
     }
 
     @Override

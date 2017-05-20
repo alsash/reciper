@@ -3,16 +3,10 @@ package com.alsash.reciper.api;
 import android.support.annotation.WorkerThread;
 
 import com.alsash.reciper.api.storage.local.database.DatabaseApi;
-import com.alsash.reciper.api.storage.local.database.table.CategoryTable;
-import com.alsash.reciper.api.storage.local.database.table.LabelTable;
-import com.alsash.reciper.api.storage.local.database.table.RecipeTable;
 import com.alsash.reciper.app.AppContract;
 import com.alsash.reciper.mvp.model.entity.CacheEntityFactory;
 import com.alsash.reciper.mvp.model.entity.Category;
-import com.alsash.reciper.mvp.model.entity.Label;
-import com.alsash.reciper.mvp.model.entity.Recipe;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Singleton;
@@ -35,8 +29,8 @@ public class StorageApi {
 
     @WorkerThread
     public synchronized List<Category> getCategories(int offset, int limit, int relationsLimit) {
-
-        List<Category> categories = new ArrayList<>();
+        return null;
+/*        List<Category> categories = new ArrayList<>();
 
         for (CategoryTable categoryDb : databaseApi.getCategories(offset, limit, relationsLimit)) {
 
@@ -78,6 +72,7 @@ public class StorageApi {
         checkCache();
 
         return categories;
+        */
     }
 
     @WorkerThread

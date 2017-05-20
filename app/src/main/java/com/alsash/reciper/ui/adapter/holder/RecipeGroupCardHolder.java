@@ -7,9 +7,9 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.alsash.reciper.R;
-import com.alsash.reciper.mvp.model.entity.BaseRecipeGroup;
-import com.alsash.reciper.ui.adapter.RecipeSingleCardListAdapter;
-import com.alsash.reciper.ui.adapter.interaction.RecipeSingleInteraction;
+import com.alsash.reciper.mvp.model.entity.BaseEntity;
+import com.alsash.reciper.ui.adapter.RecipeCardListAdapter;
+import com.alsash.reciper.ui.adapter.interaction.RecipeCardListInteraction;
 import com.alsash.reciper.ui.animator.FlipCardListAnimator;
 
 public class RecipeGroupCardHolder extends RecyclerView.ViewHolder {
@@ -17,7 +17,7 @@ public class RecipeGroupCardHolder extends RecyclerView.ViewHolder {
     private TextView groupTitle;
     private RecyclerView groupList;
     private LinearLayoutManager layoutManager;
-    private RecipeSingleCardListAdapter adapter;
+    private RecipeCardListAdapter adapter;
     private FlipCardListAnimator animator;
 
     public RecipeGroupCardHolder(ViewGroup parent) {
@@ -28,19 +28,19 @@ public class RecipeGroupCardHolder extends RecyclerView.ViewHolder {
         groupList = (RecyclerView) itemView.findViewById(R.id.group_list);
     }
 
-    public void bindGroup(final BaseRecipeGroup group,
-                          RecipeSingleInteraction singleInteraction) {
+    public void bindGroup(final BaseEntity group,
+                          RecipeCardListInteraction singleInteraction) {
         groupTitle.setText(group.getName());
 
         if (layoutManager == null) {
             layoutManager = new LinearLayoutManager(groupList.getContext(),
                     LinearLayoutManager.HORIZONTAL, false);
-            layoutManager.setInitialPrefetchItemCount(group.getRecipes().size());
+            // layoutManager.setInitialPrefetchItemCount(group.getRecipes().size());
         groupList.setLayoutManager(layoutManager);
         }
 
         if (adapter == null) {
-            adapter = new RecipeSingleCardListAdapter(singleInteraction, group.getRecipes());
+            adapter = new RecipeCardListAdapter(singleInteraction, null);
             groupList.setAdapter(adapter);
         } else {
             adapter.notifyDataSetChanged();

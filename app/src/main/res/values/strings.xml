@@ -144,48 +144,48 @@
     <!--Startup entities. Json array-->
     <string name="startup_entity_recipe">
         [
-            {\"id\":0,\"name\":\"Recipe # 0\",\"categoryId\":0},
-            {\"id\":1,\"name\":\"Recipe # 1\",\"categoryId\":1},
-            {\"id\":2,\"name\":\"Recipe # 2\",\"categoryId\":2},
-            {\"id\":3,\"name\":\"Recipe # 3\",\"categoryId\":3},
-            {\"id\":4,\"name\":\"Recipe # 4\",\"categoryId\":4},
-            {\"id\":5,\"name\":\"Recipe # 5\",\"categoryId\":5},
-            {\"id\":6,\"name\":\"Recipe # 6\",\"categoryId\":6},
-            {\"id\":7,\"name\":\"Recipe # 7\",\"categoryId\":7},
-            {\"id\":8,\"name\":\"Recipe # 8\",\"categoryId\":8},
-            {\"id\":9,\"name\":\"Recipe # 9\",\"categoryId\":9},
-            {\"id\":10,\"name\":\"Recipe # 10\",\"categoryId\":0},
-            {\"id\":11,\"name\":\"Recipe # 11\",\"categoryId\":1},
-            {\"id\":12,\"name\":\"Recipe # 12\",\"categoryId\":2},
-            {\"id\":13,\"name\":\"Recipe # 13\",\"categoryId\":3},
-            {\"id\":14,\"name\":\"Recipe # 14\",\"categoryId\":4},
-            {\"id\":15,\"name\":\"Recipe # 15\",\"categoryId\":5},
-            {\"id\":16,\"name\":\"Recipe # 16\",\"categoryId\":6},
-            {\"id\":17,\"name\":\"Recipe # 17\",\"categoryId\":7},
-            {\"id\":18,\"name\":\"Recipe # 18\",\"categoryId\":8},
-            {\"id\":19,\"name\":\"Recipe # 19\",\"categoryId\":9}
+            {\"id\":0,\"uuid\":\"34d74aa8-3d5d-11e7-a919-92ebcb67fe33\",\"name\":\"Recipe # 0\",\"categoryId\":0},
+            {\"id\":1,\"uuid\":\"34d74d46-3d5d-11e7-a919-92ebcb67fe33\",\"name\":\"Recipe # 1\",\"categoryId\":1},
+            {\"id\":2,\"uuid\":\"34d74e86-3d5d-11e7-a919-92ebcb67fe33\",\"name\":\"Recipe # 2\",\"categoryId\":2},
+            {\"id\":3,\"uuid\":\"34d75020-3d5d-11e7-a919-92ebcb67fe33\",\"name\":\"Recipe # 3\",\"categoryId\":3},
+            {\"id\":4,\"uuid\":\"34d7519c-3d5d-11e7-a919-92ebcb67fe33\",\"name\":\"Recipe # 4\",\"categoryId\":4},
+            {\"id\":5,\"uuid\":\"34d757a0-3d5d-11e7-a919-92ebcb67fe33\",\"name\":\"Recipe # 5\",\"categoryId\":5},
+            {\"id\":6,\"uuid\":\"34d7593a-3d5d-11e7-a919-92ebcb67fe33\",\"name\":\"Recipe # 6\",\"categoryId\":6},
+            {\"id\":7,\"uuid\":\"34d75e58-3d5d-11e7-a919-92ebcb67fe33\",\"name\":\"Recipe # 7\",\"categoryId\":7},
+            {\"id\":8,\"uuid\":\"34d7602e-3d5d-11e7-a919-92ebcb67fe33\",\"name\":\"Recipe # 8\",\"categoryId\":8},
+            {\"id\":9,\"uuid\":\"34d761b4-3d5d-11e7-a919-92ebcb67fe33\",\"name\":\"Recipe # 9\",\"categoryId\":9},
+            {\"id\":10,\"uuid\":\"34d7634e-3d5d-11e7-a919-92ebcb67fe33\",\"name\":\"Recipe # 10\",\"categoryId\":0},
+            {\"id\":11,\"uuid\":\"34d764b6-3d5d-11e7-a919-92ebcb67fe33\",\"name\":\"Recipe # 11\",\"categoryId\":1},
+            {\"id\":12,\"uuid\":\"34d7661e-3d5d-11e7-a919-92ebcb67fe33\",\"name\":\"Recipe # 12\",\"categoryId\":2},
+            {\"id\":13,\"uuid\":\"34d767ae-3d5d-11e7-a919-92ebcb67fe33\",\"name\":\"Recipe # 13\",\"categoryId\":3},
+            {\"id\":14,\"uuid\":\"34d76c54-3d5d-11e7-a919-92ebcb67fe33\",\"name\":\"Recipe # 14\",\"categoryId\":4},
+            {\"id\":15,\"uuid\":\"34d76d44-3d5d-11e7-a919-92ebcb67fe33\",\"name\":\"Recipe # 15\",\"categoryId\":5},
+            {\"id\":16,\"uuid\":\"34d76e48-3d5d-11e7-a919-92ebcb67fe33\",\"name\":\"Recipe # 16\",\"categoryId\":6},
+            {\"id\":17,\"uuid\":\"df99f06c-3d5d-11e7-a919-92ebcb67fe33\",\"name\":\"Recipe # 17\",\"categoryId\":7},
+            {\"id\":18,\"uuid\":\"df99f30a-3d5d-11e7-a919-92ebcb67fe33\",\"name\":\"Recipe # 18\",\"categoryId\":8},
+            {\"id\":19,\"uuid\":\"df99f42c-3d5d-11e7-a919-92ebcb67fe33\",\"name\":\"Recipe # 19\",\"categoryId\":9}
         ]
     </string>
     <string name="startup_entity_category">
         [
-            {\"id\":0,\"name\":\"Category # 0\"},
-            {\"id\":1,\"name\":\"Category # 1\"},
-            {\"id\":2,\"name\":\"Category # 2\"},
-            {\"id\":3,\"name\":\"Category # 3\"},
-            {\"id\":4,\"name\":\"Category # 4\"},
-            {\"id\":5,\"name\":\"Category # 5\"},
-            {\"id\":6,\"name\":\"Category # 6\"},
-            {\"id\":7,\"name\":\"Category # 7\"},
-            {\"id\":8,\"name\":\"Category # 8\"},
-            {\"id\":9,\"name\":\"Category # 9\"}
+            {\"id\":0,\"uuid\":\"062e3c88-3d5e-11e7-a919-92ebcb67fe33\",\"name\":\"Category # 0\"},
+            {\"id\":1,\"uuid\":\"0c7cbc90-3d5e-11e7-a919-92ebcb67fe33\",\"name\":\"Category # 1\"},
+            {\"id\":2,\"uuid\":\"0c7cbf2e-3d5e-11e7-a919-92ebcb67fe33\",\"name\":\"Category # 2\"},
+            {\"id\":3,\"uuid\":\"0c7cc050-3d5e-11e7-a919-92ebcb67fe33\",\"name\":\"Category # 3\"},
+            {\"id\":4,\"uuid\":\"0c7cc14a-3d5e-11e7-a919-92ebcb67fe33\",\"name\":\"Category # 4\"},
+            {\"id\":5,\"uuid\":\"0c7cc4b0-3d5e-11e7-a919-92ebcb67fe33\",\"name\":\"Category # 5\"},
+            {\"id\":6,\"uuid\":\"0c7cc5aa-3d5e-11e7-a919-92ebcb67fe33\",\"name\":\"Category # 6\"},
+            {\"id\":7,\"uuid\":\"0c7cc690-3d5e-11e7-a919-92ebcb67fe33\",\"name\":\"Category # 7\"},
+            {\"id\":8,\"uuid\":\"0c7cc776-3d5e-11e7-a919-92ebcb67fe33\",\"name\":\"Category # 8\"},
+            {\"id\":9,\"uuid\":\"37710c26-3d5e-11e7-a919-92ebcb67fe33\",\"name\":\"Category # 9\"}
         ]
     </string>
     <string name="startup_entity_label">
         [
-            {\"id\":0,\"name\":\"Label # 0\"},
-            {\"id\":1,\"name\":\"Label # 1\"},
-            {\"id\":2,\"name\":\"Label # 2\"},
-            {\"id\":3,\"name\":\"Label # 3\"}
+            {\"id\":0,\"uuid\":\"55cbb388-3d5e-11e7-a919-92ebcb67fe33\",\"name\":\"Label # 0\"},
+            {\"id\":1,\"uuid\":\"55cbbdc4-3d5e-11e7-a919-92ebcb67fe33\",\"name\":\"Label # 1\"},
+            {\"id\":2,\"uuid\":\"55cbc030-3d5e-11e7-a919-92ebcb67fe33\",\"name\":\"Label # 2\"},
+            {\"id\":3,\"uuid\":\"55cbc508-3d5e-11e7-a919-92ebcb67fe33\",\"name\":\"Label # 3\"}
         ]
     </string>
     <string name="startup_entity_recipe_label_join">

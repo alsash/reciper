@@ -1,28 +1,30 @@
 package com.alsash.reciper.mvp.model.entity;
 
 import java.util.Date;
-import java.util.List;
 import java.util.UUID;
 
 /**
  * A Category model
  */
-public class Category extends BaseRecipeGroup {
+public class Category extends BaseEntity {
 
     Photo photo;
 
     Category() {
     }
 
-    Category(Long id,
-             UUID uuid,
-             String name,
-             Date creationDate,
-             Date changeDate,
-             List<Recipe> recipes,
-             Photo photo) {
-        super(id, uuid, name, creationDate, changeDate, recipes);
+    public Category(Long id,
+                    UUID uuid,
+                    String name,
+                    Date creationDate,
+                    Date changeDate,
+                    Photo photo) {
+        super(id, uuid, name, creationDate, changeDate);
         this.photo = photo;
+    }
+
+    public Photo getPhoto() {
+        return photo;
     }
 
     @Override

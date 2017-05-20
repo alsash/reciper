@@ -5,9 +5,9 @@ import com.alsash.reciper.mvp.model.entity.Recipe;
 /**
  * A Recipe view interaction listener
  */
-public interface RecipeSingleInteraction {
+public interface RecipeCardListInteraction {
 
-    void onRecipeExpand(Recipe recipe);
+    void onExpand(Recipe recipe);
 
-    void onRecipeOpen(Recipe recipe);
+    void onOpen(Recipe recipe);
 }

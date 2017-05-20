@@ -12,7 +12,6 @@ import com.alsash.reciper.api.storage.local.database.table.DaoSession;
 import com.alsash.reciper.api.storage.local.database.table.LabelTable;
 import com.alsash.reciper.api.storage.local.database.table.RecipeLabelTable;
 import com.alsash.reciper.api.storage.local.database.table.RecipeTable;
-import com.alsash.reciper.api.storage.local.database.table.RecipeTableDao;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -44,40 +43,24 @@ public class DatabaseApi {
         daoSession.clear();
     }
 
+    /**
+     * Load Categories with limit and offset on background thread
+     *
+     * @param offset offset from current position
+     * @param limit  limit for loading per 1 time
+     * @return list of categories
+     */
     @WorkerThread
-    public List<CategoryTable> getCategories(int offset, int limit, int relationsLimit) {
-        // Loading Categories with limit and offset.
-        List<CategoryTable> categoriesTable = daoSession
+    public List<CategoryTable> getCategories(int offset, int limit) {
+        return daoSession
                 .getCategoryTableDao()
                 .queryBuilder()
-                .limit(limit)
-                .offset(offset)
                 .orderDesc(CategoryTableDao.Properties.ChangeDate)
                 .orderDesc(CategoryTableDao.Properties.CreationDate)
+                .limit(limit)
+                .offset(offset)
                 .build()
                 .list();
-        // Loading Recipes manually because their relation may be too long.
-        for (CategoryTable categoryTable : categoriesTable) {
-            if (relationsLimit == 0) {
-                // categoryTable.setRecipes(Collections.<RecipeTable>emptyList());
-                continue;
-            }
-            List<RecipeTable> relatedRecipesTable = daoSession
-                    .getRecipeTableDao()
-                    .queryBuilder()
-                    .limit(relationsLimit)
-                    .where(RecipeTableDao.Properties.CategoryId.eq(categoryTable.getId()))
-                    .orderDesc(RecipeTableDao.Properties.ChangeDate)
-                    .orderDesc(RecipeTableDao.Properties.CreationDate)
-                    .build()
-                    .list();
-            // Loading labels automatically because their count may be strict.
-            for (RecipeTable recipeTable : relatedRecipesTable) {
-                recipeTable.getLabels();
-            }
-            // categoryTable.setRecipes(relatedRecipesTable);
-        }
-        return categoriesTable;
     }
 
     public synchronized void createStartupEntriesIfNeed() {

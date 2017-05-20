@@ -17,7 +17,7 @@ import com.alsash.reciper.mvp.presenter.BasePresenter;
 import com.alsash.reciper.mvp.presenter.RecipeTabCategoryPresenter;
 import com.alsash.reciper.mvp.view.RecipeTabCategoryView;
 import com.alsash.reciper.ui.adapter.RecipeGroupCardListAdapter;
-import com.alsash.reciper.ui.adapter.interaction.RecipeSingleInteraction;
+import com.alsash.reciper.ui.adapter.interaction.RecipeCardListInteraction;
 import com.alsash.reciper.ui.fragment.dialog.RecipeBottomDialog;
 
 import java.util.List;
@@ -26,8 +26,8 @@ import javax.inject.Inject;
 
 import static android.support.v7.widget.RecyclerView.SCROLL_STATE_SETTLING;
 
-public class RecipeTabCategoryFragment extends BaseFragment<RecipeTabCategoryView>
-        implements RecipeTabCategoryView, RecipeSingleInteraction {
+public class RecipeTabCategoryFragmentList extends BaseFragment<RecipeTabCategoryView>
+        implements RecipeTabCategoryView, RecipeCardListInteraction {
 
     @Inject
     RecipeTabCategoryPresenter presenter;
@@ -47,8 +47,8 @@ public class RecipeTabCategoryFragment extends BaseFragment<RecipeTabCategoryVie
         }
     };
 
-    public static RecipeTabCategoryFragment newInstance() {
-        return new RecipeTabCategoryFragment();
+    public static RecipeTabCategoryFragmentList newInstance() {
+        return new RecipeTabCategoryFragmentList();
     }
 
     @Override
@@ -60,13 +60,13 @@ public class RecipeTabCategoryFragment extends BaseFragment<RecipeTabCategoryVie
     }
 
     @Override
-    public void onRecipeExpand(Recipe recipe) {
+    public void onExpand(Recipe recipe) {
         RecipeBottomDialog bottomDialog = RecipeBottomDialog.newInstance(recipe.getId());
         bottomDialog.show(getActivity().getSupportFragmentManager(), bottomDialog.getTag());
     }
 
     @Override
-    public void onRecipeOpen(Recipe recipe) {
+    public void onOpen(Recipe recipe) {
         navigator.toRecipeView(recipe.getId());
     }
 
