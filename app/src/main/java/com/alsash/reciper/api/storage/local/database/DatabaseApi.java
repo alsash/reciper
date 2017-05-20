@@ -12,6 +12,7 @@ import com.alsash.reciper.api.storage.local.database.table.DaoSession;
 import com.alsash.reciper.api.storage.local.database.table.LabelTable;
 import com.alsash.reciper.api.storage.local.database.table.RecipeLabelTable;
 import com.alsash.reciper.api.storage.local.database.table.RecipeTable;
+import com.alsash.reciper.api.storage.local.database.table.RecipeTableDao;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -57,6 +58,18 @@ public class DatabaseApi {
                 .queryBuilder()
                 .orderDesc(CategoryTableDao.Properties.ChangeDate)
                 .orderDesc(CategoryTableDao.Properties.CreationDate)
+                .limit(limit)
+                .offset(offset)
+                .build()
+                .list();
+    }
+
+    public List<RecipeTable> getRecipes(int offset, int limit) {
+        return daoSession
+                .getRecipeTableDao()
+                .queryBuilder()
+                .orderDesc(RecipeTableDao.Properties.ChangeDate)
+                .orderDesc(RecipeTableDao.Properties.CreationDate)
                 .limit(limit)
                 .offset(offset)
                 .build()

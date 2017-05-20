@@ -22,6 +22,6 @@ public class RecipeTabCategoryPresenter extends BaseListPresenter<Category, Reci
 
     @Override
     protected List<Category> loadNext(int offset, int limit) {
-        return storage.getCategories(offset, limit, 10);
+        return storage.getCategories(offset, limit);
     }
 }

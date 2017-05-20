@@ -3,10 +3,14 @@ package com.alsash.reciper.api;
 import android.support.annotation.WorkerThread;
 
 import com.alsash.reciper.api.storage.local.database.DatabaseApi;
+import com.alsash.reciper.api.storage.local.database.table.CategoryTable;
+import com.alsash.reciper.api.storage.local.database.table.PhotoTable;
 import com.alsash.reciper.app.AppContract;
 import com.alsash.reciper.mvp.model.entity.CacheEntityFactory;
 import com.alsash.reciper.mvp.model.entity.Category;
+import com.alsash.reciper.mvp.model.entity.Photo;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Singleton;
@@ -28,51 +32,31 @@ public class StorageApi {
     }
 
     @WorkerThread
-    public synchronized List<Category> getCategories(int offset, int limit, int relationsLimit) {
-        return null;
-/*        List<Category> categories = new ArrayList<>();
-
-        for (CategoryTable categoryDb : databaseApi.getCategories(offset, limit, relationsLimit)) {
-
+    public synchronized List<Category> getCategories(int offset, int limit) {
+        List<Category> categories = new ArrayList<>();
+        for (CategoryTable categoryDb : databaseApi.getCategories(offset, limit)) {
+            PhotoTable photoDb = categoryDb.getPhoto();
+            Photo photo = (photoDb == null) ? null :
+                    entityFactory.getPhoto(
+                            photoDb.getId(),
+                            photoDb.getUuid(),
+                            photoDb.getName(),
+                            photoDb.getCreationDate(),
+                            photoDb.getChangeDate(),
+                            photoDb.getUrl(),
+                            photoDb.getPath()
+                    );
             Category category = entityFactory.getCategory(
                     categoryDb.getId(),
                     categoryDb.getUuid(),
                     categoryDb.getName(),
                     categoryDb.getCreationDate(),
                     categoryDb.getChangeDate(),
-                    new ArrayList<Recipe>());
+                    photo);
             categories.add(category);
-
-            for (RecipeTable recipeDb : categoryDb.getRecipes()) {
-
-                List<Label> labels = new ArrayList<>();
-                for (LabelTable labelDb : recipeDb.getLabels()) {
-                    labels.add(entityFactory.getLabel(
-                            labelDb.getId(),
-                            labelDb.getUuid(),
-                            labelDb.getName(),
-                            labelDb.getCreationDate(),
-                            labelDb.getChangeDate(),
-                            null) // No related recipes for labels with recipes in categories
-                    );
-                }
-                recipeDb.resetLabels();
-                category.getRecipes().add(entityFactory.getRecipe(
-                        recipeDb.getId(),
-                        recipeDb.getUuid(),
-                        recipeDb.getName(),
-                        recipeDb.getCreationDate(),
-                        recipeDb.getChangeDate(),
-                        category,
-                        labels));
-            }
-            categoryDb.resetRecipes();
         }
-
         checkCache();
-
         return categories;
-        */
     }
 
     @WorkerThread
