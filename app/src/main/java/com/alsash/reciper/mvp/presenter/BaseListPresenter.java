@@ -9,7 +9,7 @@ import org.reactivestreams.Publisher;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
-import java.util.LinkedHashSet;
+import java.util.HashSet;
 import java.util.List;
 
 import io.reactivex.BackpressureStrategy;
@@ -94,17 +94,18 @@ public abstract class BaseListPresenter<M, V extends BaseListView<M>> implements
                                 && doLoading(visiblePosition);
                     }
                 })
-                .toFlowable(BackpressureStrategy.DROP)
-                .doOnNext(new Consumer<Integer>() {
-                    @Override
-                    public void accept(@NonNull Integer visiblePosition) throws Exception {
-                        setLoading(true, viewRef);
-                    }
-                })
                 .map(new Function<Integer, Integer>() {
                     @Override
                     public Integer apply(@NonNull Integer visiblePosition) throws Exception {
                         return models.size(); // Offset
+                    }
+                })
+                .distinctUntilChanged()
+                .toFlowable(BackpressureStrategy.DROP)
+                .doOnNext(new Consumer<Integer>() {
+                    @Override
+                    public void accept(@NonNull Integer offset) throws Exception {
+                        setLoading(true, viewRef);
                     }
                 })
                 .observeOn(Schedulers.io()) // Do loading on the background thread
@@ -158,7 +159,7 @@ public abstract class BaseListPresenter<M, V extends BaseListView<M>> implements
         synchronized (models) {
             int insertPosition = models.size();
             int insertCount = 0;
-            LinkedHashSet<M> checkSet = new LinkedHashSet<>(models);
+            HashSet<M> checkSet = new HashSet<>(models);
             for (M model : newModels) {
                 if (!checkSet.contains(model)) {
                     models.add(model);
@@ -189,7 +190,7 @@ public abstract class BaseListPresenter<M, V extends BaseListView<M>> implements
      */
 
     protected boolean doLoading(int visiblePosition) {
-        return ((visiblePosition + 1) * 2) >= models.size();
+        return models.size() <= ((visiblePosition + 1) * 2);
     }
 
     protected boolean isLoading() {
