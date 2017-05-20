@@ -76,13 +76,14 @@ public class CacheEntityFactory {
                                 Date creationDate,
                                 Date changeDate,
                                 Photo photo) {
-        Category category = categoriesCache.get(uuid);
+
+        Category category = (uuid == null) ? null : categoriesCache.get(uuid);
         if (category == null) category = new Category();
 
         getBaseEntity(category, id, uuid, name, creationDate, changeDate);
         category.photo = (photo == null) ? getPhoto() : photo;
 
-        categoriesCache.put(uuid, category);
+        categoriesCache.put(category.getUuid(), category);
         return category;
     }
 
@@ -96,12 +97,12 @@ public class CacheEntityFactory {
                           Date creationDate,
                           Date changeDate) {
 
-        Label label = labelsCache.get(uuid);
+        Label label = (uuid == null) ? null : labelsCache.get(uuid);
         if (label == null) label = new Label();
 
         getBaseEntity(label, id, uuid, name, creationDate, changeDate);
 
-        labelsCache.put(uuid, label);
+        labelsCache.put(label.getUuid(), label);
         return label;
     }
 
@@ -117,14 +118,14 @@ public class CacheEntityFactory {
                             Category category,
                             List<Label> labels) {
 
-        Recipe recipe = recipesCache.get(uuid);
+        Recipe recipe = (uuid == null) ? null : recipesCache.get(uuid);
         if (recipe == null) recipe = new Recipe();
 
         getBaseEntity(recipe, id, uuid, name, creationDate, changeDate);
         recipe.category = (category == null) ? getCategory() : category;
         recipe.labels = (labels == null) ? new ArrayList<Label>() : labels;
 
-        recipesCache.put(uuid, recipe);
+        recipesCache.put(recipe.getUuid(), recipe);
         return recipe;
     }
 
@@ -139,14 +140,15 @@ public class CacheEntityFactory {
                           Date changeDate,
                           String url,
                           String path) {
-        Photo photo = photosCache.get(uuid);
+
+        Photo photo = (uuid == null) ? null : photosCache.get(uuid);
         if (photo == null) photo = new Photo();
 
         getBaseEntity(photo, id, uuid, name, creationDate, changeDate);
         photo.url = (url == null) ? INITIAL_STRING : url;
         photo.path = (path == null) ? INITIAL_STRING : path;
 
-        photosCache.put(uuid, photo);
+        photosCache.put(photo.getUuid(), photo);
         return photo;
     }
 

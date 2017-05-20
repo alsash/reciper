@@ -156,20 +156,18 @@ public abstract class BaseListPresenter<M, V extends BaseListView<M>> implements
      * @param viewRef   - view that attached to this presenter
      */
     protected void addNext(List<M> newModels, WeakReference<V> viewRef) {
-        synchronized (models) {
-            int insertPosition = models.size();
-            int insertCount = 0;
-            HashSet<M> checkSet = new HashSet<>(models);
-            for (M model : newModels) {
-                if (!checkSet.contains(model)) {
-                    models.add(model);
-                    insertCount += 1;
-                }
+        int insertPosition = models.size();
+        int insertCount = 0;
+        HashSet<M> checkSet = new HashSet<>(models);
+        for (M model : newModels) {
+            if (!checkSet.contains(model)) {
+                models.add(model);
+                insertCount += 1;
             }
-            if (insertCount == 0) return;
-            if (viewRef.get() != null && viewRef.get().isViewVisible()) {
-                viewRef.get().showInsert(insertPosition, insertCount);
-            }
+        }
+        if (insertCount == 0) return;
+        if (viewRef.get() != null && viewRef.get().isViewVisible()) {
+            viewRef.get().showInsert(insertPosition, insertCount);
         }
     }
 

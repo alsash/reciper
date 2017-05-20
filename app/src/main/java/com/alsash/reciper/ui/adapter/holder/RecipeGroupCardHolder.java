@@ -8,9 +8,12 @@ import android.widget.TextView;
 
 import com.alsash.reciper.R;
 import com.alsash.reciper.mvp.model.entity.BaseEntity;
+import com.alsash.reciper.mvp.model.entity.Recipe;
 import com.alsash.reciper.ui.adapter.RecipeCardListAdapter;
 import com.alsash.reciper.ui.adapter.interaction.RecipeCardListInteraction;
 import com.alsash.reciper.ui.animator.FlipCardListAnimator;
+
+import java.util.ArrayList;
 
 public class RecipeGroupCardHolder extends RecyclerView.ViewHolder {
 
@@ -40,7 +43,7 @@ public class RecipeGroupCardHolder extends RecyclerView.ViewHolder {
         }
 
         if (adapter == null) {
-            adapter = new RecipeCardListAdapter(singleInteraction, null);
+            adapter = new RecipeCardListAdapter(singleInteraction, new ArrayList<Recipe>());
             groupList.setAdapter(adapter);
         } else {
             adapter.notifyDataSetChanged();

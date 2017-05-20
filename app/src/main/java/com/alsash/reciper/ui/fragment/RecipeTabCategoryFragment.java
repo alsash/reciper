@@ -26,7 +26,7 @@ import javax.inject.Inject;
 
 import static android.support.v7.widget.RecyclerView.SCROLL_STATE_SETTLING;
 
-public class RecipeTabCategoryFragmentList extends BaseFragment<RecipeTabCategoryView>
+public class RecipeTabCategoryFragment extends BaseFragment<RecipeTabCategoryView>
         implements RecipeTabCategoryView, RecipeCardListInteraction {
 
     @Inject
@@ -47,8 +47,8 @@ public class RecipeTabCategoryFragmentList extends BaseFragment<RecipeTabCategor
         }
     };
 
-    public static RecipeTabCategoryFragmentList newInstance() {
-        return new RecipeTabCategoryFragmentList();
+    public static RecipeTabCategoryFragment newInstance() {
+        return new RecipeTabCategoryFragment();
     }
 
     @Override
