@@ -9,16 +9,16 @@ import android.widget.TextView;
 import com.alsash.reciper.R;
 import com.alsash.reciper.mvp.model.entity.BaseRecipeGroup;
 import com.alsash.reciper.ui.adapter.RecipeSingleCardListAdapter;
-import com.alsash.reciper.ui.adapter.interaction.RecipeGroupInteraction;
 import com.alsash.reciper.ui.adapter.interaction.RecipeSingleInteraction;
 import com.alsash.reciper.ui.animator.FlipCardListAnimator;
-
-import static android.support.v7.widget.RecyclerView.SCROLL_STATE_SETTLING;
 
 public class RecipeGroupCardHolder extends RecyclerView.ViewHolder {
 
     private TextView groupTitle;
     private RecyclerView groupList;
+    private LinearLayoutManager layoutManager;
+    private RecipeSingleCardListAdapter adapter;
+    private FlipCardListAnimator animator;
 
     public RecipeGroupCardHolder(ViewGroup parent) {
         super(LayoutInflater.from(parent.getContext())
@@ -29,27 +29,38 @@ public class RecipeGroupCardHolder extends RecyclerView.ViewHolder {
     }
 
     public void bindGroup(final BaseRecipeGroup group,
-                          final RecipeGroupInteraction groupInteraction,
                           RecipeSingleInteraction singleInteraction) {
         groupTitle.setText(group.getName());
-        LinearLayoutManager layoutManager = new LinearLayoutManager(groupList.getContext(),
-                LinearLayoutManager.HORIZONTAL, false);
-        layoutManager.setInitialPrefetchItemCount(group.getRecipes().size());
+
+        if (layoutManager == null) {
+            layoutManager = new LinearLayoutManager(groupList.getContext(),
+                    LinearLayoutManager.HORIZONTAL, false);
+            layoutManager.setInitialPrefetchItemCount(group.getRecipes().size());
         groupList.setLayoutManager(layoutManager);
-        groupList.setAdapter(new RecipeSingleCardListAdapter(singleInteraction,
-                group.getRecipes()));
-        groupList.setItemAnimator(new FlipCardListAnimator());
-        groupList.clearOnScrollListeners();
-        if (groupInteraction.doRecipesScroll(getAdapterPosition())) {
+        }
+
+        if (adapter == null) {
+            adapter = new RecipeSingleCardListAdapter(singleInteraction, group.getRecipes());
+            groupList.setAdapter(adapter);
+        } else {
+            adapter.notifyDataSetChanged();
+        }
+
+        if (animator == null) {
+            animator = new FlipCardListAnimator();
+            groupList.setItemAnimator(animator);
+        }
+
+/*        groupList.clearOnScrollListeners();
             groupList.addOnScrollListener(new RecyclerView.OnScrollListener() {
                 @Override
                 public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                     if (newState != SCROLL_STATE_SETTLING) return;
-                    int lastVisiblePosition = ((LinearLayoutManager) recyclerView.getLayoutManager())
+                    int lastVisibleRecipe = ((LinearLayoutManager) recyclerView.getLayoutManager())
                             .findLastVisibleItemPosition();
-                    groupInteraction.onRecipesScroll(group, lastVisiblePosition);
+                   // groupInteraction.onRecipesScroll(getAdapterPosition(), lastVisibleRecipe);
                 }
             });
-        }
+        }*/
     }
 }

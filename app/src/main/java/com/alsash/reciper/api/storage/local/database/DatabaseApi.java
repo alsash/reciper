@@ -19,7 +19,6 @@ import com.google.gson.reflect.TypeToken;
 import org.greenrobot.greendao.database.Database;
 
 import java.lang.reflect.Type;
-import java.util.Collections;
 import java.util.List;
 
 import javax.inject.Singleton;
@@ -60,7 +59,7 @@ public class DatabaseApi {
         // Loading Recipes manually because their relation may be too long.
         for (CategoryTable categoryTable : categoriesTable) {
             if (relationsLimit == 0) {
-                categoryTable.setRecipes(Collections.<RecipeTable>emptyList());
+                // categoryTable.setRecipes(Collections.<RecipeTable>emptyList());
                 continue;
             }
             List<RecipeTable> relatedRecipesTable = daoSession
@@ -76,7 +75,7 @@ public class DatabaseApi {
             for (RecipeTable recipeTable : relatedRecipesTable) {
                 recipeTable.getLabels();
             }
-            categoryTable.setRecipes(relatedRecipesTable);
+            // categoryTable.setRecipes(relatedRecipesTable);
         }
         return categoriesTable;
     }

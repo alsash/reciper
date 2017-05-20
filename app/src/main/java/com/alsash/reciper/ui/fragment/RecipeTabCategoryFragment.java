@@ -17,7 +17,6 @@ import com.alsash.reciper.mvp.presenter.BasePresenter;
 import com.alsash.reciper.mvp.presenter.RecipeTabCategoryPresenter;
 import com.alsash.reciper.mvp.view.RecipeTabCategoryView;
 import com.alsash.reciper.ui.adapter.RecipeGroupCardListAdapter;
-import com.alsash.reciper.ui.adapter.interaction.RecipeGroupInteraction;
 import com.alsash.reciper.ui.adapter.interaction.RecipeSingleInteraction;
 import com.alsash.reciper.ui.fragment.dialog.RecipeBottomDialog;
 
@@ -28,7 +27,7 @@ import javax.inject.Inject;
 import static android.support.v7.widget.RecyclerView.SCROLL_STATE_SETTLING;
 
 public class RecipeTabCategoryFragment extends BaseFragment<RecipeTabCategoryView>
-        implements RecipeTabCategoryView, RecipeGroupInteraction, RecipeSingleInteraction {
+        implements RecipeTabCategoryView, RecipeSingleInteraction {
 
     @Inject
     RecipeTabCategoryPresenter presenter;
@@ -38,14 +37,13 @@ public class RecipeTabCategoryFragment extends BaseFragment<RecipeTabCategoryVie
     private SwipeRefreshLayout refreshIndicator;
     private RecyclerView list;
     private RecipeGroupCardListAdapter adapter;
-
-    private RecyclerView.OnScrollListener categoriesScroll = new RecyclerView.OnScrollListener() {
+    private LinearLayoutManager layoutManager;
+    private boolean needPagination;
+    private RecyclerView.OnScrollListener paginationListener = new RecyclerView.OnScrollListener() {
         @Override
         public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-            if (newState != SCROLL_STATE_SETTLING) return;
-            int lastVisibleCategory = ((LinearLayoutManager) recyclerView.getLayoutManager())
-                    .findLastVisibleItemPosition();
-            presenter.onCategoriesScroll(lastVisibleCategory);
+            if (!needPagination || newState != SCROLL_STATE_SETTLING) return;
+            presenter.nextPagination(layoutManager.findLastVisibleItemPosition());
         }
     };
 
@@ -72,46 +70,25 @@ public class RecipeTabCategoryFragment extends BaseFragment<RecipeTabCategoryVie
         navigator.toRecipeView(recipe.getId());
     }
 
-
     @Override
-    public void onRecipesScroll(int categoryPosition, int lastVisibleRecipe) {
-        presenter.onRecipesScroll(categoryPosition, lastVisibleRecipe);
+    public void setContainer(List<Category> categories) {
+        adapter = new RecipeGroupCardListAdapter(categories, this);
     }
 
     @Override
-    public boolean doRecipesScroll(int categoryPosition) {
-        return presenter.doRecipesScroll(categoryPosition);
+    public void setPagination(boolean needPagination) {
+        this.needPagination = needPagination;
     }
 
     @Override
-    public void setCategories(List<Category> categories) {
-        adapter = new RecipeGroupCardListAdapter(categories, this, this);
-    }
-
-    @Override
-    public void setCategoriesScroll(boolean scroll) {
-        if (list == null) return;
-        if (scroll) {
-            list.addOnScrollListener(categoriesScroll);
-        } else {
-            list.clearOnScrollListeners();
-        }
-    }
-
-    @Override
-    public void setRecipesScroll(int categoryPosition, boolean scroll) {
-        adapter.notifyItemChanged(categoryPosition); // will be checked at doRecipesScroll(int)
-    }
-
-    @Override
-    public void showCategoriesLoading(boolean loading) {
+    public void showLoading(boolean loading) {
         refreshIndicator.setEnabled(loading);
         refreshIndicator.setRefreshing(loading);
     }
 
     @Override
-    public void showRecipesLoading(int categoryPosition, boolean loading) {
-
+    public void showInsert(int insertPosition, int insertCount) {
+        adapter.notifyItemRangeInserted(insertPosition, insertCount);
     }
 
     @Override
@@ -130,16 +107,10 @@ public class RecipeTabCategoryFragment extends BaseFragment<RecipeTabCategoryVie
     }
 
     private void setupList() {
-        list.setLayoutManager(new LinearLayoutManager(list.getContext()) {
-            @Override
-            public boolean supportsPredictiveItemAnimations() {
-                return true;
-            }
-        });
+        layoutManager = new LinearLayoutManager(list.getContext());
+        list.setLayoutManager(layoutManager);
         list.setAdapter(adapter);
-        if (presenter.doCategoriesScroll()) {
-            list.addOnScrollListener(categoriesScroll);
-        }
+        list.addOnScrollListener(paginationListener);
     }
 
     private void setupRefresh() {

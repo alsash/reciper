@@ -54,9 +54,7 @@ public class RecipeTable {
     @Generated(hash = 2040040024)
     private transient DaoSession daoSession;
 
-    /**
-     * Used for active entity operations.
-     */
+    /** Used for active entity operations. */
     @Generated(hash = 1210201788)
     private transient RecipeTableDao myDao;
     @Generated(hash = 1372501278)
@@ -125,9 +123,7 @@ public class RecipeTable {
         this.categoryId = categoryId;
     }
 
-    /**
-     * To-one relationship, resolved on init access.
-     */
+    /** To-one relationship, resolved on first access. */
     @Generated(hash = 803105998)
     public CategoryTable getCategory() {
         Long __key = this.categoryId;
@@ -146,9 +142,7 @@ public class RecipeTable {
         return category;
     }
 
-    /**
-     * called by internal mechanisms, do not call yourself.
-     */
+    /** called by internal mechanisms, do not call yourself. */
     @Generated(hash = 1888877147)
     public void setCategory(CategoryTable category) {
         synchronized (this) {
@@ -159,7 +153,7 @@ public class RecipeTable {
     }
 
     /**
-     * To-many relationship, resolved on init access (and after reset).
+     * To-many relationship, resolved on first access (and after reset).
      * Changes to to-many relations are not persisted, make changes to the target entity.
      */
     @Generated(hash = 4833725)
@@ -180,9 +174,7 @@ public class RecipeTable {
         return labels;
     }
 
-    /**
-     * Resets a to-many relationship, making the next get call to query for a fresh result.
-     */
+    /** Resets a to-many relationship, making the next get call to query for a fresh result. */
     @Generated(hash = 902294403)
     public synchronized void resetLabels() {
         labels = null;
@@ -224,13 +216,10 @@ public class RecipeTable {
         myDao.update(this);
     }
 
-    /**
-     * called by internal mechanisms, do not call yourself.
-     */
+    /** called by internal mechanisms, do not call yourself. */
     @Generated(hash = 173120018)
     public void __setDaoSession(DaoSession daoSession) {
         this.daoSession = daoSession;
         myDao = daoSession != null ? daoSession.getRecipeTableDao() : null;
     }
-
 }

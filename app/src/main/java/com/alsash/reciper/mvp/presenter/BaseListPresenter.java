@@ -1,6 +1,5 @@
 package com.alsash.reciper.mvp.presenter;
 
-import android.support.annotation.UiThread;
 import android.support.annotation.WorkerThread;
 import android.util.Log;
 
@@ -9,6 +8,8 @@ import com.alsash.reciper.mvp.view.BaseListView;
 import org.reactivestreams.Publisher;
 
 import java.lang.ref.WeakReference;
+import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
 
 import io.reactivex.BackpressureStrategy;
@@ -28,36 +29,31 @@ import io.reactivex.subscribers.DisposableSubscriber;
  * Base List Presenter, that fetch a data, represented by Model,
  * and holds BaseListView instance, witch represents a Model of a data.
  */
-public abstract class BaseListPresenter<V extends BaseListView<M>, M> implements BasePresenter<V> {
+public abstract class BaseListPresenter<M, V extends BaseListView<M>> implements BasePresenter<V> {
 
     private static final String TAG = "BaseListPresenter";
+    private static final int DEFAULT_LIMIT = 10;
 
     private final PublishSubject<Integer> scrollSubject = PublishSubject.create();
     private final CompositeDisposable composite = new CompositeDisposable();
-    private final List<M> models;
-    private final int initialPosition;
+    private final List<M> models = new ArrayList<>();
+    private final int limit;
 
-    private Boolean fetched;
+    private boolean fetched;
     private boolean loading;
 
-    public BaseListPresenter() {
-        this.models = getStart();
-        this.initialPosition = models.size() - 1;
+    public BaseListPresenter(int limit) {
+        this.limit = (limit > 0) ? limit : DEFAULT_LIMIT;
     }
 
-    @UiThread
-    protected abstract List<M> getStart();
-
     @WorkerThread
-    protected abstract List<M> loadNext();
+    protected abstract List<M> loadNext(int offset, int limit);
 
     @Override
     public void attach(V view) {
         view.setContainer(models);
-        if (!isFetched()) {
-            view.startPagination();
-            fetch(new WeakReference<>(view));
-        }
+        view.setPagination(!isFetched());
+        if (!isFetched()) fetch(new WeakReference<>(view));
     }
 
     @Override
@@ -66,47 +62,57 @@ public abstract class BaseListPresenter<V extends BaseListView<M>, M> implements
     }
 
     @Override
+    public void invisible(V view) {
+        // do nothing
+    }
+
+    @Override
     public void detach() {
         composite.dispose(); // set Observers to null, so they are not holds any shadow references
         composite.clear();   // in v.2.1.0 - same as dispose(), but without set isDispose()
     }
 
-    public void onPagination(int maxVisiblePosition) {
+    /**
+     * Notify about scroll event for doing pagination
+     *
+     * @param maxVisiblePosition - position of the last visible item
+     */
+    public void nextPagination(int maxVisiblePosition) {
         scrollSubject.onNext(maxVisiblePosition);
     }
 
     protected void fetch(final WeakReference<V> viewRef) {
         composite.add(scrollSubject
                 .subscribeOn(AndroidSchedulers.mainThread()) // Run on the main thread by default
-                .startWith(initialPosition) // Start the start load without scroll event
+                .startWith(-1) // Start loading without scroll event
                 .distinctUntilChanged()
-                .map(new Function<Integer, Boolean>() {
-                         @Override
-                         public Boolean apply(@NonNull Integer visiblePosition) throws Exception {
-                             return (!isFetched())
-                                     && (!isLoading())
-                                     && doLoading(visiblePosition);
-                         }
-                     }
-                )
-                .filter(new Predicate<Boolean>() {
+                .filter(new Predicate<Integer>() {
                     @Override
-                    public boolean test(@NonNull Boolean needLoading) throws Exception {
-                        return needLoading;
+                    public boolean test(@NonNull Integer visiblePosition) throws Exception {
+                        return (!isFetched())
+                                && (!isLoading())
+                                && doLoading(visiblePosition);
                     }
                 })
                 .toFlowable(BackpressureStrategy.DROP)
-                .doOnNext(new Consumer<Boolean>() {
+                .doOnNext(new Consumer<Integer>() {
                     @Override
-                    public void accept(@NonNull Boolean needLoading) throws Exception {
-                        setLoading(true, viewRef); // needLoading is always true
+                    public void accept(@NonNull Integer visiblePosition) throws Exception {
+                        setLoading(true, viewRef);
+                    }
+                })
+                .map(new Function<Integer, Integer>() {
+                    @Override
+                    public Integer apply(@NonNull Integer visiblePosition) throws Exception {
+                        return models.size(); // Offset
                     }
                 })
                 .observeOn(Schedulers.io()) // Do loading on the background thread
-                .concatMap(new Function<Boolean, Publisher<List<M>>>() {
+                .concatMap(new Function<Integer, Publisher<List<M>>>() {
                     @Override
-                    public Publisher<List<M>> apply(@NonNull Boolean needLoading) throws Exception {
-                        return Flowable.just(loadNext());
+                    public Publisher<List<M>> apply(@NonNull final Integer offset)
+                            throws Exception {
+                        return Flowable.just(loadNext(offset, getLimit()));
                     }
                 })
                 .repeatUntil(new BooleanSupplier() {
@@ -118,11 +124,12 @@ public abstract class BaseListPresenter<V extends BaseListView<M>, M> implements
                 .observeOn(AndroidSchedulers.mainThread()) // Observe results on the main thread
                 .subscribeWith(new DisposableSubscriber<List<M>>() {
                                    @Override
-                                   public void onNext(List<M> models) {
+                                   public void onNext(List<M> newModels) {
                                        setLoading(false, viewRef);
-                                       if (models.size() > 0) {
-                                           addNext(models, viewRef);
-                                       } else {
+                                       if (newModels.size() > 0) {
+                                           addNext(newModels, viewRef);
+                                       }
+                                       if (newModels.size() < getLimit()) {
                                            setFetched(true, viewRef);
                                        }
                                    }
@@ -144,20 +151,29 @@ public abstract class BaseListPresenter<V extends BaseListView<M>, M> implements
     /**
      * Add next data to the container and notify view about it.
      *
-     * @param models  - next data, size > 0.
-     * @param viewRef - view that attached to this presenter
+     * @param newModels - next data, size > 0.
+     * @param viewRef   - view that attached to this presenter
      */
-    @NonNull
-    protected void addNext(List<M> models, WeakReference<V> viewRef) {
-        int insertPosition = this.models.size();
-        this.models.addAll(models);
-        if (viewRef.get() != null && viewRef.get().isViewVisible()) {
-            viewRef.get().showInsert(insertPosition);
+    protected void addNext(List<M> newModels, WeakReference<V> viewRef) {
+        synchronized (models) {
+            int insertPosition = models.size();
+            int insertCount = 0;
+            LinkedHashSet<M> checkSet = new LinkedHashSet<>(models);
+            for (M model : newModels) {
+                if (!checkSet.contains(model)) {
+                    models.add(model);
+                    insertCount += 1;
+                }
+            }
+            if (insertCount == 0) return;
+            if (viewRef.get() != null && viewRef.get().isViewVisible()) {
+                viewRef.get().showInsert(insertPosition, insertCount);
+            }
         }
     }
 
     /**
-     * Return data obtained in {@link #getStart()}
+     * Request data container
      *
      * @return data container
      */
@@ -171,6 +187,7 @@ public abstract class BaseListPresenter<V extends BaseListView<M>, M> implements
      * @param visiblePosition - current max visible position of items.
      * @return true if the load is needed.
      */
+
     protected boolean doLoading(int visiblePosition) {
         return ((visiblePosition + 1) * 2) >= models.size();
     }
@@ -188,18 +205,15 @@ public abstract class BaseListPresenter<V extends BaseListView<M>, M> implements
     }
 
     protected boolean isFetched() {
-        return (fetched == null) ? false : fetched;
+        return fetched;
     }
 
     protected void setFetched(boolean fetched, WeakReference<V> viewRef) {
-        if (this.fetched != null && this.fetched == fetched) return;
         this.fetched = fetched;
-        if (viewRef.get() != null) {
-            if (fetched) {
-                viewRef.get().stopPagination();
-            } else {
-                viewRef.get().startPagination();
-            }
-        }
+        if (fetched && viewRef.get() != null) viewRef.get().setPagination(false);
+    }
+
+    protected int getLimit() {
+        return limit;
     }
 }
