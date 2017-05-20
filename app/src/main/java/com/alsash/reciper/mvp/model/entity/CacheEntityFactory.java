@@ -25,17 +25,23 @@ public class CacheEntityFactory {
     private final LruEntityByteCache<Recipe> recipesCache;
     private final LruEntityByteCache<Photo> photosCache;
 
+    private int maxCacheSizeByte;
     private boolean createNewEntities;
 
-    public CacheEntityFactory(int cacheSizeByte) {
-        this.categoriesCache = new LruEntityByteCache<>((int) (cacheSizeByte * 0.05D));
-        this.recipesCache = new LruEntityByteCache<>((int) (cacheSizeByte * 0.05D));
-        this.labelsCache = new LruEntityByteCache<>((int) (cacheSizeByte * 0.05D));
-        this.photosCache = new LruEntityByteCache<>((int) (cacheSizeByte * 0.85D));
+    public CacheEntityFactory(int maxCacheSizeByte) {
+        this.maxCacheSizeByte = maxCacheSizeByte;
+        this.categoriesCache = new LruEntityByteCache<>((int) (maxCacheSizeByte * 0.05D));
+        this.recipesCache = new LruEntityByteCache<>((int) (maxCacheSizeByte * 0.05D));
+        this.labelsCache = new LruEntityByteCache<>((int) (maxCacheSizeByte * 0.05D));
+        this.photosCache = new LruEntityByteCache<>((int) (maxCacheSizeByte * 0.85D));
     }
 
     public void setCreateNewEntities(boolean createNewEntities) {
         this.createNewEntities = createNewEntities;
+    }
+
+    public int getMaxCacheSizeByte() {
+        return maxCacheSizeByte;
     }
 
     public int getSize() {

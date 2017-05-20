@@ -5,7 +5,6 @@ import android.support.annotation.WorkerThread;
 import com.alsash.reciper.api.storage.local.database.DatabaseApi;
 import com.alsash.reciper.api.storage.local.database.table.CategoryTable;
 import com.alsash.reciper.api.storage.local.database.table.PhotoTable;
-import com.alsash.reciper.app.AppContract;
 import com.alsash.reciper.mvp.model.entity.CacheEntityFactory;
 import com.alsash.reciper.mvp.model.entity.Category;
 import com.alsash.reciper.mvp.model.entity.Photo;
@@ -24,6 +23,8 @@ public class StorageApi {
 
     private final DatabaseApi databaseApi;
     private final CacheEntityFactory entityFactory;
+
+    private long checkCacheCount;
 
     public StorageApi(DatabaseApi databaseApi, CacheEntityFactory entityFactory) {
         this.databaseApi = databaseApi;
@@ -65,7 +66,9 @@ public class StorageApi {
     }
 
     private void checkCache() {
-        if (entityFactory.getSize() > AppContract.CACHE_SIZE_BYTE * 0.90D) {
+        checkCacheCount += 1;
+        if ((checkCacheCount % 5) != 0) return;
+        if (entityFactory.getSize() > entityFactory.getMaxCacheSizeByte() * 0.90D) {
             entityFactory.clearCache();
             databaseApi.clearCache();
         }
