@@ -5,6 +5,7 @@ import com.alsash.reciper.mvp.model.entity.Category;
 import com.alsash.reciper.mvp.model.entity.Recipe;
 import com.alsash.reciper.mvp.view.RecipeTabCategoryView;
 
+import java.lang.ref.WeakReference;
 import java.util.List;
 
 /**
@@ -31,5 +32,15 @@ public class RecipeTabCategoryPresenter
     @Override
     protected List<Recipe> loadNextRecipes(int offset, int limit, long categoryId) {
         return storage.getCategorizedRecipes(offset, limit, categoryId);
+    }
+
+    @Override
+    protected boolean doLoading(int visiblePosition) {
+        return super.doLoading(visiblePosition);
+    }
+
+    @Override
+    protected void setLoading(boolean loading, WeakReference<RecipeTabCategoryView> viewRef) {
+        super.setLoading(loading, viewRef);
     }
 }

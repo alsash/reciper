@@ -11,6 +11,7 @@ import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import io.reactivex.BackpressureStrategy;
 import io.reactivex.Flowable;
@@ -41,6 +42,7 @@ public abstract class BaseListPresenter<M, V extends BaseListView<M>> implements
 
     private boolean fetched;
     private boolean loading;
+    private int previousPosition = -2;
 
     public BaseListPresenter(int limit) {
         this.limit = (limit > 0) ? limit : DEFAULT_LIMIT;
@@ -63,14 +65,13 @@ public abstract class BaseListPresenter<M, V extends BaseListView<M>> implements
 
     @Override
     public void invisible(V view) {
-        // do nothing
+        previousPosition = -2;
     }
 
     @Override
     public void detach() {
         composite.dispose(); // set Observers to null, so they are not holds any shadow references
         composite.clear();   // in v.2.1.0 - same as dispose(), but without set isDispose()
-        fetched = false; // Check new items in database at next attach
     }
 
     @Override
@@ -96,12 +97,12 @@ public abstract class BaseListPresenter<M, V extends BaseListView<M>> implements
         composite.add(scrollSubject
                 .subscribeOn(AndroidSchedulers.mainThread()) // Run on the main thread by default
                 .startWith(models.size() - 1) // Start loading without scroll event
-                .distinctUntilChanged()
                 .filter(new Predicate<Integer>() {
                     @Override
                     public boolean test(@NonNull Integer visiblePosition) throws Exception {
-                        return (!isFetched())
-                                && (!isLoading())
+                        return !isFetched()
+                                && !isLoading()
+                                && isIncreased(visiblePosition)
                                 && doLoading(visiblePosition);
                     }
                 })
@@ -127,6 +128,7 @@ public abstract class BaseListPresenter<M, V extends BaseListView<M>> implements
                         return Flowable.just(loadNext(offset, getLimit()));
                     }
                 })
+                .delay(4, TimeUnit.SECONDS)
                 .repeatUntil(new BooleanSupplier() {
                     @Override
                     public boolean getAsBoolean() throws Exception {
@@ -182,13 +184,14 @@ public abstract class BaseListPresenter<M, V extends BaseListView<M>> implements
         }
     }
 
-    /**
-     * Request data container
-     *
-     * @return data container
-     */
     protected List<M> getModels() {
         return models;
+    }
+
+    private boolean isIncreased(int visiblePosition) {
+        boolean increased = visiblePosition > previousPosition;
+        previousPosition = visiblePosition;
+        return increased;
     }
 
     /**
@@ -197,7 +200,6 @@ public abstract class BaseListPresenter<M, V extends BaseListView<M>> implements
      * @param visiblePosition - current max visible position of items.
      * @return true if the load is needed.
      */
-
     protected boolean doLoading(int visiblePosition) {
         return models.size() <= ((visiblePosition + 1) * 2);
     }

@@ -55,6 +55,7 @@ public abstract class BaseRecipeGroupHolder<G extends BaseGroup> extends Recycle
     }
 
     public void setPresenter(BaseRecipeGroupedPresenter newPresenter) {
+        showLoading(false);
         if (presenter == null) {
             presenter = newPresenter;
             presenter.attach(this);
@@ -65,9 +66,6 @@ public abstract class BaseRecipeGroupHolder<G extends BaseGroup> extends Recycle
             presenter = newPresenter;
             presenter.attach(this);
         }
-    }
-
-    public void onRecycled() {
     }
 
     @Override

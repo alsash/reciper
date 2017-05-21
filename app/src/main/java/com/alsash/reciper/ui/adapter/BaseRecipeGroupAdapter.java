@@ -18,9 +18,9 @@ import java.util.List;
 public abstract class BaseRecipeGroupAdapter<G extends BaseGroup,
         VH extends BaseRecipeGroupHolder<G>> extends RecyclerView.Adapter<VH> {
 
-    private List<G> groupList;
-    private RecipeGroupInteraction groupInteraction;
-    private RecipeListInteraction recipeInteraction;
+    private final List<G> groupList;
+    private final RecipeGroupInteraction groupInteraction;
+    private final RecipeListInteraction recipeInteraction;
 
     public BaseRecipeGroupAdapter(List<G> groupList,
                                   RecipeGroupInteraction groupInteraction,
@@ -51,10 +51,5 @@ public abstract class BaseRecipeGroupAdapter<G extends BaseGroup,
     @Override
     public void onViewDetachedFromWindow(VH holder) {
         holder.setViewVisible(false);
-    }
-
-    @Override
-    public void onViewRecycled(VH holder) {
-        holder.onRecycled();
     }
 }
