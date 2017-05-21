@@ -4,13 +4,10 @@ import android.support.v7.widget.RecyclerView;
 
 import com.alsash.reciper.app.AppNavigator;
 import com.alsash.reciper.app.ReciperApp;
-import com.alsash.reciper.mvp.model.entity.Category;
 import com.alsash.reciper.mvp.model.entity.Recipe;
-import com.alsash.reciper.mvp.presenter.BaseRecipeGroupListPresenter;
-import com.alsash.reciper.mvp.presenter.RecipeTabCategoryPresenter;
-import com.alsash.reciper.mvp.view.RecipeTabCategoryView;
-import com.alsash.reciper.ui.adapter.RecipeCategoryCardListAdapter;
-import com.alsash.reciper.ui.adapter.interaction.RecipeGroupInteraction;
+import com.alsash.reciper.mvp.presenter.RecipeTabBookmarkPresenter;
+import com.alsash.reciper.mvp.view.RecipeTabBookmarkView;
+import com.alsash.reciper.ui.adapter.RecipeCardListAdapter;
 import com.alsash.reciper.ui.adapter.interaction.RecipeListInteraction;
 import com.alsash.reciper.ui.fragment.dialog.RecipeBottomDialog;
 
@@ -19,13 +16,13 @@ import java.util.List;
 import javax.inject.Inject;
 
 /**
- * A final fragment with presenter, that represents group of recipes and their interactions
+ * Simple final fragment with presenter and interactions
  */
-public class RecipeTabCategoryFragment extends BaseListFragment<Category, RecipeTabCategoryView>
-        implements RecipeTabCategoryView, RecipeGroupInteraction, RecipeListInteraction {
+public class RecipeTabBookmarkFragment extends BaseListFragment<Recipe, RecipeTabBookmarkView>
+        implements RecipeTabBookmarkView, RecipeListInteraction {
 
     @Inject
-    RecipeTabCategoryPresenter presenter;
+    RecipeTabBookmarkPresenter presenter;
     @Inject
     AppNavigator navigator;
 
@@ -34,7 +31,7 @@ public class RecipeTabCategoryFragment extends BaseListFragment<Category, Recipe
     }
 
     @Override
-    protected RecipeTabCategoryPresenter inject() {
+    protected RecipeTabBookmarkPresenter inject() {
         ((ReciperApp) getActivity().getApplicationContext())
                 .getRecipeTabComponent()
                 .inject(this);
@@ -42,13 +39,8 @@ public class RecipeTabCategoryFragment extends BaseListFragment<Category, Recipe
     }
 
     @Override
-    protected RecyclerView.Adapter getAdapter(List<Category> categories) {
-        return new RecipeCategoryCardListAdapter(categories, this, this);
-    }
-
-    @Override
-    public BaseRecipeGroupListPresenter getInnerPresenter() {
-        return presenter.getInnerPresenter();
+    protected RecyclerView.Adapter getAdapter(List<Recipe> container) {
+        return new RecipeCardListAdapter(this, container);
     }
 
     @Override

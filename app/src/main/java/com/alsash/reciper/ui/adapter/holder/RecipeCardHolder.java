@@ -12,6 +12,11 @@ import android.widget.TextView;
 import com.alsash.reciper.R;
 import com.alsash.reciper.mvp.model.entity.Recipe;
 
+/**
+ * An view that holds the Recipe card,
+ * response to flip animations
+ * and send interaction events ro receiver
+ */
 public class RecipeCardHolder extends RecyclerView.ViewHolder {
 
     private final CardView frontCard;

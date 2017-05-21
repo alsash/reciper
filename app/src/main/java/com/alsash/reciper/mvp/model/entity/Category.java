@@ -6,7 +6,7 @@ import java.util.UUID;
 /**
  * A Category model
  */
-public class Category extends BaseEntity {
+public class Category extends BaseEntity implements BaseGroup {
 
     Photo photo;
 

@@ -72,6 +72,15 @@ public abstract class BaseListPresenter<M, V extends BaseListView<M>> implements
         composite.clear();   // in v.2.1.0 - same as dispose(), but without set isDispose()
     }
 
+    public void refresh(V view) {
+        detach();
+        models.clear();
+        WeakReference<V> viewRef = new WeakReference<>(view);
+        setFetched(false, viewRef);
+        setLoading(false, viewRef);
+        attach(view);
+    }
+
     /**
      * Notify about scroll event for doing pagination
      *
@@ -209,7 +218,7 @@ public abstract class BaseListPresenter<M, V extends BaseListView<M>> implements
 
     protected void setFetched(boolean fetched, WeakReference<V> viewRef) {
         this.fetched = fetched;
-        if (fetched && viewRef.get() != null) viewRef.get().setPagination(false);
+        if (viewRef.get() != null) viewRef.get().setPagination(!fetched);
     }
 
     protected int getLimit() {

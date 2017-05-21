@@ -54,6 +54,10 @@ public abstract class BaseFragment<V extends BaseView> extends Fragment implemen
         presenter = null;
     }
 
+    protected BasePresenter<V> getThisPresenter() {
+        return presenter;
+    }
+
     @SuppressWarnings("unchecked")
     protected V getThisView() {
         return (V) this;

@@ -3,6 +3,7 @@ package com.alsash.reciper.ui.fragment.dialog;
 import android.app.Dialog;
 import android.os.Bundle;
 import android.support.design.widget.BottomSheetDialogFragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
@@ -16,13 +17,12 @@ import static com.alsash.reciper.app.AppContract.KEY_RECIPE_ID;
 public class RecipeBottomDialog extends BottomSheetDialogFragment
         implements Toolbar.OnMenuItemClickListener {
 
-    public static RecipeBottomDialog newInstance(Long recipeId) {
-
+    public static void show(Long recipeId, FragmentManager fragmentManager) {
         Bundle args = new Bundle();
         args.putLong(KEY_RECIPE_ID, recipeId);
-        RecipeBottomDialog fragment = new RecipeBottomDialog();
-        fragment.setArguments(args);
-        return fragment;
+        RecipeBottomDialog dialog = new RecipeBottomDialog();
+        dialog.setArguments(args);
+        dialog.show(fragmentManager, dialog.getTag());
     }
 
     @Override

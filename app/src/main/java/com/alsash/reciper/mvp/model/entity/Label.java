@@ -6,7 +6,7 @@ import java.util.UUID;
 /**
  * A Label model
  */
-public class Label extends BaseEntity {
+public class Label extends BaseEntity implements BaseGroup {
 
     Label() {
     }
