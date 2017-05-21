@@ -10,6 +10,9 @@ import com.alsash.reciper.ui.fragment.dialog.RecipeBottomDialog;
 
 import javax.inject.Singleton;
 
+import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
+import static android.support.v4.content.IntentCompat.FLAG_ACTIVITY_CLEAR_TASK;
+
 /**
  * A Navigator class for controlling transitions between application views
  */
@@ -23,7 +26,9 @@ public class AppNavigator {
     }
 
     public void toMainView() {
-        context.startActivity(new Intent(context, RecipeTabActivity.class));
+        Intent intent = new Intent(context, RecipeTabActivity.class);
+        intent.setFlags(FLAG_ACTIVITY_CLEAR_TASK | FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(intent);
     }
 
     public void toRecipeMainView(long recipeId) {
