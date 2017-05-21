@@ -77,4 +77,10 @@ public class RecipeTabPresenter implements BasePresenter<RecipeTabView> {
     public void detach() {
         startTabPositionSet = false;
     }
+
+    @Override
+    public void refresh(RecipeTabView view) {
+        detach();
+        attach(view);
+    }
 }

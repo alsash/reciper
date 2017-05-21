@@ -114,15 +114,24 @@ public class DatabaseApi {
                 .queryBuilder()
                 .orderDesc(RecipeTableDao.Properties.ChangeDate)
                 .orderDesc(RecipeTableDao.Properties.CreationDate)
+                .where(RecipeTableDao.Properties.CategoryId.eq(categoryId))
                 .limit(limit)
                 .offset(offset)
-                .where(RecipeTableDao.Properties.CategoryId.eq(categoryId))
                 .build()
                 .list();
     }
 
     public List<RecipeTable> getBookmarkedRecipes(int offset, int limit) {
-        return null;
+        return daoSession
+                .getRecipeTableDao()
+                .queryBuilder()
+                .orderDesc(RecipeTableDao.Properties.ChangeDate)
+                .orderDesc(RecipeTableDao.Properties.CreationDate)
+                //.where(RecipeTableDao.Properties.CategoryId.eq(categoryId))
+                .limit(limit)
+                .offset(offset)
+                .build()
+                .list();
     }
 
     public synchronized void createStartupEntriesIfNeed() {

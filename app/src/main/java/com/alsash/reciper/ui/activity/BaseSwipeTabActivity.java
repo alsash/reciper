@@ -41,7 +41,11 @@ public abstract class BaseSwipeTabActivity<V extends SwipeTabView> extends BaseD
 
     @Override
     public void setTabs(List<? extends SwipeTab> tabs) {
-        adapter = getPagerAdapter(tabs);
+        if (adapter == null) {
+            adapter = getPagerAdapter(tabs);
+        } else {
+            adapter.notifyDataSetChanged();
+        }
     }
 
     @Override
