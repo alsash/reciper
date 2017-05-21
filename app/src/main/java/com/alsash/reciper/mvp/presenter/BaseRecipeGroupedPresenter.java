@@ -10,6 +10,7 @@ public abstract class BaseRecipeGroupedPresenter
         extends BaseListPresenter<Recipe, RecipeListView> {
 
     private final long groupId;
+    private boolean doFirstTime = true;
 
     protected BaseRecipeGroupedPresenter(int limit, long groupId) {
         super(limit);
@@ -18,5 +19,15 @@ public abstract class BaseRecipeGroupedPresenter
 
     public long getGroupId() {
         return groupId;
+    }
+
+    @Override
+    protected boolean doLoading(int visiblePosition) {
+        boolean doLoading = super.doLoading(visiblePosition);
+        if (doLoading && doFirstTime) {
+            doLoading = (getModels().size() == 0); // no prefetched items
+            doFirstTime = false;
+        }
+        return doLoading;
     }
 }
