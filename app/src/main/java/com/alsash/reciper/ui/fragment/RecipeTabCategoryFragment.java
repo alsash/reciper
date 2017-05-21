@@ -5,7 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import com.alsash.reciper.app.AppNavigator;
 import com.alsash.reciper.app.ReciperApp;
 import com.alsash.reciper.mvp.model.entity.Category;
-import com.alsash.reciper.mvp.presenter.BaseRecipeGroupListPresenter;
+import com.alsash.reciper.mvp.presenter.BaseRecipeGroupedPresenter;
 import com.alsash.reciper.mvp.presenter.RecipeTabCategoryPresenter;
 import com.alsash.reciper.mvp.view.RecipeTabCategoryView;
 import com.alsash.reciper.ui.adapter.RecipeCategoryCardListAdapter;
@@ -44,8 +44,8 @@ public class RecipeTabCategoryFragment extends BaseRecipeListFragment<Category, 
     }
 
     @Override
-    public BaseRecipeGroupListPresenter getInnerPresenter() {
-        return presenter.getInnerPresenter();
+    public BaseRecipeGroupedPresenter getInnerPresenter(long groupId) {
+        return presenter.getInnerPresenter(groupId);
     }
 
     @Override

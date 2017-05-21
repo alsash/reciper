@@ -70,6 +70,7 @@ public abstract class BaseListPresenter<M, V extends BaseListView<M>> implements
     public void detach() {
         composite.dispose(); // set Observers to null, so they are not holds any shadow references
         composite.clear();   // in v.2.1.0 - same as dispose(), but without set isDispose()
+        fetched = false; // Check new items in database at next attach
     }
 
     @Override
@@ -94,7 +95,7 @@ public abstract class BaseListPresenter<M, V extends BaseListView<M>> implements
     protected void fetch(final WeakReference<V> viewRef) {
         composite.add(scrollSubject
                 .subscribeOn(AndroidSchedulers.mainThread()) // Run on the main thread by default
-                .startWith(-1) // Start loading without scroll event
+                .startWith(models.size() - 1) // Start loading without scroll event
                 .distinctUntilChanged()
                 .filter(new Predicate<Integer>() {
                     @Override

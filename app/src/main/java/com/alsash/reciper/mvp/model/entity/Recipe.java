@@ -9,6 +9,7 @@ import java.util.UUID;
  */
 public class Recipe extends BaseEntity {
 
+    boolean bookmarked;
     Category category;
     List<Label> labels;
     Photo photo;
@@ -28,6 +29,10 @@ public class Recipe extends BaseEntity {
         this.category = category;
         this.labels = labels;
         this.photo = photo;
+    }
+
+    public boolean isBookmarked() {
+        return bookmarked;
     }
 
     public Category getCategory() {

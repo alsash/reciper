@@ -1,6 +1,5 @@
 package com.alsash.reciper.ui.adapter.holder;
 
-import android.support.annotation.CallSuper;
 import android.support.annotation.IdRes;
 import android.support.annotation.LayoutRes;
 import android.support.v7.widget.LinearLayoutManager;
@@ -10,11 +9,12 @@ import android.view.ViewGroup;
 
 import com.alsash.reciper.mvp.model.entity.BaseGroup;
 import com.alsash.reciper.mvp.model.entity.Recipe;
-import com.alsash.reciper.mvp.presenter.BaseRecipeGroupListPresenter;
+import com.alsash.reciper.mvp.presenter.BaseRecipeGroupedPresenter;
 import com.alsash.reciper.mvp.view.RecipeListView;
 import com.alsash.reciper.ui.adapter.RecipeCardListAdapter;
 import com.alsash.reciper.ui.adapter.interaction.RecipeListInteraction;
 import com.alsash.reciper.ui.animator.FlipCardListAnimator;
+import com.alsash.reciper.ui.view.RecyclerViewHelper;
 
 import java.util.List;
 
@@ -26,40 +26,48 @@ import static android.support.v7.widget.RecyclerView.SCROLL_STATE_SETTLING;
 public abstract class BaseRecipeGroupHolder<G extends BaseGroup> extends RecyclerView.ViewHolder
         implements RecipeListView {
 
-    protected BaseRecipeGroupListPresenter presenter;
     private RecipeListInteraction interaction;
+    private BaseRecipeGroupedPresenter presenter;
     private RecyclerView groupList;
-    private LinearLayoutManager layoutManager;
     private RecipeCardListAdapter adapter;
     private boolean viewVisible;
     private boolean needPagination;
     private RecyclerView.OnScrollListener paginationListener = new RecyclerView.OnScrollListener() {
         @Override
-        public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+        public void onScrollStateChanged(RecyclerView rv, int newState) {
             if (!needPagination || newState != SCROLL_STATE_SETTLING) return;
-            presenter.nextPagination(layoutManager.findLastVisibleItemPosition());
+            int lastPosition = RecyclerViewHelper.getLastVisibleItemPosition(rv.getLayoutManager());
+            presenter.nextPagination(lastPosition);
         }
     };
 
     public BaseRecipeGroupHolder(ViewGroup parent,
                                  @LayoutRes int layoutId,
-                                 @IdRes int listId,
-                                 BaseRecipeGroupListPresenter presenter,
-                                 RecipeListInteraction interaction) {
+                                 @IdRes int listId) {
         super(LayoutInflater.from(parent.getContext()).inflate(layoutId, parent, false));
         this.groupList = (RecyclerView) itemView.findViewById(listId);
-        this.interaction = interaction;
-        this.presenter = presenter;
     }
 
-    @CallSuper
-    public void bindGroup(G group) {
-        presenter.setGroupId(group.getId());
-        presenter.refresh(this);
+    public abstract void bindGroup(G group);
+
+    public void setInteraction(RecipeListInteraction interaction) {
+        this.interaction = interaction;
+    }
+
+    public void setPresenter(BaseRecipeGroupedPresenter newPresenter) {
+        if (presenter == null) {
+            presenter = newPresenter;
+            presenter.attach(this);
+            return;
+        }
+        if (!presenter.equals(newPresenter)) {
+            presenter.detach();
+            presenter = newPresenter;
+            presenter.attach(this);
+        }
     }
 
     public void onRecycled() {
-        presenter.detach();
     }
 
     @Override
@@ -69,18 +77,21 @@ public abstract class BaseRecipeGroupHolder<G extends BaseGroup> extends Recycle
 
     public void setViewVisible(boolean viewVisible) {
         this.viewVisible = viewVisible;
+        if (presenter == null) return;
+        if (viewVisible) {
+            presenter.visible(this);
+        } else {
+            presenter.invisible(this);
+        }
     }
 
     @Override
     public void setContainer(List<Recipe> recipes) {
-        if (adapter != null) {
-            adapter.notifyDataSetChanged();
-            return;
-        }
-        layoutManager = new LinearLayoutManager(groupList.getContext(),
-                LinearLayoutManager.HORIZONTAL, false);
-        groupList.setLayoutManager(layoutManager);
         adapter = new RecipeCardListAdapter(interaction, recipes);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(groupList.getContext(),
+                LinearLayoutManager.HORIZONTAL, false);
+        if (recipes.size() > 0) layoutManager.setInitialPrefetchItemCount(recipes.size());
+        groupList.setLayoutManager(layoutManager);
         groupList.setAdapter(adapter);
         groupList.setItemAnimator(new FlipCardListAnimator());
         groupList.addOnScrollListener(paginationListener);

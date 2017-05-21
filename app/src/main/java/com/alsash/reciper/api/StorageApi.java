@@ -39,64 +39,78 @@ public class StorageApi {
     @WorkerThread
     public List<Category> getCategories(int offset, int limit) {
         List<Category> categories = new ArrayList<>();
-        for (CategoryTable categoryDb : databaseApi.getCategories(offset, limit)) {
-            categories.add(getCategory(categoryDb));
+        for (CategoryTable categoryTable : databaseApi.getCategories(offset, limit)) {
+            categories.add(getCategory(categoryTable));
         }
         checkCache();
         return categories;
     }
 
+    @WorkerThread
     public List<Label> getLabels(int offset, int limit) {
         List<Label> labels = new ArrayList<>();
-
+        for (LabelTable labelTable : databaseApi.getLabels(offset, limit)) {
+            labels.add(getLabel(labelTable));
+        }
         return labels;
     }
 
     @WorkerThread
     public List<Recipe> getRecipes(int offset, int limit) {
         List<Recipe> recipes = new ArrayList<>();
-        for (RecipeTable recipeDb : databaseApi.getRecipes(offset, limit)) {
-            recipes.add(getRecipe(recipeDb));
+        for (RecipeTable recipeTable : databaseApi.getRecipes(offset, limit)) {
+            recipes.add(getRecipe(recipeTable));
         }
         checkCache();
         return recipes;
     }
 
+    @WorkerThread
     public List<Recipe> getLabeledRecipes(int offset, int limit, long labelId) {
         List<Recipe> recipes = new ArrayList<>();
-
+        for (RecipeTable recipeTable : databaseApi.getLabeledRecipes(offset, limit, labelId)) {
+            recipes.add(getRecipe(recipeTable));
+        }
         return recipes;
     }
 
+    @WorkerThread
     public List<Recipe> getCategorizedRecipes(int offset, int limit, long categoryId) {
         List<Recipe> recipes = new ArrayList<>();
-
+        for (RecipeTable recipeTable :
+                databaseApi.getCategorizedRecipes(offset, limit, categoryId)) {
+            recipes.add(getRecipe(recipeTable));
+        }
         return recipes;
     }
 
+    @WorkerThread
     public List<Recipe> getBookmarkedRecipes(int offset, int limit) {
         List<Recipe> recipes = new ArrayList<>();
-
+        for (RecipeTable recipeTable : databaseApi.getBookmarkedRecipes(offset, limit)) {
+            recipes.add(getRecipe(recipeTable));
+        }
         return recipes;
     }
 
-    private Recipe getRecipe(RecipeTable recipeDb) {
-        return (recipeDb == null) ? null :
+    private Recipe getRecipe(RecipeTable recipeTable) {
+        return (recipeTable == null) ? null :
                 entityFactory.getRecipe(
-                        recipeDb.getId(),
-                        recipeDb.getUuid(),
-                        recipeDb.getName(),
-                        recipeDb.getCreationDate(),
-                        recipeDb.getChangeDate(),
-                        getCategory(recipeDb.getCategory()),
-                        getLabels(recipeDb.getLabels())
+                        recipeTable.getId(),
+                        recipeTable.getUuid(),
+                        recipeTable.getName(),
+                        recipeTable.getCreationDate(),
+                        recipeTable.getChangeDate(),
+                        recipeTable.getBookmarked(),
+                        getCategory(recipeTable.getCategory()),
+                        getLabels(recipeTable.getLabels())
                 );
     }
 
-    private List<Label> getLabels(List<LabelTable> labelsDb) {
-        if (labelsDb == null) return null;
+    private List<Label> getLabels(List<LabelTable> labelTables) {
+        if (labelTables == null) return null;
         List<Label> labels = new ArrayList<>();
-        for (LabelTable labelDb : labelsDb) {
+        for (LabelTable labelDb : labelTables) {
             labels.add(getLabel(labelDb));
         }
         return labels;

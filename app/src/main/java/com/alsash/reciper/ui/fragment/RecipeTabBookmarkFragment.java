@@ -24,8 +24,8 @@ public class RecipeTabBookmarkFragment extends BaseRecipeListFragment<Recipe, Re
     @Inject
     AppNavigator navigator;
 
-    public static RecipeTabCategoryFragment newInstance() {
-        return new RecipeTabCategoryFragment();
+    public static RecipeTabBookmarkFragment newInstance() {
+        return new RecipeTabBookmarkFragment();
     }
 
     @Override

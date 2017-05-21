@@ -1,13 +1,17 @@
 package com.alsash.reciper.ui.fragment;
 
+import android.content.Context;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
+import com.alsash.reciper.R;
 import com.alsash.reciper.app.AppNavigator;
 import com.alsash.reciper.app.ReciperApp;
 import com.alsash.reciper.mvp.model.entity.Recipe;
 import com.alsash.reciper.mvp.presenter.RecipeTabGridPresenter;
 import com.alsash.reciper.mvp.view.RecipeTabGridView;
 import com.alsash.reciper.ui.adapter.RecipeCardListAdapter;
+import com.alsash.reciper.ui.animator.FlipCardListAnimator;
 
 import java.util.List;
 
@@ -24,8 +28,8 @@ public class RecipeTabGridFragment extends BaseRecipeListFragment<Recipe, Recipe
     @Inject
     AppNavigator navigator;
 
-    public static RecipeTabCategoryFragment newInstance() {
-        return new RecipeTabCategoryFragment();
+    public static RecipeTabGridFragment newInstance() {
+        return new RecipeTabGridFragment();
     }
 
     @Override
@@ -44,5 +48,17 @@ public class RecipeTabGridFragment extends BaseRecipeListFragment<Recipe, Recipe
     @Override
     protected AppNavigator getNavigator() {
         return navigator;
+    }
+
+    @Override
+    protected void setupList() {
+        super.setupList();
+        list.setItemAnimator(new FlipCardListAnimator());
+    }
+
+    @Override
+    protected RecyclerView.LayoutManager getLayoutManager(Context context) {
+        return new GridLayoutManager(context,
+                context.getResources().getInteger(R.integer.recipe_list_span));
     }
 }

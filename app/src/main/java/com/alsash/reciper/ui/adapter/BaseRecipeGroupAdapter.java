@@ -1,10 +1,8 @@
 package com.alsash.reciper.ui.adapter;
 
 import android.support.v7.widget.RecyclerView;
-import android.view.ViewGroup;
 
 import com.alsash.reciper.mvp.model.entity.BaseGroup;
-import com.alsash.reciper.mvp.presenter.BaseRecipeGroupListPresenter;
 import com.alsash.reciper.ui.adapter.holder.BaseRecipeGroupHolder;
 import com.alsash.reciper.ui.adapter.interaction.RecipeGroupInteraction;
 import com.alsash.reciper.ui.adapter.interaction.RecipeListInteraction;
@@ -32,23 +30,12 @@ public abstract class BaseRecipeGroupAdapter<G extends BaseGroup,
         this.recipeInteraction = recipeInteraction;
     }
 
-    protected abstract VH onCreateViewHolder(ViewGroup parent,
-                                             int viewType,
-                                             BaseRecipeGroupListPresenter presenter,
-                                             RecipeListInteraction recipeInteraction);
-
-    @Override
-    public VH onCreateViewHolder(ViewGroup parent, int viewType) {
-        return onCreateViewHolder(
-                parent,
-                viewType,
-                groupInteraction.getInnerPresenter(),
-                recipeInteraction);
-    }
-
     @Override
     public void onBindViewHolder(VH holder, int position) {
-        holder.bindGroup(groupList.get(position));
+        G group = groupList.get(position);
+        holder.bindGroup(group);
+        holder.setInteraction(recipeInteraction);
+        holder.setPresenter(groupInteraction.getInnerPresenter(group.getId()));
     }
 
     @Override

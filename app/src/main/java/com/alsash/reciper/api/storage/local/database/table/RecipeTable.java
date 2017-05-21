@@ -29,7 +29,7 @@ public class RecipeTable {
     private String name;
     private Date creationDate;
     private Date changeDate;
-    private boolean bookmark;
+    private boolean bookmarked;
     private Long categoryId;
     @ToOne(joinProperty = "categoryId")
     private CategoryTable category;
@@ -43,7 +43,6 @@ public class RecipeTable {
     private Long photoId;
     @ToOne(joinProperty = "photoId")
     private PhotoTable photo;
-
     /**
      * Used to resolve relations
      */
@@ -57,15 +56,15 @@ public class RecipeTable {
     @Generated(hash = 1137958716)
     private transient Long photo__resolvedKey;
 
-    @Generated(hash = 465249090)
-    public RecipeTable(Long id, UUID uuid, String name, Date creationDate, Date changeDate,
-                       boolean bookmark, Long categoryId, Long photoId) {
+    @Generated(hash = 1043978897)
+    public RecipeTable(Long id, UUID uuid, String name, Date creationDate,
+                       Date changeDate, boolean bookmarked, Long categoryId, Long photoId) {
         this.id = id;
         this.uuid = uuid;
         this.name = name;
         this.creationDate = creationDate;
         this.changeDate = changeDate;
-        this.bookmark = bookmark;
+        this.bookmarked = bookmarked;
         this.categoryId = categoryId;
         this.photoId = photoId;
     }
@@ -113,6 +112,14 @@ public class RecipeTable {
         this.changeDate = changeDate;
     }
 
+    public boolean getBookmarked() {
+        return this.bookmarked;
+    }
+
+    public void setBookmarked(boolean bookmarked) {
+        this.bookmarked = bookmarked;
+    }
+
     public Long getCategoryId() {
         return this.categoryId;
     }
@@ -158,9 +165,7 @@ public class RecipeTable {
         }
     }
 
-    /**
-     * To-one relationship, resolved on first access.
-     */
+    /** To-one relationship, resolved on first access. */
     @Generated(hash = 2099343229)
     public PhotoTable getPhoto() {
         Long __key = this.photoId;
@@ -179,9 +184,7 @@ public class RecipeTable {
         return photo;
     }
 
-    /**
-     * called by internal mechanisms, do not call yourself.
-     */
+    /** called by internal mechanisms, do not call yourself. */
     @Generated(hash = 1794974770)
     public void setPhoto(PhotoTable photo) {
         synchronized (this) {
@@ -248,14 +251,6 @@ public class RecipeTable {
             throw new DaoException("Entity is detached from DAO context");
         }
         myDao.update(this);
-    }
-
-    public boolean getBookmark() {
-        return this.bookmark;
-    }
-
-    public void setBookmark(boolean bookmark) {
-        this.bookmark = bookmark;
     }
     /** called by internal mechanisms, do not call yourself. */
     @Generated(hash = 173120018)

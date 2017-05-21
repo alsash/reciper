@@ -107,7 +107,7 @@ public class CacheEntityFactory {
     }
 
     public Recipe getRecipe() {
-        return getRecipe(null, null, null, null, null, null, null);
+        return getRecipe(null, null, null, null, null, null, null, null);
     }
 
     public Recipe getRecipe(Long id,
@@ -115,6 +115,7 @@ public class CacheEntityFactory {
                             String name,
                             Date creationDate,
                             Date changeDate,
+                            Boolean bookmarked,
                             Category category,
                             List<Label> labels) {
 
@@ -122,6 +123,7 @@ public class CacheEntityFactory {
         if (recipe == null) recipe = new Recipe();
 
         getBaseEntity(recipe, id, uuid, name, creationDate, changeDate);
+        recipe.bookmarked = (bookmarked == null) ? false : bookmarked;
         recipe.category = (category == null) ? getCategory() : category;
         recipe.labels = (labels == null) ? new ArrayList<Label>() : labels;
 

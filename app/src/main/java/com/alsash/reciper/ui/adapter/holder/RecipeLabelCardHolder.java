@@ -7,8 +7,6 @@ import android.widget.TextView;
 
 import com.alsash.reciper.R;
 import com.alsash.reciper.mvp.model.entity.Label;
-import com.alsash.reciper.mvp.presenter.BaseRecipeGroupListPresenter;
-import com.alsash.reciper.ui.adapter.interaction.RecipeListInteraction;
 
 /**
  * Simple view holder that holds Label
@@ -19,10 +17,8 @@ public class RecipeLabelCardHolder extends BaseRecipeGroupHolder<Label> {
     private TextView labelName;
     private ProgressBar progressBar;
 
-    public RecipeLabelCardHolder(ViewGroup parent,
-                                 BaseRecipeGroupListPresenter presenter,
-                                 RecipeListInteraction interaction) {
-        super(parent, R.layout.view_list_group, R.id.group_list, presenter, interaction);
+    public RecipeLabelCardHolder(ViewGroup parent) {
+        super(parent, R.layout.view_list_group, R.id.group_list);
         progressBar = (ProgressBar) itemView.findViewById(R.id.group_progress);
         labelName = (TextView) itemView.findViewById(R.id.group_name);
     }
@@ -30,7 +26,6 @@ public class RecipeLabelCardHolder extends BaseRecipeGroupHolder<Label> {
     @Override
     public void bindGroup(Label label) {
         labelName.setText(label.getName());
-        super.bindGroup(label);
     }
 
     @Override

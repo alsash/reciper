@@ -3,7 +3,6 @@ package com.alsash.reciper.ui.adapter;
 import android.view.ViewGroup;
 
 import com.alsash.reciper.mvp.model.entity.Label;
-import com.alsash.reciper.mvp.presenter.BaseRecipeGroupListPresenter;
 import com.alsash.reciper.ui.adapter.holder.RecipeLabelCardHolder;
 import com.alsash.reciper.ui.adapter.interaction.RecipeGroupInteraction;
 import com.alsash.reciper.ui.adapter.interaction.RecipeListInteraction;
@@ -23,10 +22,7 @@ public class RecipeLabelCardListAdapter
     }
 
     @Override
-    protected RecipeLabelCardHolder onCreateViewHolder(ViewGroup parent,
-                                                       int viewType,
-                                                       BaseRecipeGroupListPresenter presenter,
-                                                       RecipeListInteraction recipeInteraction) {
-        return new RecipeLabelCardHolder(parent, presenter, recipeInteraction);
+    public RecipeLabelCardHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        return new RecipeLabelCardHolder(parent);
     }
 }

@@ -16,12 +16,12 @@ public abstract class BaseRecipeListFragment<M, V extends BaseListView<M>>
 
     @Override
     public void onExpand(Recipe recipe) {
-        getNavigator().toRecipeMainView(recipe.getId());
+        getNavigator().toRecipeExpandView(recipe.getId(),
+                getActivity().getSupportFragmentManager());
     }
 
     @Override
     public void onOpen(Recipe recipe) {
-        getNavigator().toRecipeExpandView(recipe.getId(),
-                getActivity().getSupportFragmentManager());
+        getNavigator().toRecipeMainView(recipe.getId());
     }
 }

@@ -5,7 +5,10 @@ import android.support.v4.app.Fragment;
 import com.alsash.reciper.R;
 import com.alsash.reciper.mvp.model.tab.SwipeTab;
 import com.alsash.reciper.mvp.view.RecipeTabView;
+import com.alsash.reciper.ui.fragment.RecipeTabBookmarkFragment;
 import com.alsash.reciper.ui.fragment.RecipeTabCategoryFragment;
+import com.alsash.reciper.ui.fragment.RecipeTabGridFragment;
+import com.alsash.reciper.ui.fragment.RecipeTabLabelFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,19 +31,19 @@ public class RecipeTabPresenter implements BasePresenter<RecipeTabView> {
         TABS.add(new SwipeTab(R.string.tab_recipe_grid, R.drawable.tab_recipe_grid, true) {
             @Override
             public Fragment getFragment() {
-                return new Fragment();
+                return RecipeTabGridFragment.newInstance();
             }
         });
         TABS.add(new SwipeTab(R.string.tab_recipe_label, R.drawable.tab_recipe_label, false) {
             @Override
             public Fragment getFragment() {
-                return new Fragment();
+                return RecipeTabLabelFragment.newInstance();
             }
         });
         TABS.add(new SwipeTab(R.string.tab_recipe_bookmark, R.drawable.tab_recipe_bookmark, true) {
             @Override
             public Fragment getFragment() {
-                return new Fragment();
+                return RecipeTabBookmarkFragment.newInstance();
             }
         });
     }

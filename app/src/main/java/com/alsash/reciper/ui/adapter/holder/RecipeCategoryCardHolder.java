@@ -7,8 +7,6 @@ import android.widget.TextView;
 
 import com.alsash.reciper.R;
 import com.alsash.reciper.mvp.model.entity.Category;
-import com.alsash.reciper.mvp.presenter.BaseRecipeGroupListPresenter;
-import com.alsash.reciper.ui.adapter.interaction.RecipeListInteraction;
 
 /**
  * Simple view holder that holds Category
@@ -19,10 +17,8 @@ public class RecipeCategoryCardHolder extends BaseRecipeGroupHolder<Category> {
     private TextView categoryName;
     private ProgressBar progressBar;
 
-    public RecipeCategoryCardHolder(ViewGroup parent,
-                                    BaseRecipeGroupListPresenter presenter,
-                                    RecipeListInteraction interaction) {
-        super(parent, R.layout.view_list_group, R.id.group_list, presenter, interaction);
+    public RecipeCategoryCardHolder(ViewGroup parent) {
+        super(parent, R.layout.view_list_group, R.id.group_list);
         progressBar = (ProgressBar) itemView.findViewById(R.id.group_progress);
         categoryName = (TextView) itemView.findViewById(R.id.group_name);
     }
@@ -30,7 +26,6 @@ public class RecipeCategoryCardHolder extends BaseRecipeGroupHolder<Category> {
     @Override
     public void bindGroup(Category category) {
         categoryName.setText(category.getName());
-        super.bindGroup(category);
     }
 
     @Override

@@ -59,20 +59,21 @@ public class DatabaseApi {
         return daoSession
                 .getCategoryTableDao()
                 .queryBuilder()
-                .orderDesc(CategoryTableDao.Properties.ChangeDate)
-                .orderDesc(CategoryTableDao.Properties.CreationDate)
+                .orderDesc(CategoryTableDao.Properties.ChangeDate,
+                        CategoryTableDao.Properties.CreationDate)
                 .limit(limit)
                 .offset(offset)
                 .build()
                 .list();
     }
 
+    @WorkerThread
     public List<LabelTable> getLabels(int offset, int limit) {
         return daoSession
                 .getLabelTableDao()
                 .queryBuilder()
-                .orderDesc(LabelTableDao.Properties.ChangeDate)
-                .orderDesc(LabelTableDao.Properties.CreationDate)
+                .orderDesc(LabelTableDao.Properties.ChangeDate,
+                        LabelTableDao.Properties.CreationDate)
                 .limit(limit)
                 .offset(offset)
                 .build()
@@ -84,20 +85,21 @@ public class DatabaseApi {
         return daoSession
                 .getRecipeTableDao()
                 .queryBuilder()
-                .orderDesc(RecipeTableDao.Properties.ChangeDate)
-                .orderDesc(RecipeTableDao.Properties.CreationDate)
+                .orderDesc(RecipeTableDao.Properties.ChangeDate,
+                        RecipeTableDao.Properties.CreationDate)
                 .limit(limit)
                 .offset(offset)
                 .build()
                 .list();
     }
 
+    @WorkerThread
     public List<RecipeTable> getLabeledRecipes(int offset, int limit, long labelId) {
         QueryBuilder<RecipeTable> queryBuilder = daoSession
                 .getRecipeTableDao()
                 .queryBuilder()
-                .orderDesc(RecipeTableDao.Properties.ChangeDate)
-                .orderDesc(RecipeTableDao.Properties.CreationDate)
+                .orderDesc(RecipeTableDao.Properties.ChangeDate,
+                        RecipeTableDao.Properties.CreationDate)
                 .limit(limit)
                 .offset(offset);
         queryBuilder
@@ -108,12 +110,13 @@ public class DatabaseApi {
                 .list();
     }
 
+    @WorkerThread
     public List<RecipeTable> getCategorizedRecipes(int offset, int limit, long categoryId) {
         return daoSession
                 .getRecipeTableDao()
                 .queryBuilder()
-                .orderDesc(RecipeTableDao.Properties.ChangeDate)
-                .orderDesc(RecipeTableDao.Properties.CreationDate)
+                .orderDesc(RecipeTableDao.Properties.ChangeDate,
+                        RecipeTableDao.Properties.CreationDate)
                 .where(RecipeTableDao.Properties.CategoryId.eq(categoryId))
                 .limit(limit)
                 .offset(offset)
@@ -121,13 +124,14 @@ public class DatabaseApi {
                 .list();
     }
 
+    @WorkerThread
     public List<RecipeTable> getBookmarkedRecipes(int offset, int limit) {
         return daoSession
                 .getRecipeTableDao()
                 .queryBuilder()
-                .orderDesc(RecipeTableDao.Properties.ChangeDate)
-                .orderDesc(RecipeTableDao.Properties.CreationDate)
-                //.where(RecipeTableDao.Properties.CategoryId.eq(categoryId))
+                .orderDesc(RecipeTableDao.Properties.ChangeDate,
+                        RecipeTableDao.Properties.CreationDate)
+                .where(RecipeTableDao.Properties.Bookmarked.eq(1)) // 1 means true in GreenDao ORM
                 .limit(limit)
                 .offset(offset)
                 .build()

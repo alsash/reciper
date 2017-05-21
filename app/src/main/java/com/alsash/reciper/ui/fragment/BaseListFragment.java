@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import com.alsash.reciper.R;
 import com.alsash.reciper.mvp.presenter.BaseListPresenter;
 import com.alsash.reciper.mvp.view.BaseListView;
+import com.alsash.reciper.ui.view.RecyclerViewHelper;
 
 import java.util.List;
 
@@ -30,13 +31,13 @@ public abstract class BaseListFragment<M, V extends BaseListView<M>> extends Bas
     protected SwipeRefreshLayout refreshIndicator;
     protected RecyclerView list;
     protected RecyclerView.Adapter adapter;
-    protected LinearLayoutManager layoutManager;
     protected boolean needPagination;
     protected RecyclerView.OnScrollListener paginationListener = new RecyclerView.OnScrollListener() {
         @Override
-        public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+        public void onScrollStateChanged(RecyclerView rv, int newState) {
             if (!needPagination || newState != SCROLL_STATE_SETTLING) return;
-            presenter.nextPagination(layoutManager.findLastVisibleItemPosition());
+            int position = RecyclerViewHelper.getLastVisibleItemPosition(rv.getLayoutManager());
+            presenter.nextPagination(position);
         }
     };
 
@@ -85,22 +86,25 @@ public abstract class BaseListFragment<M, V extends BaseListView<M>> extends Bas
         return layout;
     }
 
-    private void bindViews(View layout) {
+    protected void bindViews(View layout) {
         refreshIndicator = (SwipeRefreshLayout) layout.findViewById(R.id.list_refresh_indicator);
         list = (RecyclerView) layout.findViewById(R.id.list_refresh_rv);
     }
 
-    private void setupList() {
-        layoutManager = new LinearLayoutManager(list.getContext());
-        list.setLayoutManager(layoutManager);
+    protected void setupList() {
+        list.setLayoutManager(getLayoutManager(list.getContext()));
         list.setAdapter(adapter);
         list.addOnScrollListener(paginationListener);
     }
 
-    private void setupRefresh() {
+    protected void setupRefresh() {
         refreshIndicator.setColorSchemeResources(
                 R.color.nutrition_carbohydrate,
                 R.color.nutrition_fat,
                 R.color.nutrition_protein);
+    }
+
+    protected RecyclerView.LayoutManager getLayoutManager(Context context) {
+        return new LinearLayoutManager(context);
     }
 }
