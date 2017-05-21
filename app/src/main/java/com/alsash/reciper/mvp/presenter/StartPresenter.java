@@ -39,7 +39,7 @@ public class StartPresenter implements BasePresenter<StartView> {
     @Override
     public void attach(StartView view) {
         view.setFullscreenVisibility();
-        if (!fetched) fetch(new WeakReference<>(view));
+        if (!isFetched()) fetch(new WeakReference<>(view));
     }
 
     @Override
@@ -54,6 +54,14 @@ public class StartPresenter implements BasePresenter<StartView> {
     @Override
     public void invisible(StartView view) {
         setStarted(false);
+    }
+
+    @Override
+    public void refresh(StartView view) {
+        detach();
+        setFetched(false);
+        setStarted(false);
+        attach(view);
     }
 
     @Override
@@ -89,19 +97,19 @@ public class StartPresenter implements BasePresenter<StartView> {
                 }));
     }
 
-    protected boolean isFetched() {
+    private boolean isFetched() {
         return fetched;
     }
 
-    protected void setFetched(boolean fetched) {
+    private void setFetched(boolean fetched) {
         this.fetched = fetched;
     }
 
-    protected boolean isStarted() {
+    private boolean isStarted() {
         return started;
     }
 
-    protected void setStarted(boolean started) {
+    private void setStarted(boolean started) {
         this.started = started;
     }
 }

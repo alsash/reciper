@@ -8,8 +8,6 @@ import com.alsash.reciper.mvp.model.entity.Recipe;
 import com.alsash.reciper.mvp.presenter.RecipeTabBookmarkPresenter;
 import com.alsash.reciper.mvp.view.RecipeTabBookmarkView;
 import com.alsash.reciper.ui.adapter.RecipeCardListAdapter;
-import com.alsash.reciper.ui.adapter.interaction.RecipeListInteraction;
-import com.alsash.reciper.ui.fragment.dialog.RecipeBottomDialog;
 
 import java.util.List;
 
@@ -18,8 +16,8 @@ import javax.inject.Inject;
 /**
  * Simple final fragment with presenter and interactions
  */
-public class RecipeTabBookmarkFragment extends BaseListFragment<Recipe, RecipeTabBookmarkView>
-        implements RecipeTabBookmarkView, RecipeListInteraction {
+public class RecipeTabBookmarkFragment extends BaseRecipeListFragment<Recipe, RecipeTabBookmarkView>
+        implements RecipeTabBookmarkView {
 
     @Inject
     RecipeTabBookmarkPresenter presenter;
@@ -44,12 +42,7 @@ public class RecipeTabBookmarkFragment extends BaseListFragment<Recipe, RecipeTa
     }
 
     @Override
-    public void onExpand(Recipe recipe) {
-        RecipeBottomDialog.show(recipe.getId(), getActivity().getSupportFragmentManager());
-    }
-
-    @Override
-    public void onOpen(Recipe recipe) {
-        navigator.toRecipeView(recipe.getId());
+    protected AppNavigator getNavigator() {
+        return navigator;
     }
 }

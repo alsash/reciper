@@ -1,8 +1,7 @@
 package com.alsash.reciper.mvp.view;
 
 /**
- * Created by alsash on 5/20/17.
+ * Simple view for its presenter
  */
-
 public interface RecipeTabGridView extends RecipeListView {
 }

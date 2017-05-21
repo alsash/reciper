@@ -5,14 +5,11 @@ import android.support.v7.widget.RecyclerView;
 import com.alsash.reciper.app.AppNavigator;
 import com.alsash.reciper.app.ReciperApp;
 import com.alsash.reciper.mvp.model.entity.Category;
-import com.alsash.reciper.mvp.model.entity.Recipe;
 import com.alsash.reciper.mvp.presenter.BaseRecipeGroupListPresenter;
 import com.alsash.reciper.mvp.presenter.RecipeTabCategoryPresenter;
 import com.alsash.reciper.mvp.view.RecipeTabCategoryView;
 import com.alsash.reciper.ui.adapter.RecipeCategoryCardListAdapter;
 import com.alsash.reciper.ui.adapter.interaction.RecipeGroupInteraction;
-import com.alsash.reciper.ui.adapter.interaction.RecipeListInteraction;
-import com.alsash.reciper.ui.fragment.dialog.RecipeBottomDialog;
 
 import java.util.List;
 
@@ -21,8 +18,8 @@ import javax.inject.Inject;
 /**
  * A final fragment with presenter, that represents group of recipes and their interactions
  */
-public class RecipeTabCategoryFragment extends BaseListFragment<Category, RecipeTabCategoryView>
-        implements RecipeTabCategoryView, RecipeGroupInteraction, RecipeListInteraction {
+public class RecipeTabCategoryFragment extends BaseRecipeListFragment<Category, RecipeTabCategoryView>
+        implements RecipeTabCategoryView, RecipeGroupInteraction {
 
     @Inject
     RecipeTabCategoryPresenter presenter;
@@ -52,12 +49,7 @@ public class RecipeTabCategoryFragment extends BaseListFragment<Category, Recipe
     }
 
     @Override
-    public void onExpand(Recipe recipe) {
-        RecipeBottomDialog.show(recipe.getId(), getActivity().getSupportFragmentManager());
-    }
-
-    @Override
-    public void onOpen(Recipe recipe) {
-        navigator.toRecipeView(recipe.getId());
+    protected AppNavigator getNavigator() {
+        return navigator;
     }
 }

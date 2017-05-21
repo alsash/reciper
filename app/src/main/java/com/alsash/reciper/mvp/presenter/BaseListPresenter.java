@@ -72,6 +72,7 @@ public abstract class BaseListPresenter<M, V extends BaseListView<M>> implements
         composite.clear();   // in v.2.1.0 - same as dispose(), but without set isDispose()
     }
 
+    @Override
     public void refresh(V view) {
         detach();
         models.clear();

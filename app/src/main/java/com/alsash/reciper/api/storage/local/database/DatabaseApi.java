@@ -10,13 +10,16 @@ import com.alsash.reciper.api.storage.local.database.table.CategoryTableDao;
 import com.alsash.reciper.api.storage.local.database.table.DaoMaster;
 import com.alsash.reciper.api.storage.local.database.table.DaoSession;
 import com.alsash.reciper.api.storage.local.database.table.LabelTable;
+import com.alsash.reciper.api.storage.local.database.table.LabelTableDao;
 import com.alsash.reciper.api.storage.local.database.table.RecipeLabelTable;
+import com.alsash.reciper.api.storage.local.database.table.RecipeLabelTableDao;
 import com.alsash.reciper.api.storage.local.database.table.RecipeTable;
 import com.alsash.reciper.api.storage.local.database.table.RecipeTableDao;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import org.greenrobot.greendao.database.Database;
+import org.greenrobot.greendao.query.QueryBuilder;
 
 import java.lang.reflect.Type;
 import java.util.List;
@@ -64,6 +67,19 @@ public class DatabaseApi {
                 .list();
     }
 
+    public List<LabelTable> getLabels(int offset, int limit) {
+        return daoSession
+                .getLabelTableDao()
+                .queryBuilder()
+                .orderDesc(LabelTableDao.Properties.ChangeDate)
+                .orderDesc(LabelTableDao.Properties.CreationDate)
+                .limit(limit)
+                .offset(offset)
+                .build()
+                .list();
+    }
+
+    @WorkerThread
     public List<RecipeTable> getRecipes(int offset, int limit) {
         return daoSession
                 .getRecipeTableDao()
@@ -74,6 +90,39 @@ public class DatabaseApi {
                 .offset(offset)
                 .build()
                 .list();
+    }
+
+    public List<RecipeTable> getLabeledRecipes(int offset, int limit, long labelId) {
+        QueryBuilder<RecipeTable> queryBuilder = daoSession
+                .getRecipeTableDao()
+                .queryBuilder()
+                .orderDesc(RecipeTableDao.Properties.ChangeDate)
+                .orderDesc(RecipeTableDao.Properties.CreationDate)
+                .limit(limit)
+                .offset(offset);
+        queryBuilder
+                .join(RecipeLabelTable.class, RecipeLabelTableDao.Properties.RecipeId)
+                .where(RecipeLabelTableDao.Properties.LabelId.eq(labelId));
+        return queryBuilder
+                .build()
+                .list();
+    }
+
+    public List<RecipeTable> getCategorizedRecipes(int offset, int limit, long categoryId) {
+        return daoSession
+                .getRecipeTableDao()
+                .queryBuilder()
+                .orderDesc(RecipeTableDao.Properties.ChangeDate)
+                .orderDesc(RecipeTableDao.Properties.CreationDate)
+                .limit(limit)
+                .offset(offset)
+                .where(RecipeTableDao.Properties.CategoryId.eq(categoryId))
+                .build()
+                .list();
+    }
+
+    public List<RecipeTable> getBookmarkedRecipes(int offset, int limit) {
+        return null;
     }
 
     public synchronized void createStartupEntriesIfNeed() {

@@ -8,8 +8,6 @@ import com.alsash.reciper.mvp.model.entity.Recipe;
 import com.alsash.reciper.mvp.presenter.RecipeTabGridPresenter;
 import com.alsash.reciper.mvp.view.RecipeTabGridView;
 import com.alsash.reciper.ui.adapter.RecipeCardListAdapter;
-import com.alsash.reciper.ui.adapter.interaction.RecipeListInteraction;
-import com.alsash.reciper.ui.fragment.dialog.RecipeBottomDialog;
 
 import java.util.List;
 
@@ -18,8 +16,8 @@ import javax.inject.Inject;
 /**
  * Simple final fragment with presenter and interactions
  */
-public class RecipeTabGridFragment extends BaseListFragment<Recipe, RecipeTabGridView>
-        implements RecipeTabGridView, RecipeListInteraction {
+public class RecipeTabGridFragment extends BaseRecipeListFragment<Recipe, RecipeTabGridView>
+        implements RecipeTabGridView {
 
     @Inject
     RecipeTabGridPresenter presenter;
@@ -44,12 +42,7 @@ public class RecipeTabGridFragment extends BaseListFragment<Recipe, RecipeTabGri
     }
 
     @Override
-    public void onExpand(Recipe recipe) {
-        RecipeBottomDialog.show(recipe.getId(), getActivity().getSupportFragmentManager());
-    }
-
-    @Override
-    public void onOpen(Recipe recipe) {
-        navigator.toRecipeView(recipe.getId());
+    protected AppNavigator getNavigator() {
+        return navigator;
     }
 }

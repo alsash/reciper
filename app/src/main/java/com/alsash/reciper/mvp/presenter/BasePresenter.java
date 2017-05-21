@@ -20,5 +20,8 @@ public interface BasePresenter<V extends BaseView> {
     void invisible(V view);
 
     @UiThread
+    void refresh(V view);
+
+    @UiThread
     void detach();
 }
