@@ -15,6 +15,7 @@ import com.alsash.reciper.mvp.model.entity.Recipe;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import javax.inject.Singleton;
 
@@ -97,11 +98,11 @@ public class StorageApi {
         return (recipeTable == null) ? null :
                 entityFactory.getRecipe(
                         recipeTable.getId(),
-                        recipeTable.getUuid(),
+                        UUID.fromString(recipeTable.getUuid()),
                         recipeTable.getName(),
                         recipeTable.getCreationDate(),
                         recipeTable.getChangeDate(),
-                        recipeTable.getBookmarked(),
+                        recipeTable.getBookmark(),
                         getCategory(recipeTable.getCategory()),
                         getLabels(recipeTable.getLabels())
                 );

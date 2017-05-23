@@ -1,6 +1,6 @@
 package com.alsash.reciper.api.storage.local.database.table;
 
-import com.alsash.reciper.api.storage.local.database.converter.GuidConverter;
+import com.alsash.reciper.api.storage.local.database.converter.UuidConverter;
 
 import org.greenrobot.greendao.annotation.Convert;
 import org.greenrobot.greendao.annotation.Entity;
@@ -19,7 +19,7 @@ public class PhotoTable {
     @Id
     private Long id;
     @Unique
-    @Convert(converter = GuidConverter.class, columnType = String.class)
+    @Convert(converter = UuidConverter.class, columnType = String.class)
     private UUID uuid;
     private String name;
     private Date creationDate;

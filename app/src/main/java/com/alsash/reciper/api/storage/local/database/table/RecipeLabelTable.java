@@ -1,6 +1,6 @@
 package com.alsash.reciper.api.storage.local.database.table;
 
-import com.alsash.reciper.api.storage.local.database.converter.GuidConverter;
+import com.alsash.reciper.api.storage.local.database.converter.UuidConverter;
 
 import org.greenrobot.greendao.annotation.Convert;
 import org.greenrobot.greendao.annotation.Entity;
@@ -19,15 +19,15 @@ public class RecipeLabelTable {
     @Id
     private Long id;
     @Unique
-    @Convert(converter = GuidConverter.class, columnType = String.class)
+    @Convert(converter = UuidConverter.class, columnType = String.class)
     private UUID uuid;
     @Index
     private Long recipeId;
-    @Convert(converter = GuidConverter.class, columnType = String.class)
+    @Convert(converter = UuidConverter.class, columnType = String.class)
     private UUID recipeUuid;
     @Index
     private Long labelId;
-    @Convert(converter = GuidConverter.class, columnType = String.class)
+    @Convert(converter = UuidConverter.class, columnType = String.class)
     private UUID labelUuid;
 
     @Generated(hash = 1263246042)

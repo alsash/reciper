@@ -1,9 +1,6 @@
 package com.alsash.reciper.api.storage.local.database.table;
 
-import com.alsash.reciper.api.storage.local.database.converter.GuidConverter;
-
 import org.greenrobot.greendao.DaoException;
-import org.greenrobot.greendao.annotation.Convert;
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Generated;
 import org.greenrobot.greendao.annotation.Id;
@@ -14,7 +11,6 @@ import org.greenrobot.greendao.annotation.Unique;
 
 import java.util.Date;
 import java.util.List;
-import java.util.UUID;
 
 /**
  * Local relational database table that represents the Recipe entity
@@ -24,12 +20,11 @@ public class RecipeTable {
     @Id
     private Long id;
     @Unique
-    @Convert(converter = GuidConverter.class, columnType = String.class)
-    private UUID uuid;
+    private String uuid;
     private String name;
     private Date creationDate;
     private Date changeDate;
-    private boolean bookmarked;
+    private boolean bookmark;
     private Long categoryId;
     @ToOne(joinProperty = "categoryId")
     private CategoryTable category;
@@ -43,12 +38,19 @@ public class RecipeTable {
     private Long photoId;
     @ToOne(joinProperty = "photoId")
     private PhotoTable photo;
+
+/*    @ToMany(joinProperties = {
+            @JoinProperty(name = "uuid", referencedName = "recipeUuid")}
+    )
+    private List<ServingTable> serving;*/
     /**
      * Used to resolve relations
      */
     @Generated(hash = 2040040024)
     private transient DaoSession daoSession;
-    /** Used for active entity operations. */
+    /**
+     * Used for active entity operations.
+     */
     @Generated(hash = 1210201788)
     private transient RecipeTableDao myDao;
     @Generated(hash = 1372501278)
@@ -56,18 +58,19 @@ public class RecipeTable {
     @Generated(hash = 1137958716)
     private transient Long photo__resolvedKey;
 
-    @Generated(hash = 1043978897)
-    public RecipeTable(Long id, UUID uuid, String name, Date creationDate,
-                       Date changeDate, boolean bookmarked, Long categoryId, Long photoId) {
+    @Generated(hash = 1998934152)
+    public RecipeTable(Long id, String uuid, String name, Date creationDate,
+                       Date changeDate, boolean bookmark, Long categoryId, Long photoId) {
         this.id = id;
         this.uuid = uuid;
         this.name = name;
         this.creationDate = creationDate;
         this.changeDate = changeDate;
-        this.bookmarked = bookmarked;
+        this.bookmark = bookmark;
         this.categoryId = categoryId;
         this.photoId = photoId;
     }
+
     @Generated(hash = 1656289545)
     public RecipeTable() {
     }
@@ -80,11 +83,11 @@ public class RecipeTable {
         this.id = id;
     }
 
-    public UUID getUuid() {
+    public String getUuid() {
         return this.uuid;
     }
 
-    public void setUuid(UUID uuid) {
+    public void setUuid(String uuid) {
         this.uuid = uuid;
     }
 
@@ -112,12 +115,12 @@ public class RecipeTable {
         this.changeDate = changeDate;
     }
 
-    public boolean getBookmarked() {
-        return this.bookmarked;
+    public boolean getBookmark() {
+        return this.bookmark;
     }
 
-    public void setBookmarked(boolean bookmarked) {
-        this.bookmarked = bookmarked;
+    public void setBookmark(boolean bookmark) {
+        this.bookmark = bookmark;
     }
 
     public Long getCategoryId() {
@@ -136,7 +139,9 @@ public class RecipeTable {
         this.photoId = photoId;
     }
 
-    /** To-one relationship, resolved on first access. */
+    /**
+     * To-one relationship, resolved on first access.
+     */
     @Generated(hash = 803105998)
     public CategoryTable getCategory() {
         Long __key = this.categoryId;
@@ -155,7 +160,9 @@ public class RecipeTable {
         return category;
     }
 
-    /** called by internal mechanisms, do not call yourself. */
+    /**
+     * called by internal mechanisms, do not call yourself.
+     */
     @Generated(hash = 1888877147)
     public void setCategory(CategoryTable category) {
         synchronized (this) {
@@ -165,7 +172,9 @@ public class RecipeTable {
         }
     }
 
-    /** To-one relationship, resolved on first access. */
+    /**
+     * To-one relationship, resolved on first access.
+     */
     @Generated(hash = 2099343229)
     public PhotoTable getPhoto() {
         Long __key = this.photoId;
@@ -184,7 +193,9 @@ public class RecipeTable {
         return photo;
     }
 
-    /** called by internal mechanisms, do not call yourself. */
+    /**
+     * called by internal mechanisms, do not call yourself.
+     */
     @Generated(hash = 1794974770)
     public void setPhoto(PhotoTable photo) {
         synchronized (this) {
@@ -193,6 +204,7 @@ public class RecipeTable {
             photo__resolvedKey = photoId;
         }
     }
+
     /**
      * To-many relationship, resolved on first access (and after reset).
      * Changes to to-many relations are not persisted, make changes to the target entity.
@@ -214,11 +226,15 @@ public class RecipeTable {
         }
         return labels;
     }
-    /** Resets a to-many relationship, making the next get call to query for a fresh result. */
+
+    /**
+     * Resets a to-many relationship, making the next get call to query for a fresh result.
+     */
     @Generated(hash = 902294403)
     public synchronized void resetLabels() {
         labels = null;
     }
+
     /**
      * Convenient call for {@link org.greenrobot.greendao.AbstractDao#delete(Object)}.
      * Entity must attached to an entity context.
@@ -230,6 +246,7 @@ public class RecipeTable {
         }
         myDao.delete(this);
     }
+
     /**
      * Convenient call for {@link org.greenrobot.greendao.AbstractDao#refresh(Object)}.
      * Entity must attached to an entity context.
@@ -241,6 +258,7 @@ public class RecipeTable {
         }
         myDao.refresh(this);
     }
+
     /**
      * Convenient call for {@link org.greenrobot.greendao.AbstractDao#update(Object)}.
      * Entity must attached to an entity context.
@@ -252,10 +270,12 @@ public class RecipeTable {
         }
         myDao.update(this);
     }
+
     /** called by internal mechanisms, do not call yourself. */
     @Generated(hash = 173120018)
     public void __setDaoSession(DaoSession daoSession) {
         this.daoSession = daoSession;
         myDao = daoSession != null ? daoSession.getRecipeTableDao() : null;
     }
+
 }

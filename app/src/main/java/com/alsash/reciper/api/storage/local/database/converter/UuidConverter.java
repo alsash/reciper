@@ -7,7 +7,7 @@ import java.util.UUID;
 /**
  * Property converter from UUID to String and backward
  */
-public class GuidConverter implements PropertyConverter<UUID, String> {
+public class UuidConverter implements PropertyConverter<UUID, String> {
     @Override
     public UUID convertToEntityProperty(String databaseValue) {
         return UUID.fromString(databaseValue);

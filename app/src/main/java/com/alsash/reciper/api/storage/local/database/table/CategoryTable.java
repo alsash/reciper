@@ -1,6 +1,6 @@
 package com.alsash.reciper.api.storage.local.database.table;
 
-import com.alsash.reciper.api.storage.local.database.converter.GuidConverter;
+import com.alsash.reciper.api.storage.local.database.converter.UuidConverter;
 
 import org.greenrobot.greendao.DaoException;
 import org.greenrobot.greendao.annotation.Convert;
@@ -16,12 +16,15 @@ import java.util.UUID;
 /**
  * Local relational database table that represents the Category entity
  */
-@Entity(nameInDb = "CATEGORY")
+@Entity(
+        nameInDb = "CATEGORY",
+        active = true
+)
 public class CategoryTable {
     @Id
     private Long id;
     @Unique
-    @Convert(converter = GuidConverter.class, columnType = String.class)
+    @Convert(converter = UuidConverter.class, columnType = String.class)
     private UUID uuid;
     private String name;
     private Date creationDate;
@@ -29,13 +32,14 @@ public class CategoryTable {
     private Long photoId;
     @ToOne(joinProperty = "photoId")
     private PhotoTable photo;
-
     /**
      * Used to resolve relations
      */
     @Generated(hash = 2040040024)
     private transient DaoSession daoSession;
-    /** Used for active entity operations. */
+    /**
+     * Used for active entity operations.
+     */
     @Generated(hash = 940999369)
     private transient CategoryTableDao myDao;
     @Generated(hash = 1137958716)
@@ -51,6 +55,7 @@ public class CategoryTable {
         this.changeDate = changeDate;
         this.photoId = photoId;
     }
+
     @Generated(hash = 1679078959)
     public CategoryTable() {
     }
@@ -135,6 +140,7 @@ public class CategoryTable {
             photo__resolvedKey = photoId;
         }
     }
+
     /**
      * Convenient call for {@link org.greenrobot.greendao.AbstractDao#delete(Object)}.
      * Entity must attached to an entity context.
@@ -146,6 +152,7 @@ public class CategoryTable {
         }
         myDao.delete(this);
     }
+
     /**
      * Convenient call for {@link org.greenrobot.greendao.AbstractDao#refresh(Object)}.
      * Entity must attached to an entity context.
@@ -157,6 +164,7 @@ public class CategoryTable {
         }
         myDao.refresh(this);
     }
+
     /**
      * Convenient call for {@link org.greenrobot.greendao.AbstractDao#update(Object)}.
      * Entity must attached to an entity context.
@@ -168,10 +176,12 @@ public class CategoryTable {
         }
         myDao.update(this);
     }
+
     /** called by internal mechanisms, do not call yourself. */
     @Generated(hash = 1828535427)
     public void __setDaoSession(DaoSession daoSession) {
         this.daoSession = daoSession;
         myDao = daoSession != null ? daoSession.getCategoryTableDao() : null;
     }
+
 }

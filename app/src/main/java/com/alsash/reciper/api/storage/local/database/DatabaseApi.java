@@ -131,7 +131,7 @@ public class DatabaseApi {
                 .queryBuilder()
                 .orderDesc(RecipeTableDao.Properties.ChangeDate,
                         RecipeTableDao.Properties.CreationDate)
-                .where(RecipeTableDao.Properties.Bookmarked.eq(1)) // 1 means true in GreenDao ORM
+                .where(RecipeTableDao.Properties.Bookmark.eq(1)) // 1 means true in GreenDao ORM
                 .limit(limit)
                 .offset(offset)
                 .build()

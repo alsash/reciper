@@ -1,6 +1,6 @@
 package com.alsash.reciper.api.storage.local.database.table;
 
-import com.alsash.reciper.api.storage.local.database.converter.GuidConverter;
+import com.alsash.reciper.api.storage.local.database.converter.UuidConverter;
 
 import org.greenrobot.greendao.DaoException;
 import org.greenrobot.greendao.annotation.Convert;
@@ -23,7 +23,7 @@ public class LabelTable {
     @Id
     private Long id;
     @Unique
-    @Convert(converter = GuidConverter.class, columnType = String.class)
+    @Convert(converter = UuidConverter.class, columnType = String.class)
     private UUID uuid;
     private String name;
     private Date creationDate;
