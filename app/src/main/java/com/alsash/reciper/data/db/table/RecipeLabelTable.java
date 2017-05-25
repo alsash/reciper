@@ -1,31 +1,33 @@
-package com.alsash.reciper.data.db;
+package com.alsash.reciper.data.db.table;
 
 import com.alsash.reciper.api.storage.local.database.table.DaoSession;
-import com.alsash.reciper.mvp.model.Photo;
 
 import org.greenrobot.greendao.DaoException;
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Generated;
 import org.greenrobot.greendao.annotation.Id;
+import org.greenrobot.greendao.annotation.Index;
 import org.greenrobot.greendao.annotation.Unique;
 
 /**
- * A model of the Photo entity
+ * A to-many relation model of the Recipe and the Label entities,
  * that persists in local relational database table by GreenDao framework
  * and serialized from JSON by Gson framework
  */
 @Entity(
-        nameInDb = "PHOTO",
+        nameInDb = "RECIPE_LABEL",
         active = true,
         generateConstructors = false
 )
-public class PhotoDb implements Photo {
+public class RecipeLabelTable {
     @Id
     Long id;
     @Unique
     String uuid;
-    String url;
-    String uri;
+    @Index(name = "recipe")
+    String recipeUuid;
+    @Index(name = "label")
+    String labelUuid;
     /**
      * Used to resolve relations
      */
@@ -34,10 +36,10 @@ public class PhotoDb implements Photo {
     /**
      * Used for active entity operations.
      */
-    @Generated(hash = 1429545424)
-    private transient PhotoDbDao myDao;
+    @Generated(hash = 377029229)
+    private transient RecipeLabelTableDao myDao;
 
-    public PhotoDb() {
+    public RecipeLabelTable() {
     }
 
     public Long getId() {
@@ -56,20 +58,20 @@ public class PhotoDb implements Photo {
         this.uuid = uuid;
     }
 
-    public String getUrl() {
-        return this.url;
+    public String getRecipeUuid() {
+        return this.recipeUuid;
     }
 
-    public void setUrl(String url) {
-        this.url = url;
+    public void setRecipeUuid(String recipeUuid) {
+        this.recipeUuid = recipeUuid;
     }
 
-    public String getUri() {
-        return this.uri;
+    public String getLabelUuid() {
+        return this.labelUuid;
     }
 
-    public void setUri(String uri) {
-        this.uri = uri;
+    public void setLabelUuid(String labelUuid) {
+        this.labelUuid = labelUuid;
     }
 
     /**
@@ -111,10 +113,9 @@ public class PhotoDb implements Photo {
     /**
      * called by internal mechanisms, do not call yourself.
      */
-    @Generated(hash = 39000636)
+    @Generated(hash = 1330679234)
     public void __setDaoSession(DaoSession daoSession) {
         this.daoSession = daoSession;
-        myDao = daoSession != null ? daoSession.getPhotoDbDao() : null;
+        myDao = daoSession != null ? daoSession.getRecipeLabelTableDao() : null;
     }
-
 }

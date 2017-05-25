@@ -1,4 +1,4 @@
-package com.alsash.reciper.data.db;
+package com.alsash.reciper.data.db.table;
 
 import com.alsash.reciper.api.storage.local.database.table.DaoSession;
 
@@ -21,7 +21,7 @@ import org.greenrobot.greendao.annotation.Unique;
         active = true,
         generateConstructors = false
 )
-public class RecipeMethodDb {
+public class RecipeMethodTable {
     @Id
     Long id;
     @Unique
@@ -39,10 +39,10 @@ public class RecipeMethodDb {
     /**
      * Used for active entity operations.
      */
-    @Generated(hash = 1865448446)
-    private transient RecipeMethodDbDao myDao;
+    @Generated(hash = 1424435777)
+    private transient RecipeMethodTableDao myDao;
 
-    public RecipeMethodDb() {
+    public RecipeMethodTable() {
     }
 
     public Long getId() {
@@ -124,9 +124,9 @@ public class RecipeMethodDb {
     /**
      * called by internal mechanisms, do not call yourself.
      */
-    @Generated(hash = 71639143)
+    @Generated(hash = 1307702544)
     public void __setDaoSession(DaoSession daoSession) {
         this.daoSession = daoSession;
-        myDao = daoSession != null ? daoSession.getRecipeMethodDbDao() : null;
+        myDao = daoSession != null ? daoSession.getRecipeMethodTableDao() : null;
     }
 }

@@ -1,4 +1,4 @@
-package com.alsash.reciper.data.db;
+package com.alsash.reciper.data.db.table;
 
 import com.alsash.reciper.api.storage.local.database.table.DaoSession;
 
@@ -6,39 +6,32 @@ import org.greenrobot.greendao.DaoException;
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Generated;
 import org.greenrobot.greendao.annotation.Id;
-import org.greenrobot.greendao.annotation.NotNull;
+import org.greenrobot.greendao.annotation.Index;
 import org.greenrobot.greendao.annotation.Unique;
 
 /**
- * A model of the Food entity
+ * A model of the Ingredient entity
+ * represented by a to-many relation model of the Recipe and the Food entities,
  * that persists in local relational database table by GreenDao framework
  * and serialized from JSON by Gson framework
  */
 @Entity(
-        nameInDb = "FOOD",
+        nameInDb = "RECIPE_FOOD",
         active = true,
         generateConstructors = false
 )
-public class FoodDb {
+public class RecipeFoodTable {
     @Id
     Long id;
     @Unique
     String uuid;
-    @NotNull
-    Long usdaNdbno;
+    @Index(name = "recipe")
+    String recipeUuid;
+    @Index(name = "food")
+    String foodUuid;
     String name;
-    @NotNull
-    double protein;
-    @NotNull
-    double fat;
-    @NotNull
-    double carbs;
-    @NotNull
-    double weightUnit;
-    @NotNull
-    double energy;
-    @NotNull
-    double energyUnit;
+    double weight;
+    String weightUnit;
     /**
      * Used to resolve relations
      */
@@ -47,107 +40,66 @@ public class FoodDb {
     /**
      * Used for active entity operations.
      */
-    @Generated(hash = 699996186)
-    private transient FoodDbDao myDao;
+    @Generated(hash = 805032546)
+    private transient RecipeFoodTableDao myDao;
 
-    public FoodDb() {
+    public RecipeFoodTable() {
     }
 
     public Long getId() {
         return this.id;
     }
 
-
     public void setId(Long id) {
         this.id = id;
     }
-
 
     public String getUuid() {
         return this.uuid;
     }
 
-
     public void setUuid(String uuid) {
         this.uuid = uuid;
     }
 
-
-    public Long getUsdaNdbno() {
-        return this.usdaNdbno;
+    public String getRecipeUuid() {
+        return this.recipeUuid;
     }
 
-
-    public void setUsdaNdbno(Long usdaNdbno) {
-        this.usdaNdbno = usdaNdbno;
+    public void setRecipeUuid(String recipeUuid) {
+        this.recipeUuid = recipeUuid;
     }
 
+    public String getFoodUuid() {
+        return this.foodUuid;
+    }
+
+    public void setFoodUuid(String foodUuid) {
+        this.foodUuid = foodUuid;
+    }
 
     public String getName() {
         return this.name;
     }
 
-
     public void setName(String name) {
         this.name = name;
     }
 
-
-    public double getProtein() {
-        return this.protein;
+    public double getWeight() {
+        return this.weight;
     }
 
-
-    public void setProtein(double protein) {
-        this.protein = protein;
+    public void setWeight(double weight) {
+        this.weight = weight;
     }
 
-
-    public double getFat() {
-        return this.fat;
-    }
-
-
-    public void setFat(double fat) {
-        this.fat = fat;
-    }
-
-
-    public double getCarbs() {
-        return this.carbs;
-    }
-
-
-    public void setCarbs(double carbs) {
-        this.carbs = carbs;
-    }
-
-
-    public double getWeightUnit() {
+    public String getWeightUnit() {
         return this.weightUnit;
     }
 
-
-    public void setWeightUnit(double weightUnit) {
+    public void setWeightUnit(String weightUnit) {
         this.weightUnit = weightUnit;
-    }
-
-
-    public double getEnergy() {
-        return this.energy;
-    }
-
-
-    public void setEnergy(double energy) {
-        this.energy = energy;
-    }
-
-    public double getEnergyUnit() {
-        return this.energyUnit;
-    }
-
-    public void setEnergyUnit(double energyUnit) {
-        this.energyUnit = energyUnit;
     }
 
     /**
@@ -189,10 +141,9 @@ public class FoodDb {
     /**
      * called by internal mechanisms, do not call yourself.
      */
-    @Generated(hash = 1465367714)
+    @Generated(hash = 2007437163)
     public void __setDaoSession(DaoSession daoSession) {
         this.daoSession = daoSession;
-        myDao = daoSession != null ? daoSession.getFoodDbDao() : null;
+        myDao = daoSession != null ? daoSession.getRecipeFoodTableDao() : null;
     }
-
 }

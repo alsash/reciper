@@ -1,35 +1,31 @@
-package com.alsash.reciper.data.db;
+package com.alsash.reciper.data.db.table;
 
 import com.alsash.reciper.api.storage.local.database.table.DaoSession;
+import com.alsash.reciper.mvp.model.Photo;
 
 import org.greenrobot.greendao.DaoException;
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Generated;
 import org.greenrobot.greendao.annotation.Id;
-import org.greenrobot.greendao.annotation.Index;
-import org.greenrobot.greendao.annotation.NotNull;
 import org.greenrobot.greendao.annotation.Unique;
 
 /**
- * A to-many relation model of the Food entity and its id at USDA Food Composition Databases,
- * persists in local relational database table with the help of GreenDao framework
+ * A model of the Photo entity
+ * that persists in local relational database table by GreenDao framework
  * and serialized from JSON by Gson framework
  */
 @Entity(
-        nameInDb = "FOOD_USDA",
+        nameInDb = "PHOTO",
         active = true,
         generateConstructors = false
 )
-public class FoodUsdaDb {
+public class PhotoTable implements Photo {
     @Id
     Long id;
     @Unique
     String uuid;
-    @Index(name = "food", unique = true)
-    String foodUuid;
-    String usdaNdbNo;
-    @NotNull
-    boolean fetched;
+    String url;
+    String uri;
     /**
      * Used to resolve relations
      */
@@ -38,10 +34,10 @@ public class FoodUsdaDb {
     /**
      * Used for active entity operations.
      */
-    @Generated(hash = 288431769)
-    private transient FoodUsdaDbDao myDao;
+    @Generated(hash = 505600885)
+    private transient PhotoTableDao myDao;
 
-    public FoodUsdaDb() {
+    public PhotoTable() {
     }
 
     public Long getId() {
@@ -60,28 +56,20 @@ public class FoodUsdaDb {
         this.uuid = uuid;
     }
 
-    public String getFoodUuid() {
-        return this.foodUuid;
+    public String getUrl() {
+        return this.url;
     }
 
-    public void setFoodUuid(String foodUuid) {
-        this.foodUuid = foodUuid;
+    public void setUrl(String url) {
+        this.url = url;
     }
 
-    public String getUsdaNdbNo() {
-        return this.usdaNdbNo;
+    public String getUri() {
+        return this.uri;
     }
 
-    public void setUsdaNdbNo(String usdaNdbNo) {
-        this.usdaNdbNo = usdaNdbNo;
-    }
-
-    public boolean getFetched() {
-        return this.fetched;
-    }
-
-    public void setFetched(boolean fetched) {
-        this.fetched = fetched;
+    public void setUri(String uri) {
+        this.uri = uri;
     }
 
     /**
@@ -123,9 +111,10 @@ public class FoodUsdaDb {
     /**
      * called by internal mechanisms, do not call yourself.
      */
-    @Generated(hash = 319881892)
+    @Generated(hash = 1925384945)
     public void __setDaoSession(DaoSession daoSession) {
         this.daoSession = daoSession;
-        myDao = daoSession != null ? daoSession.getFoodUsdaDbDao() : null;
+        myDao = daoSession != null ? daoSession.getPhotoTableDao() : null;
     }
+
 }

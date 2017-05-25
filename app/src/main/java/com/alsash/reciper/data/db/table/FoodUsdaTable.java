@@ -1,4 +1,4 @@
-package com.alsash.reciper.data.db;
+package com.alsash.reciper.data.db.table;
 
 import com.alsash.reciper.api.storage.local.database.table.DaoSession;
 
@@ -10,38 +10,26 @@ import org.greenrobot.greendao.annotation.Index;
 import org.greenrobot.greendao.annotation.NotNull;
 import org.greenrobot.greendao.annotation.Unique;
 
-import java.util.Date;
-
 /**
- * A model of the Recipe entity
- * that persists in local relational database table by GreenDao framework
+ * A to-many relation model of the Food entity and its id at USDA Food Composition Databases,
+ * persists in local relational database table with the help of GreenDao framework
  * and serialized from JSON by Gson framework
  */
 @Entity(
-        nameInDb = "RECIPE",
+        nameInDb = "FOOD_USDA",
         active = true,
         generateConstructors = false
 )
-public class RecipeDb {
+public class FoodUsdaTable {
     @Id
     Long id;
     @Unique
     String uuid;
-    String name;
-    @Index(name = "date DESC")
-    Date date;
-    String source;
-    String description;
+    @Index(name = "food", unique = true)
+    String foodUuid;
+    String usdaNdbNo;
     @NotNull
-    boolean bookmark;
-    @NotNull
-    int servings;
-    @NotNull
-    double massFlowRate;
-    @Index(name = "category")
-    String categoryUuid;
-    @Index(name = "author")
-    String authorUuid;
+    boolean fetched;
     /**
      * Used to resolve relations
      */
@@ -50,10 +38,10 @@ public class RecipeDb {
     /**
      * Used for active entity operations.
      */
-    @Generated(hash = 261850341)
-    private transient RecipeDbDao myDao;
+    @Generated(hash = 531675553)
+    private transient FoodUsdaTableDao myDao;
 
-    public RecipeDb() {
+    public FoodUsdaTable() {
     }
 
     public Long getId() {
@@ -72,76 +60,28 @@ public class RecipeDb {
         this.uuid = uuid;
     }
 
-    public String getName() {
-        return this.name;
+    public String getFoodUuid() {
+        return this.foodUuid;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setFoodUuid(String foodUuid) {
+        this.foodUuid = foodUuid;
     }
 
-    public Date getDate() {
-        return this.date;
+    public String getUsdaNdbNo() {
+        return this.usdaNdbNo;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
+    public void setUsdaNdbNo(String usdaNdbNo) {
+        this.usdaNdbNo = usdaNdbNo;
     }
 
-    public String getSource() {
-        return this.source;
+    public boolean getFetched() {
+        return this.fetched;
     }
 
-    public void setSource(String source) {
-        this.source = source;
-    }
-
-    public String getDescription() {
-        return this.description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public boolean getBookmark() {
-        return this.bookmark;
-    }
-
-    public void setBookmark(boolean bookmark) {
-        this.bookmark = bookmark;
-    }
-
-    public int getServings() {
-        return this.servings;
-    }
-
-    public void setServings(int servings) {
-        this.servings = servings;
-    }
-
-    public double getMassFlowRate() {
-        return this.massFlowRate;
-    }
-
-    public void setMassFlowRate(double massFlowRate) {
-        this.massFlowRate = massFlowRate;
-    }
-
-    public String getCategoryUuid() {
-        return this.categoryUuid;
-    }
-
-    public void setCategoryUuid(String categoryUuid) {
-        this.categoryUuid = categoryUuid;
-    }
-
-    public String getAuthorUuid() {
-        return this.authorUuid;
-    }
-
-    public void setAuthorUuid(String authorUuid) {
-        this.authorUuid = authorUuid;
+    public void setFetched(boolean fetched) {
+        this.fetched = fetched;
     }
 
     /**
@@ -183,10 +123,9 @@ public class RecipeDb {
     /**
      * called by internal mechanisms, do not call yourself.
      */
-    @Generated(hash = 115976254)
+    @Generated(hash = 2079366477)
     public void __setDaoSession(DaoSession daoSession) {
         this.daoSession = daoSession;
-        myDao = daoSession != null ? daoSession.getRecipeDbDao() : null;
+        myDao = daoSession != null ? daoSession.getFoodUsdaTableDao() : null;
     }
-
 }

@@ -1,4 +1,4 @@
-package com.alsash.reciper.data.db;
+package com.alsash.reciper.data.db.table;
 
 import com.alsash.reciper.api.storage.local.database.table.DaoSession;
 
@@ -7,27 +7,30 @@ import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Generated;
 import org.greenrobot.greendao.annotation.Id;
 import org.greenrobot.greendao.annotation.Index;
+import org.greenrobot.greendao.annotation.NotNull;
 import org.greenrobot.greendao.annotation.Unique;
 
 /**
- * A to-many relation model of the Recipe and the Photo entities,
- * that persists in local relational database table by GreenDao framework
+ * A to-many relation model of the Food entity and its custom measures,
+ * persists in local relational database table with the help of GreenDao framework
  * and serialized from JSON by Gson framework
  */
 @Entity(
-        nameInDb = "RECIPE_PHOTO",
+        nameInDb = "FOOD_MEASURE",
         active = true,
         generateConstructors = false
 )
-public class RecipePhotoDb {
+public class FoodMeasureTable {
     @Id
     Long id;
     @Unique
     String uuid;
-    @Index(name = "recipe")
-    String recipeUuid;
-    @Index(name = "photo")
-    String photoUuid;
+    @Index(name = "food", unique = true)
+    String foodUuid;
+    String unit;
+    @NotNull
+    double weight;
+    String weightUnit;
     /**
      * Used to resolve relations
      */
@@ -36,10 +39,10 @@ public class RecipePhotoDb {
     /**
      * Used for active entity operations.
      */
-    @Generated(hash = 1909933848)
-    private transient RecipePhotoDbDao myDao;
+    @Generated(hash = 853739489)
+    private transient FoodMeasureTableDao myDao;
 
-    public RecipePhotoDb() {
+    public FoodMeasureTable() {
     }
 
     public Long getId() {
@@ -58,20 +61,36 @@ public class RecipePhotoDb {
         this.uuid = uuid;
     }
 
-    public String getRecipeUuid() {
-        return this.recipeUuid;
+    public String getFoodUuid() {
+        return this.foodUuid;
     }
 
-    public void setRecipeUuid(String recipeUuid) {
-        this.recipeUuid = recipeUuid;
+    public void setFoodUuid(String foodUuid) {
+        this.foodUuid = foodUuid;
     }
 
-    public String getPhotoUuid() {
-        return this.photoUuid;
+    public String getUnit() {
+        return this.unit;
     }
 
-    public void setPhotoUuid(String photoUuid) {
-        this.photoUuid = photoUuid;
+    public void setUnit(String unit) {
+        this.unit = unit;
+    }
+
+    public double getWeight() {
+        return this.weight;
+    }
+
+    public void setWeight(double weight) {
+        this.weight = weight;
+    }
+
+    public String getWeightUnit() {
+        return this.weightUnit;
+    }
+
+    public void setWeightUnit(String weightUnit) {
+        this.weightUnit = weightUnit;
     }
 
     /**
@@ -113,9 +132,9 @@ public class RecipePhotoDb {
     /**
      * called by internal mechanisms, do not call yourself.
      */
-    @Generated(hash = 450321300)
+    @Generated(hash = 750727052)
     public void __setDaoSession(DaoSession daoSession) {
         this.daoSession = daoSession;
-        myDao = daoSession != null ? daoSession.getRecipePhotoDbDao() : null;
+        myDao = daoSession != null ? daoSession.getFoodMeasureTableDao() : null;
     }
 }

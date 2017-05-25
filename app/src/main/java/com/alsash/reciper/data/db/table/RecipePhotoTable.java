@@ -1,4 +1,4 @@
-package com.alsash.reciper.data.db;
+package com.alsash.reciper.data.db.table;
 
 import com.alsash.reciper.api.storage.local.database.table.DaoSession;
 
@@ -10,24 +10,24 @@ import org.greenrobot.greendao.annotation.Index;
 import org.greenrobot.greendao.annotation.Unique;
 
 /**
- * A to-many relation model of the Recipe and the Label entities,
+ * A to-many relation model of the Recipe and the Photo entities,
  * that persists in local relational database table by GreenDao framework
  * and serialized from JSON by Gson framework
  */
 @Entity(
-        nameInDb = "RECIPE_LABEL",
+        nameInDb = "RECIPE_PHOTO",
         active = true,
         generateConstructors = false
 )
-public class RecipeLabelDb {
+public class RecipePhotoTable {
     @Id
     Long id;
     @Unique
     String uuid;
     @Index(name = "recipe")
     String recipeUuid;
-    @Index(name = "label")
-    String labelUuid;
+    @Index(name = "photo")
+    String photoUuid;
     /**
      * Used to resolve relations
      */
@@ -36,10 +36,10 @@ public class RecipeLabelDb {
     /**
      * Used for active entity operations.
      */
-    @Generated(hash = 1010615695)
-    private transient RecipeLabelDbDao myDao;
+    @Generated(hash = 1230626793)
+    private transient RecipePhotoTableDao myDao;
 
-    public RecipeLabelDb() {
+    public RecipePhotoTable() {
     }
 
     public Long getId() {
@@ -66,12 +66,12 @@ public class RecipeLabelDb {
         this.recipeUuid = recipeUuid;
     }
 
-    public String getLabelUuid() {
-        return this.labelUuid;
+    public String getPhotoUuid() {
+        return this.photoUuid;
     }
 
-    public void setLabelUuid(String labelUuid) {
-        this.labelUuid = labelUuid;
+    public void setPhotoUuid(String photoUuid) {
+        this.photoUuid = photoUuid;
     }
 
     /**
@@ -113,9 +113,9 @@ public class RecipeLabelDb {
     /**
      * called by internal mechanisms, do not call yourself.
      */
-    @Generated(hash = 1040527494)
+    @Generated(hash = 1610733880)
     public void __setDaoSession(DaoSession daoSession) {
         this.daoSession = daoSession;
-        myDao = daoSession != null ? daoSession.getRecipeLabelDbDao() : null;
+        myDao = daoSession != null ? daoSession.getRecipePhotoTableDao() : null;
     }
 }

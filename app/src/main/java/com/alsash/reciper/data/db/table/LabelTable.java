@@ -1,4 +1,4 @@
-package com.alsash.reciper.data.db;
+package com.alsash.reciper.data.db.table;
 
 import com.alsash.reciper.api.storage.local.database.table.DaoSession;
 
@@ -18,7 +18,7 @@ import org.greenrobot.greendao.annotation.Unique;
         active = true,
         generateConstructors = false
 )
-public class LabelDb {
+public class LabelTable {
     @Id
     Long id;
     @Unique
@@ -32,10 +32,10 @@ public class LabelDb {
     /**
      * Used for active entity operations.
      */
-    @Generated(hash = 1661656670)
-    private transient LabelDbDao myDao;
+    @Generated(hash = 2034547187)
+    private transient LabelTableDao myDao;
 
-    public LabelDb() {
+    public LabelTable() {
     }
 
     public Long getId() {
@@ -101,10 +101,10 @@ public class LabelDb {
     /**
      * called by internal mechanisms, do not call yourself.
      */
-    @Generated(hash = 1087470678)
+    @Generated(hash = 111975173)
     public void __setDaoSession(DaoSession daoSession) {
         this.daoSession = daoSession;
-        myDao = daoSession != null ? daoSession.getLabelDbDao() : null;
+        myDao = daoSession != null ? daoSession.getLabelTableDao() : null;
     }
 
 }

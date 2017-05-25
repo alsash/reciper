@@ -1,44 +1,62 @@
-package com.alsash.reciper.data.db;
+package com.alsash.reciper.data.db.table;
 
 import com.alsash.reciper.api.storage.local.database.table.DaoSession;
+import com.alsash.reciper.api.storage.local.database.table.PhotoTableDao;
 
 import org.greenrobot.greendao.DaoException;
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Generated;
 import org.greenrobot.greendao.annotation.Id;
 import org.greenrobot.greendao.annotation.Index;
+import org.greenrobot.greendao.annotation.JoinProperty;
+import org.greenrobot.greendao.annotation.NotNull;
+import org.greenrobot.greendao.annotation.ToMany;
 import org.greenrobot.greendao.annotation.Unique;
 
+import java.util.List;
+
 /**
- * A model of the Category entity
+ * A model of the Author entity
  * that persists in local relational database table by GreenDao framework
  * and serialized from JSON by Gson framework
  */
 @Entity(
-        nameInDb = "CATEGORY",
+        nameInDb = "AUTHOR",
         active = true,
         generateConstructors = false
 )
-public class CategoryDb {
+public class AuthorTable {
     @Id
     Long id;
+
     @Unique
+    @NotNull
     String uuid;
+    @NotNull
     String name;
+    @NotNull
+    String mail;
+
     @Index(name = "photo", unique = true)
+    @NotNull
     String photoUuid;
+
+    @ToMany(joinProperties = {@JoinProperty(name = "photoUuid", referencedName = "uuid")})
+    List<PhotoTable> photoTables;
+
     /**
      * Used to resolve relations
      */
     @Generated(hash = 2040040024)
     private transient DaoSession daoSession;
+
     /**
      * Used for active entity operations.
      */
-    @Generated(hash = 1583176328)
-    private transient CategoryDbDao myDao;
+    @Generated(hash = 1165001475)
+    private transient AuthorTableDao myDao;
 
-    public CategoryDb() {
+    public AuthorTable() {
     }
 
     public Long getId() {
@@ -65,12 +83,51 @@ public class CategoryDb {
         this.name = name;
     }
 
+    public String getMail() {
+        return this.mail;
+    }
+
+    public void setMail(String mail) {
+        this.mail = mail;
+    }
+
     public String getPhotoUuid() {
         return this.photoUuid;
     }
 
     public void setPhotoUuid(String photoUuid) {
         this.photoUuid = photoUuid;
+    }
+
+    /**
+     * To-many relationship, resolved on first access (and after reset).
+     * Changes to to-many relations are not persisted, make changes to the target entity.
+     */
+    @Generated(hash = 1252005150)
+    public List<PhotoTable> getPhotoTables() {
+        if (photoTables == null) {
+            final DaoSession daoSession = this.daoSession;
+            if (daoSession == null) {
+            throw new DaoException("Entity is detached from DAO context");
+            }
+            PhotoTableDao targetDao = daoSession.getPhotoTableDao();
+            List<PhotoTable> photoTablesNew = targetDao
+                    ._queryAuthorTable_PhotoTables(photoUuid);
+            synchronized (this) {
+                if (photoTables == null) {
+                    photoTables = photoTablesNew;
+                }
+            }
+        }
+        return photoTables;
+    }
+
+    /**
+     * Resets a to-many relationship, making the next get call to query for a fresh result.
+     */
+    @Generated(hash = 1475926327)
+    public synchronized void resetPhotoTables() {
+        photoTables = null;
     }
 
     /**
@@ -112,10 +169,9 @@ public class CategoryDb {
     /**
      * called by internal mechanisms, do not call yourself.
      */
-    @Generated(hash = 1781939201)
+    @Generated(hash = 1837510431)
     public void __setDaoSession(DaoSession daoSession) {
         this.daoSession = daoSession;
-        myDao = daoSession != null ? daoSession.getCategoryDbDao() : null;
-    }
-
+    myDao = daoSession != null ? daoSession.getAuthorTableDao() : null;
+}
 }
