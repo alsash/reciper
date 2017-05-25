@@ -1,7 +1,7 @@
 package com.alsash.reciper.di.module;
 
-import com.alsash.reciper.api.StorageApi;
 import com.alsash.reciper.app.AppNavigator;
+import com.alsash.reciper.data.StorageApi;
 import com.alsash.reciper.di.scope.StartScope;
 import com.alsash.reciper.mvp.presenter.StartPresenter;
 

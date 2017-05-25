@@ -2,8 +2,8 @@ package com.alsash.reciper.mvp.presenter;
 
 import android.util.Log;
 
-import com.alsash.reciper.api.StorageApi;
 import com.alsash.reciper.app.AppNavigator;
+import com.alsash.reciper.data.StorageApi;
 import com.alsash.reciper.mvp.view.StartView;
 
 import java.lang.ref.WeakReference;

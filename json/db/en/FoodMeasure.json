@@ -1,0 +1,98 @@
+[
+  {
+    "uuid": "ADC229C1-DF02-442B-BDE9-D340528F883C",
+    "food_uuid": "2DC555BC-B83C-4B26-A3A6-B6AFB89F134F",
+    "unit_one": "piece",
+    "unit_other": "pieces",
+    "weight": 45,
+    "weight_unit": "g"
+  },
+  {
+    "uuid": "97EB540C-2141-424D-96A0-C3590E2C05A2",
+    "food_uuid": "A675C881-1A8D-42BF-96BD-C36DD1B0873D",
+    "unit_one": "piece",
+    "unit_other": "pieces",
+    "weight": 58,
+    "weight_unit": "g"
+  },
+  {
+    "uuid": "750F7709-B2FD-4EBD-91A5-042C22F4D3EE",
+    "food_uuid": "A439D5D7-50C9-4801-9654-C4C69FFCD55E",
+    "unit_one": "piece",
+    "unit_other": "pieces",
+    "weight": 110,
+    "weight_unit": "g"
+  },
+  {
+    "uuid": "6325582A-C19F-4EC3-9CAE-40B531CF8FF5",
+    "food_uuid": "2E0D5EA4-1B92-4673-9035-B938F994D72C",
+    "unit_one": "clove",
+    "unit_other": "cloves",
+    "weight": 3,
+    "weight_unit": "g"
+  },
+  {
+    "uuid": "49BCFB92-25DC-487B-9DED-971B281201F4",
+    "food_uuid": "8C9AD082-2A8F-4EE5-8E07-8C66ABCD7A18",
+    "unit_one": "piece",
+    "unit_other": "pieces",
+    "weight": 17,
+    "weight_unit": "g"
+  },
+  {
+    "uuid": "B7ED783E-1EB8-4A18-ABEF-9FBF4D954544",
+    "food_uuid": "596B2CC1-28C4-4C3B-A7D9-AF1C10B76A91",
+    "unit_one": "bottle",
+    "unit_other": "bottles",
+    "weight": 750,
+    "weight_unit": "g"
+  },
+  {
+    "uuid": "3DF63725-8A5D-4759-B1A1-4983159132B7",
+    "food_uuid": "A2CF993F-D73C-4581-B6D1-AA3C5B665A6E",
+    "unit_one": "piece",
+    "unit_other": "pieces",
+    "weight": 45,
+    "weight_unit": "g"
+  },
+  {
+    "uuid": "4FF2F7FC-B82D-46DA-BB1D-AB3F76364D7D",
+    "food_uuid": "8BE8F283-81D3-418E-9402-95F667A89166",
+    "unit_one": "piece",
+    "unit_other": "pieces",
+    "weight": 200,
+    "weight_unit": "g"
+  },
+  {
+    "uuid": "9C019C35-1EDB-4038-A580-AE47C2A43820",
+    "food_uuid": "05AA7D8C-B713-43A6-905A-78C4A3413DDE",
+    "unit_one": "piece",
+    "unit_other": "pieces",
+    "weight": 17,
+    "weight_unit": "g"
+  },
+  {
+    "uuid": "C07D5337-4340-4EEE-A351-03525A21216E",
+    "food_uuid": "306E90CB-E406-46FC-A383-212D6DDD8CFC",
+    "unit_one": "piece",
+    "unit_other": "pieces",
+    "weight": 67,
+    "weight_unit": "g"
+  },
+  {
+    "uuid": "45D5B361-29FD-4128-B786-65D28D1DDFB3",
+    "food_uuid": "D8F52655-8487-4CFA-98EE-253314BC2788",
+    "unit_one": "slice",
+    "unit_other": "slices",
+    "weight": 139,
+    "weight_unit": "g"
+  },
+  {
+    "uuid": "04F722E6-3986-4392-839E-A19F5356E96D",
+    "food_uuid": "13F64907-566D-4160-A1A0-A8CA7E6BE1D2",
+    "unit_one": "berry",
+    "unit_other": "berries",
+    "weight": 16,
+    "weight_unit": "g"
+  }
+]

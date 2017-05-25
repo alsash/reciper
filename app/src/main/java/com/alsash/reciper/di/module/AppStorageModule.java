@@ -2,9 +2,9 @@ package com.alsash.reciper.di.module;
 
 import android.content.Context;
 
-import com.alsash.reciper.api.StorageApi;
 import com.alsash.reciper.api.storage.local.database.DatabaseApi;
 import com.alsash.reciper.app.AppContract;
+import com.alsash.reciper.data.StorageApi;
 import com.alsash.reciper.mvp.model.entity.CacheEntityFactory;
 
 import javax.inject.Singleton;

@@ -1,4 +1,4 @@
-package com.alsash.reciper.api;
+package com.alsash.reciper.data;
 
 import android.support.annotation.WorkerThread;
 

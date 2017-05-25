@@ -1,0 +1,22 @@
+[
+  {
+    "uuid": "86694F90-5BC7-4707-9B93-99C2EAE8C39E",
+    "name": "Easy"
+  },
+  {
+    "uuid": "0CFAEE78-8923-4995-BB3C-49845236C1DE",
+    "name": "Not too tricky"
+  },
+  {
+    "uuid": "CCD65F86-73CD-4F4E-A463-1EE682025EFE",
+    "name": "A challenge"
+  },
+  {
+    "uuid": "76F25DD6-B2AE-4049-90A3-17AD0D3BE7A9",
+    "name": "Healsy"
+  },
+  {
+    "uuid": "D3294B49-79EA-4D22-A256-AC24418F1830",
+    "name": "A la carte"
+  }
+]

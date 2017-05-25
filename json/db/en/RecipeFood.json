@@ -1,0 +1,610 @@
+[
+  {
+    "uuid": "C66EA9B2-815F-447D-92F3-DB9BAE42C2A2",
+    "recipe_uuid": "D9DB4B66-3F1C-4E8D-81F7-02FBCBA45DBE",
+    "food_uuid": "964D967A-3DE7-4190-A33C-A22F1B1B4B86",
+    "name": "Unsalted butter",
+    "weight": 225,
+    "weight_unit": "g"
+  },
+  {
+    "uuid": "8A0B809B-B0A3-458B-9FB3-2AFE26DFE280",
+    "recipe_uuid": "D9DB4B66-3F1C-4E8D-81F7-02FBCBA45DBE",
+    "food_uuid": "70BA843F-9912-4519-955A-BC7BEA1B9102",
+    "name": "Caster sugar",
+    "weight": 310,
+    "weight_unit": "g"
+  },
+  {
+    "uuid": "2E433A8C-9472-4931-808E-BCE037649615",
+    "recipe_uuid": "D9DB4B66-3F1C-4E8D-81F7-02FBCBA45DBE",
+    "food_uuid": "2DC555BC-B83C-4B26-A3A6-B6AFB89F134F",
+    "name": "Eggs",
+    "weight": 180,
+    "weight_unit": "g"
+  },
+  {
+    "uuid": "7B69A874-97AA-42F8-8E4C-E92F8C0B6024",
+    "recipe_uuid": "D9DB4B66-3F1C-4E8D-81F7-02FBCBA45DBE",
+    "food_uuid": "A675C881-1A8D-42BF-96BD-C36DD1B0873D",
+    "name": "Lemon",
+    "weight": 58,
+    "weight_unit": "g"
+  },
+  {
+    "uuid": "8FBA95C5-CCF3-4255-81C5-CDFD9F03171B",
+    "recipe_uuid": "D9DB4B66-3F1C-4E8D-81F7-02FBCBA45DBE",
+    "food_uuid": "71B4B1D5-9599-4C27-8093-5B5B11710F9C",
+    "name": "Plain flour",
+    "weight": 225,
+    "weight_unit": "g"
+  },
+  {
+    "uuid": "6B13C9CE-B02A-469B-A706-91B5F642C8B7",
+    "recipe_uuid": "79CF0026-D15E-4B56-A0AB-5E3131850444",
+    "food_uuid": "964D967A-3DE7-4190-A33C-A22F1B1B4B86",
+    "name": "Butter",
+    "weight": 100,
+    "weight_unit": "g"
+  },
+  {
+    "uuid": "987213F3-5225-4C0D-AF8C-8368A86839A0",
+    "recipe_uuid": "79CF0026-D15E-4B56-A0AB-5E3131850444",
+    "food_uuid": "4BBF99B0-FB24-406C-B308-7553FC54EEF2",
+    "name": "Golden caster sugar",
+    "weight": 4,
+    "weight_unit": "g"
+  },
+  {
+    "uuid": "6F644355-083D-4C6F-9637-35F74021005C",
+    "recipe_uuid": "79CF0026-D15E-4B56-A0AB-5E3131850444",
+    "food_uuid": "71B4B1D5-9599-4C27-8093-5B5B11710F9C",
+    "name": "Plain flour",
+    "weight": 200,
+    "weight_unit": "g"
+  },
+  {
+    "uuid": "06491B6E-CB9C-40C1-8BB8-5DBA2C777F6A",
+    "recipe_uuid": "79CF0026-D15E-4B56-A0AB-5E3131850444",
+    "food_uuid": "2DC555BC-B83C-4B26-A3A6-B6AFB89F134F",
+    "name": "Eggs",
+    "weight": 180,
+    "weight_unit": "g"
+  },
+  {
+    "uuid": "F597B754-012B-4A5E-A809-EEB5E1EBEAE1",
+    "recipe_uuid": "79CF0026-D15E-4B56-A0AB-5E3131850444",
+    "food_uuid": "B9ADE924-0394-4E33-A93D-88A5C8732DC7",
+    "name": "Dulce de leche (condensed milk caramel)",
+    "weight": 400,
+    "weight_unit": "g"
+  },
+  {
+    "uuid": "54DE9494-5A9D-460E-96C7-0AF7ABE0AB51",
+    "recipe_uuid": "79CF0026-D15E-4B56-A0AB-5E3131850444",
+    "food_uuid": "70BA843F-9912-4519-955A-BC7BEA1B9102",
+    "name": "Golden granulated sugar",
+    "weight": 300,
+    "weight_unit": "g"
+  },
+  {
+    "uuid": "85A9EB6B-3180-4EF6-8164-94FD70101CE4",
+    "recipe_uuid": "79CF0026-D15E-4B56-A0AB-5E3131850444",
+    "food_uuid": "A8AB2C2B-8147-48FB-B2EA-185577F31CA8",
+    "name": "Dark chocolate (70% solids)",
+    "weight": 100,
+    "weight_unit": "g"
+  },
+  {
+    "uuid": "0A6ABA9B-B950-48B9-AD1F-4479A9F263E1",
+    "recipe_uuid": "79CF0026-D15E-4B56-A0AB-5E3131850444",
+    "food_uuid": "B509CC4E-B1F0-408F-8212-5F1043934792",
+    "name": "Single cream",
+    "weight": 300,
+    "weight_unit": "g"
+  },
+  {
+    "uuid": "4FD9DC46-0BF7-4B42-B86A-B30FF57A5B16",
+    "recipe_uuid": "D96BD978-0781-483F-85D8-88838B231C8F",
+    "food_uuid": "A675C881-1A8D-42BF-96BD-C36DD1B0873D",
+    "name": "Lemon",
+    "weight": 58,
+    "weight_unit": "g"
+  },
+  {
+    "uuid": "FBF90668-B430-46C1-8EA3-716505195990",
+    "recipe_uuid": "D96BD978-0781-483F-85D8-88838B231C8F",
+    "food_uuid": "E23E23F6-E39B-4EC3-AF3F-C9C122874783",
+    "name": "Chicken legs (4 free-range)",
+    "weight": 1200,
+    "weight_unit": "g"
+  },
+  {
+    "uuid": "3AF0E6C3-8A60-4B10-BBC1-E2DEC2793C3B",
+    "recipe_uuid": "D96BD978-0781-483F-85D8-88838B231C8F",
+    "food_uuid": "F208C15C-2600-4326-9A57-57293D6283E9",
+    "name": "Potatoes",
+    "weight": 1000,
+    "weight_unit": "g"
+  },
+  {
+    "uuid": "91B8913A-955A-4605-917A-3122BC3A274E",
+    "recipe_uuid": "D96BD978-0781-483F-85D8-88838B231C8F",
+    "food_uuid": "CE8949ED-AB51-4D99-9BBE-A2E357E59702",
+    "name": "Rosemary (4 fresh sprigs)",
+    "weight": 20,
+    "weight_unit": "g"
+  },
+  {
+    "uuid": "EDB2E621-00B0-4BF1-8B24-C73DC7084150",
+    "recipe_uuid": "D96BD978-0781-483F-85D8-88838B231C8F",
+    "food_uuid": "CB49400B-F30C-4415-A66B-25B8EEC06F42",
+    "name": "Thyme(1 fresh bunch)",
+    "weight": 20,
+    "weight_unit": "g"
+  },
+  {
+    "uuid": "53DB990B-3686-4C34-AF11-01636B75D44E",
+    "recipe_uuid": "D96BD978-0781-483F-85D8-88838B231C8F",
+    "food_uuid": "2B086F0A-8BB5-476F-A0C2-A533D330027A",
+    "name": "2 bay leaves",
+    "weight": 1,
+    "weight_unit": "g"
+  },
+  {
+    "uuid": "7361AA9A-B536-49A7-A615-AB683FB210AD",
+    "recipe_uuid": "D96BD978-0781-483F-85D8-88838B231C8F",
+    "food_uuid": "93C3E976-82E1-4FF3-ADBC-9F34EF6A7314",
+    "name": "Olive oil",
+    "weight": 30,
+    "weight_unit": "g"
+  },
+  {
+    "uuid": "B8D9CC88-0A4E-4EAD-A72B-69AED59BD16B",
+    "recipe_uuid": "D96BD978-0781-483F-85D8-88838B231C8F",
+    "food_uuid": "52877D64-DB80-445C-9668-63EFA01959F0",
+    "name": "Pitted green olives",
+    "weight": 100,
+    "weight_unit": "g"
+  },
+  {
+    "uuid": "5F9F5218-69D3-407E-AD88-5F3AEF9FA54D",
+    "recipe_uuid": "EEA8ED18-CBBA-4D3C-BDFD-2FE984058422",
+    "food_uuid": "3F5B7AA2-1DBC-4182-8CD7-D48E5990361C",
+    "name": "Carrots",
+    "weight": 1000,
+    "weight_unit": "g"
+  },
+  {
+    "uuid": "D88FB9B8-32E4-40A6-BC4F-10F815DE568C",
+    "recipe_uuid": "EEA8ED18-CBBA-4D3C-BDFD-2FE984058422",
+    "food_uuid": "649148D2-F763-4DFE-839E-BCA97EA39049",
+    "name": "2 bulbs of fennel",
+    "weight": 100,
+    "weight_unit": "g"
+  },
+  {
+    "uuid": "32CE5CB5-5C91-4C89-9EF2-FA35EE05DD25",
+    "recipe_uuid": "EEA8ED18-CBBA-4D3C-BDFD-2FE984058422",
+    "food_uuid": "A439D5D7-50C9-4801-9654-C4C69FFCD55E",
+    "name": "Onion",
+    "weight": 110,
+    "weight_unit": "g"
+  },
+  {
+    "uuid": "2676ECA5-B31F-471E-BAA7-A92432E286E5",
+    "recipe_uuid": "EEA8ED18-CBBA-4D3C-BDFD-2FE984058422",
+    "food_uuid": "93C3E976-82E1-4FF3-ADBC-9F34EF6A7314",
+    "name": "Olive oil",
+    "weight": 30,
+    "weight_unit": "g"
+  },
+  {
+    "uuid": "F4813505-08D5-4583-A240-374260665E37",
+    "recipe_uuid": "EEA8ED18-CBBA-4D3C-BDFD-2FE984058422",
+    "food_uuid": "2E0D5EA4-1B92-4673-9035-B938F994D72C",
+    "name": "Garlic",
+    "weight": 6,
+    "weight_unit": "g"
+  },
+  {
+    "uuid": "6E0DAAAB-FECB-44E3-8845-4F230CC83AAF",
+    "recipe_uuid": "EEA8ED18-CBBA-4D3C-BDFD-2FE984058422",
+    "food_uuid": "67C4E73A-380B-44D0-B151-E2528AEA32CE",
+    "name": "Vegetable stock",
+    "weight": 1600,
+    "weight_unit": "g"
+  },
+  {
+    "uuid": "8980C450-592C-45AA-BB45-95074613A14B",
+    "recipe_uuid": "EEA8ED18-CBBA-4D3C-BDFD-2FE984058422",
+    "food_uuid": "B509CC4E-B1F0-408F-8212-5F1043934792",
+    "name": "Single cream",
+    "weight": 100,
+    "weight_unit": "g"
+  },
+  {
+    "uuid": "CE350548-A381-445B-81BB-662E5C201B65",
+    "recipe_uuid": "EEA8ED18-CBBA-4D3C-BDFD-2FE984058422",
+    "food_uuid": "17FCD6BD-C35C-4ED6-AA60-DBF78FF34667",
+    "name": "Fennel seeds",
+    "weight": 4,
+    "weight_unit": "g"
+  },
+  {
+    "uuid": "A1A37678-4787-4FB2-9EA8-84C6F00BF7D1",
+    "recipe_uuid": "EEA8ED18-CBBA-4D3C-BDFD-2FE984058422",
+    "food_uuid": "4E6D744B-A213-4AC6-8555-10F70B5ADD18",
+    "name": "Strong bread flour",
+    "weight": 250,
+    "weight_unit": "g"
+  },
+  {
+    "uuid": "3F611264-DE0A-44D2-B72A-559E2BCA5B35",
+    "recipe_uuid": "EEA8ED18-CBBA-4D3C-BDFD-2FE984058422",
+    "food_uuid": "C9D404E1-F085-42BE-9263-C19189359777",
+    "name": "Dried yeast",
+    "weight": 2,
+    "weight_unit": "g"
+  },
+  {
+    "uuid": "15C6CDE4-50CA-43DF-9D17-0244B3A9797B",
+    "recipe_uuid": "EEA8ED18-CBBA-4D3C-BDFD-2FE984058422",
+    "food_uuid": "9274C406-4446-47A6-BF87-CC988CCB2B80",
+    "name": "Sugar",
+    "weight": 4,
+    "weight_unit": "g"
+  },
+  {
+    "uuid": "5DE860F1-AE36-4660-A54C-559B46E3561E",
+    "recipe_uuid": "F5D21C62-419F-49BA-ADFB-67F78B00853C",
+    "food_uuid": "CC4C44AD-1ABA-453C-93EE-F977F0A64F78",
+    "name": "2 beef fillets",
+    "weight": 800,
+    "weight_unit": "g"
+  },
+  {
+    "uuid": "94C6F803-6C73-4ED7-8D47-35284E9999B9",
+    "recipe_uuid": "F5D21C62-419F-49BA-ADFB-67F78B00853C",
+    "food_uuid": "93C3E976-82E1-4FF3-ADBC-9F34EF6A7314",
+    "name": "Olive oil",
+    "weight": 60,
+    "weight_unit": "g"
+  },
+  {
+    "uuid": "170EFEDC-1115-41CF-9D0F-835ADA4E508E",
+    "recipe_uuid": "F5D21C62-419F-49BA-ADFB-67F78B00853C",
+    "food_uuid": "489048DC-3D9B-43BB-952A-88FDAD2D8366",
+    "name": "Mixture of wild mushrooms",
+    "weight": 500,
+    "weight_unit": "g"
+  },
+  {
+    "uuid": "1129BD41-675C-469D-A030-D3E410221F77",
+    "recipe_uuid": "F5D21C62-419F-49BA-ADFB-67F78B00853C",
+    "food_uuid": "CB49400B-F30C-4415-A66B-25B8EEC06F42",
+    "name": "1 thyme sprig, leaves only",
+    "weight": 10,
+    "weight_unit": "g"
+  },
+  {
+    "uuid": "57743DFB-7BC9-4CA0-8645-2D73A6D6F078",
+    "recipe_uuid": "F5D21C62-419F-49BA-ADFB-67F78B00853C",
+    "food_uuid": "CB11B1E4-D691-45A2-BBFF-70111DE10A79",
+    "name": "Ppuff pastry",
+    "weight": 500,
+    "weight_unit": "g"
+  },
+  {
+    "uuid": "B9EF4D50-046F-4EBB-857C-7CD0F46FCA6C",
+    "recipe_uuid": "F5D21C62-419F-49BA-ADFB-67F78B00853C",
+    "food_uuid": "84569268-A2E1-43DF-85D5-ABA8A1617E80",
+    "name": "8 slices of Parma ham",
+    "weight": 224,
+    "weight_unit": "g"
+  },
+  {
+    "uuid": "650E3A47-9218-40D4-82DC-6BAD2ED8A4CA",
+    "recipe_uuid": "F5D21C62-419F-49BA-ADFB-67F78B00853C",
+    "food_uuid": "8C9AD082-2A8F-4EE5-8E07-8C66ABCD7A18",
+    "name": "Egg yolks",
+    "weight": 34,
+    "weight_unit": "g"
+  },
+  {
+    "uuid": "F41A979D-DED1-4EFB-8847-674948B405EC",
+    "recipe_uuid": "F5D21C62-419F-49BA-ADFB-67F78B00853C",
+    "food_uuid": "8F592817-AEC6-491B-BE84-857E2B1C0B59",
+    "name": "Freshly ground black pepper",
+    "weight": 4,
+    "weight_unit": "g"
+  },
+  {
+    "uuid": "2675F7CA-F890-4506-A8C9-A974E6C7AC2B",
+    "recipe_uuid": "F5D21C62-419F-49BA-ADFB-67F78B00853C",
+    "food_uuid": "86A2336C-1427-4DBF-930C-21194C913323",
+    "name": "Sea salt",
+    "weight": 4,
+    "weight_unit": "g"
+  },
+  {
+    "uuid": "839E2DDD-880E-4CE0-AB38-C9937F4227EE",
+    "recipe_uuid": "F5D21C62-419F-49BA-ADFB-67F78B00853C",
+    "food_uuid": "93C3E976-82E1-4FF3-ADBC-9F34EF6A7314",
+    "name": "Olive oil",
+    "weight": 30,
+    "weight_unit": "g"
+  },
+  {
+    "uuid": "E016E009-894A-416B-AA07-7C8A3C382958",
+    "recipe_uuid": "F5D21C62-419F-49BA-ADFB-67F78B00853C",
+    "food_uuid": "DA293D1D-19CC-4DE0-947C-CE2EBB46E3F6",
+    "name": "Beef trimmings",
+    "weight": 200,
+    "weight_unit": "g"
+  },
+  {
+    "uuid": "12F411D8-DD87-49E4-877F-B79241898ABB",
+    "recipe_uuid": "F5D21C62-419F-49BA-ADFB-67F78B00853C",
+    "food_uuid": "7527751A-A7EE-442D-A7D3-ACCBD4F0C71D",
+    "name": "4 large shallots",
+    "weight": 80,
+    "weight_unit": "g"
+  },
+  {
+    "uuid": "39A5625A-87B2-4F77-BB7D-761E1EE3B636",
+    "recipe_uuid": "F5D21C62-419F-49BA-ADFB-67F78B00853C",
+    "food_uuid": "8F592817-AEC6-491B-BE84-857E2B1C0B59",
+    "name": "12 black peppercorns",
+    "weight": 6,
+    "weight_unit": "g"
+  },
+  {
+    "uuid": "B97E96AA-2A8C-4924-9B3F-11B5E8883C65",
+    "recipe_uuid": "F5D21C62-419F-49BA-ADFB-67F78B00853C",
+    "food_uuid": "2B086F0A-8BB5-476F-A0C2-A533D330027A",
+    "name": "1 bay leaf",
+    "weight": 1,
+    "weight_unit": "g"
+  },
+  {
+    "uuid": "DE243E7A-401F-48B4-9022-F9AC9EFB1602",
+    "recipe_uuid": "F5D21C62-419F-49BA-ADFB-67F78B00853C",
+    "food_uuid": "CB49400B-F30C-4415-A66B-25B8EEC06F42",
+    "name": "1 thyme sprig",
+    "weight": 4,
+    "weight_unit": "g"
+  },
+  {
+    "uuid": "EB7D58DA-8D6C-478F-8090-8763D7455AD4",
+    "recipe_uuid": "F5D21C62-419F-49BA-ADFB-67F78B00853C",
+    "food_uuid": "BD670653-A589-4DF5-A622-32EB07083293",
+    "name": "Splash of red wine vinegar",
+    "weight": 30,
+    "weight_unit": "g"
+  },
+  {
+    "uuid": "FF8B4D63-362B-4241-B2C0-2DDBC576DE8C",
+    "recipe_uuid": "F5D21C62-419F-49BA-ADFB-67F78B00853C",
+    "food_uuid": "596B2CC1-28C4-4C3B-A7D9-AF1C10B76A91",
+    "name": "Red wine",
+    "weight": 750,
+    "weight_unit": "g"
+  },
+  {
+    "uuid": "14D250E6-ED3F-4470-83BD-21C0D6284338",
+    "recipe_uuid": "F5D21C62-419F-49BA-ADFB-67F78B00853C",
+    "food_uuid": "3BBADB16-B5A6-4FE9-B570-AA5ABE0C42ED",
+    "name": "Beef stock",
+    "weight": 750,
+    "weight_unit": "g"
+  },
+  {
+    "uuid": "A3E7C319-E8E1-4E40-ADB4-0D284FBA6A80",
+    "recipe_uuid": "21273F7E-7362-491E-B45A-5E5AE503FCC9",
+    "food_uuid": "A439D5D7-50C9-4801-9654-C4C69FFCD55E",
+    "name": "Half a small red onion",
+    "weight": 35,
+    "weight_unit": "g"
+  },
+  {
+    "uuid": "7EAF87C8-6575-4D31-AEB4-95251D0111FB",
+    "recipe_uuid": "21273F7E-7362-491E-B45A-5E5AE503FCC9",
+    "food_uuid": "A2CF993F-D73C-4581-B6D1-AA3C5B665A6E",
+    "name": "Fresh red chilli",
+    "weight": 45,
+    "weight_unit": "g"
+  },
+  {
+    "uuid": "57530621-9282-4722-BDD7-3DD3C2424339",
+    "recipe_uuid": "21273F7E-7362-491E-B45A-5E5AE503FCC9",
+    "food_uuid": "8BE8F283-81D3-418E-9402-95F667A89166",
+    "name": "Ripe avocados",
+    "weight": 600,
+    "weight_unit": "g"
+  },
+  {
+    "uuid": "5A3087B2-EA4C-498F-8374-8F2AE7689A57",
+    "recipe_uuid": "21273F7E-7362-491E-B45A-5E5AE503FCC9",
+    "food_uuid": "31A2B9C9-A176-46B9-B9C6-CD431F37B2E3",
+    "name": "1 bunch of fresh coriander",
+    "weight": 20,
+    "weight_unit": "g"
+  },
+  {
+    "uuid": "3A71242B-60F5-4CEF-9BFC-B13B1DEC67E5",
+    "recipe_uuid": "21273F7E-7362-491E-B45A-5E5AE503FCC9",
+    "food_uuid": "05AA7D8C-B713-43A6-905A-78C4A3413DDE",
+    "name": "Ripe cherry tomatoes",
+    "weight": 102,
+    "weight_unit": "g"
+  },
+  {
+    "uuid": "4F4F4475-83FD-4456-9E6C-1FE235DB15A5",
+    "recipe_uuid": "21273F7E-7362-491E-B45A-5E5AE503FCC9",
+    "food_uuid": "306E90CB-E406-46FC-A383-212D6DDD8CFC",
+    "name": "Limes",
+    "weight": 134,
+    "weight_unit": "g"
+  },
+  {
+    "uuid": "C08DA5E9-1772-43E3-A21C-CA4EF5585991",
+    "recipe_uuid": "21273F7E-7362-491E-B45A-5E5AE503FCC9",
+    "food_uuid": "93C3E976-82E1-4FF3-ADBC-9F34EF6A7314",
+    "name": "Extra virgin olive oil",
+    "weight": 15,
+    "weight_unit": "g"
+  },
+  {
+    "uuid": "B697323C-6340-4CA5-AC91-B2AE4A12727F",
+    "recipe_uuid": "1022BD09-0D1A-45D1-AADE-5B2EEA58D889",
+    "food_uuid": "649148D2-F763-4DFE-839E-BCA97EA39049",
+    "name": "2 bulbs of roasted fennel",
+    "weight": 50,
+    "weight_unit": "g"
+  },
+  {
+    "uuid": "5D9799D7-141F-40F3-AC6D-10E627B24D0D",
+    "recipe_uuid": "1022BD09-0D1A-45D1-AADE-5B2EEA58D889",
+    "food_uuid": "68BE47AE-C41D-4274-B153-81223CE29D64",
+    "name": "a few sprigs of fresh basil",
+    "weight": 15,
+    "weight_unit": "g"
+  },
+  {
+    "uuid": "6C119D38-B432-42F1-87F8-8AD2D290EFBF",
+    "recipe_uuid": "1022BD09-0D1A-45D1-AADE-5B2EEA58D889",
+    "food_uuid": "A2CF993F-D73C-4581-B6D1-AA3C5B665A6E",
+    "name": "Fresh red chilli",
+    "weight": 45,
+    "weight_unit": "g"
+  },
+  {
+    "uuid": "C4192CD2-E9F3-4B70-850F-BE15BD4A0A2B",
+    "recipe_uuid": "1022BD09-0D1A-45D1-AADE-5B2EEA58D889",
+    "food_uuid": "D8F52655-8487-4CFA-98EE-253314BC2788",
+    "name": "Sourdough bread",
+    "weight": 556,
+    "weight_unit": "g"
+  },
+  {
+    "uuid": "94A643A5-2825-4121-BEA0-398BD5CE8E55",
+    "recipe_uuid": "1022BD09-0D1A-45D1-AADE-5B2EEA58D889",
+    "food_uuid": "A675C881-1A8D-42BF-96BD-C36DD1B0873D",
+    "name": "Lemon",
+    "weight": 58,
+    "weight_unit": "g"
+  },
+  {
+    "uuid": "061F824C-7605-4BF3-8B1E-FA44CA6553B1",
+    "recipe_uuid": "1022BD09-0D1A-45D1-AADE-5B2EEA58D889",
+    "food_uuid": "93C3E976-82E1-4FF3-ADBC-9F34EF6A7314",
+    "name": "Extra virgin olive oil",
+    "weight": 15,
+    "weight_unit": "g"
+  },
+  {
+    "uuid": "CE0D8EE7-4CDF-47D6-A7CA-37ACBAA384C6",
+    "recipe_uuid": "1022BD09-0D1A-45D1-AADE-5B2EEA58D889",
+    "food_uuid": "074DE0E0-8B59-49CD-A301-0C805AA36B63",
+    "name": "Parmesan cheese",
+    "weight": 50,
+    "weight_unit": "g"
+  },
+  {
+    "uuid": "1816D2BE-7130-4110-A84F-170BA944FED9",
+    "recipe_uuid": "1022BD09-0D1A-45D1-AADE-5B2EEA58D889",
+    "food_uuid": "4A5218E2-D995-4C80-B2FB-97AF3DDBCA01",
+    "name": "Buffalo mozzarella",
+    "weight": 125,
+    "weight_unit": "g"
+  },
+  {
+    "uuid": "F7445C01-FAEB-46A6-8475-F657DC21241B",
+    "recipe_uuid": "1022BD09-0D1A-45D1-AADE-5B2EEA58D889",
+    "food_uuid": "2E0D5EA4-1B92-4673-9035-B938F994D72C",
+    "name": "Garlic",
+    "weight": 3,
+    "weight_unit": "g"
+  },
+  {
+    "uuid": "0B243E6B-5734-41E1-8F2A-C33DFF6F9F8D",
+    "recipe_uuid": "9F75415B-8BE0-42FF-B247-BA876275665C",
+    "food_uuid": "A675C881-1A8D-42BF-96BD-C36DD1B0873D",
+    "name": "Amalfi lemons",
+    "weight": 174,
+    "weight_unit": "g"
+  },
+  {
+    "uuid": "151FB841-7D40-4E59-B453-982016E40E2C",
+    "recipe_uuid": "9F75415B-8BE0-42FF-B247-BA876275665C",
+    "food_uuid": "BB35A014-1DB9-404E-8D73-68F7C4D0BB84",
+    "name": "95% pure gain alcohol",
+    "weight": 250,
+    "weight_unit": "g"
+  },
+  {
+    "uuid": "657807EB-0F2D-4BAF-A1C2-FB6218746654",
+    "recipe_uuid": "9F75415B-8BE0-42FF-B247-BA876275665C",
+    "food_uuid": "9274C406-4446-47A6-BF87-CC988CCB2B80",
+    "name": "Granulated sugar",
+    "weight": 250,
+    "weight_unit": "g"
+  },
+  {
+    "uuid": "A54E2E79-C1FB-4851-B4C8-324E8AB49F4B",
+    "recipe_uuid": "68321D4A-FFC7-40E5-871C-0B1C4DF720F7",
+    "food_uuid": "682402F6-5EF5-4F79-AD92-153134C1A331",
+    "name": "Frozen blackberries",
+    "weight": 500,
+    "weight_unit": "g"
+  },
+  {
+    "uuid": "D89E16F1-44C0-4A3A-8869-8F65E04FA4EC",
+    "recipe_uuid": "68321D4A-FFC7-40E5-871C-0B1C4DF720F7",
+    "food_uuid": "A675C881-1A8D-42BF-96BD-C36DD1B0873D",
+    "name": "Lemons",
+    "weight": 232,
+    "weight_unit": "g"
+  },
+  {
+    "uuid": "52538365-32FB-4211-8791-920127702C1C",
+    "recipe_uuid": "68321D4A-FFC7-40E5-871C-0B1C4DF720F7",
+    "food_uuid": "D2E49F96-C354-4DB2-B511-53B0D5CFDBA3",
+    "name": "2 sprigs of rosemary",
+    "weight": 10,
+    "weight_unit": "g"
+  },
+  {
+    "uuid": "E544B922-3413-4B4D-8005-992C8FD1C5DA",
+    "recipe_uuid": "68321D4A-FFC7-40E5-871C-0B1C4DF720F7",
+    "food_uuid": "13F64907-566D-4160-A1A0-A8CA7E6BE1D2",
+    "name": "Juniper",
+    "weight": 160,
+    "weight_unit": "g"
+  },
+  {
+    "uuid": "837A2702-16C9-4ACC-B482-DCF34D16194D",
+    "recipe_uuid": "68321D4A-FFC7-40E5-871C-0B1C4DF720F7",
+    "food_uuid": "F45B0FD7-36B8-4C94-8D0A-70EC5B1EF6B6",
+    "name": "Honey",
+    "weight": 100,
+    "weight_unit": "g"
+  },
+  {
+    "uuid": "59C0BD44-D8EC-4FDA-8F9E-420E336EC392",
+    "recipe_uuid": "68321D4A-FFC7-40E5-871C-0B1C4DF720F7",
+    "food_uuid": "E2306C68-BF9A-45FB-94D8-FB9AB1BB9C7B",
+    "name": "Bombay Sapphire gin",
+    "weight": 500,
+    "weight_unit": "g"
+  },
+  {
+    "uuid": "37B2183C-14BC-479D-8AE6-2AFA992ACF74",
+    "recipe_uuid": "68321D4A-FFC7-40E5-871C-0B1C4DF720F7",
+    "food_uuid": "3D61F93A-37BF-4710-A647-DBC0746244D1",
+    "name": "Soda water",
+    "weight": 1000,
+    "weight_unit": "g"
+  }
+]

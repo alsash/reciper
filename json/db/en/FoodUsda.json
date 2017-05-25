@@ -1,0 +1,368 @@
+[
+  {
+    "uuid": "43D4859C-C412-4035-B447-5E95D870ADF3",
+    "food_uuid": "964D967A-3DE7-4190-A33C-A22F1B1B4B86",
+    "ndb_no": 1145,
+    "fetched": false
+  },
+  {
+    "uuid": "A611F253-EC12-4480-A761-92FCE26928EB",
+    "food_uuid": "9274C406-4446-47A6-BF87-CC988CCB2B80",
+    "ndb_no": 19335,
+    "fetched": false
+  },
+  {
+    "uuid": "14FAC8E5-E929-474C-A7EB-5A494550181C",
+    "food_uuid": "2DC555BC-B83C-4B26-A3A6-B6AFB89F134F",
+    "ndb_no": 1129,
+    "fetched": false
+  },
+  {
+    "uuid": "B2FC424A-4BD6-4520-94BA-6EC3D8B49084",
+    "food_uuid": "A675C881-1A8D-42BF-96BD-C36DD1B0873D",
+    "ndb_no": 9150,
+    "fetched": false
+  },
+  {
+    "uuid": "288169C9-5AA7-4923-ADE6-3BD6D066E038",
+    "food_uuid": "71B4B1D5-9599-4C27-8093-5B5B11710F9C",
+    "ndb_no": 20481,
+    "fetched": false
+  },
+  {
+    "uuid": "B88CE907-CCCA-4DE8-B8AB-BA52F7D45EC0",
+    "food_uuid": "B9ADE924-0394-4E33-A93D-88A5C8732DC7",
+    "ndb_no": 1225,
+    "fetched": false
+  },
+  {
+    "uuid": "0F3DBDEE-9F31-4041-B625-A3B4305658A3",
+    "food_uuid": "C95D78E3-1FFB-4047-A5FA-52D27EE242F4",
+    "ndb_no": 1095,
+    "fetched": false
+  },
+  {
+    "uuid": "E30EC79F-00BD-4A38-8E47-50A17EABD6A2",
+    "food_uuid": "4BBF99B0-FB24-406C-B308-7553FC54EEF2",
+    "ndb_no": 45083585,
+    "fetched": false
+  },
+  {
+    "uuid": "2737A359-8441-4F27-BB05-55999C23F317",
+    "food_uuid": "70BA843F-9912-4519-955A-BC7BEA1B9102",
+    "ndb_no": 45222099,
+    "fetched": false
+  },
+  {
+    "uuid": "067166ED-A304-4F58-BE4C-FCEC917851B8",
+    "food_uuid": "A8AB2C2B-8147-48FB-B2EA-185577F31CA8",
+    "ndb_no": 19904,
+    "fetched": false
+  },
+  {
+    "uuid": "EC31C6BB-4E05-4897-AF1F-33B05D4CEECF",
+    "food_uuid": "B509CC4E-B1F0-408F-8212-5F1043934792",
+    "ndb_no": 1054,
+    "fetched": false
+  },
+  {
+    "uuid": "9F0B9721-F796-4B11-9547-F897150BE976",
+    "food_uuid": "76190CA8-C4DD-45C8-9F02-3E31D8A93E59",
+    "ndb_no": 5113,
+    "fetched": false
+  },
+  {
+    "uuid": "253340DB-7FBF-4DCB-8AEA-14E1F40B36DB",
+    "food_uuid": "E23E23F6-E39B-4EC3-AF3F-C9C122874783",
+    "ndb_no": 5125,
+    "fetched": false
+  },
+  {
+    "uuid": "760B9070-3369-41E9-88C4-C6AF92F99728",
+    "food_uuid": "BF924976-A6C6-403F-8A10-20D2C5397B14",
+    "ndb_no": 5335,
+    "fetched": false
+  },
+  {
+    "uuid": "551C6C78-62DB-4772-A4E1-79BF813E3223",
+    "food_uuid": "F208C15C-2600-4326-9A57-57293D6283E9",
+    "ndb_no": 11352,
+    "fetched": false
+  },
+  {
+    "uuid": "5FEF5351-2D55-4EAC-852F-E7DD358B7802",
+    "food_uuid": "CE8949ED-AB51-4D99-9BBE-A2E357E59702",
+    "ndb_no": 2063,
+    "fetched": false
+  },
+  {
+    "uuid": "60907496-B8A8-42A5-8C02-825FEB0611F6",
+    "food_uuid": "CB49400B-F30C-4415-A66B-25B8EEC06F42",
+    "ndb_no": 2049,
+    "fetched": false
+  },
+  {
+    "uuid": "2775002D-7508-4A1E-9BCC-3E65717C10AF",
+    "food_uuid": "2B086F0A-8BB5-476F-A0C2-A533D330027A",
+    "ndb_no": 2004,
+    "fetched": false
+  },
+  {
+    "uuid": "1E430855-B652-4FA4-9804-A09CFA5A426F",
+    "food_uuid": "93C3E976-82E1-4FF3-ADBC-9F34EF6A7314",
+    "ndb_no": 4053,
+    "fetched": false
+  },
+  {
+    "uuid": "D017EDC1-F3A2-4B7A-B2D8-0BCF1369870C",
+    "food_uuid": "52877D64-DB80-445C-9668-63EFA01959F0",
+    "ndb_no": 9195,
+    "fetched": false
+  },
+  {
+    "uuid": "94ADE656-AB59-42BC-BFFC-15AA96DD1F25",
+    "food_uuid": "649148D2-F763-4DFE-839E-BCA97EA39049",
+    "ndb_no": 11957,
+    "fetched": false
+  },
+  {
+    "uuid": "ABEA4DC4-7A03-4C04-8043-A25AF8C8D8A4",
+    "food_uuid": "3F5B7AA2-1DBC-4182-8CD7-D48E5990361C",
+    "ndb_no": 11124,
+    "fetched": false
+  },
+  {
+    "uuid": "040F760F-1493-45CA-B57C-8E54CC9123BF",
+    "food_uuid": "A439D5D7-50C9-4801-9654-C4C69FFCD55E",
+    "ndb_no": 11282,
+    "fetched": false
+  },
+  {
+    "uuid": "4B91F4FC-9516-4248-92F9-3624CAF81E23",
+    "food_uuid": "2E0D5EA4-1B92-4673-9035-B938F994D72C",
+    "ndb_no": 11215,
+    "fetched": false
+  },
+  {
+    "uuid": "8B72FBAA-E854-4C87-8F37-22BF61CE710F",
+    "food_uuid": "67C4E73A-380B-44D0-B151-E2528AEA32CE",
+    "ndb_no": 45173715,
+    "fetched": false
+  },
+  {
+    "uuid": "E3A00D25-2352-4594-AF25-C9F10CA57319",
+    "food_uuid": "17FCD6BD-C35C-4ED6-AA60-DBF78FF34667",
+    "ndb_no": 2018,
+    "fetched": false
+  },
+  {
+    "uuid": "FA3422B5-BDD2-4D6E-BD35-ED7D725743D0",
+    "food_uuid": "4E6D744B-A213-4AC6-8555-10F70B5ADD18",
+    "ndb_no": 20129,
+    "fetched": false
+  },
+  {
+    "uuid": "EFE425F5-102C-409E-B4CC-C18B2E23ED95",
+    "food_uuid": "C9D404E1-F085-42BE-9263-C19189359777",
+    "ndb_no": 18375,
+    "fetched": false
+  },
+  {
+    "uuid": "0314E4F7-7515-4750-A2D6-A25527AD865B",
+    "food_uuid": "CC4C44AD-1ABA-453C-93EE-F977F0A64F78",
+    "ndb_no": 23372,
+    "fetched": false
+  },
+  {
+    "uuid": "AEE0E61E-F9E4-4B76-AB27-ECEFB8CC8FDF",
+    "food_uuid": "489048DC-3D9B-43BB-952A-88FDAD2D8366",
+    "ndb_no": 11266,
+    "fetched": false
+  },
+  {
+    "uuid": "37207BBC-B87E-433C-8B23-4EF79F0D43E2",
+    "food_uuid": "21E6BD93-0466-46AF-A09B-0F4053F77F1A",
+    "ndb_no": 11260,
+    "fetched": false
+  },
+  {
+    "uuid": "1AE0B3FF-17C8-4A94-9261-50483FB3B7E3",
+    "food_uuid": "CB11B1E4-D691-45A2-BBFF-70111DE10A79",
+    "ndb_no": 18211,
+    "fetched": false
+  },
+  {
+    "uuid": "4D517628-2D0C-4BB5-A41E-624206B3846C",
+    "food_uuid": "84569268-A2E1-43DF-85D5-ABA8A1617E80",
+    "ndb_no": 45106173,
+    "fetched": false
+  },
+  {
+    "uuid": "4D5C6391-0892-4058-9488-8ADEE4098C0F",
+    "food_uuid": "8C9AD082-2A8F-4EE5-8E07-8C66ABCD7A18",
+    "ndb_no": 1125,
+    "fetched": false
+  },
+  {
+    "uuid": "59C9FA93-A764-40DE-8678-9474BD82A454",
+    "food_uuid": "8F592817-AEC6-491B-BE84-857E2B1C0B59",
+    "ndb_no": 2030,
+    "fetched": false
+  },
+  {
+    "uuid": "E08E7B5F-E549-48EC-ADB1-9C07BFDC50FD",
+    "food_uuid": "86A2336C-1427-4DBF-930C-21194C913323",
+    "ndb_no": 2047,
+    "fetched": false
+  },
+  {
+    "uuid": "992C3294-55F0-4C6F-9A87-D281134C58CE",
+    "food_uuid": "DA293D1D-19CC-4DE0-947C-CE2EBB46E3F6",
+    "ndb_no": 23220,
+    "fetched": false
+  },
+  {
+    "uuid": "74179605-68F0-49A5-BF56-5E10C43B73E5",
+    "food_uuid": "7527751A-A7EE-442D-A7D3-ACCBD4F0C71D",
+    "ndb_no": 11677,
+    "fetched": false
+  },
+  {
+    "uuid": "9AFC4883-29FC-41E7-B187-C3565EF1CA21",
+    "food_uuid": "BD670653-A589-4DF5-A622-32EB07083293",
+    "ndb_no": 2068,
+    "fetched": false
+  },
+  {
+    "uuid": "3EC5C915-F228-4A7E-A1DD-5AF4FEDA0C97",
+    "food_uuid": "596B2CC1-28C4-4C3B-A7D9-AF1C10B76A91",
+    "ndb_no": 14096,
+    "fetched": false
+  },
+  {
+    "uuid": "B95FEF7A-0411-4F50-97ED-F3874338FD95",
+    "food_uuid": "3BBADB16-B5A6-4FE9-B570-AA5ABE0C42ED",
+    "ndb_no": 6170,
+    "fetched": false
+  },
+  {
+    "uuid": "E7FB4C6B-1788-4311-9FAE-7155EFB56D12",
+    "food_uuid": "82AB4846-6A85-4166-8505-BA6B9377C4BE",
+    "ndb_no": 11292,
+    "fetched": false
+  },
+  {
+    "uuid": "4FE1EE32-82BE-45EF-8071-C7501274E734",
+    "food_uuid": "A2CF993F-D73C-4581-B6D1-AA3C5B665A6E",
+    "ndb_no": 11819,
+    "fetched": false
+  },
+  {
+    "uuid": "6B2193D2-2456-4FE7-A18B-7C99681C4096",
+    "food_uuid": "8BE8F283-81D3-418E-9402-95F667A89166",
+    "ndb_no": 9037,
+    "fetched": false
+  },
+  {
+    "uuid": "8ED14675-C44F-42FA-8ACE-75C5D458C5B6",
+    "food_uuid": "31A2B9C9-A176-46B9-B9C6-CD431F37B2E3",
+    "ndb_no": 11165,
+    "fetched": false
+  },
+  {
+    "uuid": "03556B14-128F-4E8C-B2BB-D9BC746CBE98",
+    "food_uuid": "05AA7D8C-B713-43A6-905A-78C4A3413DDE",
+    "ndb_no": 11529,
+    "fetched": false
+  },
+  {
+    "uuid": "3A56EE03-4A63-4F0B-BD00-74FA34C44DDD",
+    "food_uuid": "A3E68AB0-4A1E-42CC-BF28-A1A4E5A67BED",
+    "ndb_no": 11696,
+    "fetched": false
+  },
+  {
+    "uuid": "79E62044-D37D-4F9C-9EF8-142CBCB5E6DA",
+    "food_uuid": "F733A59F-94A9-4D83-8972-3B004DFCF8D2",
+    "ndb_no": 11527,
+    "fetched": false
+  },
+  {
+    "uuid": "B8000A57-FFBD-46D2-98A1-F7987440A93B",
+    "food_uuid": "B726C89E-DA32-423B-9909-7C087AAD65F7",
+    "ndb_no": 11529,
+    "fetched": false
+  },
+  {
+    "uuid": "A3AA56C9-09B6-4234-B218-600A97049F60",
+    "food_uuid": "306E90CB-E406-46FC-A383-212D6DDD8CFC",
+    "ndb_no": 9159,
+    "fetched": false
+  },
+  {
+    "uuid": "CB6CBF57-3BE2-4F2A-BC8D-6592202E1F94",
+    "food_uuid": "68BE47AE-C41D-4274-B153-81223CE29D64",
+    "ndb_no": 2044,
+    "fetched": false
+  },
+  {
+    "uuid": "FA5A9E72-8082-45A9-83F4-9BE513EF2DE1",
+    "food_uuid": "D8F52655-8487-4CFA-98EE-253314BC2788",
+    "ndb_no": 18029,
+    "fetched": false
+  },
+  {
+    "uuid": "052317A9-4AFF-4CD8-8385-0D9671AC88D8",
+    "food_uuid": "074DE0E0-8B59-49CD-A301-0C805AA36B63",
+    "ndb_no": 1033,
+    "fetched": false
+  },
+  {
+    "uuid": "8184ECFD-3048-4328-9523-792D5D44FB43",
+    "food_uuid": "4A5218E2-D995-4C80-B2FB-97AF3DDBCA01",
+    "ndb_no": 1026,
+    "fetched": false
+  },
+  {
+    "uuid": "88EBF87E-192F-4DDC-8D61-A28F79E1E0EF",
+    "food_uuid": "BB35A014-1DB9-404E-8D73-68F7C4D0BB84",
+    "ndb_no": 14532,
+    "fetched": false
+  },
+  {
+    "uuid": "B71B1671-F2D2-49E9-927F-D1B30653DDD4",
+    "food_uuid": "682402F6-5EF5-4F79-AD92-153134C1A331",
+    "ndb_no": 9048,
+    "fetched": false
+  },
+  {
+    "uuid": "01E17385-7794-47DA-8326-9C5D60AE102F",
+    "food_uuid": "D2E49F96-C354-4DB2-B511-53B0D5CFDBA3",
+    "ndb_no": 2063,
+    "fetched": false
+  },
+  {
+    "uuid": "8FF98BD9-7B49-42A7-AC38-6C4D424C0CBA",
+    "food_uuid": "13F64907-566D-4160-A1A0-A8CA7E6BE1D2",
+    "ndb_no": 45238522,
+    "fetched": false
+  },
+  {
+    "uuid": "6120E93E-FF22-452B-993C-EB84D9C05397",
+    "food_uuid": "F45B0FD7-36B8-4C94-8D0A-70EC5B1EF6B6",
+    "ndb_no": 19296,
+    "fetched": false
+  },
+  {
+    "uuid": "8DBE3487-E37C-433D-89E4-C5E9D2ADA2BA",
+    "food_uuid": "E2306C68-BF9A-45FB-94D8-FB9AB1BB9C7B",
+    "ndb_no": 14049,
+    "fetched": false
+  },
+  {
+    "uuid": "B0C2D726-9544-42A5-9710-2D3F5DDC696A",
+    "food_uuid": "3D61F93A-37BF-4710-A647-DBC0746244D1",
+    "ndb_no": 14155,
+    "fetched": false
+  }
+]

@@ -1,6 +1,6 @@
 package com.alsash.reciper.mvp.presenter;
 
-import com.alsash.reciper.api.StorageApi;
+import com.alsash.reciper.data.StorageApi;
 import com.alsash.reciper.mvp.model.entity.Recipe;
 import com.alsash.reciper.mvp.view.RecipeTabBookmarkView;
 
