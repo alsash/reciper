@@ -13,8 +13,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static com.alsash.reciper.app.AppContract.PAYLOAD_FLIP_BACK_TO_FRONT;
-import static com.alsash.reciper.app.AppContract.PAYLOAD_FLIP_FRONT_TO_BACK;
+import static com.alsash.reciper.app.AppContract.Payload.FLIP_BACK_TO_FRONT;
+import static com.alsash.reciper.app.AppContract.Payload.FLIP_FRONT_TO_BACK;
 
 /**
  * Flip animator for Recipe Cards
@@ -37,9 +37,9 @@ public class FlipCardListAnimator extends DefaultItemAnimator {
         // Flip animation. Stage 2 of 3. Record flip direction.
         if (changeFlags == FLAG_CHANGED) {
             for (Object payload : payloads) {
-                if (PAYLOAD_FLIP_FRONT_TO_BACK.equals(payload)) {
+                if (FLIP_FRONT_TO_BACK.equals(payload)) {
                     return new FlipInfo().setFrontToBack(true).setFrom(holder);
-                } else if (PAYLOAD_FLIP_BACK_TO_FRONT.equals(payload)) {
+                } else if (FLIP_BACK_TO_FRONT.equals(payload)) {
                     return new FlipInfo().setFrontToBack(false).setFrom(holder);
                 }
             }

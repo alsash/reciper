@@ -12,8 +12,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import static com.alsash.reciper.app.AppContract.PAYLOAD_FLIP_BACK_TO_FRONT;
-import static com.alsash.reciper.app.AppContract.PAYLOAD_FLIP_FRONT_TO_BACK;
+import static com.alsash.reciper.app.AppContract.Payload.FLIP_BACK_TO_FRONT;
+import static com.alsash.reciper.app.AppContract.Payload.FLIP_FRONT_TO_BACK;
 
 public class RecipeCardListAdapter extends RecyclerView.Adapter<RecipeCardHolder> {
 
@@ -46,10 +46,10 @@ public class RecipeCardListAdapter extends RecyclerView.Adapter<RecipeCardHolder
                         int adapterPosition = holder.getAdapterPosition();
                         if (backCardPositions.contains(adapterPosition)) {
                             backCardPositions.remove(adapterPosition);
-                            notifyItemChanged(adapterPosition, PAYLOAD_FLIP_BACK_TO_FRONT);
+                            notifyItemChanged(adapterPosition, FLIP_BACK_TO_FRONT);
                         } else {
                             backCardPositions.add(adapterPosition);
-                            notifyItemChanged(adapterPosition, PAYLOAD_FLIP_FRONT_TO_BACK);
+                            notifyItemChanged(adapterPosition, FLIP_FRONT_TO_BACK);
                         }
                     }
                 },

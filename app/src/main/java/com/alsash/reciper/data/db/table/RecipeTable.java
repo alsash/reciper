@@ -1,7 +1,5 @@
 package com.alsash.reciper.data.db.table;
 
-import com.alsash.reciper.api.storage.local.database.table.DaoSession;
-
 import org.greenrobot.greendao.DaoException;
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Generated;
@@ -19,10 +17,9 @@ import java.util.Date;
  */
 @Entity(
         nameInDb = "RECIPE",
-        active = true,
-        generateConstructors = false
+        active = true
 )
-public class RecipeTable {
+public final class RecipeTable {
     @Id
     Long id;
     @Unique
@@ -53,6 +50,24 @@ public class RecipeTable {
     @Generated(hash = 1210201788)
     private transient RecipeTableDao myDao;
 
+    @Generated(hash = 401932172)
+    public RecipeTable(Long id, String uuid, String name, Date date, String source,
+                       String description, boolean bookmark, int servings, double massFlowRate,
+                       String categoryUuid, String authorUuid) {
+        this.id = id;
+        this.uuid = uuid;
+        this.name = name;
+        this.date = date;
+        this.source = source;
+        this.description = description;
+        this.bookmark = bookmark;
+        this.servings = servings;
+        this.massFlowRate = massFlowRate;
+        this.categoryUuid = categoryUuid;
+        this.authorUuid = authorUuid;
+    }
+
+    @Generated(hash = 1656289545)
     public RecipeTable() {
     }
 
@@ -187,6 +202,5 @@ public class RecipeTable {
     public void __setDaoSession(DaoSession daoSession) {
         this.daoSession = daoSession;
         myDao = daoSession != null ? daoSession.getRecipeTableDao() : null;
-    }
-
+}
 }

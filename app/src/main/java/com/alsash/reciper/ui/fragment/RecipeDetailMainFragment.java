@@ -41,7 +41,7 @@ public class RecipeDetailMainFragment extends Fragment {
 
     public static RecipeDetailMainFragment newInstance(long recipeId) {
         Bundle args = new Bundle();
-        args.putLong(AppContract.KEY_RECIPE_ID, recipeId);
+        args.putLong(AppContract.Key.RECIPE_ID, recipeId);
         RecipeDetailMainFragment fragment = new RecipeDetailMainFragment();
         fragment.setArguments(args);
         return fragment;
@@ -55,7 +55,7 @@ public class RecipeDetailMainFragment extends Fragment {
     }
 
     private void bindModel() {
-        long id = getArguments().getLong(AppContract.KEY_RECIPE_ID, -1);
+        long id = getArguments().getLong(AppContract.Key.RECIPE_ID, -1);
         // recipe = RecipeManager.getInstance().search(id);
         assert recipe != null;
     }

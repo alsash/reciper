@@ -23,9 +23,9 @@ public interface RecipeTabComponent {
 
     void inject(RecipeTabGridFragment recipeTabGridFragment);
 
-    void inject(RecipeTabLabelFragment recipeTabGridFragment);
+    void inject(RecipeTabLabelFragment recipeTabLabelFragment);
 
-    void inject(RecipeTabBookmarkFragment recipeTabGridFragment);
+    void inject(RecipeTabBookmarkFragment recipeTabBookmarkFragment);
 
     @Subcomponent.Builder
     interface Builder {

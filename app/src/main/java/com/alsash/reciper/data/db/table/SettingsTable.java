@@ -4,30 +4,21 @@ import org.greenrobot.greendao.DaoException;
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Generated;
 import org.greenrobot.greendao.annotation.Id;
-import org.greenrobot.greendao.annotation.Index;
-import org.greenrobot.greendao.annotation.NotNull;
 import org.greenrobot.greendao.annotation.Unique;
 
 /**
- * A model of the Method entity,
- * has a to-one relation with the Recipe entity and its methods,
- * persists in local relational database table with the help of GreenDao framework
- * and serialized from JSON by Gson framework
+ * A storage of the application settings in key-value pairs
  */
 @Entity(
-        nameInDb = "RECIPE_METHOD",
+        nameInDb = "SETTINGS",
         active = true
 )
-public final class RecipeMethodTable {
+public final class SettingsTable {
     @Id
     Long id;
     @Unique
-    String uuid;
-    @Index(name = "recipe")
-    String recipeUuid;
-    @NotNull
-    long index;
-    String body;
+    String key;
+    String val;
     /**
      * Used to resolve relations
      */
@@ -36,21 +27,18 @@ public final class RecipeMethodTable {
     /**
      * Used for active entity operations.
      */
-    @Generated(hash = 1424435777)
-    private transient RecipeMethodTableDao myDao;
+    @Generated(hash = 911576264)
+    private transient SettingsTableDao myDao;
 
-    @Generated(hash = 2115269653)
-    public RecipeMethodTable(Long id, String uuid, String recipeUuid, long index,
-                             String body) {
+    @Generated(hash = 1426145950)
+    public SettingsTable(Long id, String key, String val) {
         this.id = id;
-        this.uuid = uuid;
-        this.recipeUuid = recipeUuid;
-        this.index = index;
-        this.body = body;
+        this.key = key;
+        this.val = val;
     }
 
-    @Generated(hash = 1054732394)
-    public RecipeMethodTable() {
+    @Generated(hash = 90333447)
+    public SettingsTable() {
     }
 
     public Long getId() {
@@ -61,36 +49,20 @@ public final class RecipeMethodTable {
         this.id = id;
     }
 
-    public String getUuid() {
-        return this.uuid;
+    public String getKey() {
+        return this.key;
     }
 
-    public void setUuid(String uuid) {
-        this.uuid = uuid;
+    public void setKey(String key) {
+        this.key = key;
     }
 
-    public String getRecipeUuid() {
-        return this.recipeUuid;
+    public String getVal() {
+        return this.val;
     }
 
-    public void setRecipeUuid(String recipeUuid) {
-        this.recipeUuid = recipeUuid;
-    }
-
-    public long getIndex() {
-        return this.index;
-    }
-
-    public void setIndex(long index) {
-        this.index = index;
-    }
-
-    public String getBody() {
-        return this.body;
-    }
-
-    public void setBody(String body) {
-        this.body = body;
+    public void setVal(String val) {
+        this.val = val;
     }
 
     /**
@@ -132,9 +104,9 @@ public final class RecipeMethodTable {
     /**
      * called by internal mechanisms, do not call yourself.
      */
-    @Generated(hash = 1307702544)
+    @Generated(hash = 1758165058)
     public void __setDaoSession(DaoSession daoSession) {
         this.daoSession = daoSession;
-        myDao = daoSession != null ? daoSession.getRecipeMethodTableDao() : null;
-}
+        myDao = daoSession != null ? daoSession.getSettingsTableDao() : null;
+    }
 }

@@ -2,8 +2,10 @@ package com.alsash.reciper.mvp.presenter;
 
 import android.util.Log;
 
-import com.alsash.reciper.api.storage.StorageApi;
+import com.alsash.reciper.R;
 import com.alsash.reciper.app.AppNavigator;
+import com.alsash.reciper.logic.StorageLogic;
+import com.alsash.reciper.logic.error.NoInternetConnectionException;
 import com.alsash.reciper.mvp.view.StartView;
 
 import java.lang.ref.WeakReference;
@@ -25,27 +27,25 @@ public class StartPresenter implements BasePresenter<StartView> {
     private static final long START_DELAY_MS = 1000; // For debug
     private static final String TAG = "StartPresenter";
 
-    private final StorageApi storageApi;
+    private final StorageLogic storage;
     private final AppNavigator navigator;
     private final CompositeDisposable composite = new CompositeDisposable();
     private boolean fetched;
-    private boolean started;
 
-    public StartPresenter(StorageApi storageApi, AppNavigator navigator) {
-        this.storageApi = storageApi;
+    public StartPresenter(StorageLogic storage, AppNavigator navigator) {
+        this.storage = storage;
         this.navigator = navigator;
     }
 
     @Override
     public void attach(StartView view) {
         view.setFullscreenVisibility();
-        if (!isFetched()) fetch(new WeakReference<>(view));
+        if (!fetched) fetch(new WeakReference<>(view));
     }
 
     @Override
     public void visible(StartView view) {
-        if (!isFetched() || isStarted()) return;
-        setStarted(true);
+        if (!fetched) return;
         view.finishView();
         detach();
         navigator.toMainView();
@@ -53,14 +53,13 @@ public class StartPresenter implements BasePresenter<StartView> {
 
     @Override
     public void invisible(StartView view) {
-        setStarted(false);
+        // Do nothing
     }
 
     @Override
     public void refresh(StartView view) {
         detach();
-        setFetched(false);
-        setStarted(false);
+        fetched = false;
         attach(view);
     }
 
@@ -75,7 +74,7 @@ public class StartPresenter implements BasePresenter<StartView> {
                 .fromAction(new Action() {
                     @Override
                     public void run() throws Exception {
-                        storageApi.createStartupEntriesIfNeed();
+                        storage.createStartupEntitiesIfNeed();
                     }
                 })
                 .delay(START_DELAY_MS, TimeUnit.MILLISECONDS)
@@ -85,31 +84,23 @@ public class StartPresenter implements BasePresenter<StartView> {
                     @Override
                     public void onComplete() {
                         // This method called on Main Thread, so access is thread-safe
-                        setFetched(true);
+                        fetched = true;
                         if (viewRef.get() == null) return;
                         if (viewRef.get().isViewVisible()) visible(viewRef.get());
                     }
 
                     @Override
                     public void onError(@NonNull Throwable e) {
-                        Log.e(TAG, e.getMessage(), e);
+                        if (e instanceof NoInternetConnectionException) {
+                            if (viewRef.get() != null) {
+                                viewRef.get().showNotification(
+                                        R.string.notification_no_internet_for_fetching_recipes);
+                            }
+                        } else {
+                            Log.e(TAG, e.getMessage(), e);
+                        }
+                        onComplete();
                     }
                 }));
-    }
-
-    private boolean isFetched() {
-        return fetched;
-    }
-
-    private void setFetched(boolean fetched) {
-        this.fetched = fetched;
-    }
-
-    private boolean isStarted() {
-        return started;
-    }
-
-    private void setStarted(boolean started) {
-        this.started = started;
     }
 }

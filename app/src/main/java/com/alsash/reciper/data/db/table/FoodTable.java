@@ -1,7 +1,5 @@
 package com.alsash.reciper.data.db.table;
 
-import com.alsash.reciper.api.storage.local.database.table.DaoSession;
-
 import org.greenrobot.greendao.DaoException;
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Generated;
@@ -16,15 +14,13 @@ import org.greenrobot.greendao.annotation.Unique;
  */
 @Entity(
         nameInDb = "FOOD",
-        active = true,
-        generateConstructors = false
+        active = true
 )
-public class FoodTable {
+public final class FoodTable {
     @Id
     Long id;
     @Unique
     String uuid;
-    @NotNull
     Long usdaNdbno;
     String name;
     @NotNull
@@ -50,6 +46,23 @@ public class FoodTable {
     @Generated(hash = 256830264)
     private transient FoodTableDao myDao;
 
+    @Generated(hash = 1232541260)
+    public FoodTable(Long id, String uuid, Long usdaNdbno, String name,
+                     double protein, double fat, double carbs, double weightUnit,
+                     double energy, double energyUnit) {
+        this.id = id;
+        this.uuid = uuid;
+        this.usdaNdbno = usdaNdbno;
+        this.name = name;
+        this.protein = protein;
+        this.fat = fat;
+        this.carbs = carbs;
+        this.weightUnit = weightUnit;
+        this.energy = energy;
+        this.energyUnit = energyUnit;
+    }
+
+    @Generated(hash = 466144808)
     public FoodTable() {
     }
 
@@ -57,86 +70,69 @@ public class FoodTable {
         return this.id;
     }
 
-
     public void setId(Long id) {
         this.id = id;
     }
-
 
     public String getUuid() {
         return this.uuid;
     }
 
-
     public void setUuid(String uuid) {
         this.uuid = uuid;
     }
-
 
     public Long getUsdaNdbno() {
         return this.usdaNdbno;
     }
 
-
     public void setUsdaNdbno(Long usdaNdbno) {
         this.usdaNdbno = usdaNdbno;
     }
-
 
     public String getName() {
         return this.name;
     }
 
-
     public void setName(String name) {
         this.name = name;
     }
-
 
     public double getProtein() {
         return this.protein;
     }
 
-
     public void setProtein(double protein) {
         this.protein = protein;
     }
-
 
     public double getFat() {
         return this.fat;
     }
 
-
     public void setFat(double fat) {
         this.fat = fat;
     }
-
 
     public double getCarbs() {
         return this.carbs;
     }
 
-
     public void setCarbs(double carbs) {
         this.carbs = carbs;
     }
-
 
     public double getWeightUnit() {
         return this.weightUnit;
     }
 
-
     public void setWeightUnit(double weightUnit) {
         this.weightUnit = weightUnit;
     }
 
-
     public double getEnergy() {
         return this.energy;
     }
-
 
     public void setEnergy(double energy) {
         this.energy = energy;
@@ -193,6 +189,5 @@ public class FoodTable {
     public void __setDaoSession(DaoSession daoSession) {
         this.daoSession = daoSession;
         myDao = daoSession != null ? daoSession.getFoodTableDao() : null;
-    }
-
+}
 }

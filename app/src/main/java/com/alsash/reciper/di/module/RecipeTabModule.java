@@ -1,7 +1,7 @@
 package com.alsash.reciper.di.module;
 
-import com.alsash.reciper.api.storage.StorageApi;
 import com.alsash.reciper.di.scope.RecipeTabScope;
+import com.alsash.reciper.logic.StorageLogic;
 import com.alsash.reciper.mvp.presenter.RecipeTabBookmarkPresenter;
 import com.alsash.reciper.mvp.presenter.RecipeTabCategoryPresenter;
 import com.alsash.reciper.mvp.presenter.RecipeTabGridPresenter;
@@ -25,25 +25,25 @@ public abstract class RecipeTabModule {
 
     @Provides
     @RecipeTabScope
-    static RecipeTabCategoryPresenter provideRecipeCategoryPresenter(StorageApi storageApi) {
-        return new RecipeTabCategoryPresenter(storageApi);
+    static RecipeTabCategoryPresenter provideRecipeCategoryPresenter(StorageLogic storageLogic) {
+        return new RecipeTabCategoryPresenter(storageLogic);
     }
 
     @Provides
     @RecipeTabScope
-    static RecipeTabGridPresenter provideRecipeGridPresenter(StorageApi storageApi) {
-        return new RecipeTabGridPresenter(storageApi);
+    static RecipeTabGridPresenter provideRecipeGridPresenter(StorageLogic storageLogic) {
+        return new RecipeTabGridPresenter(storageLogic);
     }
 
     @Provides
     @RecipeTabScope
-    static RecipeTabLabelPresenter provideRecipeLabelPresenter(StorageApi storageApi) {
-        return new RecipeTabLabelPresenter(storageApi);
+    static RecipeTabLabelPresenter provideRecipeLabelPresenter(StorageLogic storageLogic) {
+        return new RecipeTabLabelPresenter(storageLogic);
     }
 
     @Provides
     @RecipeTabScope
-    static RecipeTabBookmarkPresenter provideRecipeBookmarkPresenter(StorageApi storageApi) {
-        return new RecipeTabBookmarkPresenter(storageApi);
+    static RecipeTabBookmarkPresenter provideRecipeBookmarkPresenter(StorageLogic storageLogic) {
+        return new RecipeTabBookmarkPresenter(storageLogic);
     }
 }

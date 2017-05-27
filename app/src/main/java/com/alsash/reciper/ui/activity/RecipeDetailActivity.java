@@ -20,7 +20,7 @@ public class RecipeDetailActivity extends AppCompatActivity {
 
     public static void start(Context context, long recipeId) {
         Intent starter = new Intent(context, RecipeDetailActivity.class);
-        starter.putExtra(AppContract.KEY_RECIPE_ID, recipeId);
+        starter.putExtra(AppContract.RECIPE_ID, recipeId);
         context.startActivity(starter);
     }
 
@@ -45,7 +45,7 @@ public class RecipeDetailActivity extends AppCompatActivity {
     }
 
     private void bindModel() {
-        long id = getIntent().getLongExtra(AppContract.KEY_RECIPE_ID, -1);
+        long id = getIntent().getLongExtra(AppContract.RECIPE_ID, -1);
         // recipe = RecipeManager.getInstance().search(id);
         assert recipe != null;
     }

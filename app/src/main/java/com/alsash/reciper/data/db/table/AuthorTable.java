@@ -1,15 +1,11 @@
 package com.alsash.reciper.data.db.table;
 
-import com.alsash.reciper.api.storage.local.database.table.DaoSession;
-import com.alsash.reciper.api.storage.local.database.table.PhotoTableDao;
-
 import org.greenrobot.greendao.DaoException;
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Generated;
 import org.greenrobot.greendao.annotation.Id;
 import org.greenrobot.greendao.annotation.Index;
 import org.greenrobot.greendao.annotation.JoinProperty;
-import org.greenrobot.greendao.annotation.NotNull;
 import org.greenrobot.greendao.annotation.ToMany;
 import org.greenrobot.greendao.annotation.Unique;
 
@@ -22,40 +18,40 @@ import java.util.List;
  */
 @Entity(
         nameInDb = "AUTHOR",
-        active = true,
-        generateConstructors = false
+        active = true
 )
-public class AuthorTable {
+public final class AuthorTable {
     @Id
     Long id;
-
     @Unique
-    @NotNull
     String uuid;
-    @NotNull
     String name;
-    @NotNull
     String mail;
-
     @Index(name = "photo", unique = true)
-    @NotNull
     String photoUuid;
-
     @ToMany(joinProperties = {@JoinProperty(name = "photoUuid", referencedName = "uuid")})
     List<PhotoTable> photoTables;
-
     /**
      * Used to resolve relations
      */
     @Generated(hash = 2040040024)
     private transient DaoSession daoSession;
-
     /**
      * Used for active entity operations.
      */
     @Generated(hash = 1165001475)
     private transient AuthorTableDao myDao;
 
+    @Generated(hash = 244194012)
+    public AuthorTable(Long id, String uuid, String name, String mail, String photoUuid) {
+        this.id = id;
+        this.uuid = uuid;
+        this.name = name;
+        this.mail = mail;
+        this.photoUuid = photoUuid;
+    }
+
+    @Generated(hash = 1846398607)
     public AuthorTable() {
     }
 
@@ -171,7 +167,8 @@ public class AuthorTable {
      */
     @Generated(hash = 1837510431)
     public void __setDaoSession(DaoSession daoSession) {
-        this.daoSession = daoSession;
+    this.daoSession = daoSession;
     myDao = daoSession != null ? daoSession.getAuthorTableDao() : null;
 }
+
 }

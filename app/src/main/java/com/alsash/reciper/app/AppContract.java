@@ -3,14 +3,39 @@ package com.alsash.reciper.app;
 /**
  * Public keys for all elements in the Application
  */
-public class AppContract {
+public final class AppContract {
+    private static final String TAG = "com.alsash.reciper.app.AppContract";
 
-    public static final int CACHE_SIZE_BYTE = 100 * 1024 * 1024; // 100 Mebibytes (honest Megabytes)
+    // Cloud service urls
+    public static final class Cloud {
+        public static final int CONNECT_TIMEOUT_MS = 1000;
+        public static final int READ_TIMEOUT_MS = 1000;
 
-    private static final String TAG = AppContract.class.getCanonicalName();
+        public static final class Github {
+            public static final String BASE_URL = "https://api.github.com";
+            public static final String HEADER_ACCEPT = "Accept: application/vnd.github.v3.raw+json";
+            public static final String HEADER_AGENT = "User-Agent: alsash-reciper";
+            public static final String RECIPER_JSON = "users/alsash/repos/reciper/json";
+        }
 
-    public static final String PAYLOAD_FLIP_BACK_TO_FRONT = TAG + ".payload_flip_back_to_front";
-    public static final String PAYLOAD_FLIP_FRONT_TO_BACK = TAG + ".payload_flip_front_to_back";
+        public static final class Usda {
+            public static final String BASE_URL = "https://ndb.nal.usda.gov/ndb/search/list";
+        }
+    }
 
-    public static final String KEY_RECIPE_ID = TAG + ".key_recipe_id";
+    public static final class Db {
+        public static final String DATABASE_NAME = "reciper_db";
+    }
+
+    // Animation payloads
+    public static final class Payload {
+        public static final String FLIP_BACK_TO_FRONT = TAG + ".payload_flip_back_to_front";
+        public static final String FLIP_FRONT_TO_BACK = TAG + ".payload_flip_front_to_back";
+    }
+
+    // Public entity keys
+    public static final class Key {
+        public static final String RECIPE_ID = TAG + ".key_recipe_id";
+    }
+
 }

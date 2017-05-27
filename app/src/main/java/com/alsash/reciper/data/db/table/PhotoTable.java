@@ -1,8 +1,5 @@
 package com.alsash.reciper.data.db.table;
 
-import com.alsash.reciper.api.storage.local.database.table.DaoSession;
-import com.alsash.reciper.mvp.model.Photo;
-
 import org.greenrobot.greendao.DaoException;
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Generated;
@@ -16,10 +13,9 @@ import org.greenrobot.greendao.annotation.Unique;
  */
 @Entity(
         nameInDb = "PHOTO",
-        active = true,
-        generateConstructors = false
+        active = true
 )
-public class PhotoTable implements Photo {
+public final class PhotoTable {
     @Id
     Long id;
     @Unique
@@ -37,6 +33,15 @@ public class PhotoTable implements Photo {
     @Generated(hash = 505600885)
     private transient PhotoTableDao myDao;
 
+    @Generated(hash = 1831323218)
+    public PhotoTable(Long id, String uuid, String url, String uri) {
+        this.id = id;
+        this.uuid = uuid;
+        this.url = url;
+        this.uri = uri;
+    }
+
+    @Generated(hash = 1809391605)
     public PhotoTable() {
     }
 
@@ -115,6 +120,5 @@ public class PhotoTable implements Photo {
     public void __setDaoSession(DaoSession daoSession) {
         this.daoSession = daoSession;
         myDao = daoSession != null ? daoSession.getPhotoTableDao() : null;
-    }
-
+}
 }

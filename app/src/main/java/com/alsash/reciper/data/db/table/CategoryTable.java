@@ -1,7 +1,5 @@
 package com.alsash.reciper.data.db.table;
 
-import com.alsash.reciper.api.storage.local.database.table.DaoSession;
-
 import org.greenrobot.greendao.DaoException;
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Generated;
@@ -16,10 +14,9 @@ import org.greenrobot.greendao.annotation.Unique;
  */
 @Entity(
         nameInDb = "CATEGORY",
-        active = true,
-        generateConstructors = false
+        active = true
 )
-public class CategoryTable {
+public final class CategoryTable {
     @Id
     Long id;
     @Unique
@@ -38,6 +35,15 @@ public class CategoryTable {
     @Generated(hash = 940999369)
     private transient CategoryTableDao myDao;
 
+    @Generated(hash = 842122193)
+    public CategoryTable(Long id, String uuid, String name, String photoUuid) {
+        this.id = id;
+        this.uuid = uuid;
+        this.name = name;
+        this.photoUuid = photoUuid;
+    }
+
+    @Generated(hash = 1679078959)
     public CategoryTable() {
     }
 
@@ -116,6 +122,5 @@ public class CategoryTable {
     public void __setDaoSession(DaoSession daoSession) {
         this.daoSession = daoSession;
         myDao = daoSession != null ? daoSession.getCategoryTableDao() : null;
-    }
-
+}
 }

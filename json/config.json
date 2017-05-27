@@ -1,9 +1,7 @@
 {
-  "db": {
-    "path": "/db/",
-    "locales": {
-      "locale": "en",
-      "update_date_unix": 1495742457
-    }
-  }
+  "db_path": "/db/",
+  "db_locales": [
+    "en"
+  ],
+  "db_update_date_unix": 1495742457
 }

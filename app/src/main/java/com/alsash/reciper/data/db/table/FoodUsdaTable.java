@@ -1,7 +1,5 @@
 package com.alsash.reciper.data.db.table;
 
-import com.alsash.reciper.api.storage.local.database.table.DaoSession;
-
 import org.greenrobot.greendao.DaoException;
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Generated;
@@ -17,10 +15,9 @@ import org.greenrobot.greendao.annotation.Unique;
  */
 @Entity(
         nameInDb = "FOOD_USDA",
-        active = true,
-        generateConstructors = false
+        active = true
 )
-public class FoodUsdaTable {
+public final class FoodUsdaTable {
     @Id
     Long id;
     @Unique
@@ -41,6 +38,17 @@ public class FoodUsdaTable {
     @Generated(hash = 531675553)
     private transient FoodUsdaTableDao myDao;
 
+    @Generated(hash = 1597012677)
+    public FoodUsdaTable(Long id, String uuid, String foodUuid, String usdaNdbNo,
+                         boolean fetched) {
+        this.id = id;
+        this.uuid = uuid;
+        this.foodUuid = foodUuid;
+        this.usdaNdbNo = usdaNdbNo;
+        this.fetched = fetched;
+    }
+
+    @Generated(hash = 438090143)
     public FoodUsdaTable() {
     }
 
@@ -127,5 +135,5 @@ public class FoodUsdaTable {
     public void __setDaoSession(DaoSession daoSession) {
         this.daoSession = daoSession;
         myDao = daoSession != null ? daoSession.getFoodUsdaTableDao() : null;
-    }
+}
 }
