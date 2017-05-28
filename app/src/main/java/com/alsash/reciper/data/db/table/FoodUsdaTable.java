@@ -22,9 +22,9 @@ public final class FoodUsdaTable {
     Long id;
     @Unique
     String uuid;
-    @Index(name = "food", unique = true)
+    @Index(name = "FOOD_TO_USDA", unique = true)
     String foodUuid;
-    String usdaNdbNo;
+    String ndbNo;
     @NotNull
     boolean fetched;
     /**
@@ -38,13 +38,13 @@ public final class FoodUsdaTable {
     @Generated(hash = 531675553)
     private transient FoodUsdaTableDao myDao;
 
-    @Generated(hash = 1597012677)
-    public FoodUsdaTable(Long id, String uuid, String foodUuid, String usdaNdbNo,
+    @Generated(hash = 1672562923)
+    public FoodUsdaTable(Long id, String uuid, String foodUuid, String ndbNo,
                          boolean fetched) {
         this.id = id;
         this.uuid = uuid;
         this.foodUuid = foodUuid;
-        this.usdaNdbNo = usdaNdbNo;
+        this.ndbNo = ndbNo;
         this.fetched = fetched;
     }
 
@@ -76,12 +76,12 @@ public final class FoodUsdaTable {
         this.foodUuid = foodUuid;
     }
 
-    public String getUsdaNdbNo() {
-        return this.usdaNdbNo;
+    public String getNdbNo() {
+        return this.ndbNo;
     }
 
-    public void setUsdaNdbNo(String usdaNdbNo) {
-        this.usdaNdbNo = usdaNdbNo;
+    public void setNdbNo(String ndbNo) {
+        this.ndbNo = ndbNo;
     }
 
     public boolean getFetched() {

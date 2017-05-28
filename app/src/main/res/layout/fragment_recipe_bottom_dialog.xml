@@ -187,10 +187,10 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
         android:layout_marginStart="16dp"
-        android:text="Creation date"
+        android:text="Creation changedAt"
         app:layout_constraintLeft_toRightOf="@+id/recipe_creation_date_icon"
         app:layout_constraintTop_toTopOf="@+id/recipe_time"
-        tools:text="Creation date" />
+        tools:text="Creation changedAt" />
 
     <ImageView
         android:id="@+id/recipe_change_date_icon"
@@ -210,11 +210,11 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
         android:layout_marginStart="16dp"
-        android:text="Change date"
+        android:text="Change changedAt"
         app:layout_constraintBottom_toBottomOf="@+id/recipe_change_date_icon"
         app:layout_constraintLeft_toRightOf="@+id/recipe_change_date_icon"
         app:layout_constraintTop_toTopOf="@+id/recipe_change_date_icon"
-        tools:text="Change date" />
+        tools:text="Change changedAt" />
 
     <ImageView
         android:id="@+id/recipe_food_icon"

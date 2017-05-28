@@ -27,7 +27,7 @@ public final class AuthorTable {
     String uuid;
     String name;
     String mail;
-    @Index(name = "photo", unique = true)
+    @Index(name = "PHOTO_TO_AUTHOR", unique = true)
     String photoUuid;
     @ToMany(joinProperties = {@JoinProperty(name = "photoUuid", referencedName = "uuid")})
     List<PhotoTable> photoTables;
@@ -162,13 +162,10 @@ public final class AuthorTable {
         myDao.update(this);
     }
 
-    /**
-     * called by internal mechanisms, do not call yourself.
-     */
-    @Generated(hash = 1837510431)
-    public void __setDaoSession(DaoSession daoSession) {
+    /** called by internal mechanisms, do not call yourself. */
+@Generated(hash = 1837510431)
+public void __setDaoSession(DaoSession daoSession) {
     this.daoSession = daoSession;
     myDao = daoSession != null ? daoSession.getAuthorTableDao() : null;
 }
-
 }

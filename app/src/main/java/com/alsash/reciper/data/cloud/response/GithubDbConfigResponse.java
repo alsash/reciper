@@ -6,9 +6,9 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * A Config data response from Github service
+ * A configuration of the cloud database, that persist at the Github repository
  */
-public class JsonConfigResponse {
+public class GithubDbConfigResponse {
     public String dbPath;
     @SerializedName("db_update_date_unix")
     public Date dbUpdateDate;

@@ -2,7 +2,7 @@ package com.alsash.reciper.logic;
 
 import com.alsash.reciper.data.cloud.CloudManager;
 import com.alsash.reciper.data.db.DbManager;
-import com.alsash.reciper.logic.error.NoInternetConnectionException;
+import com.alsash.reciper.logic.error.NoInternetException;
 
 import java.util.Date;
 
@@ -20,25 +20,19 @@ public class StorageLogic {
         this.cloudManager = cloudManager;
     }
 
-    /**
-     * Check whether the startup entities are stored in the database
-     *
-     * @return true if there is no need to update database from cloud
-     */
-    public boolean isDbUpToDate() {
-        return false;
-    }
-
-    public void createStartupEntitiesIfNeed() throws NoInternetConnectionException {
+    public void createStartupEntitiesIfNeed() throws NoInternetException {
         Date localUpdateDate = dbManager.getSettingsUpdateDate();
         Date cloudUpdateDate = cloudManager.getDbUpdateDate();
         boolean create = false;
         if (localUpdateDate != null && cloudUpdateDate != null) {
-            create = localUpdateDate.getTime() >= cloudUpdateDate.getTime();
+            create = localUpdateDate.getTime() < cloudUpdateDate.getTime();
         } else if (cloudUpdateDate == null && !cloudManager.isOnline()) {
-            throw new NoInternetConnectionException();
+            throw new NoInternetException();
         }
-        if (create) createStartupEntities();
+        if (create) {
+            createStartupEntities();
+            dbManager.setSettingsUpdateDate(new Date());
+        }
     }
 
     private void createStartupEntities() {

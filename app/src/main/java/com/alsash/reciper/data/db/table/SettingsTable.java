@@ -7,7 +7,7 @@ import org.greenrobot.greendao.annotation.Id;
 import org.greenrobot.greendao.annotation.Unique;
 
 /**
- * A storage of the application settings in key-value pairs
+ * A storage of the application settings persists in the String key-value pairs
  */
 @Entity(
         nameInDb = "SETTINGS",
@@ -108,5 +108,5 @@ public final class SettingsTable {
     public void __setDaoSession(DaoSession daoSession) {
         this.daoSession = daoSession;
         myDao = daoSession != null ? daoSession.getSettingsTableDao() : null;
-    }
+}
 }

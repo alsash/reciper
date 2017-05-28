@@ -22,7 +22,7 @@ public final class CategoryTable {
     @Unique
     String uuid;
     String name;
-    @Index(name = "photo", unique = true)
+    @Index(name = "PHOTO_TO_CATEGORY", unique = true)
     String photoUuid;
     /**
      * Used to resolve relations

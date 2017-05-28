@@ -5,7 +5,7 @@ import android.util.Log;
 import com.alsash.reciper.R;
 import com.alsash.reciper.app.AppNavigator;
 import com.alsash.reciper.logic.StorageLogic;
-import com.alsash.reciper.logic.error.NoInternetConnectionException;
+import com.alsash.reciper.logic.error.NoInternetException;
 import com.alsash.reciper.mvp.view.StartView;
 
 import java.lang.ref.WeakReference;
@@ -91,7 +91,7 @@ public class StartPresenter implements BasePresenter<StartView> {
 
                     @Override
                     public void onError(@NonNull Throwable e) {
-                        if (e instanceof NoInternetConnectionException) {
+                        if (e instanceof NoInternetException) {
                             if (viewRef.get() != null) {
                                 viewRef.get().showNotification(
                                         R.string.notification_no_internet_for_fetching_recipes);

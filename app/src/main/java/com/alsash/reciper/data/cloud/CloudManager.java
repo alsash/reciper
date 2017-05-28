@@ -5,9 +5,9 @@ import android.net.ConnectivityManager;
 import android.support.annotation.Nullable;
 import android.support.annotation.WorkerThread;
 
-import com.alsash.reciper.data.cloud.request.GithubRequest;
+import com.alsash.reciper.data.cloud.request.GithubDbRequest;
 import com.alsash.reciper.data.cloud.request.UsdaRequest;
-import com.alsash.reciper.data.cloud.response.JsonConfigResponse;
+import com.alsash.reciper.data.cloud.response.GithubDbConfigResponse;
 
 import java.util.Date;
 
@@ -17,13 +17,13 @@ import java.util.Date;
 public class CloudManager {
 
     private final Context context;
-    private final GithubRequest githubRequest;
+    private final GithubDbRequest githubDbRequest;
     private final UsdaRequest usdaRequest;
-    private JsonConfigResponse jsonConfig;
+    private GithubDbConfigResponse jsonConfig;
 
-    public CloudManager(Context context, GithubRequest githubRequest, UsdaRequest usdaRequest) {
+    public CloudManager(Context context, GithubDbRequest githubDbRequest, UsdaRequest usdaRequest) {
         this.context = context;
-        this.githubRequest = githubRequest;
+        this.githubDbRequest = githubDbRequest;
         this.usdaRequest = usdaRequest;
     }
 
@@ -35,11 +35,12 @@ public class CloudManager {
 
     @Nullable
     @WorkerThread
-    private JsonConfigResponse getJsonConfig() {
+    private GithubDbConfigResponse getJsonConfig() {
         if (jsonConfig != null) return jsonConfig;
         if (!isOnline()) return null;
-        jsonConfig = githubRequest.getConfig().blockingGet();
-        return jsonConfig;
+        GithubDbConfigResponse response = githubDbRequest.getConfig().blockingGet();
+        // String json = new String(Base64.decode(response.content, Base64.DEFAULT), Charset.forName("UTF-8"));
+        return response;
     }
 
     public boolean isOnline() {

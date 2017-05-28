@@ -5,7 +5,7 @@ import android.content.Context;
 import com.alsash.reciper.BuildConfig;
 import com.alsash.reciper.app.AppContract;
 import com.alsash.reciper.data.cloud.CloudManager;
-import com.alsash.reciper.data.cloud.request.GithubRequest;
+import com.alsash.reciper.data.cloud.request.GithubDbRequest;
 import com.alsash.reciper.data.cloud.request.UsdaRequest;
 import com.alsash.reciper.data.db.DbManager;
 import com.alsash.reciper.logic.StorageLogic;
@@ -55,22 +55,22 @@ public abstract class AppStorageModule {
     @Provides
     @Singleton
     static CloudManager provideCloudManager(Context context,
-                                            GithubRequest githubRequest,
+                                            GithubDbRequest githubDbRequest,
                                             UsdaRequest usdaRequest) {
-        return new CloudManager(context, githubRequest, usdaRequest);
+        return new CloudManager(context, githubDbRequest, usdaRequest);
     }
 
     @Provides
     @Singleton
-    static GithubRequest provideGithubRequest(OkHttpClient okHttpClient,
-                                              @Named("github") Gson gson) {
+    static GithubDbRequest provideGithubRequest(OkHttpClient okHttpClient,
+                                                @Named("github_db") Gson gson) {
         return new Retrofit.Builder()
                 .client(okHttpClient)
-                .baseUrl(AppContract.Cloud.Github.BASE_URL)
+                .baseUrl(AppContract.Cloud.Github.Db.BASE_URL)
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build()
-                .create(GithubRequest.class);
+                .create(GithubDbRequest.class);
     }
 
     @Provides
@@ -88,7 +88,7 @@ public abstract class AppStorageModule {
 
     @Provides
     @Singleton
-    public OkHttpClient provideOkHttpClient() {
+    static OkHttpClient provideOkHttpClient() {
         final OkHttpClient.Builder builder = new OkHttpClient.Builder();
         if (BuildConfig.DEBUG) {
             builder.addInterceptor(new HttpLoggingInterceptor().setLevel(Level.BODY));
@@ -100,8 +100,8 @@ public abstract class AppStorageModule {
 
     @Provides
     @Singleton
-    @Named("github")
-    public Gson provideGithubDeserializer() {
+    @Named("github_db")
+    static Gson provideGithubDbDeserializer() {
         return new GsonBuilder()
                 .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
                 .registerTypeAdapter(Date.class, new JsonDeserializer<Date>() {
@@ -119,7 +119,7 @@ public abstract class AppStorageModule {
     @Provides
     @Singleton
     @Named("usda")
-    public Gson provideUsdaDeserializer() {
+    static Gson provideUsdaDeserializer() {
         return new GsonBuilder()
                 .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
                 .create();

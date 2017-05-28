@@ -13,7 +13,7 @@ import dagger.Provides;
  * DI Module that provide the Navigation class for navigate between application views
  */
 @Module
-public class AppNavigatorModule {
+public abstract class AppNavigatorModule {
 
     @Provides
     @Singleton

@@ -21,9 +21,9 @@ public final class RecipePhotoTable {
     Long id;
     @Unique
     String uuid;
-    @Index(name = "recipe")
+    @Index(name = "RECIPE_TO_PHOTO")
     String recipeUuid;
-    @Index(name = "photo")
+    @Index(name = "PHOTO_TO_RECIPE")
     String photoUuid;
     /**
      * Used to resolve relations

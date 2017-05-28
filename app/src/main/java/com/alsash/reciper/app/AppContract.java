@@ -12,14 +12,22 @@ public final class AppContract {
         public static final int READ_TIMEOUT_MS = 1000;
 
         public static final class Github {
-            public static final String BASE_URL = "https://api.github.com";
-            public static final String HEADER_ACCEPT = "Accept: application/vnd.github.v3.raw+json";
-            public static final String HEADER_AGENT = "User-Agent: alsash-reciper";
-            public static final String RECIPER_JSON = "users/alsash/repos/reciper/json";
+            private static final String BASE_URL = "https://api.github.com/";
+            private static final String ACCEPT_RAW = "application/vnd.github.v3.raw+json";
+            private static final String HEADER_AGENT = "User-Agent: alsash-reciper";
+
+            public static final class Db {
+                public static final String HEADER_ACCEPT = "Accept: " + Github.ACCEPT_RAW;
+                public static final String HEADER_AGENT = Github.HEADER_AGENT;
+                public static final String CONFIG_ENDPOINT = "config.json";
+                private static final String BASE_ENDPOINT = "repos/alsash/reciper/contents/json/";
+                public static final String BASE_URL = Github.BASE_URL + BASE_ENDPOINT;
+            }
+
         }
 
         public static final class Usda {
-            public static final String BASE_URL = "https://ndb.nal.usda.gov/ndb/search/list";
+            public static final String BASE_URL = "https://ndb.nal.usda.gov/ndb/search/list/";
         }
     }
 

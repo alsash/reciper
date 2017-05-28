@@ -21,7 +21,6 @@ public final class FoodTable {
     Long id;
     @Unique
     String uuid;
-    Long usdaNdbno;
     String name;
     @NotNull
     double protein;
@@ -46,13 +45,11 @@ public final class FoodTable {
     @Generated(hash = 256830264)
     private transient FoodTableDao myDao;
 
-    @Generated(hash = 1232541260)
-    public FoodTable(Long id, String uuid, Long usdaNdbno, String name,
-                     double protein, double fat, double carbs, double weightUnit,
-                     double energy, double energyUnit) {
+    @Generated(hash = 222397625)
+    public FoodTable(Long id, String uuid, String name, double protein, double fat,
+                     double carbs, double weightUnit, double energy, double energyUnit) {
         this.id = id;
         this.uuid = uuid;
-        this.usdaNdbno = usdaNdbno;
         this.name = name;
         this.protein = protein;
         this.fat = fat;
@@ -80,14 +77,6 @@ public final class FoodTable {
 
     public void setUuid(String uuid) {
         this.uuid = uuid;
-    }
-
-    public Long getUsdaNdbno() {
-        return this.usdaNdbno;
-    }
-
-    public void setUsdaNdbno(Long usdaNdbno) {
-        this.usdaNdbno = usdaNdbno;
     }
 
     public String getName() {

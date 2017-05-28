@@ -22,9 +22,9 @@ public final class RecipeFoodTable {
     Long id;
     @Unique
     String uuid;
-    @Index(name = "recipe")
+    @Index(name = "RECIPE_TO_FOOD")
     String recipeUuid;
-    @Index(name = "food")
+    @Index(name = "FOOD_TO_RECIPE")
     String foodUuid;
     String name;
     double weight;

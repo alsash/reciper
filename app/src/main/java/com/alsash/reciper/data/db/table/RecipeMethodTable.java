@@ -23,10 +23,10 @@ public final class RecipeMethodTable {
     Long id;
     @Unique
     String uuid;
-    @Index(name = "recipe")
+    @Index(name = "RECIPE_TO_METHOD")
     String recipeUuid;
     @NotNull
-    long index;
+    int index;
     String body;
     /**
      * Used to resolve relations
@@ -39,8 +39,8 @@ public final class RecipeMethodTable {
     @Generated(hash = 1424435777)
     private transient RecipeMethodTableDao myDao;
 
-    @Generated(hash = 2115269653)
-    public RecipeMethodTable(Long id, String uuid, String recipeUuid, long index,
+    @Generated(hash = 1121164000)
+    public RecipeMethodTable(Long id, String uuid, String recipeUuid, int index,
                              String body) {
         this.id = id;
         this.uuid = uuid;
@@ -77,11 +77,11 @@ public final class RecipeMethodTable {
         this.recipeUuid = recipeUuid;
     }
 
-    public long getIndex() {
+    public int getIndex() {
         return this.index;
     }
 
-    public void setIndex(long index) {
+    public void setIndex(int index) {
         this.index = index;
     }
 

@@ -7,6 +7,7 @@ import android.support.annotation.WorkerThread;
 import com.alsash.reciper.data.db.table.DaoMaster;
 import com.alsash.reciper.data.db.table.DaoSession;
 import com.alsash.reciper.data.db.table.SettingsTable;
+import com.alsash.reciper.data.db.table.SettingsTableDao;
 
 import org.greenrobot.greendao.database.Database;
 import org.greenrobot.greendao.query.Query;
@@ -57,9 +58,14 @@ public class DbManager {
     @Nullable
     private String getSettingsValue(String key) {
         if (settingsQuery == null) {
-            settingsQuery = daoSession.getSettingsTableDao().queryBuilder().build();
+            settingsQuery = daoSession
+                    .getSettingsTableDao()
+                    .queryBuilder()
+                    .where(SettingsTableDao.Properties.Key.eq(key))
+                    .build();
+        } else {
+            settingsQuery.setParameter(0, key);
         }
-        settingsQuery.setParameter(0, key);
         List<SettingsTable> settings = settingsQuery.forCurrentThread().list();
         if (settings != null && settings.size() > 0) {
             return settings.get(0).getVal();

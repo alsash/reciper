@@ -29,9 +29,9 @@
                 <category android:name="android.intent.category.BROWSABLE" />
 
                 <data
-                    android:host="alsash.com/recipes"
-                    android:pathPrefix="/start"
-                    android:scheme="http" />
+                    android:host="alsash.github.io"
+                    android:pathPrefix="/reciper"
+                    android:scheme="https" />
             </intent-filter>
         </activity>
         <activity android:name=".ui.activity.RecipeTabActivity" />

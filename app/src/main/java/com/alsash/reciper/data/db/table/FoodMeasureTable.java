@@ -22,9 +22,10 @@ public final class FoodMeasureTable {
     Long id;
     @Unique
     String uuid;
-    @Index(name = "food", unique = true)
+    @Index(name = "FOOD_TO_MEASURE", unique = true)
     String foodUuid;
-    String unit;
+    String unitOne;
+    String unitOther;
     @NotNull
     double weight;
     String weightUnit;
@@ -39,13 +40,14 @@ public final class FoodMeasureTable {
     @Generated(hash = 853739489)
     private transient FoodMeasureTableDao myDao;
 
-    @Generated(hash = 169106229)
-    public FoodMeasureTable(Long id, String uuid, String foodUuid, String unit,
-                            double weight, String weightUnit) {
+    @Generated(hash = 298191126)
+    public FoodMeasureTable(Long id, String uuid, String foodUuid, String unitOne,
+                            String unitOther, double weight, String weightUnit) {
         this.id = id;
         this.uuid = uuid;
         this.foodUuid = foodUuid;
-        this.unit = unit;
+        this.unitOne = unitOne;
+        this.unitOther = unitOther;
         this.weight = weight;
         this.weightUnit = weightUnit;
     }
@@ -78,12 +80,20 @@ public final class FoodMeasureTable {
         this.foodUuid = foodUuid;
     }
 
-    public String getUnit() {
-        return this.unit;
+    public String getUnitOne() {
+        return this.unitOne;
     }
 
-    public void setUnit(String unit) {
-        this.unit = unit;
+    public void setUnitOne(String unitOne) {
+        this.unitOne = unitOne;
+    }
+
+    public String getUnitOther() {
+        return this.unitOther;
+    }
+
+    public void setUnitOther(String unitOther) {
+        this.unitOther = unitOther;
     }
 
     public double getWeight() {

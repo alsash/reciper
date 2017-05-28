@@ -21,8 +21,8 @@
     <string name="drawer_account_image_description">Your account\'s image</string>
     <string name="drawer_account_details_description">Account details</string>
     <string name="drawer_account_add">Add an account</string>
-    <string name="drawer_date_top_description">Creation date</string>
-    <string name="drawer_date_end_description">Change date</string>
+    <string name="drawer_date_top_description">Creation changedAt</string>
+    <string name="drawer_date_end_description">Change changedAt</string>
     <string name="drawer_recipe_num_description">Recipes</string>
     <string name="drawer_menu_foods">Ingredients</string>
     <string name="drawer_menu_cart">Cart</string>
@@ -47,8 +47,8 @@
     <string name="list_sort">Sort by</string>
     <string name="list_sort_name">Name</string>
     <string name="list_sort_account">Account</string>
-    <string name="list_sort_date_top">Creation date</string>
-    <string name="list_sort_date_end">Change date</string>
+    <string name="list_sort_date_top">Creation changedAt</string>
+    <string name="list_sort_date_end">Change changedAt</string>
     <string name="list_sort_rating">Rating</string>
     <string name="list_filter">Filter</string>
     <string name="recipe_image_description">Recipe image</string>

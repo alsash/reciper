@@ -1,5 +1,7 @@
 package com.alsash.reciper.data.db.table;
 
+import com.google.gson.annotations.SerializedName;
+
 import org.greenrobot.greendao.DaoException;
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Generated;
@@ -25,8 +27,9 @@ public final class RecipeTable {
     @Unique
     String uuid;
     String name;
-    @Index(name = "date DESC")
-    Date date;
+    @SerializedName("changed_at_unix")
+    @Index
+    Date changedAt;
     String source;
     String description;
     @NotNull
@@ -34,10 +37,10 @@ public final class RecipeTable {
     @NotNull
     int servings;
     @NotNull
-    double massFlowRate;
-    @Index(name = "category")
+    double massFlowRateGps; // gram per second
+    @Index(name = "CATEGORY_TO_RECIPE")
     String categoryUuid;
-    @Index(name = "author")
+    @Index(name = "AUTHOR_TO_RECIPE")
     String authorUuid;
     /**
      * Used to resolve relations
@@ -50,19 +53,19 @@ public final class RecipeTable {
     @Generated(hash = 1210201788)
     private transient RecipeTableDao myDao;
 
-    @Generated(hash = 401932172)
-    public RecipeTable(Long id, String uuid, String name, Date date, String source,
-                       String description, boolean bookmark, int servings, double massFlowRate,
-                       String categoryUuid, String authorUuid) {
+    @Generated(hash = 1294252874)
+    public RecipeTable(Long id, String uuid, String name, Date changedAt, String source,
+                       String description, boolean bookmark, int servings,
+                       double massFlowRateGps, String categoryUuid, String authorUuid) {
         this.id = id;
         this.uuid = uuid;
         this.name = name;
-        this.date = date;
+        this.changedAt = changedAt;
         this.source = source;
         this.description = description;
         this.bookmark = bookmark;
         this.servings = servings;
-        this.massFlowRate = massFlowRate;
+        this.massFlowRateGps = massFlowRateGps;
         this.categoryUuid = categoryUuid;
         this.authorUuid = authorUuid;
     }
@@ -95,12 +98,12 @@ public final class RecipeTable {
         this.name = name;
     }
 
-    public Date getDate() {
-        return this.date;
+    public Date getChangedAt() {
+        return this.changedAt;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
+    public void setChangedAt(Date changedAt) {
+        this.changedAt = changedAt;
     }
 
     public String getSource() {
@@ -135,12 +138,12 @@ public final class RecipeTable {
         this.servings = servings;
     }
 
-    public double getMassFlowRate() {
-        return this.massFlowRate;
+    public double getMassFlowRateGps() {
+        return this.massFlowRateGps;
     }
 
-    public void setMassFlowRate(double massFlowRate) {
-        this.massFlowRate = massFlowRate;
+    public void setMassFlowRateGps(double massFlowRateGps) {
+        this.massFlowRateGps = massFlowRateGps;
     }
 
     public String getCategoryUuid() {
@@ -202,5 +205,5 @@ public final class RecipeTable {
     public void __setDaoSession(DaoSession daoSession) {
         this.daoSession = daoSession;
         myDao = daoSession != null ? daoSession.getRecipeTableDao() : null;
-}
+    }
 }

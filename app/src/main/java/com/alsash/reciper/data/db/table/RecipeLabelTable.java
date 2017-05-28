@@ -21,9 +21,9 @@ public final class RecipeLabelTable {
     Long id;
     @Unique
     String uuid;
-    @Index(name = "recipe")
+    @Index(name = "RECIPE_TO_LABEL")
     String recipeUuid;
-    @Index(name = "label")
+    @Index(name = "LABEL_TO_RECIPE")
     String labelUuid;
     /**
      * Used to resolve relations

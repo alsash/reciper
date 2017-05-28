@@ -59,12 +59,12 @@
             android:layout_marginEnd="16dp"
             android:layout_marginRight="16dp"
             android:layout_marginTop="2dp"
-            android:text="Creation date"
+            android:text="Creation changedAt"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintLeft_toLeftOf="@+id/card_recipe_back_account_title"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="@+id/card_recipe_back_account_image_guideline"
-            tools:text="Creation date" />
+            tools:text="Creation changedAt" />
 
         <TextView
             android:id="@+id/card_recipe_back_title"
