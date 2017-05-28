@@ -86,6 +86,7 @@ public class StartPresenter implements BasePresenter<StartView> {
                         // This method called on Main Thread, so access is thread-safe
                         fetched = true;
                         if (viewRef.get() == null) return;
+                        viewRef.get().showNotification(R.string.notification_recipes_download_ok);
                         if (viewRef.get().isViewVisible()) visible(viewRef.get());
                     }
 
@@ -94,7 +95,7 @@ public class StartPresenter implements BasePresenter<StartView> {
                         if (e instanceof NoInternetException) {
                             if (viewRef.get() != null) {
                                 viewRef.get().showNotification(
-                                        R.string.notification_no_internet_for_fetching_recipes);
+                                        R.string.notification_recipes_download_err_no_internet);
                             }
                         } else {
                             Log.e(TAG, e.getMessage(), e);

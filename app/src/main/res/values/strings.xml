@@ -14,7 +14,10 @@
     <string name="navigation_cart">Cart</string>
 
     <!--Notification-->
-    <string name="notification_no_internet_for_fetching_recipes">
+    <string name="notification_recipes_download_ok">
+        New recipes have been loaded
+    </string>
+    <string name="notification_recipes_download_err_no_internet">
         Please, update internet connection for fetching new recipes
     </string>
 
