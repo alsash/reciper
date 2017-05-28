@@ -5,7 +5,7 @@ import android.util.Log;
 import com.alsash.reciper.R;
 import com.alsash.reciper.app.AppNavigator;
 import com.alsash.reciper.logic.StorageLogic;
-import com.alsash.reciper.logic.error.NoInternetException;
+import com.alsash.reciper.logic.exception.NoInternetException;
 import com.alsash.reciper.mvp.view.StartView;
 
 import java.lang.ref.WeakReference;

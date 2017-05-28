@@ -15,12 +15,12 @@ public final class AppContract {
             private static final String BASE_URL = "https://api.github.com/";
             private static final String ACCEPT_RAW = "application/vnd.github.v3.raw+json";
             private static final String HEADER_AGENT = "User-Agent: alsash-reciper";
+            private static final String JSON_ENDPOINT = "repos/alsash/reciper/contents/json/";
 
             public static final class Db {
                 public static final String HEADER_ACCEPT = "Accept: " + Github.ACCEPT_RAW;
                 public static final String HEADER_AGENT = Github.HEADER_AGENT;
-                private static final String BASE_ENDPOINT = "repos/alsash/reciper/contents/json/";
-                public static final String BASE_URL = Github.BASE_URL + BASE_ENDPOINT;
+                public static final String BASE_URL = Github.BASE_URL + JSON_ENDPOINT + "db/";
             }
 
         }

@@ -2,7 +2,7 @@ package com.alsash.reciper.logic;
 
 import com.alsash.reciper.data.cloud.CloudManager;
 import com.alsash.reciper.data.db.DbManager;
-import com.alsash.reciper.logic.error.NoInternetException;
+import com.alsash.reciper.logic.exception.NoInternetException;
 
 import java.util.Date;
 import java.util.Locale;

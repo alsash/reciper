@@ -1,4 +1,4 @@
-package com.alsash.reciper.logic.error;
+package com.alsash.reciper.logic.exception;
 
 /**
  * Created by alsash on 5/28/17.
