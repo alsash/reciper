@@ -44,25 +44,36 @@ public class StorageLogic {
             boolean created = createStartupEntities();
             if (created) dbManager.setSettingsUpdateDate(new Date());
         }
+        if (!isUsdaFetched()) {
+            updateUsda();
+        }
     }
 
     private boolean createStartupEntities() {
-        String pathDbLanguage = cloudManager.getDbLanguage(Locale.getDefault());
-        if (pathDbLanguage == null) pathDbLanguage = cloudManager.getDbLanguage(Locale.ENGLISH);
-        if (pathDbLanguage == null) return false;
-        return dbManager.insertAllInTx(
-                cloudManager.getAuthorTable(pathDbLanguage),
-                cloudManager.getCategoryTable(pathDbLanguage),
-                cloudManager.getFoodMeasureTable(pathDbLanguage),
-                cloudManager.getFoodTable(pathDbLanguage),
-                cloudManager.getFoodUsdaTable(pathDbLanguage),
-                cloudManager.getLabelTable(pathDbLanguage),
-                cloudManager.getPhotoTable(pathDbLanguage),
-                cloudManager.getRecipeFoodTable(pathDbLanguage),
-                cloudManager.getRecipeLabelTable(pathDbLanguage),
-                cloudManager.getRecipeMethodTable(pathDbLanguage),
-                cloudManager.getRecipePhotoTable(pathDbLanguage),
-                cloudManager.getRecipeTable(pathDbLanguage)
+        String dbLanguage = cloudManager.getDbLanguage(Locale.getDefault());
+        if (dbLanguage == null) dbLanguage = cloudManager.getDbLanguage(Locale.ENGLISH);
+        if (dbLanguage == null) return false;
+        return dbManager.modifyAllInTx(
+                cloudManager.getAuthorTable(dbLanguage),
+                cloudManager.getCategoryTable(dbLanguage),
+                cloudManager.getFoodMeasureTable(dbLanguage),
+                cloudManager.getFoodTable(dbLanguage),
+                cloudManager.getFoodUsdaTable(dbLanguage),
+                cloudManager.getLabelTable(dbLanguage),
+                cloudManager.getPhotoTable(dbLanguage),
+                cloudManager.getRecipeFoodTable(dbLanguage),
+                cloudManager.getRecipeLabelTable(dbLanguage),
+                cloudManager.getRecipeMethodTable(dbLanguage),
+                cloudManager.getRecipePhotoTable(dbLanguage),
+                cloudManager.getRecipeTable(dbLanguage)
         );
+    }
+
+    private boolean isUsdaFetched() {
+        return false;
+    }
+
+    private void updateUsda() {
+
     }
 }

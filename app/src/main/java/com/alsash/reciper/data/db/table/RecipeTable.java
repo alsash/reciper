@@ -205,5 +205,5 @@ public final class RecipeTable {
     public void __setDaoSession(DaoSession daoSession) {
         this.daoSession = daoSession;
         myDao = daoSession != null ? daoSession.getRecipeTableDao() : null;
-}
+    }
 }

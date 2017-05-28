@@ -53,7 +53,7 @@ public class DbManager {
     }
 
     @WorkerThread
-    public boolean insertAllInTx(@Nullable final List<AuthorTable> authors,
+    public boolean modifyAllInTx(@Nullable final List<AuthorTable> authors,
                                  @Nullable final List<CategoryTable> categories,
                                  @Nullable final List<FoodMeasureTable> foodMeasures,
                                  @Nullable final List<FoodTable> foods,
@@ -83,29 +83,29 @@ public class DbManager {
             @Override
             public void run() {
                 if (authors != null)
-                    daoSession.getAuthorTableDao().insertInTx(authors);
+                    daoSession.getAuthorTableDao().insertOrReplaceInTx(authors);
                 if (categories != null)
-                    daoSession.getCategoryTableDao().insertInTx(categories);
+                    daoSession.getCategoryTableDao().insertOrReplaceInTx(categories);
                 if (foodMeasures != null)
-                    daoSession.getFoodMeasureTableDao().insertInTx(foodMeasures);
+                    daoSession.getFoodMeasureTableDao().insertOrReplaceInTx(foodMeasures);
                 if (foods != null)
-                    daoSession.getFoodTableDao().insertInTx(foods);
+                    daoSession.getFoodTableDao().insertOrReplaceInTx(foods);
                 if (foodUsda != null)
-                    daoSession.getFoodUsdaTableDao().insertInTx(foodUsda);
+                    daoSession.getFoodUsdaTableDao().insertOrReplaceInTx(foodUsda);
                 if (labels != null)
-                    daoSession.getLabelTableDao().insertInTx(labels);
+                    daoSession.getLabelTableDao().insertOrReplaceInTx(labels);
                 if (photos != null)
-                    daoSession.getPhotoTableDao().insertInTx(photos);
+                    daoSession.getPhotoTableDao().insertOrReplaceInTx(photos);
                 if (recipeFoods != null)
-                    daoSession.getRecipeFoodTableDao().insertInTx(recipeFoods);
+                    daoSession.getRecipeFoodTableDao().insertOrReplaceInTx(recipeFoods);
                 if (recipeLabels != null)
-                    daoSession.getRecipeLabelTableDao().insertInTx(recipeLabels);
+                    daoSession.getRecipeLabelTableDao().insertOrReplaceInTx(recipeLabels);
                 if (recipeMethods != null)
-                    daoSession.getRecipeMethodTableDao().insertInTx(recipeMethods);
+                    daoSession.getRecipeMethodTableDao().insertOrReplaceInTx(recipeMethods);
                 if (recipePhotos != null)
-                    daoSession.getRecipePhotoTableDao().insertInTx(recipePhotos);
+                    daoSession.getRecipePhotoTableDao().insertOrReplaceInTx(recipePhotos);
                 if (recipes != null)
-                    daoSession.getRecipeTableDao().insertInTx(recipes);
+                    daoSession.getRecipeTableDao().insertOrReplaceInTx(recipes);
             }
         });
         return true;
@@ -143,6 +143,6 @@ public class DbManager {
     }
 
     private void setSettingsValue(String key, String val) {
-        daoSession.getSettingsTableDao().updateInTx(new SettingsTable(null, key, val));
+        daoSession.getSettingsTableDao().insertOrReplaceInTx(new SettingsTable(null, key, val));
     }
 }

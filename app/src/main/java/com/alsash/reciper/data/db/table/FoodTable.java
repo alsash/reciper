@@ -28,12 +28,10 @@ public final class FoodTable {
     double fat;
     @NotNull
     double carbs;
-    @NotNull
-    double weightUnit;
+    String weightUnit;
     @NotNull
     double energy;
-    @NotNull
-    double energyUnit;
+    String energyUnit;
     /**
      * Used to resolve relations
      */
@@ -45,9 +43,9 @@ public final class FoodTable {
     @Generated(hash = 256830264)
     private transient FoodTableDao myDao;
 
-    @Generated(hash = 222397625)
+    @Generated(hash = 670620127)
     public FoodTable(Long id, String uuid, String name, double protein, double fat,
-                     double carbs, double weightUnit, double energy, double energyUnit) {
+                     double carbs, String weightUnit, double energy, String energyUnit) {
         this.id = id;
         this.uuid = uuid;
         this.name = name;
@@ -111,11 +109,11 @@ public final class FoodTable {
         this.carbs = carbs;
     }
 
-    public double getWeightUnit() {
+    public String getWeightUnit() {
         return this.weightUnit;
     }
 
-    public void setWeightUnit(double weightUnit) {
+    public void setWeightUnit(String weightUnit) {
         this.weightUnit = weightUnit;
     }
 
@@ -127,11 +125,11 @@ public final class FoodTable {
         this.energy = energy;
     }
 
-    public double getEnergyUnit() {
+    public String getEnergyUnit() {
         return this.energyUnit;
     }
 
-    public void setEnergyUnit(double energyUnit) {
+    public void setEnergyUnit(String energyUnit) {
         this.energyUnit = energyUnit;
     }
 
