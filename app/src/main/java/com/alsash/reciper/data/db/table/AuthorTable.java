@@ -163,9 +163,9 @@ public final class AuthorTable {
     }
 
     /** called by internal mechanisms, do not call yourself. */
-@Generated(hash = 1837510431)
-public void __setDaoSession(DaoSession daoSession) {
-    this.daoSession = daoSession;
-    myDao = daoSession != null ? daoSession.getAuthorTableDao() : null;
-}
+    @Generated(hash = 1837510431)
+    public void __setDaoSession(DaoSession daoSession) {
+        this.daoSession = daoSession;
+        myDao = daoSession != null ? daoSession.getAuthorTableDao() : null;
+    }
 }

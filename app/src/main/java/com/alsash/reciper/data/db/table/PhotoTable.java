@@ -120,5 +120,5 @@ public final class PhotoTable {
     public void __setDaoSession(DaoSession daoSession) {
         this.daoSession = daoSession;
         myDao = daoSession != null ? daoSession.getPhotoTableDao() : null;
-}
+    }
 }

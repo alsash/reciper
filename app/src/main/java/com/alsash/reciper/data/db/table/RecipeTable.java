@@ -53,9 +53,9 @@ public final class RecipeTable {
     @Generated(hash = 1210201788)
     private transient RecipeTableDao myDao;
 
-    @Generated(hash = 1294252874)
-    public RecipeTable(Long id, String uuid, String name, Date changedAt, String source,
-                       String description, boolean bookmark, int servings,
+    @Generated(hash = 1065296129)
+    public RecipeTable(Long id, String uuid, String name, Date changedAt,
+                       String source, String description, boolean bookmark, int servings,
                        double massFlowRateGps, String categoryUuid, String authorUuid) {
         this.id = id;
         this.uuid = uuid;
@@ -206,4 +206,5 @@ public final class RecipeTable {
         this.daoSession = daoSession;
         myDao = daoSession != null ? daoSession.getRecipeTableDao() : null;
     }
+
 }

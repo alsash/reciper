@@ -178,5 +178,5 @@ public final class FoodTable {
     public void __setDaoSession(DaoSession daoSession) {
         this.daoSession = daoSession;
         myDao = daoSession != null ? daoSession.getFoodTableDao() : null;
-}
+    }
 }

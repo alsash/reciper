@@ -110,5 +110,5 @@ public final class LabelTable {
     public void __setDaoSession(DaoSession daoSession) {
         this.daoSession = daoSession;
         myDao = daoSession != null ? daoSession.getLabelTableDao() : null;
-}
+    }
 }

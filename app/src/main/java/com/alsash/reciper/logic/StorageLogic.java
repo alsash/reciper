@@ -23,7 +23,7 @@ public class StorageLogic {
     public void createStartupEntitiesIfNeed() throws NoInternetException {
         Date localUpdateDate = dbManager.getSettingsUpdateDate();
         Date cloudUpdateDate = cloudManager.getDbUpdateDate();
-        boolean create = false;
+        boolean create;
         // First access
         if (localUpdateDate == null) {
             if (cloudUpdateDate != null) {
@@ -47,8 +47,8 @@ public class StorageLogic {
     }
 
     private boolean createStartupEntities() {
-        String pathDbLanguage = cloudManager.getPathDbLanguage(Locale.getDefault());
-        if (pathDbLanguage == null) pathDbLanguage = cloudManager.getPathDbLanguage(Locale.ENGLISH);
+        String pathDbLanguage = cloudManager.getDbLanguage(Locale.getDefault());
+        if (pathDbLanguage == null) pathDbLanguage = cloudManager.getDbLanguage(Locale.ENGLISH);
         if (pathDbLanguage == null) return false;
         return dbManager.insertAllInTx(
                 cloudManager.getAuthorTable(pathDbLanguage),

@@ -124,5 +124,5 @@ public final class RecipePhotoTable {
     public void __setDaoSession(DaoSession daoSession) {
         this.daoSession = daoSession;
         myDao = daoSession != null ? daoSession.getRecipePhotoTableDao() : null;
-}
+    }
 }

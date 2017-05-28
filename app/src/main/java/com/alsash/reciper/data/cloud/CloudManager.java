@@ -44,18 +44,18 @@ public class CloudManager {
     @Nullable
     @WorkerThread
     public Date getDbUpdateDate() {
-        return (getDbConfig() == null) ? null : getDbConfig().dbUpdateDate;
+        return (getDbConfig() == null) ? null : getDbConfig().updatedAt;
     }
 
     @Nullable
     @WorkerThread
-    public String getPathDbLanguage(Locale userLocale) {
+    public String getDbLanguage(Locale userLocale) {
         if (dbConfig == null) dbConfig = getDbConfig();
         if (dbConfig == null) return null;
         String userLanguage = userLocale.getLanguage().toLowerCase();
-        for (String dbLanguage : dbConfig.dbLanguages) {
-            if (userLanguage.equals(dbLanguage.toLowerCase())) {
-                return dbConfig.dbPath + dbLanguage.toLowerCase();
+        for (String language : dbConfig.languages) {
+            if (userLanguage.equals(language.toLowerCase())) {
+                return language.toLowerCase();
             }
         }
         return null;
@@ -63,74 +63,86 @@ public class CloudManager {
 
     @Nullable
     @WorkerThread
-    public List<AuthorTable> getAuthorTable(String pathDbLanguage) {
-        return githubDbRequest.getAuthorTable(pathDbLanguage).blockingGet();
+    public List<AuthorTable> getAuthorTable(String language) {
+        return (getDbConfig() == null) ? null :
+                githubDbRequest.getAuthorTable(getDbConfig().version, language).blockingGet();
     }
 
     @Nullable
     @WorkerThread
-    public List<CategoryTable> getCategoryTable(String pathDbLanguage) {
-        return githubDbRequest.getCategoryTable(pathDbLanguage).blockingGet();
+    public List<CategoryTable> getCategoryTable(String language) {
+        return (getDbConfig() == null) ? null :
+                githubDbRequest.getCategoryTable(getDbConfig().version, language).blockingGet();
     }
 
     @Nullable
     @WorkerThread
-    public List<FoodMeasureTable> getFoodMeasureTable(String pathDbLanguage) {
-        return githubDbRequest.getFoodMeasureTable(pathDbLanguage).blockingGet();
+    public List<FoodMeasureTable> getFoodMeasureTable(String language) {
+        return (getDbConfig() == null) ? null :
+                githubDbRequest.getFoodMeasureTable(getDbConfig().version, language).blockingGet();
     }
 
     @Nullable
     @WorkerThread
-    public List<FoodTable> getFoodTable(String pathDbLanguage) {
-        return githubDbRequest.getFoodTable(pathDbLanguage).blockingGet();
+    public List<FoodTable> getFoodTable(String language) {
+        return (getDbConfig() == null) ? null :
+                githubDbRequest.getFoodTable(getDbConfig().version, language).blockingGet();
     }
 
     @Nullable
     @WorkerThread
-    public List<FoodUsdaTable> getFoodUsdaTable(String pathDbLanguage) {
-        return githubDbRequest.getFoodUsdaTable(pathDbLanguage).blockingGet();
+    public List<FoodUsdaTable> getFoodUsdaTable(String language) {
+        return (getDbConfig() == null) ? null :
+                githubDbRequest.getFoodUsdaTable(getDbConfig().version, language).blockingGet();
     }
 
     @Nullable
     @WorkerThread
-    public List<LabelTable> getLabelTable(String pathDbLanguage) {
-        return githubDbRequest.getLabelTable(pathDbLanguage).blockingGet();
+    public List<LabelTable> getLabelTable(String language) {
+        return (getDbConfig() == null) ? null :
+                githubDbRequest.getLabelTable(getDbConfig().version, language).blockingGet();
     }
 
     @Nullable
     @WorkerThread
-    public List<PhotoTable> getPhotoTable(String pathDbLanguage) {
-        return githubDbRequest.getPhotoTable(pathDbLanguage).blockingGet();
+    public List<PhotoTable> getPhotoTable(String language) {
+        return (getDbConfig() == null) ? null :
+                githubDbRequest.getPhotoTable(getDbConfig().version, language).blockingGet();
     }
 
     @Nullable
     @WorkerThread
-    public List<RecipeFoodTable> getRecipeFoodTable(String pathDbLanguage) {
-        return githubDbRequest.getRecipeFoodTable(pathDbLanguage).blockingGet();
+    public List<RecipeFoodTable> getRecipeFoodTable(String language) {
+        return (getDbConfig() == null) ? null :
+                githubDbRequest.getRecipeFoodTable(getDbConfig().version, language).blockingGet();
     }
 
     @Nullable
     @WorkerThread
-    public List<RecipeLabelTable> getRecipeLabelTable(String pathDbLanguage) {
-        return githubDbRequest.getRecipeLabelTable(pathDbLanguage).blockingGet();
+    public List<RecipeLabelTable> getRecipeLabelTable(String language) {
+        return (getDbConfig() == null) ? null :
+                githubDbRequest.getRecipeLabelTable(getDbConfig().version, language).blockingGet();
     }
 
     @Nullable
     @WorkerThread
-    public List<RecipeMethodTable> getRecipeMethodTable(String pathDbLanguage) {
-        return githubDbRequest.getRecipeMethodTable(pathDbLanguage).blockingGet();
+    public List<RecipeMethodTable> getRecipeMethodTable(String language) {
+        return (getDbConfig() == null) ? null :
+                githubDbRequest.getRecipeMethodTable(getDbConfig().version, language).blockingGet();
     }
 
     @Nullable
     @WorkerThread
-    public List<RecipePhotoTable> getRecipePhotoTable(String pathDbLanguage) {
-        return githubDbRequest.getRecipePhotoTable(pathDbLanguage).blockingGet();
+    public List<RecipePhotoTable> getRecipePhotoTable(String language) {
+        return (getDbConfig() == null) ? null :
+                githubDbRequest.getRecipePhotoTable(getDbConfig().version, language).blockingGet();
     }
 
     @Nullable
     @WorkerThread
-    public List<RecipeTable> getRecipeTable(String pathDbLanguage) {
-        return githubDbRequest.getRecipeTable(pathDbLanguage).blockingGet();
+    public List<RecipeTable> getRecipeTable(String language) {
+        return (getDbConfig() == null) ? null :
+                githubDbRequest.getRecipeTable(getDbConfig().version, language).blockingGet();
     }
 
     @Nullable

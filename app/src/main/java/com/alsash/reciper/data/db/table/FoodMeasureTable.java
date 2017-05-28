@@ -155,5 +155,5 @@ public final class FoodMeasureTable {
     public void __setDaoSession(DaoSession daoSession) {
         this.daoSession = daoSession;
         myDao = daoSession != null ? daoSession.getFoodMeasureTableDao() : null;
-}
+    }
 }

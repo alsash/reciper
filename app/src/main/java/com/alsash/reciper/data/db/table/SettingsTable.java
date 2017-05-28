@@ -108,5 +108,5 @@ public final class SettingsTable {
     public void __setDaoSession(DaoSession daoSession) {
         this.daoSession = daoSession;
         myDao = daoSession != null ? daoSession.getSettingsTableDao() : null;
-}
+    }
 }

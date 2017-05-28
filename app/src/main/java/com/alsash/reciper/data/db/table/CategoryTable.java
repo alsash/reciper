@@ -122,5 +122,5 @@ public final class CategoryTable {
     public void __setDaoSession(DaoSession daoSession) {
         this.daoSession = daoSession;
         myDao = daoSession != null ? daoSession.getCategoryTableDao() : null;
-}
+    }
 }

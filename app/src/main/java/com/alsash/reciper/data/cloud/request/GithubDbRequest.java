@@ -34,50 +34,62 @@ public interface GithubDbRequest {
     Maybe<GithubDbConfigResponse> getConfig();
 
     @Headers({HEADER_ACCEPT, HEADER_AGENT})
-    @GET("{db_language}/author.json")
-    Maybe<List<AuthorTable>> getAuthorTable(@Path("db_language") String pathDbLanguage);
+    @GET("{version}/{language}/author_table.json")
+    Maybe<List<AuthorTable>> getAuthorTable(@Path("version") String version,
+                                            @Path("language") String language);
 
     @Headers({HEADER_ACCEPT, HEADER_AGENT})
-    @GET("{db_language}/category.json")
-    Maybe<List<CategoryTable>> getCategoryTable(@Path("db_language") String pathDbLanguage);
+    @GET("{version}/{language}/category_table.json")
+    Maybe<List<CategoryTable>> getCategoryTable(@Path("version") String version,
+                                                @Path("language") String language);
 
     @Headers({HEADER_ACCEPT, HEADER_AGENT})
-    @GET("{db_language}/food_measure.json")
-    Maybe<List<FoodMeasureTable>> getFoodMeasureTable(@Path("db_language") String pathDbLanguage);
+    @GET("{version}/{language}/food_measure_table.json")
+    Maybe<List<FoodMeasureTable>> getFoodMeasureTable(@Path("version") String version,
+                                                      @Path("language") String language);
 
     @Headers({HEADER_ACCEPT, HEADER_AGENT})
-    @GET("{db_language}/food.json")
-    Maybe<List<FoodTable>> getFoodTable(@Path("db_language") String pathDbLanguage);
+    @GET("{version}/{language}/food_table.json")
+    Maybe<List<FoodTable>> getFoodTable(@Path("version") String version,
+                                        @Path("language") String language);
 
     @Headers({HEADER_ACCEPT, HEADER_AGENT})
-    @GET("{db_language}/food_usda.json")
-    Maybe<List<FoodUsdaTable>> getFoodUsdaTable(@Path("db_language") String pathDbLanguage);
+    @GET("{version}/{language}/food_usda_table.json")
+    Maybe<List<FoodUsdaTable>> getFoodUsdaTable(@Path("version") String version,
+                                                @Path("language") String language);
 
     @Headers({HEADER_ACCEPT, HEADER_AGENT})
-    @GET("{db_language}/label.json")
-    Maybe<List<LabelTable>> getLabelTable(@Path("db_language") String pathDbLanguage);
+    @GET("{version}/{language}/label_table.json")
+    Maybe<List<LabelTable>> getLabelTable(@Path("version") String version,
+                                          @Path("language") String language);
 
     @Headers({HEADER_ACCEPT, HEADER_AGENT})
-    @GET("{db_language}/photo.json")
-    Maybe<List<PhotoTable>> getPhotoTable(@Path("db_language") String pathDbLanguage);
+    @GET("{version}/{language}/photo_table.json")
+    Maybe<List<PhotoTable>> getPhotoTable(@Path("version") String version,
+                                          @Path("language") String language);
 
     @Headers({HEADER_ACCEPT, HEADER_AGENT})
-    @GET("{db_language}/recipe_food.json")
-    Maybe<List<RecipeFoodTable>> getRecipeFoodTable(@Path("db_language") String pathDbLanguage);
+    @GET("{version}/{language}/recipe_food_table.json")
+    Maybe<List<RecipeFoodTable>> getRecipeFoodTable(@Path("version") String version,
+                                                    @Path("language") String language);
 
     @Headers({HEADER_ACCEPT, HEADER_AGENT})
-    @GET("{db_language}/recipe_label.json")
-    Maybe<List<RecipeLabelTable>> getRecipeLabelTable(@Path("db_language") String pathDbLanguage);
+    @GET("{version}/{language}/recipe_label_table.json")
+    Maybe<List<RecipeLabelTable>> getRecipeLabelTable(@Path("version") String version,
+                                                      @Path("language") String language);
 
     @Headers({HEADER_ACCEPT, HEADER_AGENT})
-    @GET("{db_language}/recipe_method.json")
-    Maybe<List<RecipeMethodTable>> getRecipeMethodTable(@Path("db_language") String pathDbLanguage);
+    @GET("{version}/{language}/recipe_method_table.json")
+    Maybe<List<RecipeMethodTable>> getRecipeMethodTable(@Path("version") String version,
+                                                        @Path("language") String language);
 
     @Headers({HEADER_ACCEPT, HEADER_AGENT})
-    @GET("{db_language}/recipe_photo.json")
-    Maybe<List<RecipePhotoTable>> getRecipePhotoTable(@Path("db_language") String pathDbLanguage);
+    @GET("{version}/{language}/recipe_photo_table.json")
+    Maybe<List<RecipePhotoTable>> getRecipePhotoTable(@Path("version") String version,
+                                                      @Path("language") String language);
 
     @Headers({HEADER_ACCEPT, HEADER_AGENT})
-    @GET("{db_language}/recipe.json")
-    Maybe<List<RecipeTable>> getRecipeTable(@Path("db_language") String pathDbLanguage);
+    @GET("{version}/{language}/recipe_table.json")
+    Maybe<List<RecipeTable>> getRecipeTable(@Path("version") String version,
+                                            @Path("language") String language);
 }
