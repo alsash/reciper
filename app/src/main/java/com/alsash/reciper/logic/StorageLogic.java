@@ -5,11 +5,11 @@ import com.alsash.reciper.data.db.DbManager;
 import com.alsash.reciper.logic.error.NoInternetException;
 
 import java.util.Date;
+import java.util.Locale;
 
 /**
- * Created by alsash on 5/26/17.
+ * Logic for processing data in storage
  */
-
 public class StorageLogic {
 
     private final CloudManager cloudManager;
@@ -24,19 +24,34 @@ public class StorageLogic {
         Date localUpdateDate = dbManager.getSettingsUpdateDate();
         Date cloudUpdateDate = cloudManager.getDbUpdateDate();
         boolean create = false;
-        if (localUpdateDate != null && cloudUpdateDate != null) {
-            create = localUpdateDate.getTime() < cloudUpdateDate.getTime();
-        } else if (cloudUpdateDate == null && !cloudManager.isOnline()) {
-            throw new NoInternetException();
+        // First access
+        if (localUpdateDate == null) {
+            if (cloudUpdateDate != null) {
+                create = true;
+            } else if (!cloudManager.isOnline()) {
+                throw new NoInternetException();
+            } else {
+                create = false; // Something goes wrong, but we can't do anything...
+            }
+            // Next access
+        } else {
+            create = false;
+            if (cloudUpdateDate != null) {
+                create = localUpdateDate.getTime() < cloudUpdateDate.getTime();
+            }
         }
-        if (create) {
-            createStartupEntities();
+        if (createStartupEntities()) {
             dbManager.setSettingsUpdateDate(new Date());
         }
     }
 
-    private void createStartupEntities() {
+    private boolean createStartupEntities() {
+        String pathDbLanguage = cloudManager.getPathDbLanguage(Locale.getDefault());
+        if (pathDbLanguage == null) pathDbLanguage = cloudManager.getPathDbLanguage(Locale.ENGLISH);
+        if (pathDbLanguage == null) return false;
+        dbManager.insertAuthors(cloudManager.getAuthors(pathDbLanguage));
 
+        return false;
     }
 
 }

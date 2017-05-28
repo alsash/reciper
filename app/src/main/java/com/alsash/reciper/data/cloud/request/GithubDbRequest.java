@@ -2,6 +2,17 @@ package com.alsash.reciper.data.cloud.request;
 
 import com.alsash.reciper.data.cloud.response.GithubDbConfigResponse;
 import com.alsash.reciper.data.db.table.AuthorTable;
+import com.alsash.reciper.data.db.table.CategoryTable;
+import com.alsash.reciper.data.db.table.FoodMeasureTable;
+import com.alsash.reciper.data.db.table.FoodTable;
+import com.alsash.reciper.data.db.table.FoodUsdaTable;
+import com.alsash.reciper.data.db.table.LabelTable;
+import com.alsash.reciper.data.db.table.PhotoTable;
+import com.alsash.reciper.data.db.table.RecipeFoodTable;
+import com.alsash.reciper.data.db.table.RecipeLabelTable;
+import com.alsash.reciper.data.db.table.RecipeMethodTable;
+import com.alsash.reciper.data.db.table.RecipePhotoTable;
+import com.alsash.reciper.data.db.table.RecipeTable;
 
 import java.util.List;
 
@@ -23,6 +34,50 @@ public interface GithubDbRequest {
     Maybe<GithubDbConfigResponse> getConfig();
 
     @Headers({HEADER_ACCEPT, HEADER_AGENT})
-    @GET("{db_locale}/author.json")
-    Maybe<List<AuthorTable>> getAuthorTable(@Path("db_locale") String dbLocale);
+    @GET("{db_language}/author.json")
+    Maybe<List<AuthorTable>> getAuthorTable(@Path("db_language") String pathDbLanguage);
+
+    @Headers({HEADER_ACCEPT, HEADER_AGENT})
+    @GET("{db_language}/category.json")
+    Maybe<List<CategoryTable>> getCategoryTable(@Path("db_language") String pathDbLanguage);
+
+    @Headers({HEADER_ACCEPT, HEADER_AGENT})
+    @GET("{db_language}/author.json")
+    Maybe<List<FoodMeasureTable>> getAuthorTable(@Path("db_language") String pathDbLanguage);
+
+    @Headers({HEADER_ACCEPT, HEADER_AGENT})
+    @GET("{db_language}/author.json")
+    Maybe<List<FoodTable>> getAuthorTable(@Path("db_language") String pathDbLanguage);
+
+    @Headers({HEADER_ACCEPT, HEADER_AGENT})
+    @GET("{db_language}/author.json")
+    Maybe<List<FoodUsdaTable>> getAuthorTable(@Path("db_language") String pathDbLanguage);
+
+    @Headers({HEADER_ACCEPT, HEADER_AGENT})
+    @GET("{db_language}/author.json")
+    Maybe<List<LabelTable>> getAuthorTable(@Path("db_language") String pathDbLanguage);
+
+    @Headers({HEADER_ACCEPT, HEADER_AGENT})
+    @GET("{db_language}/author.json")
+    Maybe<List<PhotoTable>> getAuthorTable(@Path("db_language") String pathDbLanguage);
+
+    @Headers({HEADER_ACCEPT, HEADER_AGENT})
+    @GET("{db_language}/author.json")
+    Maybe<List<RecipeFoodTable>> getAuthorTable(@Path("db_language") String pathDbLanguage);
+
+    @Headers({HEADER_ACCEPT, HEADER_AGENT})
+    @GET("{db_language}/author.json")
+    Maybe<List<RecipeLabelTable>> getAuthorTable(@Path("db_language") String pathDbLanguage);
+
+    @Headers({HEADER_ACCEPT, HEADER_AGENT})
+    @GET("{db_language}/author.json")
+    Maybe<List<RecipeMethodTable>> getAuthorTable(@Path("db_language") String pathDbLanguage);
+
+    @Headers({HEADER_ACCEPT, HEADER_AGENT})
+    @GET("{db_language}/author.json")
+    Maybe<List<RecipePhotoTable>> getAuthorTable(@Path("db_language") String pathDbLanguage);
+
+    @Headers({HEADER_ACCEPT, HEADER_AGENT})
+    @GET("{db_language}/author.json")
+    Maybe<List<RecipeTable>> getAuthorTable(@Path("db_language") String pathDbLanguage);
 }

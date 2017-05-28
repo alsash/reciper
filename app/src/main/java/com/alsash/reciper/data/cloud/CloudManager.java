@@ -38,7 +38,7 @@ public class CloudManager {
 
     @Nullable
     @WorkerThread
-    public String getDbPathLocale(Locale userLocale) {
+    public String getPathDbLanguage(Locale userLocale) {
         if (dbConfig == null) dbConfig = getDbConfig();
         if (dbConfig == null) return null;
         String userLanguage = userLocale.getLanguage().toLowerCase();
@@ -52,9 +52,10 @@ public class CloudManager {
 
     @Nullable
     @WorkerThread
-    public List<AuthorTable> getAuthorTables(String dbPathLocale) {
-        return githubDbRequest.getAuthorTable(dbPathLocale).blockingGet();
+    public List<AuthorTable> getAuthors(String pathDbLanguage) {
+        return githubDbRequest.getAuthorTable(pathDbLanguage).blockingGet();
     }
+
 
     @Nullable
     @WorkerThread
