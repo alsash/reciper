@@ -12,5 +12,5 @@ public class GithubDbConfigResponse {
     public String dbPath;
     @SerializedName("db_update_date_unix")
     public Date dbUpdateDate;
-    public List<String> dbLocales;
+    public List<String> dbLanguages;
 }

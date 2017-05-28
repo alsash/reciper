@@ -1,6 +1,6 @@
 {
   "db_path": "/db/",
-  "db_locales": [
+  "db_languages": [
     "en"
   ],
   "db_update_date_unix": 1495742457
