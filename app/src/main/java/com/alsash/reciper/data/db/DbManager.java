@@ -53,18 +53,18 @@ public class DbManager {
     }
 
     @WorkerThread
-    public void insertAllInTx(@Nullable final List<AuthorTable> authors,
-                              @Nullable final List<CategoryTable> categories,
-                              @Nullable final List<FoodMeasureTable> foodMeasures,
-                              @Nullable final List<FoodTable> foods,
-                              @Nullable final List<FoodUsdaTable> foodUsda,
-                              @Nullable final List<LabelTable> labels,
-                              @Nullable final List<PhotoTable> photos,
-                              @Nullable final List<RecipeFoodTable> recipeFoods,
-                              @Nullable final List<RecipeLabelTable> recipeLabels,
-                              @Nullable final List<RecipeMethodTable> recipeMethods,
-                              @Nullable final List<RecipePhotoTable> recipePhotos,
-                              @Nullable final List<RecipeTable> recipes) {
+    public boolean insertAllInTx(@Nullable final List<AuthorTable> authors,
+                                 @Nullable final List<CategoryTable> categories,
+                                 @Nullable final List<FoodMeasureTable> foodMeasures,
+                                 @Nullable final List<FoodTable> foods,
+                                 @Nullable final List<FoodUsdaTable> foodUsda,
+                                 @Nullable final List<LabelTable> labels,
+                                 @Nullable final List<PhotoTable> photos,
+                                 @Nullable final List<RecipeFoodTable> recipeFoods,
+                                 @Nullable final List<RecipeLabelTable> recipeLabels,
+                                 @Nullable final List<RecipeMethodTable> recipeMethods,
+                                 @Nullable final List<RecipePhotoTable> recipePhotos,
+                                 @Nullable final List<RecipeTable> recipes) {
         if (authors == null
                 && categories == null
                 && foodMeasures == null
@@ -77,9 +77,8 @@ public class DbManager {
                 && recipeMethods == null
                 && recipePhotos == null
                 && recipes == null) {
-            return;
+            return false;
         }
-
         daoSession.runInTx(new Runnable() {
             @Override
             public void run() {
@@ -109,6 +108,7 @@ public class DbManager {
                     daoSession.getRecipeTableDao().insertInTx(recipes);
             }
         });
+        return true;
     }
 
     @Nullable

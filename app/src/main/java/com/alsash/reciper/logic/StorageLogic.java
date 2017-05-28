@@ -40,8 +40,9 @@ public class StorageLogic {
                 create = localUpdateDate.getTime() < cloudUpdateDate.getTime();
             }
         }
-        if (createStartupEntities()) {
-            dbManager.setSettingsUpdateDate(new Date());
+        if (create) {
+            boolean created = createStartupEntities();
+            if (created) dbManager.setSettingsUpdateDate(new Date());
         }
     }
 
@@ -49,9 +50,19 @@ public class StorageLogic {
         String pathDbLanguage = cloudManager.getPathDbLanguage(Locale.getDefault());
         if (pathDbLanguage == null) pathDbLanguage = cloudManager.getPathDbLanguage(Locale.ENGLISH);
         if (pathDbLanguage == null) return false;
-        dbManager.insertAuthors(cloudManager.getAuthors(pathDbLanguage));
-
-        return false;
+        return dbManager.insertAllInTx(
+                cloudManager.getAuthorTable(pathDbLanguage),
+                cloudManager.getCategoryTable(pathDbLanguage),
+                cloudManager.getFoodMeasureTable(pathDbLanguage),
+                cloudManager.getFoodTable(pathDbLanguage),
+                cloudManager.getFoodUsdaTable(pathDbLanguage),
+                cloudManager.getLabelTable(pathDbLanguage),
+                cloudManager.getPhotoTable(pathDbLanguage),
+                cloudManager.getRecipeFoodTable(pathDbLanguage),
+                cloudManager.getRecipeLabelTable(pathDbLanguage),
+                cloudManager.getRecipeMethodTable(pathDbLanguage),
+                cloudManager.getRecipePhotoTable(pathDbLanguage),
+                cloudManager.getRecipeTable(pathDbLanguage)
+        );
     }
-
 }

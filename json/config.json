@@ -1,5 +1,5 @@
 {
-  "db_path": "/db/",
+  "db_path": "db/",
   "db_languages": [
     "en"
   ],
