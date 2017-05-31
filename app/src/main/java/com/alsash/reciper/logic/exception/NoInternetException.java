@@ -1,9 +1,8 @@
 package com.alsash.reciper.logic.exception;
 
 /**
- * Created by alsash on 5/28/17.
+ * An logical exception caused by internet connection unavailable
  */
-
 public class NoInternetException extends RuntimeException {
     public NoInternetException() {
         super("internet connection unavailable");
