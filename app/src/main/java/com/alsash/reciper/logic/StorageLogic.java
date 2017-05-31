@@ -2,9 +2,12 @@ package com.alsash.reciper.logic;
 
 import com.alsash.reciper.data.cloud.CloudManager;
 import com.alsash.reciper.data.db.DbManager;
+import com.alsash.reciper.data.db.table.FoodTable;
+import com.alsash.reciper.data.db.table.FoodUsdaTable;
 import com.alsash.reciper.logic.exception.NoInternetException;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 /**
@@ -44,8 +47,8 @@ public class StorageLogic {
             boolean created = createStartupEntities();
             if (created) dbManager.setSettingsUpdateDate(new Date());
         }
-        if (!isUsdaFetched()) {
-            updateUsda();
+        if (!isFoodUsdaFetched()) {
+            updateFoodUsda();
         }
     }
 
@@ -54,26 +57,33 @@ public class StorageLogic {
         if (dbLanguage == null) dbLanguage = cloudManager.getDbLanguage(Locale.ENGLISH);
         if (dbLanguage == null) return false;
         return dbManager.modifyAllInTx(
-                cloudManager.getAuthorTable(dbLanguage),
-                cloudManager.getCategoryTable(dbLanguage),
-                cloudManager.getFoodMeasureTable(dbLanguage),
-                cloudManager.getFoodTable(dbLanguage),
-                cloudManager.getFoodUsdaTable(dbLanguage),
-                cloudManager.getLabelTable(dbLanguage),
-                cloudManager.getPhotoTable(dbLanguage),
-                cloudManager.getRecipeFoodTable(dbLanguage),
-                cloudManager.getRecipeLabelTable(dbLanguage),
-                cloudManager.getRecipeMethodTable(dbLanguage),
-                cloudManager.getRecipePhotoTable(dbLanguage),
-                cloudManager.getRecipeTable(dbLanguage)
+                cloudManager.getDbAuthorTable(dbLanguage),
+                cloudManager.getDbCategoryTable(dbLanguage),
+                cloudManager.getDbFoodMeasureTable(dbLanguage),
+                cloudManager.getDbFoodTable(dbLanguage),
+                cloudManager.getDbFoodUsdaTable(dbLanguage),
+                cloudManager.getDbLabelTable(dbLanguage),
+                cloudManager.getDbPhotoTable(dbLanguage),
+                cloudManager.getDbRecipeFoodTable(dbLanguage),
+                cloudManager.getDbRecipeLabelTable(dbLanguage),
+                cloudManager.getDbRecipeMethodTable(dbLanguage),
+                cloudManager.getDbRecipePhotoTable(dbLanguage),
+                cloudManager.getDbRecipeTable(dbLanguage)
         );
     }
 
-    private boolean isUsdaFetched() {
-        return false;
+    private boolean isFoodUsdaFetched() {
+        return dbManager.restrictWith(0, 1).getFoodUsdaTable(false).size() == 0;
     }
 
-    private void updateUsda() {
+    private void updateFoodUsda() {
+        List<FoodUsdaTable> foodUsdaTables = dbManager.restrictWith(0, 10).getFoodUsdaTable(false);
+        if (foodUsdaTables.size() == 0) return;
+        String[] ndbNos = new String[foodUsdaTables.size()];
+        for (int i = 0; i < foodUsdaTables.size(); i++) {
+            ndbNos[i] = foodUsdaTables.get(i).getNdbNo();
+        }
+        List<FoodTable> foodTables = cloudManager.getUsdaFoodTable(ndbNos);
 
     }
 }

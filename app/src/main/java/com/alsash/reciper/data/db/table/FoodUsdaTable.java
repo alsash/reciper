@@ -9,7 +9,7 @@ import org.greenrobot.greendao.annotation.NotNull;
 import org.greenrobot.greendao.annotation.Unique;
 
 /**
- * A to-many relation model of the Food entity and its id at USDA Food Composition Databases,
+ * A to-many relation model of the FoodContainer entity and its id at USDA FoodContainer Composition Databases,
  * persists in local relational database table with the help of GreenDao framework
  * and serialized from JSON by Gson framework
  */

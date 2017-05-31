@@ -1,10 +1,26 @@
 package com.alsash.reciper.app;
 
+import com.alsash.reciper.BuildConfig;
+
 /**
  * Public keys for all elements in the Application
  */
 public final class AppContract {
     private static final String TAG = "com.alsash.reciper.app.AppContract";
+
+    public enum UNIT {
+        GRAM("g"), KILOGRAM("kg"), KCAL("kcal");
+        private final String unitString;
+
+        UNIT(String unitString) {
+            this.unitString = unitString;
+        }
+
+        @Override
+        public String toString() {
+            return unitString;
+        }
+    }
 
     // Cloud service urls
     public static final class Cloud {
@@ -26,7 +42,9 @@ public final class AppContract {
         }
 
         public static final class Usda {
-            public static final String BASE_URL = "https://ndb.nal.usda.gov/ndb/search/list/";
+            public static final String API_KEY = BuildConfig.USDA_API_KEY;
+            public static final String BASE_URL = "https://api.nal.usda.gov/";
+            public static final String HEADER_CONTENT = "Content-Type: application/json";
         }
     }
 

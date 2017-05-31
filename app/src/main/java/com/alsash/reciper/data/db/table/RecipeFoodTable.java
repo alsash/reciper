@@ -9,7 +9,7 @@ import org.greenrobot.greendao.annotation.Unique;
 
 /**
  * A model of the Ingredient entity
- * represented by a to-many relation model of the Recipe and the Food entities,
+ * represented by a to-many relation model of the Recipe and the FoodContainer entities,
  * that persists in local relational database table by GreenDao framework
  * and serialized from JSON by Gson framework
  */

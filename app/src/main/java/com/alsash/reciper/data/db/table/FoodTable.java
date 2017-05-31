@@ -8,7 +8,7 @@ import org.greenrobot.greendao.annotation.NotNull;
 import org.greenrobot.greendao.annotation.Unique;
 
 /**
- * A model of the Food entity
+ * A model of the FoodContainer entity
  * that persists in local relational database table by GreenDao framework
  * and serialized from JSON by Gson framework
  */

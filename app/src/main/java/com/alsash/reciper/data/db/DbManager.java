@@ -11,6 +11,7 @@ import com.alsash.reciper.data.db.table.DaoSession;
 import com.alsash.reciper.data.db.table.FoodMeasureTable;
 import com.alsash.reciper.data.db.table.FoodTable;
 import com.alsash.reciper.data.db.table.FoodUsdaTable;
+import com.alsash.reciper.data.db.table.FoodUsdaTableDao;
 import com.alsash.reciper.data.db.table.LabelTable;
 import com.alsash.reciper.data.db.table.PhotoTable;
 import com.alsash.reciper.data.db.table.RecipeFoodTable;
@@ -23,6 +24,7 @@ import com.alsash.reciper.data.db.table.SettingsTableDao;
 
 import org.greenrobot.greendao.database.Database;
 import org.greenrobot.greendao.query.Query;
+import org.greenrobot.greendao.query.QueryBuilder;
 
 import java.util.Date;
 import java.util.List;
@@ -37,19 +39,37 @@ public class DbManager {
     private DaoSession daoSession;
     private Query<SettingsTable> settingsQuery;
     private boolean restrict;
-    private int limit;
     private int offset;
+    private int limit;
 
     public DbManager(Context context, String databaseName) {
         Database database = new DbHelper(context, databaseName).getWritableDb();
         daoSession = new DaoMaster(database).newSession();
     }
 
-    public DbManager restrictWith(int limit, int offset) {
+    public DbManager restrictWith(int offset, int limit) {
         this.restrict = true;
-        this.limit = limit;
         this.offset = offset;
+        this.limit = limit;
         return this;
+    }
+
+/*    public List<FoodTable> getFoodTableWhereUsdaNotFetched() {
+        QueryBuilder<FoodTable> builder = daoSession
+                .getFoodTableDao()
+                .queryBuilder()
+                .join(FoodTableDao.Properties.Uuid, FoodUsdaTable.class, FoodUsdaTableDao.Properties.FoodUuid)
+                .where(FoodUsdaTableDao.Properties.Fetched.eq(0)) // false
+                .
+    }*/
+
+    public List<FoodUsdaTable> getFoodUsdaTable(boolean fetched) {
+        QueryBuilder<FoodUsdaTable> builder = daoSession
+                .getFoodUsdaTableDao()
+                .queryBuilder()
+                .where(FoodUsdaTableDao.Properties.Fetched.eq((fetched) ? 1 : 0));
+        obtainRestriction(builder);
+        return builder.build().list();
     }
 
     @WorkerThread
@@ -139,6 +159,13 @@ public class DbManager {
             return settings.get(0).getVal();
         } else {
             return null;
+        }
+    }
+
+    private void obtainRestriction(QueryBuilder<?> builder) {
+        if (restrict) {
+            builder.offset(offset).limit(limit);
+            restrict = false;
         }
     }
 
