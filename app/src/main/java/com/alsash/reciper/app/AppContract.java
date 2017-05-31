@@ -24,8 +24,8 @@ public final class AppContract {
 
     // Cloud service urls
     public static final class Cloud {
-        public static final int CONNECT_TIMEOUT_MS = 1000;
-        public static final int READ_TIMEOUT_MS = 1000;
+        public static final int CONNECT_TIMEOUT_MS = 5000;
+        public static final int READ_TIMEOUT_MS = 5000;
 
         public static final class Github {
             private static final String BASE_URL = "https://api.github.com/";

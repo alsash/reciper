@@ -54,15 +54,6 @@ public class DbManager {
         return this;
     }
 
-/*    public List<FoodTable> getFoodTableWhereUsdaNotFetched() {
-        QueryBuilder<FoodTable> builder = daoSession
-                .getFoodTableDao()
-                .queryBuilder()
-                .join(FoodTableDao.Properties.Uuid, FoodUsdaTable.class, FoodUsdaTableDao.Properties.FoodUuid)
-                .where(FoodUsdaTableDao.Properties.Fetched.eq(0)) // false
-                .
-    }*/
-
     public List<FoodUsdaTable> getFoodUsdaTable(boolean fetched) {
         QueryBuilder<FoodUsdaTable> builder = daoSession
                 .getFoodUsdaTableDao()

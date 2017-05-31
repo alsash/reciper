@@ -41,9 +41,9 @@ public class UsdaFoodsResponse {
 
     public static class Measure {
         public String label;
-        public int eqv;
+        public double eqv;
         public String eunit;
-        public int qty;
+        public double qty;
         public String value;
     }
 }

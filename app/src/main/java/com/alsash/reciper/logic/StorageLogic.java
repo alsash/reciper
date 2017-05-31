@@ -77,13 +77,12 @@ public class StorageLogic {
     }
 
     private void updateFoodUsda() {
-        List<FoodUsdaTable> foodUsdaTables = dbManager.restrictWith(0, 10).getFoodUsdaTable(false);
+        List<FoodUsdaTable> foodUsdaTables = dbManager.restrictWith(0, 5).getFoodUsdaTable(false);
         if (foodUsdaTables.size() == 0) return;
         String[] ndbNos = new String[foodUsdaTables.size()];
         for (int i = 0; i < foodUsdaTables.size(); i++) {
             ndbNos[i] = foodUsdaTables.get(i).getNdbNo();
         }
         List<FoodTable> foodTables = cloudManager.getUsdaFoodTable(ndbNos);
-
     }
 }

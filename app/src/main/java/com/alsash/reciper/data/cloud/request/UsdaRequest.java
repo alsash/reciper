@@ -15,7 +15,7 @@ import static com.alsash.reciper.app.AppContract.Cloud.Usda.HEADER_CONTENT;
  */
 public interface UsdaRequest {
     @Headers(HEADER_CONTENT)
-    @GET("ndb/reports/V2")
+    @GET("ndb/V2/reports")
     Maybe<UsdaFoodsResponse> getFood(@Query("api_key") String apiKey,
                                      @Query("ndbno") String... ndbNo);
 }
