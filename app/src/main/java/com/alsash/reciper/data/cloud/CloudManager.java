@@ -24,8 +24,10 @@ import com.alsash.reciper.data.db.table.RecipePhotoTable;
 import com.alsash.reciper.data.db.table.RecipeTable;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 /**
  * A cloud manager for single access to all cloud services.
@@ -58,46 +60,50 @@ public class CloudManager {
                 && cm.getActiveNetworkInfo().isConnected());
     }
 
-    public FoodTable getUsdaFoodTable(String usdaNdbNo) {
-        FoodTable foodTable = new FoodTable();
-        foodTable.setWeightUnit(AppContract.UNIT.GRAM.toString());
-        foodTable.setEnergyUnit(AppContract.UNIT.KCAL.toString());
+    public Map<String, FoodTable> getUsdaFoodTable(String... usdaNdbNos) {
+        Map<String, FoodTable> result = new HashMap<>();
 
-        if (!isOnline()) return foodTable;
+        if (!isOnline()) return result;
 
         UsdaFoodsResponse response = usdaRequest
-                .getFood(Usda.API_KEY, usdaNdbNo)
+                .getFood(Usda.API_KEY, usdaNdbNos)
                 .onErrorComplete()
                 .blockingGet();
         if (response == null
                 || response.foods == null
                 || response.foods.size() == 0) {
-            return foodTable;
+            return result;
         }
 
-        foodTable.setName(response.foods.get(0).food.desc.name);
+        for (UsdaFoodsResponse.FoodContainer foodContainer : response.foods) {
+            if (foodContainer.food.desc.ndbno == null) continue;
+            FoodTable foodTable = new FoodTable();
+            result.put(foodContainer.food.desc.ndbno, foodTable);
 
-        if (response.foods.get(0).food.nutrients == null) {
-            return foodTable;
-        }
+            foodTable.setWeightUnit(AppContract.UNIT.GRAM.toString());
+            foodTable.setEnergyUnit(AppContract.UNIT.KCAL.toString());
+            foodTable.setName(response.foods.get(0).food.desc.name);
 
-        for (UsdaFoodsResponse.Nutrient nutrient : response.foods.get(0).food.nutrients) {
-            switch (nutrient.nutrientId) {
-                case USDA_NUTRITION_ID_PROTEIN:
-                    foodTable.setProtein(nutrient.value / 100);
-                    break;
-                case USDA_NUTRITION_ID_FAT:
-                    foodTable.setFat(nutrient.value / 100);
-                    break;
-                case USDA_NUTRITION_ID_CARBS:
-                    foodTable.setCarbs(nutrient.value / 100);
-                    break;
-                case USDA_NUTRITION_ID_ENERGY:
-                    foodTable.setEnergy(nutrient.value);
-                    break;
+            if (response.foods.get(0).food.nutrients != null) {
+                for (UsdaFoodsResponse.Nutrient nutrient : foodContainer.food.nutrients) {
+                    switch (nutrient.nutrientId) {
+                        case USDA_NUTRITION_ID_PROTEIN:
+                            foodTable.setProtein(nutrient.value / 100);
+                            break;
+                        case USDA_NUTRITION_ID_FAT:
+                            foodTable.setFat(nutrient.value / 100);
+                            break;
+                        case USDA_NUTRITION_ID_CARBS:
+                            foodTable.setCarbs(nutrient.value / 100);
+                            break;
+                        case USDA_NUTRITION_ID_ENERGY:
+                            foodTable.setEnergy(nutrient.value);
+                            break;
+                    }
+                }
             }
         }
-        return foodTable;
+        return result;
     }
 
     @Nullable
@@ -121,80 +127,108 @@ public class CloudManager {
     @Nullable
     public List<AuthorTable> getDbAuthorTable(String language) {
         return (getDbConfig() == null) ? null :
-                githubDbRequest.getAuthorTable(getDbConfig().version, language).blockingGet();
+                githubDbRequest
+                        .getAuthorTable(getDbConfig().version, language)
+                        .onErrorComplete()
+                        .blockingGet();
     }
 
     @Nullable
     public List<CategoryTable> getDbCategoryTable(String language) {
         return (getDbConfig() == null) ? null :
-                githubDbRequest.getCategoryTable(getDbConfig().version, language).blockingGet();
+                githubDbRequest.getCategoryTable(getDbConfig().version, language)
+                        .onErrorComplete()
+                        .blockingGet();
     }
 
     @Nullable
     public List<FoodMeasureTable> getDbFoodMeasureTable(String language) {
         return (getDbConfig() == null) ? null :
-                githubDbRequest.getFoodMeasureTable(getDbConfig().version, language).blockingGet();
+                githubDbRequest.getFoodMeasureTable(getDbConfig().version, language)
+                        .onErrorComplete()
+                        .blockingGet();
     }
 
     @Nullable
     public List<FoodTable> getDbFoodTable(String language) {
         return (getDbConfig() == null) ? null :
-                githubDbRequest.getFoodTable(getDbConfig().version, language).blockingGet();
+                githubDbRequest.getFoodTable(getDbConfig().version, language)
+                        .onErrorComplete()
+                        .blockingGet();
     }
 
     @Nullable
     public List<FoodUsdaTable> getDbFoodUsdaTable(String language) {
         return (getDbConfig() == null) ? null :
-                githubDbRequest.getFoodUsdaTable(getDbConfig().version, language).blockingGet();
+                githubDbRequest.getFoodUsdaTable(getDbConfig().version, language)
+                        .onErrorComplete()
+                        .blockingGet();
     }
 
     @Nullable
     public List<LabelTable> getDbLabelTable(String language) {
         return (getDbConfig() == null) ? null :
-                githubDbRequest.getLabelTable(getDbConfig().version, language).blockingGet();
+                githubDbRequest.getLabelTable(getDbConfig().version, language)
+                        .onErrorComplete()
+                        .blockingGet();
     }
 
     @Nullable
     public List<PhotoTable> getDbPhotoTable(String language) {
         return (getDbConfig() == null) ? null :
-                githubDbRequest.getPhotoTable(getDbConfig().version, language).blockingGet();
+                githubDbRequest.getPhotoTable(getDbConfig().version, language)
+                        .onErrorComplete()
+                        .blockingGet();
     }
 
     @Nullable
     public List<RecipeFoodTable> getDbRecipeFoodTable(String language) {
         return (getDbConfig() == null) ? null :
-                githubDbRequest.getRecipeFoodTable(getDbConfig().version, language).blockingGet();
+                githubDbRequest.getRecipeFoodTable(getDbConfig().version, language)
+                        .onErrorComplete()
+                        .blockingGet();
     }
 
     @Nullable
     public List<RecipeLabelTable> getDbRecipeLabelTable(String language) {
         return (getDbConfig() == null) ? null :
-                githubDbRequest.getRecipeLabelTable(getDbConfig().version, language).blockingGet();
+                githubDbRequest.getRecipeLabelTable(getDbConfig().version, language)
+                        .onErrorComplete()
+                        .blockingGet();
     }
 
     @Nullable
     public List<RecipeMethodTable> getDbRecipeMethodTable(String language) {
         return (getDbConfig() == null) ? null :
-                githubDbRequest.getRecipeMethodTable(getDbConfig().version, language).blockingGet();
+                githubDbRequest.getRecipeMethodTable(getDbConfig().version, language)
+                        .onErrorComplete()
+                        .blockingGet();
     }
 
     @Nullable
     public List<RecipePhotoTable> getDbRecipePhotoTable(String language) {
         return (getDbConfig() == null) ? null :
-                githubDbRequest.getRecipePhotoTable(getDbConfig().version, language).blockingGet();
+                githubDbRequest.getRecipePhotoTable(getDbConfig().version, language)
+                        .onErrorComplete()
+                        .blockingGet();
     }
 
     @Nullable
     public List<RecipeTable> getDbRecipeTable(String language) {
         return (getDbConfig() == null) ? null :
-                githubDbRequest.getRecipeTable(getDbConfig().version, language).blockingGet();
+                githubDbRequest.getRecipeTable(getDbConfig().version, language)
+                        .onErrorComplete()
+                        .blockingGet();
     }
 
     @Nullable
     private GithubDbConfigResponse getDbConfig() {
         if (dbConfig != null) return dbConfig;
         if (!isOnline()) return null;
-        dbConfig = githubDbRequest.getConfig().blockingGet();
+        dbConfig = githubDbRequest
+                .getConfig()
+                .onErrorComplete()
+                .blockingGet();
         return dbConfig;
     }
 }

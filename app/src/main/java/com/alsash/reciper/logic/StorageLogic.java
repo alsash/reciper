@@ -9,6 +9,7 @@ import com.alsash.reciper.logic.exception.NoInternetException;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 /**
  * Logic for processing data in storage.
@@ -77,24 +78,33 @@ public class StorageLogic {
     private boolean updateFoodUsda() {
         List<FoodTable> dbFoods;
         do {
-            // Load foods, without updated nutrition values
-            dbFoods = dbManager.restrictWith(0, 10).getFoodTable(false);
+            // Loading foods, up to 20 items, without updated nutrition values
+            dbFoods = dbManager.restrictWith(0, 20).getFoodTable(false);
             if (dbFoods.size() == 0) break;
-            for (FoodTable dbFood : dbFoods) {
-                String ndbNo = (dbFood.getFoodUsdaTables().size() == 0) ? null :
-                        dbFood.getFoodUsdaTables().get(0).getNdbNo();
-                if (ndbNo == null) continue;
-                // Fetching nutrition values
-                FoodTable usdaFood = cloudManager.getUsdaFoodTable(ndbNo);
-                // Updating nutrition values
-                if (dbFood.getName() == null) dbFood.setName(usdaFood.getName());
-                dbFood.setProtein(usdaFood.getProtein());
-                dbFood.setFat(usdaFood.getFat());
-                dbFood.setCarbs(usdaFood.getCarbs());
-                dbFood.setWeightUnit(usdaFood.getWeightUnit());
-                dbFood.setEnergy(usdaFood.getEnergy());
-                dbFood.setEnergyUnit(usdaFood.getEnergyUnit());
-                dbFood.getFoodUsdaTables().get(0).setFetched(true);
+
+            // Fetching nutrition values
+            String[] ndbNos = new String[dbFoods.size()];
+            for (int i = 0; i < dbFoods.size(); i++) {
+                ndbNos[i] = dbFoods.get(i).getFoodUsdaTables().get(0).getNdbNo();
+            }
+            Map<String, FoodTable> usdaResult = cloudManager.getUsdaFoodTable(ndbNos);
+
+            // Updating nutrition values
+            for (Map.Entry<String, FoodTable> entry : usdaResult.entrySet()) {
+                for (FoodTable dbFood : dbFoods) {
+                    if (dbFood.getFoodUsdaTables().get(0).getNdbNo().equals(entry.getKey())) {
+                        FoodTable usdaFood = entry.getValue();
+                        if (dbFood.getName() == null) dbFood.setName(usdaFood.getName());
+                        dbFood.setProtein(usdaFood.getProtein());
+                        dbFood.setFat(usdaFood.getFat());
+                        dbFood.setCarbs(usdaFood.getCarbs());
+                        dbFood.setWeightUnit(usdaFood.getWeightUnit());
+                        dbFood.setEnergy(usdaFood.getEnergy());
+                        dbFood.setEnergyUnit(usdaFood.getEnergyUnit());
+                        dbFood.getFoodUsdaTables().get(0).setFetched(true);
+                        break; // entrySet
+                    }
+                }
             }
             dbManager.modifyDeepFoodTable(dbFoods);
         } while (dbFoods.size() > 0);
