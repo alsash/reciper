@@ -1,17 +1,18 @@
 package com.alsash.reciper.logic;
 
+
 import com.alsash.reciper.data.cloud.CloudManager;
 import com.alsash.reciper.data.db.DbManager;
 import com.alsash.reciper.data.db.table.FoodTable;
 import com.alsash.reciper.logic.exception.NoInternetException;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
 /**
- * Logic for processing data in storage
+ * Logic for processing data in storage.
+ * All methods, except constructor, must be called on background thread
  */
 public class StorageLogic {
 
@@ -23,7 +24,7 @@ public class StorageLogic {
         this.cloudManager = cloudManager;
     }
 
-    public void createStartupEntitiesIfNeed() throws NoInternetException {
+    public boolean createStartupEntitiesIfNeed() throws NoInternetException {
         Date localUpdateDate = dbManager.getSettingsUpdateDate();
         Date cloudUpdateDate = cloudManager.getDbUpdateDate();
         boolean create;
@@ -46,7 +47,9 @@ public class StorageLogic {
         if (create) {
             boolean created = createStartupEntities();
             if (created) dbManager.setSettingsUpdateDate(new Date());
+            return created;
         }
+        return false;
     }
 
     private boolean createStartupEntities() {
@@ -75,49 +78,26 @@ public class StorageLogic {
         List<FoodTable> dbFoods;
         do {
             // Load foods, without updated nutrition values
-            int offset = 0;
-            int limit = 10;
-            dbFoods = dbManager.restrictWith(offset, limit).getFoodTable(false);
+            dbFoods = dbManager.restrictWith(0, 10).getFoodTable(false);
             if (dbFoods.size() == 0) break;
-            // Getting ndbno ids
-            List<String> ndbNoList = new ArrayList<>();
-            for (int i = 0; i < dbFoods.size(); i++) {
-                try {
-                    String ndbNo = dbFoods.get(i).getFoodUsdaTables().get(i).getNdbNo();
-                    if (ndbNo != null) ndbNoList.add(ndbNo);
-                } catch (IndexOutOfBoundsException e) {
-                    continue;
-                }
-            }
-            // Fetching nutrition values from usda
-            List<FoodTable> udsaFoods = cloudManager.getUsdaFoodTable(
-                    ndbNoList.toArray(new String[ndbNoList.size()]));
-            // Updating nutrition values
-            for (FoodTable usdaFood : udsaFoods) {
-                for (FoodTable dbFood : dbFoods) {
-                    try {
-                        if (dbFood.getFoodUsdaTables().get(0).getNdbNo().equals(
-                                usdaFood.getFoodUsdaTables().get(0).getNdbNo())) {
-                            if (dbFood.getName() == null) dbFood.setName(usdaFood.getName());
-                            dbFood.setProtein(usdaFood.getProtein());
-                            dbFood.setFat(usdaFood.getFat());
-                            dbFood.setCarbs(usdaFood.getCarbs());
-                            dbFood.setWeightUnit(usdaFood.getWeightUnit());
-                            dbFood.setEnergy(usdaFood.getEnergy());
-                            dbFood.setEnergyUnit(usdaFood.getEnergyUnit());
-                            dbFood.getFoodUsdaTables().get(0).setFetched(true);
-                            break; // dbFoods
-                        }
-                    } catch (IndexOutOfBoundsException e) {
-                        continue;
-                    }
-                }
+            for (FoodTable dbFood : dbFoods) {
+                String ndbNo = (dbFood.getFoodUsdaTables().size() == 0) ? null :
+                        dbFood.getFoodUsdaTables().get(0).getNdbNo();
+                if (ndbNo == null) continue;
+                // Fetching nutrition values
+                FoodTable usdaFood = cloudManager.getUsdaFoodTable(ndbNo);
+                // Updating nutrition values
+                if (dbFood.getName() == null) dbFood.setName(usdaFood.getName());
+                dbFood.setProtein(usdaFood.getProtein());
+                dbFood.setFat(usdaFood.getFat());
+                dbFood.setCarbs(usdaFood.getCarbs());
+                dbFood.setWeightUnit(usdaFood.getWeightUnit());
+                dbFood.setEnergy(usdaFood.getEnergy());
+                dbFood.setEnergyUnit(usdaFood.getEnergyUnit());
+                dbFood.getFoodUsdaTables().get(0).setFetched(true);
             }
             dbManager.modifyDeepFoodTable(dbFoods);
-            offset = limit;
-            limit += 10;
         } while (dbFoods.size() > 0);
         return true;
-
     }
 }

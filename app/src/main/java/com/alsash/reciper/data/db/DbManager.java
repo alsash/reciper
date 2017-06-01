@@ -2,7 +2,6 @@ package com.alsash.reciper.data.db;
 
 import android.content.Context;
 import android.support.annotation.Nullable;
-import android.support.annotation.WorkerThread;
 
 import com.alsash.reciper.data.db.table.AuthorTable;
 import com.alsash.reciper.data.db.table.CategoryTable;
@@ -32,7 +31,8 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * An Database manager for single access to all database tables
+ * An Database manager for single access to all database tables.
+ * All methods, except constructor, must be called on background thread
  */
 public class DbManager {
 
@@ -85,7 +85,6 @@ public class DbManager {
         });
     }
 
-    @WorkerThread
     public boolean modifyAll(@Nullable final List<AuthorTable> authors,
                              @Nullable final List<CategoryTable> categories,
                              @Nullable final List<FoodMeasureTable> foodMeasures,
@@ -145,13 +144,11 @@ public class DbManager {
     }
 
     @Nullable
-    @WorkerThread
     public Date getSettingsUpdateDate() {
         String updateDateString = getSettingsValue(SETTINGS_KEY_UPDATE_DATE);
         return (updateDateString == null) ? null : new Date(Long.parseLong(updateDateString));
     }
 
-    @WorkerThread
     public void setSettingsUpdateDate(Date date) {
         setSettingsValue(SETTINGS_KEY_UPDATE_DATE, Long.toString(date.getTime()));
     }

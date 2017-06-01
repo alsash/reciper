@@ -17,5 +17,5 @@ public interface UsdaRequest {
     @Headers(HEADER_CONTENT)
     @GET("ndb/V2/reports")
     Maybe<UsdaFoodsResponse> getFood(@Query("api_key") String apiKey,
-                                     @Query("ndbno") String... ndbNo);
+                                     @Query("ndbno") String ndbNo);
 }
