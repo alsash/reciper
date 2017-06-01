@@ -4,8 +4,12 @@ import org.greenrobot.greendao.DaoException;
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Generated;
 import org.greenrobot.greendao.annotation.Id;
+import org.greenrobot.greendao.annotation.JoinProperty;
 import org.greenrobot.greendao.annotation.NotNull;
+import org.greenrobot.greendao.annotation.ToMany;
 import org.greenrobot.greendao.annotation.Unique;
+
+import java.util.List;
 
 /**
  * A model of the FoodContainer entity
@@ -32,6 +36,11 @@ public final class FoodTable {
     @NotNull
     double energy;
     String energyUnit;
+    @ToMany(joinProperties = {@JoinProperty(name = "uuid", referencedName = "foodUuid")})
+    List<FoodMeasureTable> foodMeasureTables;
+    @ToMany(joinProperties = {@JoinProperty(name = "uuid", referencedName = "foodUuid")})
+    List<FoodUsdaTable> foodUsdaTables;
+
     /**
      * Used to resolve relations
      */
@@ -167,6 +176,68 @@ public final class FoodTable {
             throw new DaoException("Entity is detached from DAO context");
         }
         myDao.update(this);
+    }
+
+    /**
+     * To-many relationship, resolved on first access (and after reset).
+     * Changes to to-many relations are not persisted, make changes to the target entity.
+     */
+    @Generated(hash = 1102525603)
+    public List<FoodMeasureTable> getFoodMeasureTables() {
+        if (foodMeasureTables == null) {
+            final DaoSession daoSession = this.daoSession;
+            if (daoSession == null) {
+                throw new DaoException("Entity is detached from DAO context");
+            }
+            FoodMeasureTableDao targetDao = daoSession.getFoodMeasureTableDao();
+            List<FoodMeasureTable> foodMeasureTablesNew = targetDao
+                    ._queryFoodTable_FoodMeasureTables(uuid);
+            synchronized (this) {
+                if (foodMeasureTables == null) {
+                    foodMeasureTables = foodMeasureTablesNew;
+                }
+            }
+        }
+        return foodMeasureTables;
+    }
+
+    /**
+     * Resets a to-many relationship, making the next get call to query for a fresh result.
+     */
+    @Generated(hash = 807362054)
+    public synchronized void resetFoodMeasureTables() {
+        foodMeasureTables = null;
+    }
+
+    /**
+     * To-many relationship, resolved on first access (and after reset).
+     * Changes to to-many relations are not persisted, make changes to the target entity.
+     */
+    @Generated(hash = 889381843)
+    public List<FoodUsdaTable> getFoodUsdaTables() {
+        if (foodUsdaTables == null) {
+            final DaoSession daoSession = this.daoSession;
+            if (daoSession == null) {
+                throw new DaoException("Entity is detached from DAO context");
+            }
+            FoodUsdaTableDao targetDao = daoSession.getFoodUsdaTableDao();
+            List<FoodUsdaTable> foodUsdaTablesNew = targetDao
+                    ._queryFoodTable_FoodUsdaTables(uuid);
+            synchronized (this) {
+                if (foodUsdaTables == null) {
+                    foodUsdaTables = foodUsdaTablesNew;
+                }
+            }
+        }
+        return foodUsdaTables;
+    }
+
+    /**
+     * Resets a to-many relationship, making the next get call to query for a fresh result.
+     */
+    @Generated(hash = 920509767)
+    public synchronized void resetFoodUsdaTables() {
+        foodUsdaTables = null;
     }
 
     /**

@@ -53,8 +53,9 @@ public class CloudManager {
     @WorkerThread
     public List<FoodTable> getUsdaFoodTable(String... usdaNdbNo) {
         List<FoodTable> foodTables = new ArrayList<>();
-        UsdaFoodsResponse response = usdaRequest.getFood(Usda.API_KEY, usdaNdbNo).blockingGet();
-
+        UsdaFoodsResponse response = usdaRequest.getFood(Usda.API_KEY, usdaNdbNo)
+                .onErrorComplete().blockingGet();
+        if (response == null || response.foods == null) return foodTables;
         for (UsdaFoodsResponse.FoodContainer foodContainer : response.foods) {
             FoodTable foodTable = new FoodTable();
             foodTable.setName(foodContainer.food.desc.name);

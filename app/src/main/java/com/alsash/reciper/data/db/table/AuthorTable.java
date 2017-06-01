@@ -104,7 +104,7 @@ public final class AuthorTable {
         if (photoTables == null) {
             final DaoSession daoSession = this.daoSession;
             if (daoSession == null) {
-            throw new DaoException("Entity is detached from DAO context");
+                throw new DaoException("Entity is detached from DAO context");
             }
             PhotoTableDao targetDao = daoSession.getPhotoTableDao();
             List<PhotoTable> photoTablesNew = targetDao
@@ -162,7 +162,9 @@ public final class AuthorTable {
         myDao.update(this);
     }
 
-    /** called by internal mechanisms, do not call yourself. */
+    /**
+     * called by internal mechanisms, do not call yourself.
+     */
     @Generated(hash = 1837510431)
     public void __setDaoSession(DaoSession daoSession) {
         this.daoSession = daoSession;

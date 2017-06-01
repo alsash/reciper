@@ -10,6 +10,7 @@ import com.alsash.reciper.data.db.table.DaoMaster;
 import com.alsash.reciper.data.db.table.DaoSession;
 import com.alsash.reciper.data.db.table.FoodMeasureTable;
 import com.alsash.reciper.data.db.table.FoodTable;
+import com.alsash.reciper.data.db.table.FoodTableDao;
 import com.alsash.reciper.data.db.table.FoodUsdaTable;
 import com.alsash.reciper.data.db.table.FoodUsdaTableDao;
 import com.alsash.reciper.data.db.table.LabelTable;
@@ -26,6 +27,7 @@ import org.greenrobot.greendao.database.Database;
 import org.greenrobot.greendao.query.Query;
 import org.greenrobot.greendao.query.QueryBuilder;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -54,28 +56,48 @@ public class DbManager {
         return this;
     }
 
-    public List<FoodUsdaTable> getFoodUsdaTable(boolean fetched) {
-        QueryBuilder<FoodUsdaTable> builder = daoSession
-                .getFoodUsdaTableDao()
-                .queryBuilder()
-                .where(FoodUsdaTableDao.Properties.Fetched.eq((fetched) ? 1 : 0));
+    public List<FoodTable> getFoodTable(boolean usdaFetched) {
+        QueryBuilder<FoodTable> builder = daoSession.getFoodTableDao().queryBuilder();
         obtainRestriction(builder);
+        builder.join(FoodTableDao.Properties.Uuid,
+                FoodUsdaTable.class,
+                FoodUsdaTableDao.Properties.FoodUuid)
+                .where(FoodUsdaTableDao.Properties.Fetched.eq((usdaFetched) ? 1 : 0));
         return builder.build().list();
     }
 
+    public void modifyDeepFoodTable(final List<FoodTable> foodTableList) {
+        daoSession.runInTx(new Runnable() {
+            @Override
+            public void run() {
+                daoSession.getFoodTableDao().insertOrReplaceInTx(foodTableList);
+                List<FoodUsdaTable> foodUsdaTableList = new ArrayList<>();
+                List<FoodMeasureTable> foodMeasureTableList = new ArrayList<>();
+                for (FoodTable foodTable : foodTableList) {
+                    foodUsdaTableList.addAll(foodTable.getFoodUsdaTables());
+                    foodMeasureTableList.addAll(foodTable.getFoodMeasureTables());
+                }
+                if (foodUsdaTableList.size() > 0)
+                    daoSession.getFoodUsdaTableDao().insertOrReplaceInTx(foodUsdaTableList);
+                if (foodMeasureTableList.size() > 0)
+                    daoSession.getFoodMeasureTableDao().insertOrReplaceInTx(foodMeasureTableList);
+            }
+        });
+    }
+
     @WorkerThread
-    public boolean modifyAllInTx(@Nullable final List<AuthorTable> authors,
-                                 @Nullable final List<CategoryTable> categories,
-                                 @Nullable final List<FoodMeasureTable> foodMeasures,
-                                 @Nullable final List<FoodTable> foods,
-                                 @Nullable final List<FoodUsdaTable> foodUsda,
-                                 @Nullable final List<LabelTable> labels,
-                                 @Nullable final List<PhotoTable> photos,
-                                 @Nullable final List<RecipeFoodTable> recipeFoods,
-                                 @Nullable final List<RecipeLabelTable> recipeLabels,
-                                 @Nullable final List<RecipeMethodTable> recipeMethods,
-                                 @Nullable final List<RecipePhotoTable> recipePhotos,
-                                 @Nullable final List<RecipeTable> recipes) {
+    public boolean modifyAll(@Nullable final List<AuthorTable> authors,
+                             @Nullable final List<CategoryTable> categories,
+                             @Nullable final List<FoodMeasureTable> foodMeasures,
+                             @Nullable final List<FoodTable> foods,
+                             @Nullable final List<FoodUsdaTable> foodUsda,
+                             @Nullable final List<LabelTable> labels,
+                             @Nullable final List<PhotoTable> photos,
+                             @Nullable final List<RecipeFoodTable> recipeFoods,
+                             @Nullable final List<RecipeLabelTable> recipeLabels,
+                             @Nullable final List<RecipeMethodTable> recipeMethods,
+                             @Nullable final List<RecipePhotoTable> recipePhotos,
+                             @Nullable final List<RecipeTable> recipes) {
         if (authors == null
                 && categories == null
                 && foodMeasures == null
