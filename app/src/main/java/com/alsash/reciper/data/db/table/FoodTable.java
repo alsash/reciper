@@ -4,15 +4,17 @@ import org.greenrobot.greendao.DaoException;
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Generated;
 import org.greenrobot.greendao.annotation.Id;
+import org.greenrobot.greendao.annotation.Index;
 import org.greenrobot.greendao.annotation.JoinProperty;
 import org.greenrobot.greendao.annotation.NotNull;
 import org.greenrobot.greendao.annotation.ToMany;
 import org.greenrobot.greendao.annotation.Unique;
 
+import java.util.Date;
 import java.util.List;
 
 /**
- * A model of the FoodContainer entity
+ * A model of the Food entity
  * that persists in local relational database table by GreenDao framework
  * and serialized from JSON by Gson framework
  */
@@ -20,11 +22,13 @@ import java.util.List;
         nameInDb = "FOOD",
         active = true
 )
-public final class FoodTable {
+public final class FoodTable implements Table {
     @Id
     Long id;
     @Unique
     String uuid;
+    @Index
+    Date changedAt;
     String name;
     @NotNull
     double protein;
@@ -52,11 +56,12 @@ public final class FoodTable {
     @Generated(hash = 256830264)
     private transient FoodTableDao myDao;
 
-    @Generated(hash = 670620127)
-    public FoodTable(Long id, String uuid, String name, double protein, double fat,
-                     double carbs, String weightUnit, double energy, String energyUnit) {
+    @Generated(hash = 602744997)
+    public FoodTable(Long id, String uuid, Date changedAt, String name, double protein,
+                     double fat, double carbs, String weightUnit, double energy, String energyUnit) {
         this.id = id;
         this.uuid = uuid;
+        this.changedAt = changedAt;
         this.name = name;
         this.protein = protein;
         this.fat = fat;
@@ -238,6 +243,14 @@ public final class FoodTable {
     @Generated(hash = 920509767)
     public synchronized void resetFoodUsdaTables() {
         foodUsdaTables = null;
+    }
+
+    public Date getChangedAt() {
+        return this.changedAt;
+    }
+
+    public void setChangedAt(Date changedAt) {
+        this.changedAt = changedAt;
     }
 
     /**

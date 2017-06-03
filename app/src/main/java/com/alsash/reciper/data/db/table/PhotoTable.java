@@ -4,7 +4,10 @@ import org.greenrobot.greendao.DaoException;
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Generated;
 import org.greenrobot.greendao.annotation.Id;
+import org.greenrobot.greendao.annotation.Index;
 import org.greenrobot.greendao.annotation.Unique;
+
+import java.util.Date;
 
 /**
  * A model of the Photo entity
@@ -15,11 +18,13 @@ import org.greenrobot.greendao.annotation.Unique;
         nameInDb = "PHOTO",
         active = true
 )
-public final class PhotoTable {
+public final class PhotoTable implements Table {
     @Id
     Long id;
     @Unique
     String uuid;
+    @Index
+    Date changedAt;
     String url;
     String uri;
     /**
@@ -33,10 +38,11 @@ public final class PhotoTable {
     @Generated(hash = 505600885)
     private transient PhotoTableDao myDao;
 
-    @Generated(hash = 1831323218)
-    public PhotoTable(Long id, String uuid, String url, String uri) {
+    @Generated(hash = 1198313965)
+    public PhotoTable(Long id, String uuid, Date changedAt, String url, String uri) {
         this.id = id;
         this.uuid = uuid;
+        this.changedAt = changedAt;
         this.url = url;
         this.uri = uri;
     }
@@ -111,6 +117,14 @@ public final class PhotoTable {
             throw new DaoException("Entity is detached from DAO context");
         }
         myDao.update(this);
+    }
+
+    public Date getChangedAt() {
+        return this.changedAt;
+    }
+
+    public void setChangedAt(Date changedAt) {
+        this.changedAt = changedAt;
     }
 
     /**

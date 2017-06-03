@@ -8,6 +8,8 @@ import org.greenrobot.greendao.annotation.Index;
 import org.greenrobot.greendao.annotation.NotNull;
 import org.greenrobot.greendao.annotation.Unique;
 
+import java.util.Date;
+
 /**
  * A model of the Method entity,
  * has a to-one relation with the Recipe entity and its methods,
@@ -18,11 +20,13 @@ import org.greenrobot.greendao.annotation.Unique;
         nameInDb = "RECIPE_METHOD",
         active = true
 )
-public final class RecipeMethodTable {
+public final class RecipeMethodTable implements Table {
     @Id
     Long id;
     @Unique
     String uuid;
+    @Index
+    Date changedAt;
     @Index(name = "RECIPE_TO_METHOD")
     String recipeUuid;
     @NotNull
@@ -39,11 +43,12 @@ public final class RecipeMethodTable {
     @Generated(hash = 1424435777)
     private transient RecipeMethodTableDao myDao;
 
-    @Generated(hash = 1121164000)
-    public RecipeMethodTable(Long id, String uuid, String recipeUuid, int index,
-                             String body) {
+    @Generated(hash = 1724055475)
+    public RecipeMethodTable(Long id, String uuid, Date changedAt,
+                             String recipeUuid, int index, String body) {
         this.id = id;
         this.uuid = uuid;
+        this.changedAt = changedAt;
         this.recipeUuid = recipeUuid;
         this.index = index;
         this.body = body;
@@ -67,6 +72,14 @@ public final class RecipeMethodTable {
 
     public void setUuid(String uuid) {
         this.uuid = uuid;
+    }
+
+    public Date getChangedAt() {
+        return this.changedAt;
+    }
+
+    public void setChangedAt(Date changedAt) {
+        this.changedAt = changedAt;
     }
 
     public String getRecipeUuid() {

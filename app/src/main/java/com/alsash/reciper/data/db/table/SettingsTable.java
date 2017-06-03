@@ -4,7 +4,10 @@ import org.greenrobot.greendao.DaoException;
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Generated;
 import org.greenrobot.greendao.annotation.Id;
+import org.greenrobot.greendao.annotation.Index;
 import org.greenrobot.greendao.annotation.Unique;
+
+import java.util.Date;
 
 /**
  * A storage of the application settings persists in the String key-value pairs
@@ -13,9 +16,12 @@ import org.greenrobot.greendao.annotation.Unique;
         nameInDb = "SETTINGS",
         active = true
 )
-public final class SettingsTable {
+public final class SettingsTable implements Table {
     @Id
     Long id;
+    String uuid;
+    @Index
+    Date changedAt;
     @Unique
     String key;
     String val;
@@ -30,9 +36,12 @@ public final class SettingsTable {
     @Generated(hash = 911576264)
     private transient SettingsTableDao myDao;
 
-    @Generated(hash = 1426145950)
-    public SettingsTable(Long id, String key, String val) {
+    @Generated(hash = 538444622)
+    public SettingsTable(Long id, String uuid, Date changedAt, String key,
+                         String val) {
         this.id = id;
+        this.uuid = uuid;
+        this.changedAt = changedAt;
         this.key = key;
         this.val = val;
     }
@@ -47,6 +56,22 @@ public final class SettingsTable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getUuid() {
+        return this.uuid;
+    }
+
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
+    }
+
+    public Date getChangedAt() {
+        return this.changedAt;
+    }
+
+    public void setChangedAt(Date changedAt) {
+        this.changedAt = changedAt;
     }
 
     public String getKey() {

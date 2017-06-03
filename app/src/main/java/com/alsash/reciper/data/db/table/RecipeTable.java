@@ -21,15 +21,16 @@ import java.util.Date;
         nameInDb = "RECIPE",
         active = true
 )
-public final class RecipeTable {
+public final class RecipeTable implements Table {
     @Id
     Long id;
     @Unique
     String uuid;
-    String name;
-    @SerializedName("changed_at_unix")
     @Index
     Date changedAt;
+    @SerializedName("created_at_unix")
+    Date createdAt;
+    String name;
     String source;
     String description;
     @NotNull
@@ -53,14 +54,16 @@ public final class RecipeTable {
     @Generated(hash = 1210201788)
     private transient RecipeTableDao myDao;
 
-    @Generated(hash = 1065296129)
-    public RecipeTable(Long id, String uuid, String name, Date changedAt,
-                       String source, String description, boolean bookmark, int servings,
-                       double massFlowRateGps, String categoryUuid, String authorUuid) {
+    @Generated(hash = 1782286148)
+    public RecipeTable(Long id, String uuid, Date changedAt, Date createdAt,
+                       String name, String source, String description, boolean bookmark,
+                       int servings, double massFlowRateGps, String categoryUuid,
+                       String authorUuid) {
         this.id = id;
         this.uuid = uuid;
-        this.name = name;
         this.changedAt = changedAt;
+        this.createdAt = createdAt;
+        this.name = name;
         this.source = source;
         this.description = description;
         this.bookmark = bookmark;
@@ -90,20 +93,28 @@ public final class RecipeTable {
         this.uuid = uuid;
     }
 
-    public String getName() {
-        return this.name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public Date getChangedAt() {
         return this.changedAt;
     }
 
     public void setChangedAt(Date changedAt) {
         this.changedAt = changedAt;
+    }
+
+    public Date getCreatedAt() {
+        return this.createdAt;
+    }
+
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public String getName() {
+        return this.name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getSource() {

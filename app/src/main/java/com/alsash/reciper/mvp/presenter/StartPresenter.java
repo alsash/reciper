@@ -5,7 +5,6 @@ import android.util.Log;
 import com.alsash.reciper.R;
 import com.alsash.reciper.app.AppNavigator;
 import com.alsash.reciper.logic.StorageLogic;
-import com.alsash.reciper.logic.exception.NoInternetException;
 import com.alsash.reciper.mvp.view.StartView;
 
 import java.lang.ref.WeakReference;
@@ -74,7 +73,7 @@ public class StartPresenter implements BasePresenter<StartView> {
                 .fromAction(new Action() {
                     @Override
                     public void run() throws Exception {
-                        storage.createStartupEntitiesIfNeed();
+                        //   storage.createStartupEntitiesIfNeed();
                     }
                 })
                 .delay(START_DELAY_MS, TimeUnit.MILLISECONDS)
@@ -92,14 +91,7 @@ public class StartPresenter implements BasePresenter<StartView> {
 
                     @Override
                     public void onError(@NonNull Throwable e) {
-                        if (e instanceof NoInternetException) {
-                            if (viewRef.get() != null) {
-                                viewRef.get().showNotification(
-                                        R.string.notification_recipes_download_err_no_internet);
-                            }
-                        } else {
-                            Log.e(TAG, e.getMessage(), e);
-                        }
+                        Log.e(TAG, e.getMessage(), e);
                         onComplete();
                     }
                 }));

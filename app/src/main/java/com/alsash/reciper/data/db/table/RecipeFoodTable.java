@@ -7,9 +7,11 @@ import org.greenrobot.greendao.annotation.Id;
 import org.greenrobot.greendao.annotation.Index;
 import org.greenrobot.greendao.annotation.Unique;
 
+import java.util.Date;
+
 /**
  * A model of the Ingredient entity
- * represented by a to-many relation model of the Recipe and the FoodContainer entities,
+ * represented by a to-many relation model of the Recipe and the Food entities,
  * that persists in local relational database table by GreenDao framework
  * and serialized from JSON by Gson framework
  */
@@ -17,11 +19,13 @@ import org.greenrobot.greendao.annotation.Unique;
         nameInDb = "RECIPE_FOOD",
         active = true
 )
-public final class RecipeFoodTable {
+public final class RecipeFoodTable implements Table {
     @Id
     Long id;
     @Unique
     String uuid;
+    @Index
+    Date changedAt;
     @Index(name = "RECIPE_TO_FOOD")
     String recipeUuid;
     @Index(name = "FOOD_TO_RECIPE")
@@ -40,11 +44,12 @@ public final class RecipeFoodTable {
     @Generated(hash = 805032546)
     private transient RecipeFoodTableDao myDao;
 
-    @Generated(hash = 284329634)
-    public RecipeFoodTable(Long id, String uuid, String recipeUuid, String foodUuid,
-                           String name, double weight, String weightUnit) {
+    @Generated(hash = 1962229842)
+    public RecipeFoodTable(Long id, String uuid, Date changedAt, String recipeUuid,
+                           String foodUuid, String name, double weight, String weightUnit) {
         this.id = id;
         this.uuid = uuid;
+        this.changedAt = changedAt;
         this.recipeUuid = recipeUuid;
         this.foodUuid = foodUuid;
         this.name = name;
@@ -70,6 +75,14 @@ public final class RecipeFoodTable {
 
     public void setUuid(String uuid) {
         this.uuid = uuid;
+    }
+
+    public Date getChangedAt() {
+        return this.changedAt;
+    }
+
+    public void setChangedAt(Date changedAt) {
+        this.changedAt = changedAt;
     }
 
     public String getRecipeUuid() {

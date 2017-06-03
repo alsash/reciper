@@ -4,7 +4,10 @@ import org.greenrobot.greendao.DaoException;
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Generated;
 import org.greenrobot.greendao.annotation.Id;
+import org.greenrobot.greendao.annotation.Index;
 import org.greenrobot.greendao.annotation.Unique;
+
+import java.util.Date;
 
 /**
  * A model of the Label entity
@@ -15,11 +18,13 @@ import org.greenrobot.greendao.annotation.Unique;
         nameInDb = "LABEL",
         active = true
 )
-public final class LabelTable {
+public final class LabelTable implements Table {
     @Id
     Long id;
     @Unique
     String uuid;
+    @Index
+    Date changedAt;
     String name;
     /**
      * Used to resolve relations
@@ -32,10 +37,11 @@ public final class LabelTable {
     @Generated(hash = 2034547187)
     private transient LabelTableDao myDao;
 
-    @Generated(hash = 340435706)
-    public LabelTable(Long id, String uuid, String name) {
+    @Generated(hash = 1846443958)
+    public LabelTable(Long id, String uuid, Date changedAt, String name) {
         this.id = id;
         this.uuid = uuid;
+        this.changedAt = changedAt;
         this.name = name;
     }
 
@@ -57,6 +63,14 @@ public final class LabelTable {
 
     public void setUuid(String uuid) {
         this.uuid = uuid;
+    }
+
+    public Date getChangedAt() {
+        return this.changedAt;
+    }
+
+    public void setChangedAt(Date changedAt) {
+        this.changedAt = changedAt;
     }
 
     public String getName() {

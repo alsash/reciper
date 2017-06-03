@@ -8,8 +8,10 @@ import org.greenrobot.greendao.annotation.Index;
 import org.greenrobot.greendao.annotation.NotNull;
 import org.greenrobot.greendao.annotation.Unique;
 
+import java.util.Date;
+
 /**
- * A to-many relation model of the FoodContainer entity and its id at USDA FoodContainer Composition Databases,
+ * A to-many relation model of the Food entity and its id at the USDA Food Composition Database,
  * persists in local relational database table with the help of GreenDao framework
  * and serialized from JSON by Gson framework
  */
@@ -17,11 +19,13 @@ import org.greenrobot.greendao.annotation.Unique;
         nameInDb = "FOOD_USDA",
         active = true
 )
-public final class FoodUsdaTable {
+public final class FoodUsdaTable implements Table {
     @Id
     Long id;
     @Unique
     String uuid;
+    @Index
+    Date changedAt;
     @Index(name = "FOOD_TO_USDA", unique = true)
     String foodUuid;
     String ndbNo;
@@ -38,11 +42,11 @@ public final class FoodUsdaTable {
     @Generated(hash = 531675553)
     private transient FoodUsdaTableDao myDao;
 
-    @Generated(hash = 1672562923)
-    public FoodUsdaTable(Long id, String uuid, String foodUuid, String ndbNo,
-                         boolean fetched) {
+    @Generated(hash = 226837285)
+    public FoodUsdaTable(Long id, String uuid, Date changedAt, String foodUuid, String ndbNo, boolean fetched) {
         this.id = id;
         this.uuid = uuid;
+        this.changedAt = changedAt;
         this.foodUuid = foodUuid;
         this.ndbNo = ndbNo;
         this.fetched = fetched;
@@ -66,6 +70,14 @@ public final class FoodUsdaTable {
 
     public void setUuid(String uuid) {
         this.uuid = uuid;
+    }
+
+    public Date getChangedAt() {
+        return this.changedAt;
+    }
+
+    public void setChangedAt(Date changedAt) {
+        this.changedAt = changedAt;
     }
 
     public String getFoodUuid() {

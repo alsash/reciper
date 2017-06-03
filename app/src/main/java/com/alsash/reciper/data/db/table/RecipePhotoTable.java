@@ -7,6 +7,8 @@ import org.greenrobot.greendao.annotation.Id;
 import org.greenrobot.greendao.annotation.Index;
 import org.greenrobot.greendao.annotation.Unique;
 
+import java.util.Date;
+
 /**
  * A to-many relation model of the Recipe and the Photo entities,
  * that persists in local relational database table by GreenDao framework
@@ -16,11 +18,13 @@ import org.greenrobot.greendao.annotation.Unique;
         nameInDb = "RECIPE_PHOTO",
         active = true
 )
-public final class RecipePhotoTable {
+public final class RecipePhotoTable implements Table {
     @Id
     Long id;
     @Unique
     String uuid;
+    @Index
+    Date changedAt;
     @Index(name = "RECIPE_TO_PHOTO")
     String recipeUuid;
     @Index(name = "PHOTO_TO_RECIPE")
@@ -36,11 +40,12 @@ public final class RecipePhotoTable {
     @Generated(hash = 1230626793)
     private transient RecipePhotoTableDao myDao;
 
-    @Generated(hash = 5484994)
-    public RecipePhotoTable(Long id, String uuid, String recipeUuid,
+    @Generated(hash = 1643778738)
+    public RecipePhotoTable(Long id, String uuid, Date changedAt, String recipeUuid,
                             String photoUuid) {
         this.id = id;
         this.uuid = uuid;
+        this.changedAt = changedAt;
         this.recipeUuid = recipeUuid;
         this.photoUuid = photoUuid;
     }
@@ -115,6 +120,14 @@ public final class RecipePhotoTable {
             throw new DaoException("Entity is detached from DAO context");
         }
         myDao.update(this);
+    }
+
+    public Date getChangedAt() {
+        return this.changedAt;
+    }
+
+    public void setChangedAt(Date changedAt) {
+        this.changedAt = changedAt;
     }
 
     /**

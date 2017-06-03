@@ -25,58 +25,62 @@ public class StorageLogic {
         this.cloudManager = cloudManager;
     }
 
-    public boolean createStartupEntitiesIfNeed() throws NoInternetException {
+    public boolean isDbUpToDate() throws NoInternetException {
+        boolean upToDate;
         Date localUpdateDate = dbManager.getSettingsUpdateDate();
         Date cloudUpdateDate = cloudManager.getDbUpdateDate();
-        boolean create;
         // First access
         if (localUpdateDate == null) {
             if (cloudUpdateDate != null) {
-                create = true;
+                upToDate = false;
             } else if (!cloudManager.isOnline()) {
                 throw new NoInternetException();
             } else {
-                create = false; // Something goes wrong, but we can't do anything...
+                upToDate = false; // Something goes wrong, but we can't do anything...
             }
             // Next access
         } else {
-            create = false;
+            upToDate = true;
             if (cloudUpdateDate != null) {
-                create = localUpdateDate.getTime() < cloudUpdateDate.getTime();
+                upToDate = localUpdateDate.getTime() >= cloudUpdateDate.getTime();
             }
         }
-        if (create) {
-            boolean created = createStartupEntities();
-            if (created) dbManager.setSettingsUpdateDate(new Date());
-            return created;
-        }
-        return false;
+        return upToDate;
     }
 
-    private boolean createStartupEntities() {
+    public boolean createStartupEntities(Date createdAt) {
+        if (!cloudManager.isOnline()) return false;
         String dbLanguage = cloudManager.getDbLanguage(Locale.getDefault());
         if (dbLanguage == null) dbLanguage = cloudManager.getDbLanguage(Locale.ENGLISH);
         if (dbLanguage == null) return false;
-        boolean modify = dbManager.modifyAll(
-                cloudManager.getDbAuthorTable(dbLanguage),
-                cloudManager.getDbCategoryTable(dbLanguage),
-                cloudManager.getDbFoodMeasureTable(dbLanguage),
-                cloudManager.getDbFoodTable(dbLanguage),
-                cloudManager.getDbFoodUsdaTable(dbLanguage),
-                cloudManager.getDbLabelTable(dbLanguage),
-                cloudManager.getDbPhotoTable(dbLanguage),
-                cloudManager.getDbRecipeFoodTable(dbLanguage),
-                cloudManager.getDbRecipeLabelTable(dbLanguage),
-                cloudManager.getDbRecipeMethodTable(dbLanguage),
-                cloudManager.getDbRecipePhotoTable(dbLanguage),
-                cloudManager.getDbRecipeTable(dbLanguage)
-        );
-        boolean update = updateFoodUsda();
+        boolean modify = dbManager
+                .changeWith(createdAt)
+                .modifyAll(
+                        cloudManager.getDbAuthorTable(dbLanguage),
+                        cloudManager.getDbCategoryTable(dbLanguage),
+                        cloudManager.getDbFoodMeasureTable(dbLanguage),
+                        cloudManager.getDbFoodTable(dbLanguage),
+                        cloudManager.getDbFoodUsdaTable(dbLanguage),
+                        cloudManager.getDbLabelTable(dbLanguage),
+                        cloudManager.getDbPhotoTable(dbLanguage),
+                        cloudManager.getDbRecipeFoodTable(dbLanguage),
+                        cloudManager.getDbRecipeLabelTable(dbLanguage),
+                        cloudManager.getDbRecipeMethodTable(dbLanguage),
+                        cloudManager.getDbRecipePhotoTable(dbLanguage),
+                        cloudManager.getDbRecipeTable(dbLanguage)
+                );
+        boolean update = updateFoodUsda(createdAt);
+        if (modify && update) dbManager.setSettingsUpdateDate(createdAt);
         return modify && update;
     }
 
-    private boolean updateFoodUsda() {
+    public void deleteAllEntitiesCreatedAt(Date createdAt) {
+        dbManager.changeWith(createdAt).deleteAll();
+    }
+
+    private boolean updateFoodUsda(Date updateDate) {
         List<FoodTable> dbFoods;
+        if (!cloudManager.isOnline()) return false; // not updated
         do {
             // Loading foods, up to 20 items, without updated nutrition values
             dbFoods = dbManager.restrictWith(0, 20).getFoodTable(false);
@@ -88,9 +92,11 @@ public class StorageLogic {
                 ndbNos[i] = dbFoods.get(i).getFoodUsdaTables().get(0).getNdbNo();
             }
             Map<String, FoodTable> usdaResult = cloudManager.getUsdaFoodTable(ndbNos);
+            if (usdaResult.size() == 0) return false; // not updated
 
             // Updating nutrition values
             for (Map.Entry<String, FoodTable> entry : usdaResult.entrySet()) {
+                boolean found = false;
                 for (FoodTable dbFood : dbFoods) {
                     if (dbFood.getFoodUsdaTables().get(0).getNdbNo().equals(entry.getKey())) {
                         FoodTable usdaFood = entry.getValue();
@@ -102,11 +108,13 @@ public class StorageLogic {
                         dbFood.setEnergy(usdaFood.getEnergy());
                         dbFood.setEnergyUnit(usdaFood.getEnergyUnit());
                         dbFood.getFoodUsdaTables().get(0).setFetched(true);
-                        break; // entrySet
+                        found = true;
+                        break;
                     }
                 }
+                if (!found) return false; // not updated
             }
-            dbManager.modifyDeepFoodTable(dbFoods);
+            dbManager.changeWith(updateDate).modifyDeepFoodTable(dbFoods);
         } while (dbFoods.size() > 0);
         return true;
     }

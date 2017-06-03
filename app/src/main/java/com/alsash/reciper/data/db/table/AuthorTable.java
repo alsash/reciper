@@ -9,6 +9,7 @@ import org.greenrobot.greendao.annotation.JoinProperty;
 import org.greenrobot.greendao.annotation.ToMany;
 import org.greenrobot.greendao.annotation.Unique;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -20,11 +21,13 @@ import java.util.List;
         nameInDb = "AUTHOR",
         active = true
 )
-public final class AuthorTable {
+public final class AuthorTable implements Table {
     @Id
     Long id;
     @Unique
     String uuid;
+    @Index
+    Date changedAt;
     String name;
     String mail;
     @Index(name = "PHOTO_TO_AUTHOR", unique = true)
@@ -42,10 +45,12 @@ public final class AuthorTable {
     @Generated(hash = 1165001475)
     private transient AuthorTableDao myDao;
 
-    @Generated(hash = 244194012)
-    public AuthorTable(Long id, String uuid, String name, String mail, String photoUuid) {
+    @Generated(hash = 952714114)
+    public AuthorTable(Long id, String uuid, Date changedAt, String name, String mail,
+                       String photoUuid) {
         this.id = id;
         this.uuid = uuid;
+        this.changedAt = changedAt;
         this.name = name;
         this.mail = mail;
         this.photoUuid = photoUuid;
@@ -69,6 +74,14 @@ public final class AuthorTable {
 
     public void setUuid(String uuid) {
         this.uuid = uuid;
+    }
+
+    public Date getChangedAt() {
+        return this.changedAt;
+    }
+
+    public void setChangedAt(Date changedAt) {
+        this.changedAt = changedAt;
     }
 
     public String getName() {

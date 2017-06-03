@@ -7,6 +7,8 @@ import org.greenrobot.greendao.annotation.Id;
 import org.greenrobot.greendao.annotation.Index;
 import org.greenrobot.greendao.annotation.Unique;
 
+import java.util.Date;
+
 /**
  * A model of the Category entity
  * that persists in local relational database table by GreenDao framework
@@ -16,11 +18,13 @@ import org.greenrobot.greendao.annotation.Unique;
         nameInDb = "CATEGORY",
         active = true
 )
-public final class CategoryTable {
+public final class CategoryTable implements Table {
     @Id
     Long id;
     @Unique
     String uuid;
+    @Index
+    Date changedAt;
     String name;
     @Index(name = "PHOTO_TO_CATEGORY", unique = true)
     String photoUuid;
@@ -35,10 +39,12 @@ public final class CategoryTable {
     @Generated(hash = 940999369)
     private transient CategoryTableDao myDao;
 
-    @Generated(hash = 842122193)
-    public CategoryTable(Long id, String uuid, String name, String photoUuid) {
+    @Generated(hash = 106282483)
+    public CategoryTable(Long id, String uuid, Date changedAt, String name,
+                         String photoUuid) {
         this.id = id;
         this.uuid = uuid;
+        this.changedAt = changedAt;
         this.name = name;
         this.photoUuid = photoUuid;
     }
@@ -61,6 +67,14 @@ public final class CategoryTable {
 
     public void setUuid(String uuid) {
         this.uuid = uuid;
+    }
+
+    public Date getChangedAt() {
+        return this.changedAt;
+    }
+
+    public void setChangedAt(Date changedAt) {
+        this.changedAt = changedAt;
     }
 
     public String getName() {
