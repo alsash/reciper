@@ -21,7 +21,7 @@ public class RecipeTabActivity extends BaseSwipeTabActivity<RecipeTabView>
     @Override
     protected BasePresenter<RecipeTabView> inject() {
         ((ReciperApp) getApplicationContext())
-                .getRecipeTabComponent()
+                .getUiRecipeTabComponent()
                 .inject(this);
         return presenter; // BasePresenter will be embedded in the activity lifecycle
     }

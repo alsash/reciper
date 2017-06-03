@@ -5,8 +5,8 @@ import android.app.Application;
 import com.alsash.reciper.BuildConfig;
 import com.alsash.reciper.di.component.AppComponent;
 import com.alsash.reciper.di.component.DaggerAppComponent;
-import com.alsash.reciper.di.component.RecipeTabComponent;
-import com.alsash.reciper.di.component.StartComponent;
+import com.alsash.reciper.di.component.UiRecipeTabComponent;
+import com.alsash.reciper.di.component.UiStartComponent;
 import com.alsash.reciper.di.module.AppContextModule;
 import com.facebook.stetho.Stetho;
 
@@ -15,8 +15,8 @@ import com.facebook.stetho.Stetho;
  */
 public class ReciperApp extends Application {
 
-    private StartComponent startComponent;
-    private RecipeTabComponent recipeTabComponent;
+    private UiStartComponent uiStartComponent;
+    private UiRecipeTabComponent uiRecipeTabComponent;
 
     @Override
     public void onCreate() {
@@ -26,10 +26,10 @@ public class ReciperApp extends Application {
         AppComponent appComponent = DaggerAppComponent.builder()
                 .appContextModule(new AppContextModule(this))
                 .build();
-        startComponent = appComponent
+        uiStartComponent = appComponent
                 .getStartComponentBuilder()
                 .build();
-        recipeTabComponent = appComponent
+        uiRecipeTabComponent = appComponent
                 .getRecipeTabComponentBuilder()
                 .build();
 
@@ -38,11 +38,11 @@ public class ReciperApp extends Application {
 
     }
 
-    public StartComponent getStartComponent() {
-        return startComponent;
+    public UiStartComponent getUiStartComponent() {
+        return uiStartComponent;
     }
 
-    public RecipeTabComponent getRecipeTabComponent() {
-        return recipeTabComponent;
+    public UiRecipeTabComponent getUiRecipeTabComponent() {
+        return uiRecipeTabComponent;
     }
 }

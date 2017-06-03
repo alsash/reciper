@@ -33,7 +33,7 @@ public class RecipeTabCategoryFragment extends BaseRecipeListFragment<Category, 
     @Override
     protected RecipeTabCategoryPresenter inject() {
         ((ReciperApp) getActivity().getApplicationContext())
-                .getRecipeTabComponent()
+                .getUiRecipeTabComponent()
                 .inject(this);
         return presenter; // Presenter will be embedded in fragment lifecycle
     }

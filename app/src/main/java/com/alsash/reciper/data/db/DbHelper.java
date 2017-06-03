@@ -11,7 +11,7 @@ import org.greenrobot.greendao.database.StandardDatabase;
 /**
  * Simple SQLiteOpenHelper for the GreenDao database framework
  */
-class DbHelper extends DaoMaster.OpenHelper {
+public class DbHelper extends DaoMaster.OpenHelper {
 
     public DbHelper(Context context, String name) {
         super(context, name);

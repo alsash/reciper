@@ -35,7 +35,7 @@ public class RecipeTabGridFragment extends BaseRecipeListFragment<Recipe, Recipe
     @Override
     protected RecipeTabGridPresenter inject() {
         ((ReciperApp) getActivity().getApplicationContext())
-                .getRecipeTabComponent()
+                .getUiRecipeTabComponent()
                 .inject(this);
         return presenter; // Presenter will be embedded in fragment lifecycle
     }

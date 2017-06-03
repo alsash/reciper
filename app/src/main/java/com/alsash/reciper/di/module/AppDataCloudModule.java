@@ -1,14 +1,12 @@
 package com.alsash.reciper.di.module;
 
-import android.content.Context;
+import android.net.ConnectivityManager;
 
 import com.alsash.reciper.BuildConfig;
 import com.alsash.reciper.app.AppContract;
 import com.alsash.reciper.data.cloud.CloudManager;
 import com.alsash.reciper.data.cloud.request.GithubDbRequest;
 import com.alsash.reciper.data.cloud.request.UsdaRequest;
-import com.alsash.reciper.data.db.DbManager;
-import com.alsash.reciper.logic.StorageLogic;
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -37,27 +35,14 @@ import retrofit2.converter.gson.GsonConverterFactory;
  * DI Module that provide the StorageLogic with their dependencies
  */
 @Module
-public abstract class AppStorageModule {
+public abstract class AppDataCloudModule {
 
     @Provides
     @Singleton
-    static StorageLogic provideStorageLogic(DbManager dbManager,
-                                            CloudManager cloudManager) {
-        return new StorageLogic(dbManager, cloudManager);
-    }
-
-    @Provides
-    @Singleton
-    static DbManager provideDbManager(Context context) {
-        return new DbManager(context, AppContract.Db.DATABASE_NAME);
-    }
-
-    @Provides
-    @Singleton
-    static CloudManager provideCloudManager(Context context,
+    static CloudManager provideCloudManager(ConnectivityManager connectivityManager,
                                             GithubDbRequest githubDbRequest,
                                             UsdaRequest usdaRequest) {
-        return new CloudManager(context, githubDbRequest, usdaRequest);
+        return new CloudManager(connectivityManager, githubDbRequest, usdaRequest);
     }
 
     @Provides

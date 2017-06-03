@@ -1,6 +1,6 @@
 package com.alsash.reciper.di.component;
 
-import com.alsash.reciper.di.module.RecipeTabModule;
+import com.alsash.reciper.di.module.UiRecipeTabModule;
 import com.alsash.reciper.di.scope.RecipeTabScope;
 import com.alsash.reciper.ui.activity.RecipeTabActivity;
 import com.alsash.reciper.ui.fragment.RecipeTabBookmarkFragment;
@@ -11,11 +11,11 @@ import com.alsash.reciper.ui.fragment.RecipeTabLabelFragment;
 import dagger.Subcomponent;
 
 /**
- * DI Component that build bridge between recipe list views and theirs dependencies
+ * DI Component that build bridge between recipe tab views and theirs dependencies
  */
 @RecipeTabScope
-@Subcomponent(modules = {RecipeTabModule.class})
-public interface RecipeTabComponent {
+@Subcomponent(modules = {UiRecipeTabModule.class})
+public interface UiRecipeTabComponent {
 
     void inject(RecipeTabActivity recipeTabActivity);
 
@@ -29,7 +29,7 @@ public interface RecipeTabComponent {
 
     @Subcomponent.Builder
     interface Builder {
-        RecipeTabComponent build();
+        UiRecipeTabComponent build();
     }
 
 }

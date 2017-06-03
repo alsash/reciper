@@ -1,6 +1,5 @@
 package com.alsash.reciper.data.cloud;
 
-import android.content.Context;
 import android.net.ConnectivityManager;
 import android.support.annotation.Nullable;
 
@@ -40,24 +39,24 @@ public class CloudManager {
     private static final int USDA_NUTRITION_ID_CARBS = 205;
     private static final int USDA_NUTRITION_ID_ENERGY = 208;
 
-    private final Context context;
+    private final ConnectivityManager connectivityManager;
     private final GithubDbRequest githubDbRequest;
     private final UsdaRequest usdaRequest;
 
     private GithubDbConfigResponse dbConfig;
 
-    public CloudManager(Context context, GithubDbRequest githubDbRequest, UsdaRequest usdaRequest) {
-        this.context = context;
+    public CloudManager(ConnectivityManager connectivityManager,
+                        GithubDbRequest githubDbRequest,
+                        UsdaRequest usdaRequest) {
+        this.connectivityManager = connectivityManager;
         this.githubDbRequest = githubDbRequest;
         this.usdaRequest = usdaRequest;
     }
 
     public boolean isOnline() {
-        ConnectivityManager cm = (ConnectivityManager) context
-                .getSystemService(Context.CONNECTIVITY_SERVICE);
-        return (cm != null
-                && cm.getActiveNetworkInfo() != null
-                && cm.getActiveNetworkInfo().isConnected());
+        return (connectivityManager != null
+                && connectivityManager.getActiveNetworkInfo() != null
+                && connectivityManager.getActiveNetworkInfo().isConnected());
     }
 
     public Map<String, FoodTable> getUsdaFoodTable(String... usdaNdbNos) {

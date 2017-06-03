@@ -45,7 +45,7 @@ public class StartActivity extends BaseActivity<StartView> implements StartView 
     @Override
     protected BasePresenter<StartView> inject() {
         ((ReciperApp) getApplicationContext())
-                .getStartComponent()
+                .getUiStartComponent()
                 .inject(this);
         return presenter;
     }

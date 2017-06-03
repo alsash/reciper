@@ -5,4 +5,10 @@ package com.alsash.reciper.logic;
  */
 
 public class BusinessLogic {
+
+    private final StorageLogic logic;
+
+    public BusinessLogic(StorageLogic logic) {
+        this.logic = logic;
+    }
 }

@@ -33,7 +33,7 @@ public class RecipeTabLabelFragment extends BaseRecipeListFragment<Label, Recipe
     @Override
     protected RecipeTabLabelPresenter inject() {
         ((ReciperApp) getActivity().getApplicationContext())
-                .getRecipeTabComponent()
+                .getUiRecipeTabComponent()
                 .inject(this);
         return presenter; // Presenter will be embedded in fragment lifecycle
     }

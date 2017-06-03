@@ -31,7 +31,7 @@ public class RecipeTabBookmarkFragment extends BaseRecipeListFragment<Recipe, Re
     @Override
     protected RecipeTabBookmarkPresenter inject() {
         ((ReciperApp) getActivity().getApplicationContext())
-                .getRecipeTabComponent()
+                .getUiRecipeTabComponent()
                 .inject(this);
         return presenter; // Presenter will be embedded in fragment lifecycle
     }

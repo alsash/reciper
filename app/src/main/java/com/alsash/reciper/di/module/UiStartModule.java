@@ -12,7 +12,7 @@ import dagger.Provides;
  * DI Module that provide StartPresenter
  */
 @Module
-public abstract class StartModule {
+public abstract class UiStartModule {
 
     @Provides
     @StartScope

@@ -1,11 +1,9 @@
 package com.alsash.reciper.data.db;
 
-import android.content.Context;
 import android.support.annotation.Nullable;
 
 import com.alsash.reciper.data.db.table.AuthorTable;
 import com.alsash.reciper.data.db.table.CategoryTable;
-import com.alsash.reciper.data.db.table.DaoMaster;
 import com.alsash.reciper.data.db.table.DaoSession;
 import com.alsash.reciper.data.db.table.FoodMeasureTable;
 import com.alsash.reciper.data.db.table.FoodTable;
@@ -22,7 +20,6 @@ import com.alsash.reciper.data.db.table.RecipeTable;
 import com.alsash.reciper.data.db.table.SettingsTable;
 import com.alsash.reciper.data.db.table.SettingsTableDao;
 
-import org.greenrobot.greendao.database.Database;
 import org.greenrobot.greendao.query.Query;
 import org.greenrobot.greendao.query.QueryBuilder;
 
@@ -44,9 +41,8 @@ public class DbManager {
     private int offset;
     private int limit;
 
-    public DbManager(Context context, String databaseName) {
-        Database database = new DbHelper(context, databaseName).getWritableDb();
-        daoSession = new DaoMaster(database).newSession();
+    public DbManager(DaoSession daoSession) {
+        this.daoSession = daoSession;
     }
 
     public DbManager restrictWith(int offset, int limit) {
