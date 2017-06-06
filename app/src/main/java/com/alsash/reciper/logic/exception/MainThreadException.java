@@ -1,10 +1,18 @@
 package com.alsash.reciper.logic.exception;
 
+import android.os.Looper;
+
 /**
  * An logical exception caused by internet connection unavailable
  */
 public class MainThreadException extends RuntimeException {
-    public MainThreadException(String method) {
-        super(method + " must be called on background thread");
+    private MainThreadException(String owner, String action) {
+        super(owner + " : " + action + " must be called on background thread");
+    }
+
+    public static void throwOnMainThread(String owner, String action) throws MainThreadException {
+        if (Looper.myLooper() == Looper.getMainLooper()) {
+            throw new MainThreadException(owner, action);
+        }
     }
 }

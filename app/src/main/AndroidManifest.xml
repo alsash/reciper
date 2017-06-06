@@ -37,6 +37,7 @@
         <activity android:name=".ui.activity.RecipeTabActivity" />
         <activity android:name=".ui.activity.RecipeListActivity" />
         <activity android:name=".ui.activity.RecipeDetailActivity" />
+        <activity android:name=".ui.activity.RecipeCollectionsActivity" />
     </application>
 
 </manifest>

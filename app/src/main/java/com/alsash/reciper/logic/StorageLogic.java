@@ -4,7 +4,7 @@ package com.alsash.reciper.logic;
 import com.alsash.reciper.data.cloud.CloudManager;
 import com.alsash.reciper.data.db.DbManager;
 import com.alsash.reciper.data.db.table.FoodTable;
-import com.alsash.reciper.logic.exception.NoInternetException;
+import com.alsash.reciper.logic.exception.MainThreadException;
 
 import java.util.Date;
 import java.util.List;
@@ -13,9 +13,11 @@ import java.util.Map;
 
 /**
  * Logic for processing data in storage.
- * All methods, except constructor, must be called on background thread
+ * All methods, except constructor, must be called on the background thread.
  */
 public class StorageLogic {
+
+    private static final String TAG = "StorageLogic";
 
     private final CloudManager cloudManager;
     private final DbManager dbManager;
@@ -25,30 +27,39 @@ public class StorageLogic {
         this.cloudManager = cloudManager;
     }
 
-    public boolean isDbUpToDate() throws NoInternetException {
-        boolean upToDate;
-        Date localUpdateDate = dbManager.getSettingsUpdateDate();
-        Date cloudUpdateDate = cloudManager.getDbUpdateDate();
-        // First access
-        if (localUpdateDate == null) {
-            if (cloudUpdateDate != null) {
-                upToDate = false;
-            } else if (!cloudManager.isOnline()) {
-                throw new NoInternetException();
-            } else {
-                upToDate = false; // Something goes wrong, but we can't do anything...
-            }
-            // Next access
+    /**
+     * Fetch startup entities from cloud and create it in database.
+     * Must be called on the background thread.
+     */
+    public void createStartupEntitiesIfNeed() throws Exception {
+        MainThreadException.throwOnMainThread(TAG, "createStartupEntitiesIfNeed()");
+        if (isDbUpToDate()) return;
+        Date createdAt = new Date();
+        if (createStartupEntities(createdAt)) {
+            dbManager.setSettingsUpdateDate(createdAt);
         } else {
-            upToDate = true;
-            if (cloudUpdateDate != null) {
-                upToDate = localUpdateDate.getTime() >= cloudUpdateDate.getTime();
-            }
+            deleteAllEntitiesCreatedAt(createdAt);
         }
-        return upToDate;
     }
 
-    public boolean createStartupEntities(Date createdAt) {
+    private boolean isDbUpToDate() {
+        Date localUpdateDate = dbManager.getSettingsUpdateDate();
+        // First access
+        if (localUpdateDate == null) return false;
+
+        Date cloudUpdateDate = cloudManager.getDbUpdateDate();
+        // Next access
+        if (cloudUpdateDate == null) return true;
+
+        // Standard access
+        return localUpdateDate.getTime() >= cloudUpdateDate.getTime();
+    }
+
+    private void deleteAllEntitiesCreatedAt(Date createdAt) {
+        dbManager.changeWith(createdAt).deleteAll();
+    }
+
+    private boolean createStartupEntities(Date createdAt) {
         if (!cloudManager.isOnline()) return false;
         String dbLanguage = cloudManager.getDbLanguage(Locale.getDefault());
         if (dbLanguage == null) dbLanguage = cloudManager.getDbLanguage(Locale.ENGLISH);
@@ -70,12 +81,7 @@ public class StorageLogic {
                         cloudManager.getDbRecipeTable(dbLanguage)
                 );
         boolean update = updateFoodUsda(createdAt);
-        if (modify && update) dbManager.setSettingsUpdateDate(createdAt);
         return modify && update;
-    }
-
-    public void deleteAllEntitiesCreatedAt(Date createdAt) {
-        dbManager.changeWith(createdAt).deleteAll();
     }
 
     private boolean updateFoodUsda(Date updateDate) {

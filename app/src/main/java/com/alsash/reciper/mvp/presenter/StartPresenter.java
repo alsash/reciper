@@ -2,7 +2,6 @@ package com.alsash.reciper.mvp.presenter;
 
 import android.util.Log;
 
-import com.alsash.reciper.R;
 import com.alsash.reciper.app.AppNavigator;
 import com.alsash.reciper.logic.StorageLogic;
 import com.alsash.reciper.mvp.view.StartView;
@@ -73,7 +72,7 @@ public class StartPresenter implements BasePresenter<StartView> {
                 .fromAction(new Action() {
                     @Override
                     public void run() throws Exception {
-                        //   storage.createStartupEntitiesIfNeed();
+                        storage.createStartupEntitiesIfNeed();
                     }
                 })
                 .delay(START_DELAY_MS, TimeUnit.MILLISECONDS)
@@ -85,7 +84,6 @@ public class StartPresenter implements BasePresenter<StartView> {
                         // This method called on Main Thread, so access is thread-safe
                         fetched = true;
                         if (viewRef.get() == null) return;
-                        viewRef.get().showNotification(R.string.notification_recipes_download_ok);
                         if (viewRef.get().isViewVisible()) visible(viewRef.get());
                     }
 

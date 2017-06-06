@@ -68,7 +68,7 @@ public class RecipeDetailActivity extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         assert actionBar != null;
         actionBar.setDisplayHomeAsUpEnabled(true); // Back arrow on toolbar
-        setupDrawer(null); // Parent navigation drawer without button on toolbar
+        setupDrawer(null); // Parent app_navigation drawer without button on toolbar
     }
 
     private void setupPager() {

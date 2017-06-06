@@ -18,14 +18,13 @@ public abstract class AppLogicModule {
 
     @Provides
     @Singleton
-    static BusinessLogic provideBusinessLogic(StorageLogic storageLogic) {
-        return new BusinessLogic(storageLogic);
+    static BusinessLogic provideBusinessLogic() {
+        return new BusinessLogic();
     }
 
     @Provides
     @Singleton
-    static StorageLogic provideStorageLogic(DbManager dbManager,
-                                            CloudManager cloudManager) {
+    static StorageLogic provideStorageLogic(DbManager dbManager, CloudManager cloudManager) {
         return new StorageLogic(dbManager, cloudManager);
     }
 }

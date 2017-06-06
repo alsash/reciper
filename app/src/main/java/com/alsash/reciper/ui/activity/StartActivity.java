@@ -2,9 +2,7 @@ package com.alsash.reciper.ui.activity;
 
 import android.annotation.SuppressLint;
 import android.os.Handler;
-import android.support.annotation.StringRes;
 import android.view.View;
-import android.widget.Toast;
 
 import com.alsash.reciper.app.ReciperApp;
 import com.alsash.reciper.mvp.presenter.BasePresenter;
@@ -53,11 +51,6 @@ public class StartActivity extends BaseActivity<StartView> implements StartView 
     @Override
     public void setFullscreenVisibility() {
         if (!FULLSCREEN_DELAYED) fullscreenSetter.run(); // Else - implemented with Handler
-    }
-
-    @Override
-    public void showNotification(@StringRes int id) {
-        Toast.makeText(this, id, Toast.LENGTH_SHORT).show();
     }
 
     @Override

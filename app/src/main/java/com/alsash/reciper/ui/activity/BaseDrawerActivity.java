@@ -113,7 +113,7 @@ public abstract class BaseDrawerActivity<V extends BaseView> extends BaseActivit
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // back stack for child activity's navigation
+        // back stack for child activity's app_navigation
         if (getNavItemId() == null && item.getItemId() == android.R.id.home) {
             finish();
             return true;
@@ -123,7 +123,7 @@ public abstract class BaseDrawerActivity<V extends BaseView> extends BaseActivit
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        // Handle navigation view item clicks here.
+        // Handle app_navigation view item clicks here.
         int id = item.getItemId();
         int thisId = getNavItemId() != null ? getNavItemId() : 0;
 
