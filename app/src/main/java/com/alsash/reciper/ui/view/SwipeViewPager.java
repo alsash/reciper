@@ -2,12 +2,12 @@ package com.alsash.reciper.ui.view;
 
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 
 import com.alsash.reciper.R;
+import com.alsash.reciper.ui.adapter.SwipePagerAdapter;
 
 /**
  * Custom ViewPager that toggle handling motion events
@@ -44,10 +44,9 @@ public class SwipeViewPager extends ViewPager {
         return this.isSwipeEnabled && super.onInterceptTouchEvent(event);
     }
 
-    @Override
-    public void setAdapter(PagerAdapter adapter) {
+    public void setAdapter(SwipePagerAdapter adapter) {
         super.setAdapter(adapter);
-        if (adapter instanceof OnPageSelectListener) {
+        if (adapter.hasSwipeBehaviour()) {
             addOnPageChangeListener(new SimpleOnPageChangeListener() {
                 @Override
                 public void onPageSelected(int position) {

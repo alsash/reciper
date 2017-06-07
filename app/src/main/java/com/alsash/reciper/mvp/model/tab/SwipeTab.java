@@ -5,7 +5,7 @@ import android.support.annotation.StringRes;
 import android.support.v4.app.Fragment;
 
 /**
- * A simple Tab model for representing tabs in with SwipeViewPager
+ * A simple Tab model for representing tabs with SwipeViewPager
  */
 public abstract class SwipeTab {
     private final Integer title;

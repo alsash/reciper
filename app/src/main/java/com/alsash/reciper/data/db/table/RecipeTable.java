@@ -34,8 +34,6 @@ public final class RecipeTable implements Table {
     String source;
     String description;
     @NotNull
-    boolean bookmark;
-    @NotNull
     int servings;
     @NotNull
     double massFlowRateGps; // gram per second
@@ -54,11 +52,10 @@ public final class RecipeTable implements Table {
     @Generated(hash = 1210201788)
     private transient RecipeTableDao myDao;
 
-    @Generated(hash = 1782286148)
-    public RecipeTable(Long id, String uuid, Date changedAt, Date createdAt,
-                       String name, String source, String description, boolean bookmark,
-                       int servings, double massFlowRateGps, String categoryUuid,
-                       String authorUuid) {
+    @Generated(hash = 1742398024)
+    public RecipeTable(Long id, String uuid, Date changedAt, Date createdAt, String name,
+                       String source, String description, int servings, double massFlowRateGps,
+                       String categoryUuid, String authorUuid) {
         this.id = id;
         this.uuid = uuid;
         this.changedAt = changedAt;
@@ -66,7 +63,6 @@ public final class RecipeTable implements Table {
         this.name = name;
         this.source = source;
         this.description = description;
-        this.bookmark = bookmark;
         this.servings = servings;
         this.massFlowRateGps = massFlowRateGps;
         this.categoryUuid = categoryUuid;
@@ -131,14 +127,6 @@ public final class RecipeTable implements Table {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public boolean getBookmark() {
-        return this.bookmark;
-    }
-
-    public void setBookmark(boolean bookmark) {
-        this.bookmark = bookmark;
     }
 
     public int getServings() {

@@ -212,10 +212,9 @@
             {\"id\":19,\"recipeId\":19,\"labelId\":3}
         ]
     </string>
-    <string name="title_activity_recipe_collection">Recipes</string>
-    <string name="title_categories">Categories</string>
-    <string name="navigation_recipe_collections_categories">Categories</string>
-    <string name="navigation_recipe_collections_grid">Grid</string>
-    <string name="navigation_recipe_collections_labels">Labels</string>
-    <string name="navigation_recipe_collections_bookmarks">Bookmarks</string>
+    <string name="activity_recipe_collections_title">Recipes</string>
+    <string name="activity_recipe_collections_nav_categories">Categories</string>
+    <string name="activity_recipe_collections_nav_grid">Grid</string>
+    <string name="activity_recipe_collections_nav_labels">Labels</string>
+    <string name="activity_recipe_collections_nav_bookmarks">Bookmarks</string>
 </resources>

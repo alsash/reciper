@@ -25,18 +25,19 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <FrameLayout
-        android:id="@+id/activity_recipe_collections_container"
+    <com.alsash.reciper.ui.view.SwipeViewPager
+        android:id="@+id/activity_recipe_collections_pager"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        app:svp_is_swipe_enabled="false" />
 
     <android.support.design.widget.BottomNavigationView
-        android:id="@+id/activity_recipe_collection_navigation"
+        android:id="@+id/activity_recipe_collections_nav"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="start"
+        android:layout_gravity="bottom"
         android:background="?android:attr/windowBackground"
-        app:menu="@menu/navigation_recipe_collections" />
+        app:menu="@menu/activity_recipe_collections_nav" />
 
 </android.support.design.widget.CoordinatorLayout>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/activity_recipe_collections_nav_categories"
+        android:icon="@drawable/activity_recipe_collections_nav_categories"
+        android:title="@string/activity_recipe_collections_nav_categories" />
+
+    <item
+        android:id="@+id/activity_recipe_collections_nav_grid"
+        android:icon="@drawable/activity_recipe_collections_nav_grid"
+        android:title="@string/activity_recipe_collections_nav_grid" />
+
+    <item
+        android:id="@+id/activity_recipe_collections_nav_labels"
+        android:icon="@drawable/activity_recipe_collections_nav_labels"
+        android:title="@string/activity_recipe_collections_nav_labels" />
+
+    <!--    <item
+            android:id="@+id/activity_recipe_collections_nav_bookmarks"
+            android:icon="@drawable/activity_recipe_collections_nav_bookmarks"
+            android:title="@string/activity_recipe_collections_nav_bookmarks" />-->
+</menu>

@@ -5,7 +5,7 @@ import android.content.Intent;
 import android.support.v4.app.FragmentManager;
 import android.widget.Toast;
 
-import com.alsash.reciper.ui.activity.RecipeTabActivity;
+import com.alsash.reciper.ui.activity.RecipeCollectionsActivity;
 import com.alsash.reciper.ui.fragment.dialog.RecipeBottomDialog;
 
 import javax.inject.Singleton;
@@ -26,7 +26,7 @@ public class AppNavigator {
     }
 
     public void toMainView() {
-        Intent intent = new Intent(context, RecipeTabActivity.class);
+        Intent intent = new Intent(context, RecipeCollectionsActivity.class);
         intent.setFlags(FLAG_ACTIVITY_CLEAR_TASK | FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(intent);
     }
