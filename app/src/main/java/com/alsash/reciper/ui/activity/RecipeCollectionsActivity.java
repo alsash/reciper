@@ -2,29 +2,29 @@ package com.alsash.reciper.ui.activity;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
 import com.alsash.reciper.R;
+import com.alsash.reciper.app.ReciperApp;
+import com.alsash.reciper.mvp.presenter.BasePresenter;
+import com.alsash.reciper.mvp.presenter.RecipeCollectionsPresenter;
+import com.alsash.reciper.mvp.view.RecipeCollectionsView;
 import com.alsash.reciper.ui.adapter.SwipePagerAdapter;
-import com.alsash.reciper.ui.fragment.RecipeTabCategoryFragment;
-import com.alsash.reciper.ui.fragment.RecipeTabGridFragment;
-import com.alsash.reciper.ui.fragment.RecipeTabLabelFragment;
 import com.alsash.reciper.ui.view.SwipeViewPager;
 
-public class RecipeCollectionsActivity extends AppCompatActivity {
+import javax.inject.Inject;
 
+public class RecipeCollectionsActivity extends BaseDrawerActivity<RecipeCollectionsView>
+        implements RecipeCollectionsView {
+
+    @Inject
+    RecipeCollectionsPresenter presenter;
     private SwipeViewPager pager;
-
-    private SwipePagerAdapter adapter = new SwipePagerAdapter(getSupportFragmentManager(),
-            new Fragment[]{
-                    RecipeTabCategoryFragment.newInstance(),
-                    RecipeTabGridFragment.newInstance(),
-                    RecipeTabLabelFragment.newInstance(),
-            });
+    private SwipePagerAdapter adapter;
 
     private BottomNavigationView.OnNavigationItemSelectedListener navigationListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -46,14 +46,39 @@ public class RecipeCollectionsActivity extends AppCompatActivity {
     };
 
     @Override
+    public void setCollections(Fragment[] collections) {
+        if (adapter != null) return;
+        adapter = new SwipePagerAdapter(getSupportFragmentManager(), collections);
+        pager.setAdapter(adapter);
+    }
+
+    @Override
+    public void showCollection(int position) {
+        if (pager.getCurrentItem() != position) pager.setCurrentItem(position);
+    }
+
+    @Override
+    protected BasePresenter<RecipeCollectionsView> inject() {
+        ((ReciperApp) getApplicationContext())
+                .getUiRecipeCollectionsComponent()
+                .inject(this);
+        return presenter; // BasePresenter will be embedded in the activity lifecycle
+    }
+
+    @Nullable
+    @Override
+    protected Integer getNavItemId() {
+        return null;
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipe_collections);
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null) actionBar.setTitle(R.string.activity_recipe_collections_title);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.activity_recipe_collections_toolbar);
+        setSupportActionBar(toolbar);
+        setupDrawer(toolbar); // Call to parent BaseDrawerActivity
         pager = ((SwipeViewPager) findViewById(R.id.activity_recipe_collections_pager));
-        pager.setAdapter(adapter);
-        pager.setCurrentItem(0);
         ((BottomNavigationView) findViewById(R.id.activity_recipe_collections_nav))
                 .setOnNavigationItemSelectedListener(navigationListener);
     }

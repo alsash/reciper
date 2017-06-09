@@ -25,4 +25,6 @@ public interface AppComponent {
     UiStartComponent.Builder getStartComponentBuilder();
 
     UiRecipeTabComponent.Builder getRecipeTabComponentBuilder();
+
+    UiRecipeCollectionsComponent.Builder getRecipeCollectionsComponentBuilder();
 }

@@ -18,6 +18,7 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
+            android:title="@string/activity_recipe_collections_title"
             app:layout_scrollFlags="scroll|enterAlways"
             app:popupTheme="@style/AppTheme.PopupOverlay">
 
@@ -38,6 +39,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
         android:background="?android:attr/windowBackground"
+        app:layout_scrollFlags="scroll|enterAlways|snap"
         app:menu="@menu/activity_recipe_collections_nav" />
 
 </android.support.design.widget.CoordinatorLayout>

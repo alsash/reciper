@@ -5,6 +5,7 @@ import android.app.Application;
 import com.alsash.reciper.BuildConfig;
 import com.alsash.reciper.di.component.AppComponent;
 import com.alsash.reciper.di.component.DaggerAppComponent;
+import com.alsash.reciper.di.component.UiRecipeCollectionsComponent;
 import com.alsash.reciper.di.component.UiRecipeTabComponent;
 import com.alsash.reciper.di.component.UiStartComponent;
 import com.alsash.reciper.di.module.AppContextModule;
@@ -17,12 +18,16 @@ public class ReciperApp extends Application {
 
     private UiStartComponent uiStartComponent;
     private UiRecipeTabComponent uiRecipeTabComponent;
+    private UiRecipeCollectionsComponent uiRecipeCollectionsComponent;
 
+    /**
+     * Initializing all components while splash (StartActivity) is shown.
+     */
     @Override
     public void onCreate() {
         super.onCreate();
 
-        // Google Dagger 2 initialization
+        // Google Dagger 2 initialization.
         AppComponent appComponent = DaggerAppComponent.builder()
                 .appContextModule(new AppContextModule(this))
                 .build();
@@ -31,6 +36,9 @@ public class ReciperApp extends Application {
                 .build();
         uiRecipeTabComponent = appComponent
                 .getRecipeTabComponentBuilder()
+                .build();
+        uiRecipeCollectionsComponent = appComponent
+                .getRecipeCollectionsComponentBuilder()
                 .build();
 
         // Facebook Stetho initialization
@@ -44,5 +52,9 @@ public class ReciperApp extends Application {
 
     public UiRecipeTabComponent getUiRecipeTabComponent() {
         return uiRecipeTabComponent;
+    }
+
+    public UiRecipeCollectionsComponent getUiRecipeCollectionsComponent() {
+        return uiRecipeCollectionsComponent;
     }
 }

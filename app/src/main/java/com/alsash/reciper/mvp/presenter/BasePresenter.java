@@ -5,7 +5,7 @@ import android.support.annotation.UiThread;
 import com.alsash.reciper.mvp.view.BaseView;
 
 /**
- * Тhe BasePresenter's interface, which is embedded into the view life cycle.
+ * A BasePresenter's interface, which is embedded into the view life cycle.
  * Responsibility for the order of embedding into the view belong to the view itself.
  */
 public interface BasePresenter<V extends BaseView> {

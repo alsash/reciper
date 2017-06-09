@@ -8,6 +8,7 @@ import com.alsash.reciper.data.db.table.CategoryTable;
 import com.alsash.reciper.data.db.table.CategoryTableDao;
 import com.alsash.reciper.data.db.table.DaoSession;
 import com.alsash.reciper.data.db.table.FoodMeasureTable;
+import com.alsash.reciper.data.db.table.FoodMeasureTableDao;
 import com.alsash.reciper.data.db.table.FoodTable;
 import com.alsash.reciper.data.db.table.FoodTableDao;
 import com.alsash.reciper.data.db.table.FoodUsdaTable;
@@ -192,12 +193,12 @@ public class DbManager {
                 );
                 daoSession.getFoodMeasureTableDao().deleteInTx(
                         daoSession.getFoodMeasureTableDao().queryBuilder()
-                                .where(FoodUsdaTableDao.Properties.ChangedAt.eq(changeDate))
+                                .where(FoodMeasureTableDao.Properties.ChangedAt.eq(changeDate))
                                 .list()
                 );
                 daoSession.getFoodTableDao().deleteInTx(
                         daoSession.getFoodTableDao().queryBuilder()
-                                .where(FoodUsdaTableDao.Properties.ChangedAt.eq(changeDate))
+                                .where(FoodTableDao.Properties.ChangedAt.eq(changeDate))
                                 .list()
                 );
                 daoSession.getFoodUsdaTableDao().deleteInTx(
