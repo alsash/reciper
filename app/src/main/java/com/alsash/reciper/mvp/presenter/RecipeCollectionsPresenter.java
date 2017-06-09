@@ -12,21 +12,26 @@ import com.alsash.reciper.ui.fragment.RecipeTabLabelFragment;
  */
 public class RecipeCollectionsPresenter implements BasePresenter<RecipeCollectionsView> {
 
+    private static final int MAIN_COLLECTION_POSITION = 1;
+
     private final Fragment[] collections = new Fragment[]{
             RecipeTabCategoryFragment.newInstance(),
             RecipeTabGridFragment.newInstance(),
             RecipeTabLabelFragment.newInstance()
     };
 
+    private boolean mainCollectionShowed;
+
     @Override
     public void attach(RecipeCollectionsView view) {
         view.setCollections(collections);
-        view.showCollection(1);
     }
 
     @Override
     public void visible(RecipeCollectionsView view) {
-        // Do nothing
+        if (mainCollectionShowed) return;
+        view.showCollection(MAIN_COLLECTION_POSITION);
+        mainCollectionShowed = true;
     }
 
     @Override
@@ -36,11 +41,11 @@ public class RecipeCollectionsPresenter implements BasePresenter<RecipeCollectio
 
     @Override
     public void refresh(RecipeCollectionsView view) {
-        // Do nothing
+        detach();
     }
 
     @Override
     public void detach() {
-        // Do nothing
+        mainCollectionShowed = false;
     }
 }

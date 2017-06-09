@@ -1,6 +1,7 @@
 package com.alsash.reciper.ui.activity;
 
 import android.os.Bundle;
+import android.support.annotation.IdRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomNavigationView;
@@ -23,38 +24,22 @@ public class RecipeCollectionsActivity extends BaseDrawerActivity<RecipeCollecti
 
     @Inject
     RecipeCollectionsPresenter presenter;
-    private SwipeViewPager pager;
+    private BottomNavigationView navigation;
     private SwipePagerAdapter adapter;
-
-    private BottomNavigationView.OnNavigationItemSelectedListener navigationListener
-            = new BottomNavigationView.OnNavigationItemSelectedListener() {
-        @Override
-        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-            switch (item.getItemId()) {
-                case R.id.activity_recipe_collections_nav_categories:
-                    pager.setCurrentItem(0);
-                    return true;
-                case R.id.activity_recipe_collections_nav_grid:
-                    pager.setCurrentItem(1);
-                    return true;
-                case R.id.activity_recipe_collections_nav_labels:
-                    pager.setCurrentItem(2);
-                    return true;
-            }
-            return false;
-        }
-    };
+    private SwipeViewPager pager;
 
     @Override
     public void setCollections(Fragment[] collections) {
         if (adapter != null) return;
         adapter = new SwipePagerAdapter(getSupportFragmentManager(), collections);
-        pager.setAdapter(adapter);
     }
 
     @Override
     public void showCollection(int position) {
-        if (pager.getCurrentItem() != position) pager.setCurrentItem(position);
+        if (navigation == null) return;
+        Integer id = convertPositionToId(position);
+        if (id == null) return;
+        navigation.setSelectedItemId(id);
     }
 
     @Override
@@ -79,7 +64,46 @@ public class RecipeCollectionsActivity extends BaseDrawerActivity<RecipeCollecti
         setSupportActionBar(toolbar);
         setupDrawer(toolbar); // Call to parent BaseDrawerActivity
         pager = ((SwipeViewPager) findViewById(R.id.activity_recipe_collections_pager));
-        ((BottomNavigationView) findViewById(R.id.activity_recipe_collections_nav))
-                .setOnNavigationItemSelectedListener(navigationListener);
+        pager.setAdapter(adapter);
+        navigation = (BottomNavigationView) findViewById(R.id.activity_recipe_collections_nav);
+        navigation.setOnNavigationItemSelectedListener(
+                new BottomNavigationView.OnNavigationItemSelectedListener() {
+                    @Override
+                    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                        Integer position = convertIdToPosition(item.getItemId());
+                        if (position == null) return false;
+                        pager.setCurrentItem(position);
+                        return true;
+                    }
+                });
+    }
+
+    @IdRes
+    @Nullable
+    private Integer convertPositionToId(int position) {
+        switch (position) {
+            case 0:
+                return R.id.activity_recipe_collections_nav_categories;
+            case 1:
+                return R.id.activity_recipe_collections_nav_grid;
+            case 2:
+                return R.id.activity_recipe_collections_nav_labels;
+            default:
+                return null;
+        }
+    }
+
+    @Nullable
+    private Integer convertIdToPosition(@IdRes int id) {
+        switch (id) {
+            case R.id.activity_recipe_collections_nav_categories:
+                return 0;
+            case R.id.activity_recipe_collections_nav_grid:
+                return 1;
+            case R.id.activity_recipe_collections_nav_labels:
+                return 2;
+            default:
+                return null;
+        }
     }
 }
