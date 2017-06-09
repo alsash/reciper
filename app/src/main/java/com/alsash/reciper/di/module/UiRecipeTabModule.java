@@ -2,9 +2,9 @@ package com.alsash.reciper.di.module;
 
 import com.alsash.reciper.di.scope.RecipeTabScope;
 import com.alsash.reciper.logic.StorageLogic;
+import com.alsash.reciper.mvp.presenter.RecipeCollectionGridPresenter;
 import com.alsash.reciper.mvp.presenter.RecipeTabBookmarkPresenter;
 import com.alsash.reciper.mvp.presenter.RecipeTabCategoryPresenter;
-import com.alsash.reciper.mvp.presenter.RecipeTabGridPresenter;
 import com.alsash.reciper.mvp.presenter.RecipeTabLabelPresenter;
 import com.alsash.reciper.mvp.presenter.RecipeTabPresenter;
 
@@ -31,8 +31,8 @@ public abstract class UiRecipeTabModule {
 
     @Provides
     @RecipeTabScope
-    static RecipeTabGridPresenter provideRecipeGridPresenter(StorageLogic storageLogic) {
-        return new RecipeTabGridPresenter(storageLogic);
+    static RecipeCollectionGridPresenter provideRecipeGridPresenter(StorageLogic storageLogic) {
+        return new RecipeCollectionGridPresenter(storageLogic);
     }
 
     @Provides

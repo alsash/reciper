@@ -8,8 +8,8 @@ import com.alsash.reciper.R;
 import com.alsash.reciper.app.AppNavigator;
 import com.alsash.reciper.app.ReciperApp;
 import com.alsash.reciper.mvp.model.entity.Recipe;
-import com.alsash.reciper.mvp.presenter.RecipeTabGridPresenter;
-import com.alsash.reciper.mvp.view.RecipeTabGridView;
+import com.alsash.reciper.mvp.presenter.RecipeCollectionGridPresenter;
+import com.alsash.reciper.mvp.view.RecipeCollectionGridView;
 import com.alsash.reciper.ui.adapter.RecipeCardListAdapter;
 import com.alsash.reciper.ui.animator.FlipCardListAnimator;
 
@@ -20,20 +20,20 @@ import javax.inject.Inject;
 /**
  * Simple final fragment with presenter and interactions
  */
-public class RecipeTabGridFragment extends BaseRecipeListFragment<Recipe, RecipeTabGridView>
-        implements RecipeTabGridView {
+public class RecipeCollectionGridFragment extends BaseRecipeListFragment<Recipe, RecipeCollectionGridView>
+        implements RecipeCollectionGridView {
 
     @Inject
-    RecipeTabGridPresenter presenter;
+    RecipeCollectionGridPresenter presenter;
     @Inject
     AppNavigator navigator;
 
-    public static RecipeTabGridFragment newInstance() {
-        return new RecipeTabGridFragment();
+    public static RecipeCollectionGridFragment newInstance() {
+        return new RecipeCollectionGridFragment();
     }
 
     @Override
-    protected RecipeTabGridPresenter inject() {
+    protected RecipeCollectionGridPresenter inject() {
         ((ReciperApp) getActivity().getApplicationContext())
                 .getUiRecipeTabComponent()
                 .inject(this);

@@ -3,9 +3,9 @@ package com.alsash.reciper.di.component;
 import com.alsash.reciper.di.module.UiRecipeTabModule;
 import com.alsash.reciper.di.scope.RecipeTabScope;
 import com.alsash.reciper.ui.activity.RecipeTabActivity;
+import com.alsash.reciper.ui.fragment.RecipeCollectionGridFragment;
 import com.alsash.reciper.ui.fragment.RecipeTabBookmarkFragment;
 import com.alsash.reciper.ui.fragment.RecipeTabCategoryFragment;
-import com.alsash.reciper.ui.fragment.RecipeTabGridFragment;
 import com.alsash.reciper.ui.fragment.RecipeTabLabelFragment;
 
 import dagger.Subcomponent;
@@ -21,7 +21,7 @@ public interface UiRecipeTabComponent {
 
     void inject(RecipeTabCategoryFragment recipeTabCategoryFragment);
 
-    void inject(RecipeTabGridFragment recipeTabGridFragment);
+    void inject(RecipeCollectionGridFragment recipeTabGridFragment);
 
     void inject(RecipeTabLabelFragment recipeTabLabelFragment);
 
