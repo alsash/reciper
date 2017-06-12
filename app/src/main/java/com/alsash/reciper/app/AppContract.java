@@ -2,6 +2,8 @@ package com.alsash.reciper.app;
 
 import com.alsash.reciper.BuildConfig;
 
+import java.util.concurrent.TimeUnit;
+
 /**
  * Public keys for all elements in the Application
  */
@@ -34,6 +36,7 @@ public final class AppContract {
             private static final String JSON_ENDPOINT = "repos/alsash/reciper/contents/json/";
 
             public static final class Db {
+                public static final long CHECK_INTERVAL_MS = TimeUnit.HOURS.toMillis(12);
                 public static final String HEADER_ACCEPT = "Accept: " + Github.ACCEPT_RAW;
                 public static final String HEADER_AGENT = Github.HEADER_AGENT;
                 public static final String BASE_URL = Github.BASE_URL + JSON_ENDPOINT + "db/";

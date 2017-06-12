@@ -1,6 +1,7 @@
 package com.alsash.reciper.logic;
 
 
+import com.alsash.reciper.app.AppContract;
 import com.alsash.reciper.data.cloud.CloudManager;
 import com.alsash.reciper.data.db.DbManager;
 import com.alsash.reciper.data.db.table.CategoryTable;
@@ -25,6 +26,9 @@ import java.util.Map;
 public class StorageLogic {
 
     private static final String TAG = "StorageLogic";
+
+    private static final long CLOUD_DB_CHECK_INTERVAL_MS
+            = AppContract.Cloud.Github.Db.CHECK_INTERVAL_MS;
 
     private final CloudManager cloudManager;
     private final DbManager dbManager;
@@ -103,12 +107,16 @@ public class StorageLogic {
         // First access
         if (localUpdateDate == null) return false;
 
-        Date cloudUpdateDate = cloudManager.getDbUpdateDate();
         // Next access
+        // Check interval
+        long checkInterval = new Date().getTime() - localUpdateDate.getTime();
+        if (checkInterval <= CLOUD_DB_CHECK_INTERVAL_MS) return true;
+
+        // Check updates
+        Date cloudUpdateDate = cloudManager.getDbUpdateDate();
         if (cloudUpdateDate == null) return true;
 
-        // Standard access
-        return localUpdateDate.getTime() >= cloudUpdateDate.getTime();
+        return cloudUpdateDate.getTime() <= localUpdateDate.getTime();
     }
 
     private void deleteAllEntitiesCreatedAt(Date createdAt) {

@@ -73,7 +73,7 @@ public class RecipeCollectionsActivity extends BaseDrawerActivity<RecipeCollecti
                     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                         Integer position = convertIdToPosition(item.getItemId());
                         if (position == null) return false;
-                        pager.setCurrentItem(position);
+                        pager.setCurrentItem(position, true);
                         return true;
                     }
                 });

@@ -93,6 +93,7 @@ public abstract class BaseRecipeGroupHolder<G extends BaseEntity> extends Recycl
                 LinearLayoutManager.HORIZONTAL, false);
         if (recipes.size() > 0) layoutManager.setInitialPrefetchItemCount(recipes.size());
         groupList.setLayoutManager(layoutManager);
+        groupList.setNestedScrollingEnabled(false);
         groupList.setAdapter(adapter);
         groupList.setItemAnimator(new FlipCardListAnimator());
         groupList.addOnScrollListener(paginationListener);
