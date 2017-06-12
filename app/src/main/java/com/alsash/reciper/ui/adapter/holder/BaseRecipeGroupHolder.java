@@ -91,7 +91,9 @@ public abstract class BaseRecipeGroupHolder<G extends BaseEntity> extends Recycl
         adapter = new RecipeCardListAdapter(interaction, recipes);
         LinearLayoutManager layoutManager = new LinearLayoutManager(groupList.getContext(),
                 LinearLayoutManager.HORIZONTAL, false);
-        if (recipes.size() > 0) layoutManager.setInitialPrefetchItemCount(recipes.size());
+        if (recipes.size() > layoutManager.getInitialPrefetchItemCount()) {
+            layoutManager.setInitialPrefetchItemCount(recipes.size());
+        }
         groupList.setLayoutManager(layoutManager);
         groupList.setNestedScrollingEnabled(false);
         groupList.setAdapter(adapter);

@@ -14,7 +14,7 @@
         android:theme="@style/AppTheme">
         <!--Glide Framework-->
         <meta-data
-            android:name="com.alsash.reciper.di.module.GlideDiModule"
+            android:name="com.alsash.reciper.di.module.AppGlideModule"
             android:value="GlideModule" />
 
         <activity

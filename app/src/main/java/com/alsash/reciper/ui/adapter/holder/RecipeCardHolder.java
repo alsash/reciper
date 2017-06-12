@@ -7,11 +7,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.alsash.reciper.R;
 import com.alsash.reciper.mvp.model.entity.Recipe;
-import com.bumptech.glide.Glide;
+import com.alsash.reciper.ui.loader.ImageLoader;
 
 /**
  * An view that holds the Recipe card,
@@ -22,6 +23,7 @@ public class RecipeCardHolder extends RecyclerView.ViewHolder {
 
     private final CardView frontCard;
     private final ImageView frontImage;
+    private final ProgressBar frontImageBar;
     private final TextView frontTitle;
     private final ImageButton frontPinButton;
     private final ImageButton frontOpenButton;
@@ -37,9 +39,9 @@ public class RecipeCardHolder extends RecyclerView.ViewHolder {
     public RecipeCardHolder(ViewGroup parent) {
         super(LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.card_recipe, parent, false));
-
         frontCard = (CardView) itemView.findViewById(R.id.card_recipe_front);
         frontImage = (ImageView) itemView.findViewById(R.id.card_recipe_front_image);
+        frontImageBar = (ProgressBar) itemView.findViewById(R.id.card_recipe_front_image_bar);
         frontTitle = (TextView) itemView.findViewById(R.id.card_recipe_front_title);
         frontPinButton = (ImageButton) itemView.findViewById(R.id.card_recipe_front_expand_button);
         frontOpenButton = (ImageButton) itemView.findViewById(R.id.card_recipe_front_open_button);
@@ -59,17 +61,11 @@ public class RecipeCardHolder extends RecyclerView.ViewHolder {
     public void bindRecipe(Recipe recipe) {
         frontTitle.setText(recipe.getName());
 
-        if (recipe.getMainPhoto() != null)
-            Glide.with(frontImage.getContext())
-                    .load(recipe.getMainPhoto().getUrl())
-                    .into(frontImage);
+        ImageLoader.getInstance().load(recipe.getMainPhoto(), frontImage, frontImageBar);
 
         backTitle.setText(recipe.getName());
 
-        if (recipe.getAuthor() != null && recipe.getAuthor().getPhoto() != null)
-            Glide.with(backAccountImage.getContext())
-                    .load(recipe.getAuthor().getPhoto().getUrl())
-                    .into(backAccountImage);
+        ImageLoader.getInstance().load(recipe.getAuthor().getPhoto(), backAccountImage);
 
     }
 

@@ -1,8 +1,10 @@
 package com.alsash.reciper.ui.view.behavior;
 
+import android.content.Context;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.view.ViewCompat;
+import android.util.AttributeSet;
 import android.view.View;
 
 /**
@@ -10,7 +12,20 @@ import android.view.View;
  */
 public class BottomNavigationBehavior extends CoordinatorLayout.Behavior<BottomNavigationView> {
 
+    /**
+     * Required empty constructor
+     */
     public BottomNavigationBehavior() {
+    }
+
+    /**
+     * Required constructor
+     *
+     * @param context - Context instance
+     * @param attrs   - AttributeSet instance
+     */
+    public BottomNavigationBehavior(Context context, AttributeSet attrs) {
+        super(context, attrs);
     }
 
     @Override

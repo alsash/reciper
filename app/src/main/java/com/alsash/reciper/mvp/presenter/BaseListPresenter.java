@@ -11,7 +11,6 @@ import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 import io.reactivex.BackpressureStrategy;
 import io.reactivex.Flowable;
@@ -128,7 +127,7 @@ public abstract class BaseListPresenter<M, V extends BaseListView<M>> implements
                         return Flowable.just(loadNext(offset, getLimit()));
                     }
                 })
-                .delay(4, TimeUnit.SECONDS)
+                // .delay(4, TimeUnit.SECONDS)
                 .repeatUntil(new BooleanSupplier() {
                     @Override
                     public boolean getAsBoolean() throws Exception {

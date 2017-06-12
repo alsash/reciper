@@ -1,10 +1,14 @@
 package com.alsash.reciper.mvp.presenter;
 
+import android.content.Context;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
+import com.alsash.reciper.BuildConfig;
 import com.alsash.reciper.app.AppNavigator;
 import com.alsash.reciper.logic.StorageLogic;
 import com.alsash.reciper.mvp.view.StartView;
+import com.bumptech.glide.Glide;
 
 import java.lang.ref.WeakReference;
 import java.util.concurrent.TimeUnit;
@@ -73,6 +77,13 @@ public class StartPresenter implements BasePresenter<StartView> {
                     @Override
                     public void run() throws Exception {
                         storage.createStartupEntitiesIfNeed();
+                        if (BuildConfig.DEBUG) {
+                            Context context = ((AppCompatActivity) viewRef.get())
+                                    .getApplicationContext();
+                            Glide glide = Glide.get(context);
+                            glide.clearDiskCache();
+                            glide.clearMemory();
+                        }
                     }
                 })
                 .delay(START_DELAY_MS, TimeUnit.MILLISECONDS)

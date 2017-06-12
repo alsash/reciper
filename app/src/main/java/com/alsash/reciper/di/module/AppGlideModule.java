@@ -13,18 +13,27 @@ import com.bumptech.glide.module.GlideModule;
 import java.io.InputStream;
 
 import javax.inject.Inject;
+import javax.inject.Singleton;
 
+import dagger.Module;
+import dagger.Provides;
 import okhttp3.OkHttpClient;
 
 /**
  * Glide integration with injection by Dagger 2
  */
-public class GlideDiModule implements GlideModule {
+@Module
+public class AppGlideModule implements GlideModule {
 
     @Inject
-    OkHttpClient okHttpClient;
+    OkHttpUrlLoader.Factory factory;
 
-    @Override
+    @Provides
+    @Singleton
+    static OkHttpUrlLoader.Factory provideOkHttpUrlLoaderFactory(OkHttpClient okHttpClient) {
+        return new OkHttpUrlLoader.Factory(okHttpClient);
+    }
+
     public void applyOptions(Context context, GlideBuilder builder) {
         builder.setDecodeFormat(DecodeFormat.PREFER_ARGB_8888);
     }
@@ -38,7 +47,7 @@ public class GlideDiModule implements GlideModule {
         glide.register(
                 GlideUrl.class,
                 InputStream.class,
-                new OkHttpUrlLoader.Factory(okHttpClient)
+                factory
         );
     }
 }
