@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.alsash.reciper.R;
 import com.alsash.reciper.mvp.model.entity.Recipe;
+import com.bumptech.glide.Glide;
 
 /**
  * An view that holds the Recipe card,
@@ -57,7 +58,19 @@ public class RecipeCardHolder extends RecyclerView.ViewHolder {
 
     public void bindRecipe(Recipe recipe) {
         frontTitle.setText(recipe.getName());
+
+        if (recipe.getMainPhoto() != null)
+            Glide.with(frontImage.getContext())
+                    .load(recipe.getMainPhoto().getUrl())
+                    .into(frontImage);
+
         backTitle.setText(recipe.getName());
+
+        if (recipe.getAuthor() != null && recipe.getAuthor().getPhoto() != null)
+            Glide.with(backAccountImage.getContext())
+                    .load(recipe.getAuthor().getPhoto().getUrl())
+                    .into(backAccountImage);
+
     }
 
     /**
