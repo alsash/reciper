@@ -12,6 +12,11 @@
         android:label="@string/app_name"
         android:supportsRtl="false"
         android:theme="@style/AppTheme">
+        <!--Glide Framework-->
+        <meta-data
+            android:name="com.alsash.reciper.di.module.GlideDiModule"
+            android:value="GlideModule" />
+
         <activity
             android:name=".ui.activity.StartActivity"
             android:configChanges="orientation|keyboardHidden"
@@ -34,10 +39,9 @@
                     android:scheme="https" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.activity.RecipeTabActivity" />
+        <activity android:name=".ui.activity.RecipeCollectionsActivity" />
         <activity android:name=".ui.activity.RecipeListActivity" />
         <activity android:name=".ui.activity.RecipeDetailActivity" />
-        <activity android:name=".ui.activity.RecipeCollectionsActivity" />
     </application>
 
 </manifest>

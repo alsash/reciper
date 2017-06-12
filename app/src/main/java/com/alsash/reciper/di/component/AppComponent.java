@@ -4,6 +4,7 @@ import com.alsash.reciper.di.module.AppContextModule;
 import com.alsash.reciper.di.module.AppDataCloudModule;
 import com.alsash.reciper.di.module.AppDataDbModule;
 import com.alsash.reciper.di.module.AppLogicModule;
+import com.alsash.reciper.di.module.GlideDiModule;
 
 import javax.inject.Singleton;
 
@@ -22,6 +23,8 @@ import dagger.Component;
         }
 )
 public interface AppComponent {
+
+    void inject(GlideDiModule glideDiModule);
 
     UiStartComponent.Builder getStartComponentBuilder();
 

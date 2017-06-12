@@ -15,6 +15,7 @@ import com.facebook.stetho.Stetho;
  */
 public class ReciperApp extends Application {
 
+    private AppComponent appComponent;
     private UiStartComponent uiStartComponent;
     private UiRecipeCollectionsComponent uiRecipeCollectionsComponent;
 
@@ -26,7 +27,7 @@ public class ReciperApp extends Application {
         super.onCreate();
 
         // Google Dagger 2 initialization.
-        AppComponent appComponent = DaggerAppComponent.builder()
+        appComponent = DaggerAppComponent.builder()
                 .appContextModule(new AppContextModule(this))
                 .build();
         uiStartComponent = appComponent
@@ -39,6 +40,10 @@ public class ReciperApp extends Application {
         // Facebook Stetho initialization
         if (BuildConfig.DEBUG) Stetho.initializeWithDefaults(this);
 
+    }
+
+    public AppComponent getAppComponent() {
+        return appComponent;
     }
 
     public UiStartComponent getUiStartComponent() {

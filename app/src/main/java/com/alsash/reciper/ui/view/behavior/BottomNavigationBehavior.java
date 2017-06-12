@@ -1,22 +1,16 @@
 package com.alsash.reciper.ui.view.behavior;
 
-import android.content.Context;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.view.ViewCompat;
-import android.util.AttributeSet;
 import android.view.View;
 
 /**
  * A CoordinatorLayout.Behavior for appearance and disappearance of the BottomNavigationView
  */
-public class BottomAppearanceBehavior extends CoordinatorLayout.Behavior<BottomNavigationView> {
+public class BottomNavigationBehavior extends CoordinatorLayout.Behavior<BottomNavigationView> {
 
-    public BottomAppearanceBehavior() {
-    }
-
-    public BottomAppearanceBehavior(Context context, AttributeSet attrs) {
-        super(context, attrs);
+    public BottomNavigationBehavior() {
     }
 
     @Override
