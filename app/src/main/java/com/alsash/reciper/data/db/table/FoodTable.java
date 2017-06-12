@@ -1,5 +1,8 @@
 package com.alsash.reciper.data.db.table;
 
+import com.alsash.reciper.mvp.model.entity.Food;
+import com.alsash.reciper.mvp.model.entity.Measure;
+
 import org.greenrobot.greendao.DaoException;
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Generated;
@@ -20,9 +23,10 @@ import java.util.List;
  */
 @Entity(
         nameInDb = "FOOD",
+        generateGettersSetters = false,
         active = true
 )
-public final class FoodTable implements Table {
+public final class FoodTable implements Table, Food {
     @Id
     Long id;
     @Unique
@@ -44,7 +48,6 @@ public final class FoodTable implements Table {
     List<FoodMeasureTable> foodMeasureTables;
     @ToMany(joinProperties = {@JoinProperty(name = "uuid", referencedName = "foodUuid")})
     List<FoodUsdaTable> foodUsdaTables;
-
     /**
      * Used to resolve relations
      */
@@ -75,112 +78,102 @@ public final class FoodTable implements Table {
     public FoodTable() {
     }
 
+    @Override
     public Long getId() {
-        return this.id;
+        return id;
     }
 
+    @Override
     public void setId(Long id) {
         this.id = id;
     }
 
+    @Override
     public String getUuid() {
-        return this.uuid;
+        return uuid;
     }
 
+    @Override
     public void setUuid(String uuid) {
         this.uuid = uuid;
     }
 
+    @Override
+    public Date getChangedAt() {
+        return changedAt;
+    }
+
+    @Override
+    public void setChangedAt(Date changedAt) {
+        this.changedAt = changedAt;
+    }
+
+    @Override
     public String getName() {
-        return this.name;
+        return name;
     }
 
     public void setName(String name) {
         this.name = name;
     }
 
+    @Override
     public double getProtein() {
-        return this.protein;
+        return protein;
     }
 
     public void setProtein(double protein) {
         this.protein = protein;
     }
 
+    @Override
     public double getFat() {
-        return this.fat;
+        return fat;
     }
 
     public void setFat(double fat) {
         this.fat = fat;
     }
 
+    @Override
     public double getCarbs() {
-        return this.carbs;
+        return carbs;
     }
 
     public void setCarbs(double carbs) {
         this.carbs = carbs;
     }
 
+    @Override
     public String getWeightUnit() {
-        return this.weightUnit;
+        return weightUnit;
     }
 
     public void setWeightUnit(String weightUnit) {
         this.weightUnit = weightUnit;
     }
 
+    @Override
     public double getEnergy() {
-        return this.energy;
+        return energy;
     }
 
     public void setEnergy(double energy) {
         this.energy = energy;
     }
 
+    @Override
     public String getEnergyUnit() {
-        return this.energyUnit;
+        return energyUnit;
     }
 
     public void setEnergyUnit(String energyUnit) {
         this.energyUnit = energyUnit;
     }
 
-    /**
-     * Convenient call for {@link org.greenrobot.greendao.AbstractDao#delete(Object)}.
-     * Entity must attached to an entity context.
-     */
-    @Generated(hash = 128553479)
-    public void delete() {
-        if (myDao == null) {
-            throw new DaoException("Entity is detached from DAO context");
-        }
-        myDao.delete(this);
-    }
-
-    /**
-     * Convenient call for {@link org.greenrobot.greendao.AbstractDao#refresh(Object)}.
-     * Entity must attached to an entity context.
-     */
-    @Generated(hash = 1942392019)
-    public void refresh() {
-        if (myDao == null) {
-            throw new DaoException("Entity is detached from DAO context");
-        }
-        myDao.refresh(this);
-    }
-
-    /**
-     * Convenient call for {@link org.greenrobot.greendao.AbstractDao#update(Object)}.
-     * Entity must attached to an entity context.
-     */
-    @Generated(hash = 713229351)
-    public void update() {
-        if (myDao == null) {
-            throw new DaoException("Entity is detached from DAO context");
-        }
-        myDao.update(this);
+    @Override
+    public Measure getMeasure() {
+        return getFoodMeasureTables().size() > 0 ? getFoodMeasureTables().get(0) : null;
     }
 
     /**
@@ -245,12 +238,40 @@ public final class FoodTable implements Table {
         foodUsdaTables = null;
     }
 
-    public Date getChangedAt() {
-        return this.changedAt;
+    /**
+     * Convenient call for {@link org.greenrobot.greendao.AbstractDao#delete(Object)}.
+     * Entity must attached to an entity context.
+     */
+    @Generated(hash = 128553479)
+    public void delete() {
+        if (myDao == null) {
+            throw new DaoException("Entity is detached from DAO context");
+        }
+        myDao.delete(this);
     }
 
-    public void setChangedAt(Date changedAt) {
-        this.changedAt = changedAt;
+    /**
+     * Convenient call for {@link org.greenrobot.greendao.AbstractDao#refresh(Object)}.
+     * Entity must attached to an entity context.
+     */
+    @Generated(hash = 1942392019)
+    public void refresh() {
+        if (myDao == null) {
+            throw new DaoException("Entity is detached from DAO context");
+        }
+        myDao.refresh(this);
+    }
+
+    /**
+     * Convenient call for {@link org.greenrobot.greendao.AbstractDao#update(Object)}.
+     * Entity must attached to an entity context.
+     */
+    @Generated(hash = 713229351)
+    public void update() {
+        if (myDao == null) {
+            throw new DaoException("Entity is detached from DAO context");
+        }
+        myDao.update(this);
     }
 
     /**

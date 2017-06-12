@@ -1,11 +1,9 @@
 package com.alsash.reciper.mvp.presenter;
 
-import android.annotation.SuppressLint;
 import android.support.annotation.UiThread;
 import android.support.annotation.WorkerThread;
-import android.util.LongSparseArray;
 
-import com.alsash.reciper.mvp.model.entity.BaseGroup;
+import com.alsash.reciper.mvp.model.entity.BaseEntity;
 import com.alsash.reciper.mvp.model.entity.Recipe;
 import com.alsash.reciper.mvp.view.BaseListView;
 
@@ -20,53 +18,54 @@ import java.util.Map;
  * @param <G> - Entity, that represents group of recipes
  * @param <V> - view, that can be attached to this presenter
  */
-public abstract class BaseRecipeGroupPresenter<G extends BaseGroup, V extends BaseListView<G>>
+public abstract class BaseRecipeGroupPresenter<G extends BaseEntity, V extends BaseListView<G>>
         extends BaseListPresenter<G, V> {
 
     private final int recipesLimit;
-    private final Map<Long, List<Recipe>> prefetchedRecipes;
-    private final LongSparseArray<BaseRecipeGroupedPresenter> presenters;
+    private final Map<G, List<Recipe>> prefetchedRecipes;
+    private final Map<G, BaseRecipeGroupInnerPresenter<G>> presenters;
 
-    @SuppressLint("UseSparseArrays")
     public BaseRecipeGroupPresenter(int groupsLimit, int recipesLimit) {
         super(groupsLimit);
         this.recipesLimit = recipesLimit;
-        this.prefetchedRecipes = Collections.synchronizedMap(new HashMap<Long, List<Recipe>>());
-        this.presenters = new LongSparseArray<>(recipesLimit * 7);
+        this.prefetchedRecipes = Collections.synchronizedMap(
+                new HashMap<G, List<Recipe>>());
+        this.presenters = Collections.synchronizedMap(
+                new HashMap<G, BaseRecipeGroupInnerPresenter<G>>());
     }
 
     @WorkerThread
     protected abstract List<G> loadNextGroups(int offset, int limit);
 
     @WorkerThread
-    protected abstract List<Recipe> loadNextRecipes(int offset, int limit, long groupId);
+    protected abstract List<Recipe> loadNextRecipes(G group, int offset, int limit);
+
 
     @WorkerThread
     @Override
     protected List<G> loadNext(int offset, int limit) {
         List<G> groups = loadNextGroups(offset, limit);
-        // Prefetch Recipes by groupId
+        // Prefetch Recipes by group
         synchronized (prefetchedRecipes) {
             for (G group : groups) {
-                long id = group.getId();
-                prefetchedRecipes.put(id, loadNextRecipes(0, recipesLimit, id));
+                prefetchedRecipes.put(group, loadNextRecipes(group, 0, recipesLimit));
             }
         }
         return groups;
     }
 
     @UiThread
-    public BaseRecipeGroupedPresenter getInnerPresenter(long groupId) {
-        BaseRecipeGroupedPresenter presenter = presenters.get(groupId);
+    public BaseRecipeGroupInnerPresenter<G> getInnerPresenter(G group) {
+        BaseRecipeGroupInnerPresenter<G> presenter = presenters.get(group);
         if (presenter == null) {
-            presenter = new BaseRecipeGroupedPresenter(recipesLimit, groupId) {
+            presenter = new BaseRecipeGroupInnerPresenter<G>(recipesLimit, group) {
                 @Override
                 protected List<Recipe> loadNext(int offset, int limit) {
-                    return loadNextRecipes(offset, limit, getGroupId());
+                    return loadNextRecipes(getGroup(), offset, limit);
                 }
             };
-            presenters.put(groupId, presenter);
-            List<Recipe> recipes = prefetchedRecipes.get(groupId);
+            presenters.put(group, presenter);
+            List<Recipe> recipes = prefetchedRecipes.get(group);
             if (recipes != null) presenter.getModels().addAll(recipes);
         }
         return presenter;

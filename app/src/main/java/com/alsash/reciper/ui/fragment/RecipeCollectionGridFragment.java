@@ -11,6 +11,7 @@ import com.alsash.reciper.mvp.model.entity.Recipe;
 import com.alsash.reciper.mvp.presenter.RecipeCollectionGridPresenter;
 import com.alsash.reciper.mvp.view.RecipeCollectionGridView;
 import com.alsash.reciper.ui.adapter.RecipeCardListAdapter;
+import com.alsash.reciper.ui.adapter.interaction.RecipeListInteraction;
 import com.alsash.reciper.ui.animator.FlipCardListAnimator;
 
 import java.util.List;
@@ -18,10 +19,11 @@ import java.util.List;
 import javax.inject.Inject;
 
 /**
- * Simple final fragment with presenter and interactions
+ * A fragment that represent list of recipe cards
  */
-public class RecipeCollectionGridFragment extends BaseRecipeListFragment<Recipe, RecipeCollectionGridView>
-        implements RecipeCollectionGridView {
+public class RecipeCollectionGridFragment
+        extends BaseListFragment<Recipe, RecipeCollectionGridView>
+        implements RecipeCollectionGridView, RecipeListInteraction {
 
     @Inject
     RecipeCollectionGridPresenter presenter;
@@ -33,9 +35,19 @@ public class RecipeCollectionGridFragment extends BaseRecipeListFragment<Recipe,
     }
 
     @Override
+    public void onPin(Recipe recipe) {
+        // Do nothing
+    }
+
+    @Override
+    public void onOpen(Recipe recipe) {
+        navigator.fromActivity(getActivity()).toRecipeDetailsView(recipe.getId());
+    }
+
+    @Override
     protected RecipeCollectionGridPresenter inject() {
         ((ReciperApp) getActivity().getApplicationContext())
-                .getUiRecipeTabComponent()
+                .getUiRecipeCollectionsComponent()
                 .inject(this);
         return presenter; // Presenter will be embedded in fragment lifecycle
     }
@@ -43,11 +55,6 @@ public class RecipeCollectionGridFragment extends BaseRecipeListFragment<Recipe,
     @Override
     protected RecyclerView.Adapter getAdapter(List<Recipe> container) {
         return new RecipeCardListAdapter(this, container);
-    }
-
-    @Override
-    protected AppNavigator getNavigator() {
-        return navigator;
     }
 
     @Override

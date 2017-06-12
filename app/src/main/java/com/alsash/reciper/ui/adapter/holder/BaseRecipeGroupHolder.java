@@ -7,9 +7,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
-import com.alsash.reciper.mvp.model.entity.BaseGroup;
+import com.alsash.reciper.mvp.model.entity.BaseEntity;
 import com.alsash.reciper.mvp.model.entity.Recipe;
-import com.alsash.reciper.mvp.presenter.BaseRecipeGroupedPresenter;
+import com.alsash.reciper.mvp.presenter.BaseRecipeGroupInnerPresenter;
 import com.alsash.reciper.mvp.view.RecipeListView;
 import com.alsash.reciper.ui.adapter.RecipeCardListAdapter;
 import com.alsash.reciper.ui.adapter.interaction.RecipeListInteraction;
@@ -23,11 +23,11 @@ import static android.support.v7.widget.RecyclerView.SCROLL_STATE_SETTLING;
 /**
  * An abstract view holder that shows list of Recipes with help of their Presenter
  */
-public abstract class BaseRecipeGroupHolder<G extends BaseGroup> extends RecyclerView.ViewHolder
+public abstract class BaseRecipeGroupHolder<G extends BaseEntity> extends RecyclerView.ViewHolder
         implements RecipeListView {
 
     private RecipeListInteraction interaction;
-    private BaseRecipeGroupedPresenter presenter;
+    private BaseRecipeGroupInnerPresenter<G> presenter;
     private RecyclerView groupList;
     private RecipeCardListAdapter adapter;
     private boolean viewVisible;
@@ -50,11 +50,14 @@ public abstract class BaseRecipeGroupHolder<G extends BaseGroup> extends Recycle
 
     public abstract void bindGroup(G group);
 
+    @Override
+    public abstract void showLoading(boolean loading);
+
     public void setInteraction(RecipeListInteraction interaction) {
         this.interaction = interaction;
     }
 
-    public void setPresenter(BaseRecipeGroupedPresenter newPresenter) {
+    public void setPresenter(BaseRecipeGroupInnerPresenter<G> newPresenter) {
         showLoading(false);
         if (presenter == null) {
             presenter = newPresenter;

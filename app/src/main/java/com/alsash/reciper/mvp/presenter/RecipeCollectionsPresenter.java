@@ -3,9 +3,9 @@ package com.alsash.reciper.mvp.presenter;
 import android.support.v4.app.Fragment;
 
 import com.alsash.reciper.mvp.view.RecipeCollectionsView;
+import com.alsash.reciper.ui.fragment.RecipeCollectionCategoryFragment;
 import com.alsash.reciper.ui.fragment.RecipeCollectionGridFragment;
-import com.alsash.reciper.ui.fragment.RecipeTabCategoryFragment;
-import com.alsash.reciper.ui.fragment.RecipeTabLabelFragment;
+import com.alsash.reciper.ui.fragment.RecipeCollectionLabelFragment;
 
 /**
  * A RecipeCollectionsPresenter
@@ -15,9 +15,9 @@ public class RecipeCollectionsPresenter implements BasePresenter<RecipeCollectio
     private static final int MAIN_COLLECTION_POSITION = 1;
 
     private final Fragment[] collections = new Fragment[]{
-            RecipeTabCategoryFragment.newInstance(),
+            RecipeCollectionCategoryFragment.newInstance(),
             RecipeCollectionGridFragment.newInstance(),
-            RecipeTabLabelFragment.newInstance()
+            RecipeCollectionLabelFragment.newInstance()
     };
 
     private boolean mainCollectionShowed;

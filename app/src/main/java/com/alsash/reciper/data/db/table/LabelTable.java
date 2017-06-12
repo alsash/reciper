@@ -1,5 +1,7 @@
 package com.alsash.reciper.data.db.table;
 
+import com.alsash.reciper.mvp.model.entity.Label;
+
 import org.greenrobot.greendao.DaoException;
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Generated;
@@ -16,9 +18,10 @@ import java.util.Date;
  */
 @Entity(
         nameInDb = "LABEL",
+        generateGettersSetters = false,
         active = true
 )
-public final class LabelTable implements Table {
+public final class LabelTable implements Table, Label {
     @Id
     Long id;
     @Unique
@@ -49,32 +52,39 @@ public final class LabelTable implements Table {
     public LabelTable() {
     }
 
+    @Override
     public Long getId() {
-        return this.id;
+        return id;
     }
 
+    @Override
     public void setId(Long id) {
         this.id = id;
     }
 
+    @Override
     public String getUuid() {
-        return this.uuid;
+        return uuid;
     }
 
+    @Override
     public void setUuid(String uuid) {
         this.uuid = uuid;
     }
 
+    @Override
     public Date getChangedAt() {
-        return this.changedAt;
+        return changedAt;
     }
 
+    @Override
     public void setChangedAt(Date changedAt) {
         this.changedAt = changedAt;
     }
 
+    @Override
     public String getName() {
-        return this.name;
+        return name;
     }
 
     public void setName(String name) {

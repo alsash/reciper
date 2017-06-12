@@ -1,5 +1,7 @@
 package com.alsash.reciper.data.db.table;
 
+import com.alsash.reciper.mvp.model.entity.Photo;
+
 import org.greenrobot.greendao.DaoException;
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Generated;
@@ -16,9 +18,10 @@ import java.util.Date;
  */
 @Entity(
         nameInDb = "PHOTO",
+        generateGettersSetters = false,
         active = true
 )
-public final class PhotoTable implements Table {
+public final class PhotoTable implements Table, Photo {
     @Id
     Long id;
     @Unique
@@ -26,7 +29,6 @@ public final class PhotoTable implements Table {
     @Index
     Date changedAt;
     String url;
-    String uri;
     /**
      * Used to resolve relations
      */
@@ -38,49 +40,55 @@ public final class PhotoTable implements Table {
     @Generated(hash = 505600885)
     private transient PhotoTableDao myDao;
 
-    @Generated(hash = 1198313965)
-    public PhotoTable(Long id, String uuid, Date changedAt, String url, String uri) {
+    @Generated(hash = 745723696)
+    public PhotoTable(Long id, String uuid, Date changedAt, String url) {
         this.id = id;
         this.uuid = uuid;
         this.changedAt = changedAt;
         this.url = url;
-        this.uri = uri;
     }
 
     @Generated(hash = 1809391605)
     public PhotoTable() {
     }
 
+    @Override
     public Long getId() {
-        return this.id;
+        return id;
     }
 
+    @Override
     public void setId(Long id) {
         this.id = id;
     }
 
+    @Override
     public String getUuid() {
-        return this.uuid;
+        return uuid;
     }
 
+    @Override
     public void setUuid(String uuid) {
         this.uuid = uuid;
     }
 
+    @Override
+    public Date getChangedAt() {
+        return changedAt;
+    }
+
+    @Override
+    public void setChangedAt(Date changedAt) {
+        this.changedAt = changedAt;
+    }
+
+    @Override
     public String getUrl() {
-        return this.url;
+        return url;
     }
 
     public void setUrl(String url) {
         this.url = url;
-    }
-
-    public String getUri() {
-        return this.uri;
-    }
-
-    public void setUri(String uri) {
-        this.uri = uri;
     }
 
     /**
@@ -117,14 +125,6 @@ public final class PhotoTable implements Table {
             throw new DaoException("Entity is detached from DAO context");
         }
         myDao.update(this);
-    }
-
-    public Date getChangedAt() {
-        return this.changedAt;
-    }
-
-    public void setChangedAt(Date changedAt) {
-        this.changedAt = changedAt;
     }
 
     /**

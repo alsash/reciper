@@ -70,6 +70,54 @@ public class DbManager {
         return this;
     }
 
+    public List<CategoryTable> getCategoryTable() {
+        QueryBuilder<CategoryTable> builder = daoSession.getCategoryTableDao().queryBuilder();
+        obtainRestriction(builder);
+        return builder.build().list();
+    }
+
+    public List<LabelTable> getLabelTable() {
+        QueryBuilder<LabelTable> builder = daoSession.getLabelTableDao().queryBuilder();
+        obtainRestriction(builder);
+        return builder.build().list();
+    }
+
+    public List<RecipeTable> getRecipeTable() {
+        QueryBuilder<RecipeTable> builder = daoSession.getRecipeTableDao().queryBuilder();
+        obtainRestriction(builder);
+        return builder.build().list();
+    }
+
+    public List<RecipeTable> getRecipeTable(CategoryTable categoryTable) {
+        QueryBuilder<RecipeTable> builder = daoSession.getRecipeTableDao().queryBuilder();
+        obtainRestriction(builder);
+        builder
+                .join(
+                        RecipeTableDao.Properties.CategoryUuid,
+                        CategoryTable.class,
+                        CategoryTableDao.Properties.Uuid
+                )
+                .where(
+                        CategoryTableDao.Properties.Uuid.eq(categoryTable.getUuid())
+                );
+        return builder.build().list();
+    }
+
+    public List<RecipeTable> getRecipeTable(LabelTable labelTable) {
+        QueryBuilder<RecipeTable> builder = daoSession.getRecipeTableDao().queryBuilder();
+        obtainRestriction(builder);
+        builder
+                .join(
+                        RecipeTableDao.Properties.Uuid,
+                        RecipeLabelTable.class,
+                        RecipeLabelTableDao.Properties.RecipeUuid
+                )
+                .where(
+                        RecipeLabelTableDao.Properties.LabelUuid.eq(labelTable.getUuid())
+                );
+        return builder.build().list();
+    }
+
     public List<FoodTable> getFoodTable(boolean usdaFetched) {
         QueryBuilder<FoodTable> builder = daoSession.getFoodTableDao().queryBuilder();
         obtainRestriction(builder);

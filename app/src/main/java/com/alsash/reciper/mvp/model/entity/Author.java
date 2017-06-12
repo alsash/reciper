@@ -1,9 +1,9 @@
-package com.alsash.reciper.mvp.model;
+package com.alsash.reciper.mvp.model.entity;
 
 /**
  * An Author entity
  */
-public interface Author extends Entity {
+public interface Author extends BaseEntity {
 
     String getName();
 

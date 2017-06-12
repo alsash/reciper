@@ -22,7 +22,7 @@ public class RecipeCardHolder extends RecyclerView.ViewHolder {
     private final CardView frontCard;
     private final ImageView frontImage;
     private final TextView frontTitle;
-    private final ImageButton frontExpandButton;
+    private final ImageButton frontPinButton;
     private final ImageButton frontOpenButton;
 
     private final CardView backCard;
@@ -30,7 +30,7 @@ public class RecipeCardHolder extends RecyclerView.ViewHolder {
     private final TextView backAccountTitle;
     private final TextView backCreationDate;
     private final TextView backTitle;
-    private final ImageButton backExpandButton;
+    private final ImageButton backPinButton;
     private final ImageButton backOpenButton;
 
     public RecipeCardHolder(ViewGroup parent) {
@@ -40,7 +40,7 @@ public class RecipeCardHolder extends RecyclerView.ViewHolder {
         frontCard = (CardView) itemView.findViewById(R.id.card_recipe_front);
         frontImage = (ImageView) itemView.findViewById(R.id.card_recipe_front_image);
         frontTitle = (TextView) itemView.findViewById(R.id.card_recipe_front_title);
-        frontExpandButton = (ImageButton) itemView.findViewById(R.id.card_recipe_front_expand_button);
+        frontPinButton = (ImageButton) itemView.findViewById(R.id.card_recipe_front_expand_button);
         frontOpenButton = (ImageButton) itemView.findViewById(R.id.card_recipe_front_open_button);
 
         backCard = (CardView) itemView.findViewById(R.id.card_recipe_back);
@@ -49,7 +49,7 @@ public class RecipeCardHolder extends RecyclerView.ViewHolder {
         backAccountTitle = (TextView) itemView.findViewById(R.id.card_recipe_back_account_title);
         backCreationDate = (TextView) itemView.findViewById(R.id.card_recipe_back_recipe_creation_date);
         backTitle = (TextView) itemView.findViewById(R.id.card_recipe_back_title);
-        backExpandButton = (ImageButton) itemView.findViewById(R.id.card_recipe_back_expand_button);
+        backPinButton = (ImageButton) itemView.findViewById(R.id.card_recipe_back_expand_button);
         backOpenButton = (ImageButton) itemView.findViewById(R.id.card_recipe_back_open_button);
 
         setBackVisible(false);
@@ -64,7 +64,7 @@ public class RecipeCardHolder extends RecyclerView.ViewHolder {
      * Set the listeners in the following sequence:
      *
      * @param listeners 0. flipListener
-     *                  1. expandListener
+     *                  1. PinListener
      *                  2. openListener
      */
     public void setListeners(View.OnClickListener... listeners) {
@@ -75,8 +75,8 @@ public class RecipeCardHolder extends RecyclerView.ViewHolder {
                     frontCard.setOnClickListener(listeners[i]);
                     break;
                 case 1:
-                    backExpandButton.setOnClickListener(listeners[i]);
-                    frontExpandButton.setOnClickListener(listeners[i]);
+                    backPinButton.setOnClickListener(listeners[i]);
+                    frontPinButton.setOnClickListener(listeners[i]);
                     break;
                 case 2:
                     backOpenButton.setOnClickListener(listeners[i]);

@@ -1,5 +1,7 @@
 package com.alsash.reciper.data.db.table;
 
+import com.alsash.reciper.mvp.model.entity.Measure;
+
 import org.greenrobot.greendao.DaoException;
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Generated;
@@ -17,9 +19,10 @@ import java.util.Date;
  */
 @Entity(
         nameInDb = "FOOD_MEASURE",
+        generateGettersSetters = false,
         active = true
 )
-public final class FoodMeasureTable implements Table {
+public final class FoodMeasureTable implements Table, Measure {
     @Id
     Long id;
     @Unique
@@ -61,64 +64,74 @@ public final class FoodMeasureTable implements Table {
     public FoodMeasureTable() {
     }
 
+    @Override
     public Long getId() {
-        return this.id;
+        return id;
     }
 
+    @Override
     public void setId(Long id) {
         this.id = id;
     }
 
+    @Override
     public String getUuid() {
-        return this.uuid;
+        return uuid;
     }
 
+    @Override
     public void setUuid(String uuid) {
         this.uuid = uuid;
     }
 
+    @Override
     public Date getChangedAt() {
-        return this.changedAt;
+        return changedAt;
     }
 
+    @Override
     public void setChangedAt(Date changedAt) {
         this.changedAt = changedAt;
     }
 
     public String getFoodUuid() {
-        return this.foodUuid;
+        return foodUuid;
     }
 
     public void setFoodUuid(String foodUuid) {
         this.foodUuid = foodUuid;
     }
 
+    @Override
     public String getUnitOne() {
-        return this.unitOne;
+        return unitOne;
     }
 
     public void setUnitOne(String unitOne) {
         this.unitOne = unitOne;
     }
 
+    @Override
     public String getUnitOther() {
-        return this.unitOther;
+        return unitOther;
     }
 
     public void setUnitOther(String unitOther) {
         this.unitOther = unitOther;
     }
 
+    @Override
     public double getWeight() {
-        return this.weight;
+        return weight;
     }
 
     public void setWeight(double weight) {
         this.weight = weight;
     }
 
+    @Override
     public String getWeightUnit() {
-        return this.weightUnit;
+        return weightUnit;
     }
 
     public void setWeightUnit(String weightUnit) {

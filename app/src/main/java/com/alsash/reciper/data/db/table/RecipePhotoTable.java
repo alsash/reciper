@@ -5,9 +5,12 @@ import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Generated;
 import org.greenrobot.greendao.annotation.Id;
 import org.greenrobot.greendao.annotation.Index;
+import org.greenrobot.greendao.annotation.JoinProperty;
+import org.greenrobot.greendao.annotation.ToMany;
 import org.greenrobot.greendao.annotation.Unique;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * A to-many relation model of the Recipe and the Photo entities,
@@ -25,10 +28,13 @@ public final class RecipePhotoTable implements Table {
     String uuid;
     @Index
     Date changedAt;
+    boolean main;
     @Index(name = "RECIPE_TO_PHOTO")
     String recipeUuid;
     @Index(name = "PHOTO_TO_RECIPE")
     String photoUuid;
+    @ToMany(joinProperties = {@JoinProperty(name = "photoUuid", referencedName = "uuid")})
+    List<PhotoTable> photoTables;
     /**
      * Used to resolve relations
      */
@@ -40,12 +46,13 @@ public final class RecipePhotoTable implements Table {
     @Generated(hash = 1230626793)
     private transient RecipePhotoTableDao myDao;
 
-    @Generated(hash = 1643778738)
-    public RecipePhotoTable(Long id, String uuid, Date changedAt, String recipeUuid,
-                            String photoUuid) {
+    @Generated(hash = 1842787686)
+    public RecipePhotoTable(Long id, String uuid, Date changedAt, boolean main,
+                            String recipeUuid, String photoUuid) {
         this.id = id;
         this.uuid = uuid;
         this.changedAt = changedAt;
+        this.main = main;
         this.recipeUuid = recipeUuid;
         this.photoUuid = photoUuid;
     }
@@ -70,6 +77,22 @@ public final class RecipePhotoTable implements Table {
         this.uuid = uuid;
     }
 
+    public Date getChangedAt() {
+        return this.changedAt;
+    }
+
+    public void setChangedAt(Date changedAt) {
+        this.changedAt = changedAt;
+    }
+
+    public boolean getMain() {
+        return this.main;
+    }
+
+    public void setMain(boolean main) {
+        this.main = main;
+    }
+
     public String getRecipeUuid() {
         return this.recipeUuid;
     }
@@ -84,6 +107,37 @@ public final class RecipePhotoTable implements Table {
 
     public void setPhotoUuid(String photoUuid) {
         this.photoUuid = photoUuid;
+    }
+
+    /**
+     * To-many relationship, resolved on first access (and after reset).
+     * Changes to to-many relations are not persisted, make changes to the target entity.
+     */
+    @Generated(hash = 278895634)
+    public List<PhotoTable> getPhotoTables() {
+        if (photoTables == null) {
+            final DaoSession daoSession = this.daoSession;
+            if (daoSession == null) {
+                throw new DaoException("Entity is detached from DAO context");
+            }
+            PhotoTableDao targetDao = daoSession.getPhotoTableDao();
+            List<PhotoTable> photoTablesNew = targetDao
+                    ._queryRecipePhotoTable_PhotoTables(photoUuid);
+            synchronized (this) {
+                if (photoTables == null) {
+                    photoTables = photoTablesNew;
+                }
+            }
+        }
+        return photoTables;
+    }
+
+    /**
+     * Resets a to-many relationship, making the next get call to query for a fresh result.
+     */
+    @Generated(hash = 1475926327)
+    public synchronized void resetPhotoTables() {
+        photoTables = null;
     }
 
     /**
@@ -120,14 +174,6 @@ public final class RecipePhotoTable implements Table {
             throw new DaoException("Entity is detached from DAO context");
         }
         myDao.update(this);
-    }
-
-    public Date getChangedAt() {
-        return this.changedAt;
-    }
-
-    public void setChangedAt(Date changedAt) {
-        this.changedAt = changedAt;
     }
 
     /**

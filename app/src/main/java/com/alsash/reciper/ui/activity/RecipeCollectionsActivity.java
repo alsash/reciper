@@ -24,6 +24,7 @@ public class RecipeCollectionsActivity extends BaseDrawerActivity<RecipeCollecti
 
     @Inject
     RecipeCollectionsPresenter presenter;
+
     private BottomNavigationView navigation;
     private SwipePagerAdapter adapter;
     private SwipeViewPager pager;

@@ -1,5 +1,8 @@
 package com.alsash.reciper.data.db.table;
 
+import com.alsash.reciper.mvp.model.entity.Author;
+import com.alsash.reciper.mvp.model.entity.Photo;
+
 import org.greenrobot.greendao.DaoException;
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Generated;
@@ -19,9 +22,10 @@ import java.util.List;
  */
 @Entity(
         nameInDb = "AUTHOR",
+        generateGettersSetters = false,
         active = true
 )
-public final class AuthorTable implements Table {
+public final class AuthorTable implements Table, Author {
     @Id
     Long id;
     @Unique
@@ -60,40 +64,48 @@ public final class AuthorTable implements Table {
     public AuthorTable() {
     }
 
+    @Override
     public Long getId() {
-        return this.id;
+        return id;
     }
 
+    @Override
     public void setId(Long id) {
         this.id = id;
     }
 
+    @Override
     public String getUuid() {
-        return this.uuid;
+        return uuid;
     }
 
+    @Override
     public void setUuid(String uuid) {
         this.uuid = uuid;
     }
 
+    @Override
     public Date getChangedAt() {
-        return this.changedAt;
+        return changedAt;
     }
 
+    @Override
     public void setChangedAt(Date changedAt) {
         this.changedAt = changedAt;
     }
 
+    @Override
     public String getName() {
-        return this.name;
+        return name;
     }
 
     public void setName(String name) {
         this.name = name;
     }
 
+    @Override
     public String getMail() {
-        return this.mail;
+        return mail;
     }
 
     public void setMail(String mail) {
@@ -101,11 +113,16 @@ public final class AuthorTable implements Table {
     }
 
     public String getPhotoUuid() {
-        return this.photoUuid;
+        return photoUuid;
     }
 
     public void setPhotoUuid(String photoUuid) {
         this.photoUuid = photoUuid;
+    }
+
+    @Override
+    public Photo getPhoto() {
+        return getPhotoTables().size() > 0 ? getPhotoTables().get(0) : null;
     }
 
     /**

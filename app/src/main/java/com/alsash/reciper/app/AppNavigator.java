@@ -20,22 +20,38 @@ import static android.support.v4.content.IntentCompat.FLAG_ACTIVITY_CLEAR_TASK;
 public class AppNavigator {
 
     private final Context context;
+    private Context activityContext;
 
     public AppNavigator(Context context) {
         this.context = context;
     }
 
-    public void toMainView() {
+    public AppNavigator fromActivity(Context activityContext) {
+        this.activityContext = activityContext;
+        return this;
+    }
+
+    public void toRecipeCollectionsView() {
+        Context context = getContext();
         Intent intent = new Intent(context, RecipeCollectionsActivity.class);
         intent.setFlags(FLAG_ACTIVITY_CLEAR_TASK | FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(intent);
     }
 
-    public void toRecipeMainView(long recipeId) {
+    public void toRecipeDetailsView(long recipeId) {
         Toast.makeText(context, "Recipe id = " + recipeId, Toast.LENGTH_LONG).show();
     }
 
     public void toRecipeExpandView(long recipeId, FragmentManager fragmentManager) {
         RecipeBottomDialog.show(recipeId, fragmentManager);
+    }
+
+    private Context getContext() {
+        if (activityContext != null) {
+            Context context = activityContext;
+            activityContext = null;
+            return context;
+        }
+        return this.context;
     }
 }

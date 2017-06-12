@@ -16,7 +16,7 @@ public class RecipeLabelCardListAdapter
         extends BaseRecipeGroupAdapter<Label, RecipeLabelCardHolder> {
 
     public RecipeLabelCardListAdapter(List<Label> groupList,
-                                      RecipeGroupInteraction groupInteraction,
+                                      RecipeGroupInteraction<Label> groupInteraction,
                                       RecipeListInteraction recipeInteraction) {
         super(groupList, groupInteraction, recipeInteraction);
     }

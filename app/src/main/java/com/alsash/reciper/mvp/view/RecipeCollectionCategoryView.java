@@ -5,5 +5,5 @@ import com.alsash.reciper.mvp.model.entity.Category;
 /**
  * Simple view for its presenter
  */
-public interface RecipeTabCategoryView extends BaseListView<Category> {
+public interface RecipeCollectionCategoryView extends BaseListView<Category> {
 }

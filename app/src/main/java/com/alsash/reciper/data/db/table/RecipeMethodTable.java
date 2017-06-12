@@ -1,5 +1,7 @@
 package com.alsash.reciper.data.db.table;
 
+import com.alsash.reciper.mvp.model.entity.Method;
+
 import org.greenrobot.greendao.DaoException;
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Generated;
@@ -18,9 +20,10 @@ import java.util.Date;
  */
 @Entity(
         nameInDb = "RECIPE_METHOD",
+        generateGettersSetters = false,
         active = true
 )
-public final class RecipeMethodTable implements Table {
+public final class RecipeMethodTable implements Table, Method {
     @Id
     Long id;
     @Unique
@@ -37,9 +40,7 @@ public final class RecipeMethodTable implements Table {
      */
     @Generated(hash = 2040040024)
     private transient DaoSession daoSession;
-    /**
-     * Used for active entity operations.
-     */
+    /** Used for active entity operations. */
     @Generated(hash = 1424435777)
     private transient RecipeMethodTableDao myDao;
 
@@ -58,32 +59,38 @@ public final class RecipeMethodTable implements Table {
     public RecipeMethodTable() {
     }
 
+    @Override
     public Long getId() {
-        return this.id;
+        return id;
     }
 
+    @Override
     public void setId(Long id) {
         this.id = id;
     }
 
+    @Override
     public String getUuid() {
-        return this.uuid;
+        return uuid;
     }
 
+    @Override
     public void setUuid(String uuid) {
         this.uuid = uuid;
     }
 
+    @Override
     public Date getChangedAt() {
-        return this.changedAt;
+        return changedAt;
     }
 
+    @Override
     public void setChangedAt(Date changedAt) {
         this.changedAt = changedAt;
     }
 
     public String getRecipeUuid() {
-        return this.recipeUuid;
+        return recipeUuid;
     }
 
     public void setRecipeUuid(String recipeUuid) {
@@ -91,15 +98,16 @@ public final class RecipeMethodTable implements Table {
     }
 
     public int getIndex() {
-        return this.index;
+        return index;
     }
 
     public void setIndex(int index) {
         this.index = index;
     }
 
+    @Override
     public String getBody() {
-        return this.body;
+        return body;
     }
 
     public void setBody(String body) {
@@ -142,9 +150,7 @@ public final class RecipeMethodTable implements Table {
         myDao.update(this);
     }
 
-    /**
-     * called by internal mechanisms, do not call yourself.
-     */
+    /** called by internal mechanisms, do not call yourself. */
     @Generated(hash = 1307702544)
     public void __setDaoSession(DaoSession daoSession) {
         this.daoSession = daoSession;

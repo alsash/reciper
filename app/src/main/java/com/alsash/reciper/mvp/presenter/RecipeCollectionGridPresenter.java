@@ -9,9 +9,10 @@ import java.util.List;
 /**
  * A Presenter that represents collection of all Recipes
  */
-public class RecipeCollectionGridPresenter extends BaseListPresenter<Recipe, RecipeCollectionGridView> {
+public class RecipeCollectionGridPresenter
+        extends BaseListPresenter<Recipe, RecipeCollectionGridView> {
 
-    private static final int PAGINATION_LIMIT = 10;
+    private static final int PAGINATION_LIMIT = 15;
 
     private final StorageLogic storage;
 
@@ -22,6 +23,6 @@ public class RecipeCollectionGridPresenter extends BaseListPresenter<Recipe, Rec
 
     @Override
     protected List<Recipe> loadNext(int offset, int limit) {
-        return null; // storage.getRecipes(offset, limit);
+        return storage.getRecipes(offset, limit);
     }
 }

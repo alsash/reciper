@@ -3,9 +3,16 @@ package com.alsash.reciper.logic;
 
 import com.alsash.reciper.data.cloud.CloudManager;
 import com.alsash.reciper.data.db.DbManager;
+import com.alsash.reciper.data.db.table.CategoryTable;
 import com.alsash.reciper.data.db.table.FoodTable;
+import com.alsash.reciper.data.db.table.LabelTable;
+import com.alsash.reciper.data.db.table.RecipeTable;
 import com.alsash.reciper.logic.exception.MainThreadException;
+import com.alsash.reciper.mvp.model.entity.Category;
+import com.alsash.reciper.mvp.model.entity.Label;
+import com.alsash.reciper.mvp.model.entity.Recipe;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -40,6 +47,55 @@ public class StorageLogic {
         } else {
             deleteAllEntitiesCreatedAt(createdAt);
         }
+    }
+
+    public List<Category> getCategories(int offset, int limit) {
+        List<Category> categories = new ArrayList<>();
+        List<CategoryTable> categoryTables = dbManager
+                .restrictWith(offset, limit)
+                .getCategoryTable();
+        for (CategoryTable categoryTable : categoryTables) {
+            // Prefetch to-one relations
+            categoryTable.getPhoto();
+            categories.add(categoryTable);
+        }
+        return categories;
+    }
+
+    public List<Label> getLabels(int offset, int limit) {
+        List<Label> labels = new ArrayList<>();
+        List<LabelTable> labelTables = dbManager
+                .restrictWith(offset, limit)
+                .getLabelTable();
+        labels.addAll(labelTables);
+        return labels;
+    }
+
+    public List<Recipe> getRecipes(int offset, int limit) {
+        List<Recipe> recipes = new ArrayList<>();
+        List<RecipeTable> recipeTables = dbManager
+                .restrictWith(offset, limit)
+                .getRecipeTable();
+        recipes.addAll(prefetchRecipeRelations(recipeTables));
+        return recipes;
+    }
+
+    public List<Recipe> getRecipes(Category category, int offset, int limit) {
+        List<Recipe> recipes = new ArrayList<>();
+        List<RecipeTable> recipeTables = dbManager
+                .restrictWith(offset, limit)
+                .getRecipeTable((CategoryTable) category);
+        recipes.addAll(prefetchRecipeRelations(recipeTables));
+        return recipes;
+    }
+
+    public List<Recipe> getRecipes(Label label, int offset, int limit) {
+        List<Recipe> recipes = new ArrayList<>();
+        List<RecipeTable> recipeTables = dbManager
+                .restrictWith(offset, limit)
+                .getRecipeTable((LabelTable) label);
+        recipes.addAll(prefetchRecipeRelations(recipeTables));
+        return recipes;
     }
 
     private boolean isDbUpToDate() {
@@ -123,5 +179,31 @@ public class StorageLogic {
             dbManager.changeWith(updateDate).modifyDeepFoodTable(dbFoods);
         } while (dbFoods.size() > 0);
         return true;
+    }
+
+    private List<RecipeTable> prefetchRecipeRelations(List<RecipeTable> recipeTables) {
+        for (RecipeTable recipeTable : recipeTables) prefetchRecipeRelations(recipeTable);
+        return recipeTables;
+    }
+
+    private List<RecipeTable> prefetchRecipeRelationsFull(List<RecipeTable> recipeTables) {
+        for (RecipeTable recipeTable : recipeTables) prefetchRecipeRelationsFull(recipeTable);
+        return recipeTables;
+    }
+
+    private RecipeTable prefetchRecipeRelations(RecipeTable recipeTable) {
+        recipeTable.getAuthor();
+        recipeTable.getCategory();
+        recipeTable.getMainPhoto();
+        return recipeTable;
+    }
+
+    private RecipeTable prefetchRecipeRelationsFull(RecipeTable recipeTable) {
+        prefetchRecipeRelations(recipeTable);
+        recipeTable.getPhotos();
+        recipeTable.getLabels();
+        recipeTable.getIngredients();
+        recipeTable.getMethods();
+        return recipeTable;
     }
 }

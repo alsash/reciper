@@ -10,7 +10,11 @@ import dagger.Subcomponent;
  * DI Component that build bridge between StartActivity and its dependencies
  */
 @StartScope
-@Subcomponent(modules = {UiStartModule.class})
+@Subcomponent(
+        modules = {
+                UiStartModule.class
+        }
+)
 public interface UiStartComponent {
 
     void inject(StartActivity startActivity);

@@ -1,13 +1,19 @@
 package com.alsash.reciper.data.db.table;
 
+import com.alsash.reciper.mvp.model.entity.Category;
+import com.alsash.reciper.mvp.model.entity.Photo;
+
 import org.greenrobot.greendao.DaoException;
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Generated;
 import org.greenrobot.greendao.annotation.Id;
 import org.greenrobot.greendao.annotation.Index;
+import org.greenrobot.greendao.annotation.JoinProperty;
+import org.greenrobot.greendao.annotation.ToMany;
 import org.greenrobot.greendao.annotation.Unique;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * A model of the Category entity
@@ -16,9 +22,10 @@ import java.util.Date;
  */
 @Entity(
         nameInDb = "CATEGORY",
+        generateGettersSetters = false,
         active = true
 )
-public final class CategoryTable implements Table {
+public final class CategoryTable implements Table, Category {
     @Id
     Long id;
     @Unique
@@ -28,6 +35,8 @@ public final class CategoryTable implements Table {
     String name;
     @Index(name = "PHOTO_TO_CATEGORY", unique = true)
     String photoUuid;
+    @ToMany(joinProperties = {@JoinProperty(name = "photoUuid", referencedName = "uuid")})
+    List<PhotoTable> photoTables;
     /**
      * Used to resolve relations
      */
@@ -53,32 +62,39 @@ public final class CategoryTable implements Table {
     public CategoryTable() {
     }
 
+    @Override
     public Long getId() {
-        return this.id;
+        return id;
     }
 
+    @Override
     public void setId(Long id) {
         this.id = id;
     }
 
+    @Override
     public String getUuid() {
-        return this.uuid;
+        return uuid;
     }
 
+    @Override
     public void setUuid(String uuid) {
         this.uuid = uuid;
     }
 
+    @Override
     public Date getChangedAt() {
-        return this.changedAt;
+        return changedAt;
     }
 
+    @Override
     public void setChangedAt(Date changedAt) {
         this.changedAt = changedAt;
     }
 
+    @Override
     public String getName() {
-        return this.name;
+        return name;
     }
 
     public void setName(String name) {
@@ -86,11 +102,16 @@ public final class CategoryTable implements Table {
     }
 
     public String getPhotoUuid() {
-        return this.photoUuid;
+        return photoUuid;
     }
 
     public void setPhotoUuid(String photoUuid) {
         this.photoUuid = photoUuid;
+    }
+
+    @Override
+    public Photo getPhoto() {
+        return getPhotoTables().size() > 0 ? getPhotoTables().get(0) : null;
     }
 
     /**
@@ -127,6 +148,37 @@ public final class CategoryTable implements Table {
             throw new DaoException("Entity is detached from DAO context");
         }
         myDao.update(this);
+    }
+
+    /**
+     * To-many relationship, resolved on first access (and after reset).
+     * Changes to to-many relations are not persisted, make changes to the target entity.
+     */
+    @Generated(hash = 228559382)
+    public List<PhotoTable> getPhotoTables() {
+        if (photoTables == null) {
+            final DaoSession daoSession = this.daoSession;
+            if (daoSession == null) {
+                throw new DaoException("Entity is detached from DAO context");
+            }
+            PhotoTableDao targetDao = daoSession.getPhotoTableDao();
+            List<PhotoTable> photoTablesNew = targetDao
+                    ._queryCategoryTable_PhotoTables(photoUuid);
+            synchronized (this) {
+                if (photoTables == null) {
+                    photoTables = photoTablesNew;
+                }
+            }
+        }
+        return photoTables;
+    }
+
+    /**
+     * Resets a to-many relationship, making the next get call to query for a fresh result.
+     */
+    @Generated(hash = 1475926327)
+    public synchronized void resetPhotoTables() {
+        photoTables = null;
     }
 
     /**

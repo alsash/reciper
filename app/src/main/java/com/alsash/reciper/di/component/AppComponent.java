@@ -18,13 +18,12 @@ import dagger.Component;
                 AppContextModule.class,
                 AppDataCloudModule.class,
                 AppDataDbModule.class,
-                AppLogicModule.class}
+                AppLogicModule.class
+        }
 )
 public interface AppComponent {
 
     UiStartComponent.Builder getStartComponentBuilder();
-
-    UiRecipeTabComponent.Builder getRecipeTabComponentBuilder();
 
     UiRecipeCollectionsComponent.Builder getRecipeCollectionsComponentBuilder();
 }

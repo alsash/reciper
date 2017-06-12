@@ -46,7 +46,7 @@ public class StartPresenter implements BasePresenter<StartView> {
         if (!fetched) return;
         view.finishView();
         detach();
-        navigator.toMainView();
+        navigator.toRecipeCollectionsView();
     }
 
     @Override

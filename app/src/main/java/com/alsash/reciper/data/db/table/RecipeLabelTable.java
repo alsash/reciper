@@ -5,9 +5,12 @@ import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Generated;
 import org.greenrobot.greendao.annotation.Id;
 import org.greenrobot.greendao.annotation.Index;
+import org.greenrobot.greendao.annotation.JoinProperty;
+import org.greenrobot.greendao.annotation.ToMany;
 import org.greenrobot.greendao.annotation.Unique;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * A to-many relation model of the Recipe and the Label entities,
@@ -29,6 +32,8 @@ public final class RecipeLabelTable implements Table {
     String recipeUuid;
     @Index(name = "LABEL_TO_RECIPE")
     String labelUuid;
+    @ToMany(joinProperties = {@JoinProperty(name = "labelUuid", referencedName = "uuid")})
+    List<LabelTable> labelTables;
     /**
      * Used to resolve relations
      */
@@ -54,24 +59,38 @@ public final class RecipeLabelTable implements Table {
     public RecipeLabelTable() {
     }
 
+    @Override
     public Long getId() {
-        return this.id;
+        return id;
     }
 
+    @Override
     public void setId(Long id) {
         this.id = id;
     }
 
+    @Override
     public String getUuid() {
-        return this.uuid;
+        return uuid;
     }
 
+    @Override
     public void setUuid(String uuid) {
         this.uuid = uuid;
     }
 
+    @Override
+    public Date getChangedAt() {
+        return changedAt;
+    }
+
+    @Override
+    public void setChangedAt(Date changedAt) {
+        this.changedAt = changedAt;
+    }
+
     public String getRecipeUuid() {
-        return this.recipeUuid;
+        return recipeUuid;
     }
 
     public void setRecipeUuid(String recipeUuid) {
@@ -79,11 +98,42 @@ public final class RecipeLabelTable implements Table {
     }
 
     public String getLabelUuid() {
-        return this.labelUuid;
+        return labelUuid;
     }
 
     public void setLabelUuid(String labelUuid) {
         this.labelUuid = labelUuid;
+    }
+
+    /**
+     * To-many relationship, resolved on first access (and after reset).
+     * Changes to to-many relations are not persisted, make changes to the target entity.
+     */
+    @Generated(hash = 1625591711)
+    public List<LabelTable> getLabelTables() {
+        if (labelTables == null) {
+            final DaoSession daoSession = this.daoSession;
+            if (daoSession == null) {
+                throw new DaoException("Entity is detached from DAO context");
+            }
+            LabelTableDao targetDao = daoSession.getLabelTableDao();
+            List<LabelTable> labelTablesNew = targetDao
+                    ._queryRecipeLabelTable_LabelTables(labelUuid);
+            synchronized (this) {
+                if (labelTables == null) {
+                    labelTables = labelTablesNew;
+                }
+            }
+        }
+        return labelTables;
+    }
+
+    /**
+     * Resets a to-many relationship, making the next get call to query for a fresh result.
+     */
+    @Generated(hash = 1691759982)
+    public synchronized void resetLabelTables() {
+        labelTables = null;
     }
 
     /**
@@ -120,14 +170,6 @@ public final class RecipeLabelTable implements Table {
             throw new DaoException("Entity is detached from DAO context");
         }
         myDao.update(this);
-    }
-
-    public Date getChangedAt() {
-        return this.changedAt;
-    }
-
-    public void setChangedAt(Date changedAt) {
-        this.changedAt = changedAt;
     }
 
     /**

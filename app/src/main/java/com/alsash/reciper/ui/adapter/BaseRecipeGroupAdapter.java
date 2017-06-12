@@ -2,7 +2,7 @@ package com.alsash.reciper.ui.adapter;
 
 import android.support.v7.widget.RecyclerView;
 
-import com.alsash.reciper.mvp.model.entity.BaseGroup;
+import com.alsash.reciper.mvp.model.entity.BaseEntity;
 import com.alsash.reciper.ui.adapter.holder.BaseRecipeGroupHolder;
 import com.alsash.reciper.ui.adapter.interaction.RecipeGroupInteraction;
 import com.alsash.reciper.ui.adapter.interaction.RecipeListInteraction;
@@ -15,15 +15,15 @@ import java.util.List;
  * @param <G>  - outer group model, that related to recipes
  * @param <VH> - outer group view holder
  */
-public abstract class BaseRecipeGroupAdapter<G extends BaseGroup,
+public abstract class BaseRecipeGroupAdapter<G extends BaseEntity,
         VH extends BaseRecipeGroupHolder<G>> extends RecyclerView.Adapter<VH> {
 
     private final List<G> groupList;
-    private final RecipeGroupInteraction groupInteraction;
+    private final RecipeGroupInteraction<G> groupInteraction;
     private final RecipeListInteraction recipeInteraction;
 
     public BaseRecipeGroupAdapter(List<G> groupList,
-                                  RecipeGroupInteraction groupInteraction,
+                                  RecipeGroupInteraction<G> groupInteraction,
                                   RecipeListInteraction recipeInteraction) {
         this.groupList = groupList;
         this.groupInteraction = groupInteraction;
@@ -35,7 +35,7 @@ public abstract class BaseRecipeGroupAdapter<G extends BaseGroup,
         G group = groupList.get(position);
         holder.bindGroup(group);
         holder.setInteraction(recipeInteraction);
-        holder.setPresenter(groupInteraction.getInnerPresenter(group.getId()));
+        holder.setPresenter(groupInteraction.injectInnerPresenter(group));
     }
 
     @Override

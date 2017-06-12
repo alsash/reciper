@@ -5,5 +5,5 @@ import com.alsash.reciper.mvp.model.entity.Label;
 /**
  * Simple view for its presenter
  */
-public interface RecipeTabLabelView extends BaseListView<Label> {
+public interface RecipeCollectionLabelView extends BaseListView<Label> {
 }

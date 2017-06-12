@@ -16,7 +16,7 @@ public class RecipeCategoryCardListAdapter
         extends BaseRecipeGroupAdapter<Category, RecipeCategoryCardHolder> {
 
     public RecipeCategoryCardListAdapter(List<Category> groupList,
-                                         RecipeGroupInteraction groupInteraction,
+                                         RecipeGroupInteraction<Category> groupInteraction,
                                          RecipeListInteraction recipeInteraction) {
         super(groupList, groupInteraction, recipeInteraction);
     }

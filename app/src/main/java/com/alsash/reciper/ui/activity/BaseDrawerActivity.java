@@ -132,7 +132,7 @@ public abstract class BaseDrawerActivity<V extends BaseView> extends BaseActivit
             Class<?> nextClass = null;
             switch (id) {
                 case R.id.navigation_recipes:
-                    nextClass = RecipeTabActivity.class;
+                    nextClass = RecipeCollectionsActivity.class;
                     break;
 //                case R.id.drawer_base_nav_recipe_favorite:
 //                    nextClass = RecipeTabFavActivity.class;

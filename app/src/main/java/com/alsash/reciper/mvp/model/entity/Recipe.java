@@ -1,70 +1,27 @@
 package com.alsash.reciper.mvp.model.entity;
 
 import java.util.Date;
-import java.util.List;
-import java.util.UUID;
 
 /**
- * A Recipe model
+ * A Recipe entity
  */
-public class Recipe extends BaseEntity {
+public interface Recipe extends BaseEntity {
 
-    boolean bookmarked;
-    Category category;
-    List<Label> labels;
-    Photo photo;
+    Date getCreatedAt();
 
-    Recipe() {
-    }
+    String getName();
 
-    Recipe(Long id,
-           UUID uuid,
-           String name,
-           Date creationDate,
-           Date changeDate,
-           Category category,
-           List<Label> labels,
-           Photo photo) {
-        super(id, uuid, name, creationDate, changeDate);
-        this.category = category;
-        this.labels = labels;
-        this.photo = photo;
-    }
+    String getSource();
 
-    public boolean isBookmarked() {
-        return bookmarked;
-    }
+    String getDescription();
 
-    public Category getCategory() {
-        return category;
-    }
+    int getServings();
 
-    public List<Label> getLabels() {
-        return labels;
-    }
+    double getMassFlowRateGps(); // gram per second
 
-    public Photo getPhoto() {
-        return photo;
-    }
+    Photo getMainPhoto();
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Recipe)) return false;
-        Recipe recipe = (Recipe) o;
-        return uuid != null ? uuid.equals(recipe.uuid) : recipe.uuid == null;
-    }
+    Author getAuthor();
 
-    @Override
-    public int hashCode() {
-        return uuid != null ? uuid.hashCode() : 0;
-    }
-
-    @Override
-    int getSize() {
-        return super.getSize()
-                + ((category == null) ? 0 : 4)
-                + ((labels == null) ? 0 : 4)
-                + ((photo == null) ? 0 : 4);
-    }
+    Category getCategory();
 }

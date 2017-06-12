@@ -1,13 +1,19 @@
 package com.alsash.reciper.data.db.table;
 
+import com.alsash.reciper.mvp.model.entity.Food;
+import com.alsash.reciper.mvp.model.entity.Ingredient;
+
 import org.greenrobot.greendao.DaoException;
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Generated;
 import org.greenrobot.greendao.annotation.Id;
 import org.greenrobot.greendao.annotation.Index;
+import org.greenrobot.greendao.annotation.JoinProperty;
+import org.greenrobot.greendao.annotation.ToMany;
 import org.greenrobot.greendao.annotation.Unique;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * A model of the Ingredient entity
@@ -17,22 +23,25 @@ import java.util.Date;
  */
 @Entity(
         nameInDb = "RECIPE_FOOD",
+        generateGettersSetters = false,
         active = true
 )
-public final class RecipeFoodTable implements Table {
+public final class RecipeFoodTable implements Table, Ingredient {
     @Id
     Long id;
     @Unique
     String uuid;
     @Index
     Date changedAt;
+    String name;
+    double weight;
+    String weightUnit;
     @Index(name = "RECIPE_TO_FOOD")
     String recipeUuid;
     @Index(name = "FOOD_TO_RECIPE")
     String foodUuid;
-    String name;
-    double weight;
-    String weightUnit;
+    @ToMany(joinProperties = {@JoinProperty(name = "foodUuid", referencedName = "uuid")})
+    List<FoodTable> foodTables;
     /**
      * Used to resolve relations
      */
@@ -44,49 +53,82 @@ public final class RecipeFoodTable implements Table {
     @Generated(hash = 805032546)
     private transient RecipeFoodTableDao myDao;
 
-    @Generated(hash = 1962229842)
-    public RecipeFoodTable(Long id, String uuid, Date changedAt, String recipeUuid,
-                           String foodUuid, String name, double weight, String weightUnit) {
+    @Generated(hash = 1549919066)
+    public RecipeFoodTable(Long id, String uuid, Date changedAt, String name, double weight,
+                           String weightUnit, String recipeUuid, String foodUuid) {
         this.id = id;
         this.uuid = uuid;
         this.changedAt = changedAt;
-        this.recipeUuid = recipeUuid;
-        this.foodUuid = foodUuid;
         this.name = name;
         this.weight = weight;
         this.weightUnit = weightUnit;
+        this.recipeUuid = recipeUuid;
+        this.foodUuid = foodUuid;
     }
 
     @Generated(hash = 74732698)
     public RecipeFoodTable() {
     }
 
+    @Override
     public Long getId() {
-        return this.id;
+        return id;
     }
 
+    @Override
     public void setId(Long id) {
         this.id = id;
     }
 
+    @Override
     public String getUuid() {
-        return this.uuid;
+        return uuid;
     }
 
+    @Override
     public void setUuid(String uuid) {
         this.uuid = uuid;
     }
 
+    @Override
     public Date getChangedAt() {
-        return this.changedAt;
+        return changedAt;
     }
 
+    @Override
     public void setChangedAt(Date changedAt) {
         this.changedAt = changedAt;
     }
 
+    @Override
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    @Override
+    public double getWeight() {
+        return weight;
+    }
+
+    public void setWeight(double weight) {
+        this.weight = weight;
+    }
+
+    @Override
+    public String getWeightUnit() {
+        return weightUnit;
+    }
+
+    public void setWeightUnit(String weightUnit) {
+        this.weightUnit = weightUnit;
+    }
+
     public String getRecipeUuid() {
-        return this.recipeUuid;
+        return recipeUuid;
     }
 
     public void setRecipeUuid(String recipeUuid) {
@@ -94,35 +136,47 @@ public final class RecipeFoodTable implements Table {
     }
 
     public String getFoodUuid() {
-        return this.foodUuid;
+        return foodUuid;
     }
 
     public void setFoodUuid(String foodUuid) {
         this.foodUuid = foodUuid;
     }
 
-    public String getName() {
-        return this.name;
+    @Override
+    public Food getFood() {
+        return getFoodTables().size() > 0 ? getFoodTables().get(0) : null;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    /**
+     * To-many relationship, resolved on first access (and after reset).
+     * Changes to to-many relations are not persisted, make changes to the target entity.
+     */
+    @Generated(hash = 217659463)
+    public List<FoodTable> getFoodTables() {
+        if (foodTables == null) {
+            final DaoSession daoSession = this.daoSession;
+            if (daoSession == null) {
+                throw new DaoException("Entity is detached from DAO context");
+            }
+            FoodTableDao targetDao = daoSession.getFoodTableDao();
+            List<FoodTable> foodTablesNew = targetDao
+                    ._queryRecipeFoodTable_FoodTables(foodUuid);
+            synchronized (this) {
+                if (foodTables == null) {
+                    foodTables = foodTablesNew;
+                }
+            }
+        }
+        return foodTables;
     }
 
-    public double getWeight() {
-        return this.weight;
-    }
-
-    public void setWeight(double weight) {
-        this.weight = weight;
-    }
-
-    public String getWeightUnit() {
-        return this.weightUnit;
-    }
-
-    public void setWeightUnit(String weightUnit) {
-        this.weightUnit = weightUnit;
+    /**
+     * Resets a to-many relationship, making the next get call to query for a fresh result.
+     */
+    @Generated(hash = 1011280790)
+    public synchronized void resetFoodTables() {
+        foodTables = null;
     }
 
     /**

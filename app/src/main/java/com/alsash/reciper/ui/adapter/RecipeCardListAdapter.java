@@ -53,11 +53,11 @@ public class RecipeCardListAdapter extends RecyclerView.Adapter<RecipeCardHolder
                         }
                     }
                 },
-                // Expand Listener
+                // Pin Listener
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        interaction.onExpand(recipeList.get(holder.getAdapterPosition()));
+                        interaction.onPin(recipeList.get(holder.getAdapterPosition()));
                     }
                 },
                 // Open Listener

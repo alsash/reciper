@@ -6,7 +6,6 @@ import com.alsash.reciper.BuildConfig;
 import com.alsash.reciper.di.component.AppComponent;
 import com.alsash.reciper.di.component.DaggerAppComponent;
 import com.alsash.reciper.di.component.UiRecipeCollectionsComponent;
-import com.alsash.reciper.di.component.UiRecipeTabComponent;
 import com.alsash.reciper.di.component.UiStartComponent;
 import com.alsash.reciper.di.module.AppContextModule;
 import com.facebook.stetho.Stetho;
@@ -17,7 +16,6 @@ import com.facebook.stetho.Stetho;
 public class ReciperApp extends Application {
 
     private UiStartComponent uiStartComponent;
-    private UiRecipeTabComponent uiRecipeTabComponent;
     private UiRecipeCollectionsComponent uiRecipeCollectionsComponent;
 
     /**
@@ -34,9 +32,6 @@ public class ReciperApp extends Application {
         uiStartComponent = appComponent
                 .getStartComponentBuilder()
                 .build();
-        uiRecipeTabComponent = appComponent
-                .getRecipeTabComponentBuilder()
-                .build();
         uiRecipeCollectionsComponent = appComponent
                 .getRecipeCollectionsComponentBuilder()
                 .build();
@@ -48,10 +43,6 @@ public class ReciperApp extends Application {
 
     public UiStartComponent getUiStartComponent() {
         return uiStartComponent;
-    }
-
-    public UiRecipeTabComponent getUiRecipeTabComponent() {
-        return uiRecipeTabComponent;
     }
 
     public UiRecipeCollectionsComponent getUiRecipeCollectionsComponent() {
