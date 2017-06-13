@@ -29,7 +29,7 @@ public class RecipeCollectionCategoryPresenter
     }
 
     @Override
-    protected List<Recipe> loadNextRecipes(Category category, int offset, int limit) {
+    public List<Recipe> loadNextRecipes(Category category, int offset, int limit) {
         return storage.getRecipes(category, offset, limit);
     }
 }

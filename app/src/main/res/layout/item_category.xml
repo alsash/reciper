@@ -52,10 +52,10 @@
     <android.support.v7.widget.RecyclerView
         android:id="@+id/item_category_inner_list"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="320dp"
         android:layout_marginBottom="0dp"
         android:layout_marginTop="0dp"
-        android:clipChildren="true"
+        android:clipChildren="false"
         android:clipToPadding="false"
         android:orientation="horizontal"
         android:paddingBottom="8dp"

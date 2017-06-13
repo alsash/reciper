@@ -29,7 +29,7 @@ public class RecipeCollectionLabelPresenter
     }
 
     @Override
-    protected List<Recipe> loadNextRecipes(Label label, int offset, int limit) {
+    public List<Recipe> loadNextRecipes(Label label, int offset, int limit) {
         return storage.getRecipes(label, offset, limit);
     }
 }
