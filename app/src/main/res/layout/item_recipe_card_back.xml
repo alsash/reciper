@@ -11,21 +11,18 @@
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:layout_marginLeft="8dp"
-        android:layout_marginStart="4dp"
         android:layout_marginTop="8dp"
         android:src="@color/gray_200"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="ContentDescription" />
+        tools:ignore="ContentDescription,RtlHardcoded" />
 
     <TextView
         android:id="@+id/item_recipe_back_author_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="2dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
-        android:layout_marginStart="2dp"
         android:fontFamily="serif"
         android:maxLines="1"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
@@ -42,10 +39,8 @@
         android:id="@+id/item_recipe_back_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="2dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
-        android:layout_marginStart="2dp"
         android:fontFamily="serif"
         android:textAppearance="@style/TextAppearance.AppCompat.Small"
         android:textSize="12sp"
@@ -64,7 +59,6 @@
         android:layout_marginBottom="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
-        android:layout_marginStart="2dp"
         android:layout_marginTop="8dp"
         android:fontFamily="serif"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
@@ -83,12 +77,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
-        android:layout_marginEnd="2dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
-        android:layout_marginStart="2dp"
         android:fontFamily="serif"
-        android:gravity="end"
+        android:gravity="right"
         android:maxLines="2"
         android:textAlignment="center"
         android:textAppearance="@style/TextAppearance.AppCompat.Small"
@@ -98,6 +90,7 @@
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
+        tools:ignore="RtlHardcoded"
         tools:text="Recipe source" />
 
     <!--Space with 1:1 aspect ratio - for front and back alignments-->

@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">Recipes</string>
-    <string name="recipe_card_date_format">MMMM YYYY</string>
+    <string name="recipe_card_date_format">MMMM yyyy</string>
 
     <!--Recipe tabs-->
     <string name="tab_recipe_category">Categories</string>
