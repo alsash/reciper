@@ -34,7 +34,7 @@ public class RecipeCollectionLabelFragment
     }
 
     @Override
-    public void onPin(Recipe recipe) {
+    public void onFavorite(Recipe recipe) {
 
     }
 

@@ -39,6 +39,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
         android:background="?android:attr/windowBackground"
+        android:theme="@style/AppTheme.NavigationView"
         app:layout_behavior="com.alsash.reciper.ui.view.behavior.BottomNavigationBehavior"
         app:menu="@menu/activity_recipe_collections_nav" />
 

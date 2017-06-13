@@ -14,9 +14,4 @@
         android:id="@+id/activity_recipe_collections_nav_labels"
         android:icon="@drawable/activity_recipe_collections_nav_labels"
         android:title="@string/activity_recipe_collections_nav_labels" />
-
-    <!--    <item
-            android:id="@+id/activity_recipe_collections_nav_bookmarks"
-            android:icon="@drawable/activity_recipe_collections_nav_bookmarks"
-            android:title="@string/activity_recipe_collections_nav_bookmarks" />-->
 </menu>

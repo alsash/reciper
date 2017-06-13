@@ -35,7 +35,7 @@ public class RecipeCollectionCategoryFragment
     }
 
     @Override
-    public void onPin(Recipe recipe) {
+    public void onFavorite(Recipe recipe) {
         // Do nothing
     }
 

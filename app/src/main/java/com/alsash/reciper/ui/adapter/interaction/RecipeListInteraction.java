@@ -7,7 +7,7 @@ import com.alsash.reciper.mvp.model.entity.Recipe;
  */
 public interface RecipeListInteraction {
 
-    void onPin(Recipe recipe);
+    void onFavorite(Recipe recipe);
 
     void onOpen(Recipe recipe);
 }
