@@ -5,6 +5,7 @@ import android.support.annotation.LayoutRes;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import com.alsash.reciper.mvp.model.entity.BaseEntity;
@@ -50,6 +51,16 @@ public abstract class BaseRecipeGroupHolder<G extends BaseEntity> extends Recycl
 
     public abstract void bindGroup(G group);
 
+    /**
+     * Set the listeners in the following sequence:
+     *
+     * @param listeners 0. openListener
+     */
+    public abstract void setListeners(View.OnClickListener... listeners);
+
+    @LayoutRes
+    protected abstract int getRecipeCardLayout();
+
     @Override
     public abstract void showLoading(boolean loading);
 
@@ -88,7 +99,7 @@ public abstract class BaseRecipeGroupHolder<G extends BaseEntity> extends Recycl
 
     @Override
     public void setContainer(List<Recipe> recipes) {
-        adapter = new RecipeCardListAdapter(interaction, recipes);
+        adapter = new RecipeCardListAdapter(interaction, recipes, getRecipeCardLayout());
         LinearLayoutManager layoutManager = new LinearLayoutManager(groupList.getContext(),
                 LinearLayoutManager.HORIZONTAL, false);
         if (recipes.size() > layoutManager.getInitialPrefetchItemCount()) {

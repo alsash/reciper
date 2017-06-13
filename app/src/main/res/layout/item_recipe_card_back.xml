@@ -35,7 +35,7 @@
         app:layout_constraintLeft_toRightOf="@+id/item_recipe_back_author_image"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="@+id/item_recipe_back_author_image"
-        app:layout_constraintVertical_bias="0.100000024"
+        app:layout_constraintVertical_bias="0.2"
         tools:text="Author first and last name" />
 
     <TextView
@@ -121,7 +121,7 @@
     <Space
         android:id="@+id/item_recipe_back_space_2"
         android:layout_width="0dp"
-        android:layout_height="56dp"
+        android:layout_height="52dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/item_recipe_back_space_1_container" />
@@ -160,7 +160,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@+id/item_recipe_back_bt_vertical_divider"
-        app:layout_constraintTop_toTopOf="@+id/item_recipe_back_bt_horizontal_divider"
+        app:layout_constraintTop_toBottomOf="@+id/item_recipe_back_bt_horizontal_divider"
         app:srcCompat="@drawable/item_recipe_bt_flip_on"
         tools:ignore="ContentDescription" />
 
@@ -172,7 +172,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toRightOf="@+id/item_recipe_back_bt_vertical_divider"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/item_recipe_back_bt_horizontal_divider"
+        app:layout_constraintTop_toBottomOf="@+id/item_recipe_back_bt_horizontal_divider"
         app:srcCompat="@drawable/item_recipe_bt_fav_off"
         tools:ignore="ContentDescription" />
 

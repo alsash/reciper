@@ -1,5 +1,6 @@
 package com.alsash.reciper.ui.adapter;
 
+import android.support.annotation.LayoutRes;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,17 +21,27 @@ public class RecipeCardListAdapter extends RecyclerView.Adapter<RecipeCardHolder
     private final RecipeListInteraction interaction;
     private final List<? extends Recipe> recipeList;
     private final Set<Integer> backCardPositions;
+    @LayoutRes
+    private final int recipeCardLayoutId;
 
     public RecipeCardListAdapter(RecipeListInteraction interaction,
-                                 List<? extends Recipe> recipeList) {
+                                 List<? extends Recipe> recipeList,
+                                 @LayoutRes int recipeCardLayoutId) {
         this.interaction = interaction;
         this.recipeList = recipeList;
         this.backCardPositions = new HashSet<>();
+        this.recipeCardLayoutId = recipeCardLayoutId;
+        setHasStableIds(true);
     }
 
     @Override
     public RecipeCardHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new RecipeCardHolder(parent);
+        return new RecipeCardHolder(parent, recipeCardLayoutId);
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return recipeList.get(position).getId();
     }
 
     @Override
@@ -53,7 +64,7 @@ public class RecipeCardListAdapter extends RecyclerView.Adapter<RecipeCardHolder
                         }
                     }
                 },
-                // Pin Listener
+                // Favorite Listener
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {

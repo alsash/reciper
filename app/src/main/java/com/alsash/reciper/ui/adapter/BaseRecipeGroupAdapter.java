@@ -1,6 +1,7 @@
 package com.alsash.reciper.ui.adapter;
 
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 
 import com.alsash.reciper.mvp.model.entity.BaseEntity;
 import com.alsash.reciper.ui.adapter.holder.BaseRecipeGroupHolder;
@@ -28,12 +29,24 @@ public abstract class BaseRecipeGroupAdapter<G extends BaseEntity,
         this.groupList = groupList;
         this.groupInteraction = groupInteraction;
         this.recipeInteraction = recipeInteraction;
+        setHasStableIds(true);
     }
 
     @Override
-    public void onBindViewHolder(VH holder, int position) {
+    public long getItemId(int position) {
+        return groupList.get(position).getId();
+    }
+
+    @Override
+    public void onBindViewHolder(final VH holder, int position) {
         G group = groupList.get(position);
         holder.bindGroup(group);
+        holder.setListeners(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                groupInteraction.onOpen(groupList.get(holder.getAdapterPosition()));
+            }
+        });
         holder.setInteraction(recipeInteraction);
         holder.setPresenter(groupInteraction.injectInnerPresenter(group));
     }

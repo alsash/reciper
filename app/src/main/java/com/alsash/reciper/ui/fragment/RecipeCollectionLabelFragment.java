@@ -49,6 +49,11 @@ public class RecipeCollectionLabelFragment
     }
 
     @Override
+    public void onOpen(Label label) {
+        // Do Nothing
+    }
+
+    @Override
     protected RecipeCollectionLabelPresenter inject() {
         ((ReciperApp) getActivity().getApplicationContext())
                 .getUiRecipeCollectionsComponent()

@@ -54,7 +54,7 @@ public class RecipeCollectionGridFragment
 
     @Override
     protected RecyclerView.Adapter getAdapter(List<Recipe> container) {
-        return new RecipeCardListAdapter(this, container);
+        return new RecipeCardListAdapter(this, container, R.layout.item_recipe_card);
     }
 
     @Override

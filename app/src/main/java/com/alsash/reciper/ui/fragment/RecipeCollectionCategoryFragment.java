@@ -50,6 +50,11 @@ public class RecipeCollectionCategoryFragment
     }
 
     @Override
+    public void onOpen(Category category) {
+        // Do Nothing
+    }
+
+    @Override
     protected RecipeCollectionCategoryPresenter inject() {
         ((ReciperApp) getActivity().getApplicationContext())
                 .getUiRecipeCollectionsComponent()

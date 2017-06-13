@@ -4,33 +4,29 @@ import com.alsash.reciper.mvp.model.entity.BaseEntity;
 import com.alsash.reciper.mvp.model.entity.Recipe;
 import com.alsash.reciper.mvp.view.RecipeListView;
 
+import java.util.List;
+
 /**
- * An abstract presenter, that helps to represent inner list of Recipes
+ * An inner presenter, that helps to represent inner list of Recipes
  *
  * @param <G> - Entity, that represents group of recipes
  */
-public abstract class BaseRecipeGroupInnerPresenter<G extends BaseEntity>
+public class BaseRecipeGroupInnerPresenter<G extends BaseEntity>
         extends BaseListPresenter<Recipe, RecipeListView> {
 
+    private final BaseRecipeGroupPresenter<G, ?> outerPresenter;
     private final G group;
-    private boolean checkPrefetched;
 
-    protected BaseRecipeGroupInnerPresenter(int limit, G group) {
+    public BaseRecipeGroupInnerPresenter(int limit,
+                                         G group,
+                                         BaseRecipeGroupPresenter<G, ?> outerPresenter) {
         super(limit);
         this.group = group;
-    }
-
-    public G getGroup() {
-        return group;
+        this.outerPresenter = outerPresenter;
     }
 
     @Override
-    protected boolean doLoading(int visiblePosition) {
-        boolean doLoading = super.doLoading(visiblePosition);
-        if (doLoading && !checkPrefetched) {
-            doLoading = (getModels().size() == 0); // no prefetched items
-            checkPrefetched = true;
-        }
-        return doLoading;
+    protected List<Recipe> loadNext(int offset, int limit) {
+        return outerPresenter.loadNextRecipes(group, offset, limit);
     }
 }

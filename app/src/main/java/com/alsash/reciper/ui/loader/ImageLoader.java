@@ -5,6 +5,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 
+import com.alsash.reciper.app.util.MutableBoolean;
 import com.alsash.reciper.mvp.model.entity.Photo;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -44,9 +45,23 @@ public class ImageLoader {
                 .into(imageView);
     }
 
+    public void load(Photo photo,
+                     ImageView imageView,
+                     ProgressBar progressBar,
+                     MutableBoolean complete) {
+        String url = (photo == null) ? null : photo.getUrl();
+        Glide.with(imageView.getContext())
+                .load(url)
+                .listener(new GlideRequestListener(progressBar, complete))
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .crossFade()
+                .into(imageView);
+    }
+
     private static class GlideRequestListener implements RequestListener<String, GlideDrawable> {
 
         private ProgressBar progressBar;
+        private MutableBoolean complete;
 
         public GlideRequestListener() {
         }
@@ -56,13 +71,20 @@ public class ImageLoader {
             progressBar.setVisibility(View.VISIBLE);
         }
 
+        public GlideRequestListener(ProgressBar progressBar, MutableBoolean complete) {
+            this.progressBar = progressBar;
+            this.complete = complete;
+            progressBar.setVisibility(View.VISIBLE);
+            complete.set(false);
+        }
+
         @Override
         public boolean onException(Exception e,
                                    String model,
                                    Target<GlideDrawable> target,
                                    boolean isFirstResource) {
             Log.d(TAG, e.getMessage(), e);
-            resetProgressBar();
+            setComplete();
             return false;
         }
 
@@ -72,14 +94,19 @@ public class ImageLoader {
                                        Target<GlideDrawable> target,
                                        boolean isFromMemoryCache,
                                        boolean isFirstResource) {
-            resetProgressBar();
+            setComplete();
             return false;
         }
 
-        private void resetProgressBar() {
-            if (progressBar == null) return;
-            progressBar.setVisibility(View.GONE);
-            progressBar = null;
+        private void setComplete() {
+            if (complete != null) {
+                complete.set(true);
+                complete = null;
+            }
+            if (progressBar != null) {
+                progressBar.setVisibility(View.GONE);
+                progressBar = null;
+            }
         }
     }
 

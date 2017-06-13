@@ -32,7 +32,7 @@
             android:layout_height="24dp"
             android:layout_gravity="center"
             android:indeterminate="true"
-            android:indeterminateTint="@color/white"
+            android:indeterminateTint="@color/primary"
             tools:targetApi="lollipop" />
 
     </android.support.percent.PercentFrameLayout>
@@ -40,10 +40,10 @@
     <TextView
         android:id="@+id/item_recipe_front_name"
         android:layout_width="0dp"
-        android:layout_height="48dp"
-        android:layout_marginLeft="4dp"
-        android:layout_marginRight="4dp"
-        android:layout_marginTop="4dp"
+        android:layout_height="52dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="0dp"
         android:fontFamily="serif"
         android:gravity="center_horizontal"
         android:maxLines="2"
@@ -62,7 +62,7 @@
         android:layout_height="1dp"
         android:layout_marginLeft="4dp"
         android:layout_marginRight="4dp"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="0dp"
         android:background="@color/gray_100"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"

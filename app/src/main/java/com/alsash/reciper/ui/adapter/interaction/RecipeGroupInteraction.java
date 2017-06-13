@@ -9,4 +9,6 @@ import com.alsash.reciper.mvp.presenter.BaseRecipeGroupInnerPresenter;
 public interface RecipeGroupInteraction<G extends BaseEntity> {
 
     BaseRecipeGroupInnerPresenter<G> injectInnerPresenter(G group);
+
+    void onOpen(G group);
 }

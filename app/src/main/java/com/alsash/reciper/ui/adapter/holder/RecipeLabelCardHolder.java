@@ -14,26 +14,37 @@ import com.alsash.reciper.mvp.model.entity.Label;
  */
 public class RecipeLabelCardHolder extends BaseRecipeGroupHolder<Label> {
 
-    private TextView labelName;
-    private ProgressBar progressBar;
+    private final TextView name;
+    private final ProgressBar bar;
 
     public RecipeLabelCardHolder(ViewGroup parent) {
-        super(parent, R.layout.view_list_group, R.id.group_list);
-        progressBar = (ProgressBar) itemView.findViewById(R.id.group_progress);
-        labelName = (TextView) itemView.findViewById(R.id.group_name);
+        super(parent, R.layout.item_label, R.id.item_label_inner_list);
+        name = (TextView) itemView.findViewById(R.id.item_label_name);
+        bar = (ProgressBar) itemView.findViewById(R.id.item_label_bar);
+    }
+
+    @Override
+    protected int getRecipeCardLayout() {
+        return R.layout.item_label_recipe_card;
     }
 
     @Override
     public void bindGroup(Label label) {
-        labelName.setText(label.getName());
+        name.setText(label.getName());
+    }
+
+    /**
+     * Set the listeners in the following sequence:
+     *
+     * @param listeners 0. openListener
+     */
+    @Override
+    public void setListeners(View.OnClickListener... listeners) {
+        name.setOnClickListener(listeners[0]);
     }
 
     @Override
     public void showLoading(boolean loading) {
-        if (loading) {
-            progressBar.setVisibility(View.VISIBLE);
-        } else {
-            progressBar.setVisibility(View.INVISIBLE);
-        }
+        bar.setVisibility(loading ? View.VISIBLE : View.GONE);
     }
 }

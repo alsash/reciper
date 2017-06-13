@@ -1,5 +1,6 @@
 package com.alsash.reciper.ui.adapter.holder;
 
+import android.support.annotation.LayoutRes;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -42,9 +43,8 @@ public class RecipeCardHolder extends RecyclerView.ViewHolder {
 
     private final SimpleDateFormat dateFormat;
 
-    public RecipeCardHolder(ViewGroup parent) {
-        super(LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_recipe_card, parent, false));
+    public RecipeCardHolder(ViewGroup parent, @LayoutRes int recipeCardLayoutId) {
+        super(LayoutInflater.from(parent.getContext()).inflate(recipeCardLayoutId, parent, false));
 
         frontCard = (CardView) itemView.findViewById(R.id.item_recipe_card_front);
         frontImage = (ImageView) itemView.findViewById(R.id.item_recipe_front_image);

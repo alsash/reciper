@@ -11,6 +11,7 @@ import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import io.reactivex.BackpressureStrategy;
 import io.reactivex.Flowable;
@@ -52,9 +53,11 @@ public abstract class BaseListPresenter<M, V extends BaseListView<M>> implements
 
     @Override
     public void attach(V view) {
+        WeakReference<V> viewRef = new WeakReference<>(view);
+        setLoading(false, viewRef);
         view.setContainer(models);
         view.setPagination(!isFetched());
-        if (!isFetched()) fetch(new WeakReference<>(view));
+        if (!isFetched()) fetch(viewRef);
     }
 
     @Override
@@ -71,6 +74,7 @@ public abstract class BaseListPresenter<M, V extends BaseListView<M>> implements
     public void detach() {
         composite.dispose(); // set Observers to null, so they are not holds any shadow references
         composite.clear();   // in v.2.1.0 - same as dispose(), but without set isDispose()
+        loading = false;
     }
 
     @Override
@@ -127,7 +131,7 @@ public abstract class BaseListPresenter<M, V extends BaseListView<M>> implements
                         return Flowable.just(loadNext(offset, getLimit()));
                     }
                 })
-                // .delay(4, TimeUnit.SECONDS)
+                .delay(3, TimeUnit.SECONDS)
                 .repeatUntil(new BooleanSupplier() {
                     @Override
                     public boolean getAsBoolean() throws Exception {

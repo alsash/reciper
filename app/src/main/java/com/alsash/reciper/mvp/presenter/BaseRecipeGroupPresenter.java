@@ -38,7 +38,7 @@ public abstract class BaseRecipeGroupPresenter<G extends BaseEntity, V extends B
     protected abstract List<G> loadNextGroups(int offset, int limit);
 
     @WorkerThread
-    protected abstract List<Recipe> loadNextRecipes(G group, int offset, int limit);
+    public abstract List<Recipe> loadNextRecipes(G group, int offset, int limit);
 
 
     @WorkerThread
@@ -58,12 +58,7 @@ public abstract class BaseRecipeGroupPresenter<G extends BaseEntity, V extends B
     public BaseRecipeGroupInnerPresenter<G> getInnerPresenter(G group) {
         BaseRecipeGroupInnerPresenter<G> presenter = presenters.get(group);
         if (presenter == null) {
-            presenter = new BaseRecipeGroupInnerPresenter<G>(recipesLimit, group) {
-                @Override
-                protected List<Recipe> loadNext(int offset, int limit) {
-                    return loadNextRecipes(getGroup(), offset, limit);
-                }
-            };
+            presenter = new BaseRecipeGroupInnerPresenter<>(recipesLimit, group, this);
             presenters.put(group, presenter);
             List<Recipe> recipes = prefetchedRecipes.get(group);
             if (recipes != null) presenter.getModels().addAll(recipes);
