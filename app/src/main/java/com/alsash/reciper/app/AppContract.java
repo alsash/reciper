@@ -1,6 +1,7 @@
 package com.alsash.reciper.app;
 
 import com.alsash.reciper.BuildConfig;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
 import java.util.concurrent.TimeUnit;
 
@@ -53,6 +54,14 @@ public final class AppContract {
 
     public static final class Db {
         public static final String DATABASE_NAME = "reciper_db";
+    }
+
+    // Glide framework
+    public static final class Glide {
+        public static final double MEMORY_CACHE_FACTOR = 1.5D;
+        public static final double BITMAP_POOL_FACTOR = 1.5D;
+        public static final int DISK_CACHE_SIZE_BYTES = 512 * 1024 * 1024; // 512 MiB
+        public static final DiskCacheStrategy DEFAULT_CACHE_STRATEGY = DiskCacheStrategy.SOURCE;
     }
 
     // Animation payloads

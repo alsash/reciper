@@ -56,7 +56,7 @@ public class RecipeDetailMainFragment extends Fragment {
 
     private void bindModel() {
         long id = getArguments().getLong(AppContract.Key.RECIPE_ID, -1);
-        // recipe = RecipeManager.getInstance().search(id);
+        // recipe = RecipeManager.get().search(id);
         assert recipe != null;
     }
 

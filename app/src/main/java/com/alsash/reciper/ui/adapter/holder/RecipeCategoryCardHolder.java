@@ -36,7 +36,7 @@ public class RecipeCategoryCardHolder extends BaseRecipeGroupHolder<Category> {
 
     @Override
     public void bindGroup(Category category) {
-        ImageLoader.getInstance().load(category.getPhoto(), image, bar, barFree.set(false));
+        ImageLoader.get().source(category.getPhoto()).bar(bar).completer(barFree).load(image);
         name.setText(category.getName());
     }
 
@@ -53,9 +53,6 @@ public class RecipeCategoryCardHolder extends BaseRecipeGroupHolder<Category> {
 
     @Override
     public void showLoading(boolean loading) {
-        if (barFree.is())
-            bar.setVisibility(loading ? View.VISIBLE : View.GONE);
-        if (loading)
-            loading = true;
+        if (barFree.is()) bar.setVisibility(loading ? View.VISIBLE : View.GONE);
     }
 }

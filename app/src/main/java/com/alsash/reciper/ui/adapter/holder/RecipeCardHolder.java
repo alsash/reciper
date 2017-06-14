@@ -72,8 +72,8 @@ public class RecipeCardHolder extends RecyclerView.ViewHolder {
 
     public void bindRecipe(Recipe recipe) {
         frontName.setText(recipe.getName());
-        ImageLoader.getInstance().load(recipe.getMainPhoto(), frontImage, frontBar);
-        ImageLoader.getInstance().load(recipe.getAuthor().getPhoto(), backAuthorImage);
+        ImageLoader.get().source(recipe.getMainPhoto()).bar(frontBar).load(frontImage);
+        ImageLoader.get().source(recipe.getAuthor()).load(backAuthorImage);
         backAuthorName.setText(recipe.getAuthor().getName());
         backSource.setText(recipe.getSource());
         backDate.setText(dateFormat.format(recipe.getCreatedAt()));
