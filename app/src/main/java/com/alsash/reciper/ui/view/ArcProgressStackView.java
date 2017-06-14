@@ -575,22 +575,21 @@ public class ArcProgressStackView extends View {
         return mTypeface;
     }
 
-    public void setTypeface(final Typeface typeface) {
-        mTypeface = typeface;
-        mTextPaint.setTypeface(typeface);
-        postInvalidate();
-    }
-
     public void setTypeface(final String typeface) {
         Typeface tempTypeface;
         try {
             if (isInEditMode()) return;
             tempTypeface = Typeface.createFromAsset(getContext().getAssets(), typeface);
         } catch (Exception e) {
-            tempTypeface = Typeface.create(Typeface.DEFAULT, Typeface.NORMAL);
+            tempTypeface = Typeface.create("sans-serif-condensed", Typeface.NORMAL);
         }
-
         setTypeface(tempTypeface);
+    }
+
+    public void setTypeface(final Typeface typeface) {
+        mTypeface = typeface;
+        mTextPaint.setTypeface(typeface);
+        postInvalidate();
     }
 
     public IndicatorOrientation getIndicatorOrientation() {
