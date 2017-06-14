@@ -35,13 +35,13 @@ public abstract class BaseListPresenter<M, V extends BaseListView<M>> implements
     private static final int DEFAULT_LIMIT = 10;
 
     private final PublishSubject<Integer> scrollSubject = PublishSubject.create();
-    private final CompositeDisposable composite = new CompositeDisposable();
     private final List<M> models = new ArrayList<>();
     private final int limit;
 
+    private CompositeDisposable composite = new CompositeDisposable();
     private boolean fetched;
     private boolean loading;
-    private int previousPosition = -2;
+    private int previousPosition;
 
     public BaseListPresenter(int limit) {
         this.limit = (limit > 0) ? limit : DEFAULT_LIMIT;
@@ -53,7 +53,7 @@ public abstract class BaseListPresenter<M, V extends BaseListView<M>> implements
     @Override
     public void attach(V view) {
         WeakReference<V> viewRef = new WeakReference<>(view);
-        setLoading(false, viewRef);
+        resetPreviousPosition();
         view.setContainer(models);
         view.setPagination(!isFetched());
         if (!isFetched()) fetch(viewRef);
@@ -73,6 +73,7 @@ public abstract class BaseListPresenter<M, V extends BaseListView<M>> implements
     public void detach() {
         composite.dispose(); // set Observers to null, so they are not holds any shadow references
         composite.clear();   // in v.2.1.0 - same as dispose(), but without set isDispose()
+        composite = new CompositeDisposable(); // Recreate Composite for correct refreshing
         loading = false;
     }
 
@@ -196,6 +197,10 @@ public abstract class BaseListPresenter<M, V extends BaseListView<M>> implements
         return increased;
     }
 
+    private void resetPreviousPosition() {
+        previousPosition = -2;
+    }
+
     /**
      * The decision whether to load a new pack of items.
      *
@@ -229,5 +234,9 @@ public abstract class BaseListPresenter<M, V extends BaseListView<M>> implements
 
     protected int getLimit() {
         return limit;
+    }
+
+    protected CompositeDisposable getComposite() {
+        return composite;
     }
 }

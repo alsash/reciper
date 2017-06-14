@@ -1,6 +1,9 @@
 package com.alsash.reciper.logic;
 
 
+import android.support.annotation.UiThread;
+
+import com.alsash.reciper.BuildConfig;
 import com.alsash.reciper.app.AppContract;
 import com.alsash.reciper.data.cloud.CloudManager;
 import com.alsash.reciper.data.db.DbManager;
@@ -8,6 +11,7 @@ import com.alsash.reciper.data.db.table.CategoryTable;
 import com.alsash.reciper.data.db.table.FoodTable;
 import com.alsash.reciper.data.db.table.LabelTable;
 import com.alsash.reciper.data.db.table.RecipeTable;
+import com.alsash.reciper.logic.action.RecipeAction;
 import com.alsash.reciper.logic.exception.MainThreadException;
 import com.alsash.reciper.mvp.model.entity.Category;
 import com.alsash.reciper.mvp.model.entity.Label;
@@ -21,7 +25,7 @@ import java.util.Map;
 
 /**
  * Logic for processing data in storage.
- * All methods, except constructor, must be called on the background thread.
+ * All methods, except explicit annotated, must be called on the background thread.
  */
 public class StorageLogic {
 
@@ -33,6 +37,7 @@ public class StorageLogic {
     private final CloudManager cloudManager;
     private final DbManager dbManager;
 
+    @UiThread
     public StorageLogic(DbManager dbManager, CloudManager cloudManager) {
         this.dbManager = dbManager;
         this.cloudManager = cloudManager;
@@ -43,7 +48,8 @@ public class StorageLogic {
      * Must be called on the background thread.
      */
     public void createStartupEntitiesIfNeed() throws Exception {
-        MainThreadException.throwOnMainThread(TAG, "createStartupEntitiesIfNeed()");
+        if (BuildConfig.DEBUG)
+            MainThreadException.throwOnMainThread(TAG, "createStartupEntitiesIfNeed()");
         if (isDbUpToDate()) return;
         Date createdAt = new Date();
         if (createStartupEntities(createdAt)) {
@@ -54,6 +60,7 @@ public class StorageLogic {
     }
 
     public List<Category> getCategories(int offset, int limit) {
+        if (BuildConfig.DEBUG) MainThreadException.throwOnMainThread(TAG, "getCategories()");
         List<Category> categories = new ArrayList<>();
         List<CategoryTable> categoryTables = dbManager
                 .restrictWith(offset, limit)
@@ -67,6 +74,7 @@ public class StorageLogic {
     }
 
     public List<Label> getLabels(int offset, int limit) {
+        if (BuildConfig.DEBUG) MainThreadException.throwOnMainThread(TAG, "getLabels()");
         List<Label> labels = new ArrayList<>();
         List<LabelTable> labelTables = dbManager
                 .restrictWith(offset, limit)
@@ -76,6 +84,7 @@ public class StorageLogic {
     }
 
     public List<Recipe> getRecipes(int offset, int limit) {
+        if (BuildConfig.DEBUG) MainThreadException.throwOnMainThread(TAG, "getRecipes(int, int)");
         List<Recipe> recipes = new ArrayList<>();
         List<RecipeTable> recipeTables = dbManager
                 .restrictWith(offset, limit)
@@ -85,6 +94,8 @@ public class StorageLogic {
     }
 
     public List<Recipe> getRecipes(Category category, int offset, int limit) {
+        if (BuildConfig.DEBUG)
+            MainThreadException.throwOnMainThread(TAG, "getRecipes(Category, int, int)");
         List<Recipe> recipes = new ArrayList<>();
         List<RecipeTable> recipeTables = dbManager
                 .restrictWith(offset, limit)
@@ -94,12 +105,30 @@ public class StorageLogic {
     }
 
     public List<Recipe> getRecipes(Label label, int offset, int limit) {
+        if (BuildConfig.DEBUG)
+            MainThreadException.throwOnMainThread(TAG, "getRecipes(Label, int, int)");
         List<Recipe> recipes = new ArrayList<>();
         List<RecipeTable> recipeTables = dbManager
                 .restrictWith(offset, limit)
                 .getRecipeTable((LabelTable) label);
         recipes.addAll(prefetchRecipeRelations(recipeTables));
         return recipes;
+    }
+
+    @UiThread
+    public void updateSync(Recipe recipe, RecipeAction action, Object... values) {
+        RecipeTable recipeTable = (RecipeTable) recipe;
+        switch (action) {
+            case FAVORITE:
+                recipeTable.setFavorite(!recipeTable.isFavorite());
+                break;
+        }
+    }
+
+    public void updateAsync(Recipe recipe) {
+        if (BuildConfig.DEBUG) MainThreadException.throwOnMainThread(TAG, "updateAsync()");
+        RecipeTable recipeTable = (RecipeTable) recipe;
+        recipeTable.update();
     }
 
     private boolean isDbUpToDate() {

@@ -10,14 +10,14 @@ import java.util.List;
  * A Presenter that represents collection of all Recipes
  */
 public class RecipeCollectionGridPresenter
-        extends BaseListPresenter<Recipe, RecipeCollectionGridView> {
+        extends BaseRecipeListPresenter<RecipeCollectionGridView> {
 
     private static final int PAGINATION_LIMIT = 15;
 
     private final StorageLogic storage;
 
     public RecipeCollectionGridPresenter(StorageLogic storage) {
-        super(PAGINATION_LIMIT);
+        super(PAGINATION_LIMIT, storage);
         this.storage = storage;
     }
 

@@ -19,6 +19,8 @@ public interface Recipe extends BaseEntity {
 
     double getMassFlowRateGps(); // gram per second
 
+    boolean isFavorite();
+
     Photo getMainPhoto();
 
     Author getAuthor();

@@ -24,6 +24,11 @@ public class RecipeCollectionCategoryPresenter
     }
 
     @Override
+    protected StorageLogic getStorageLogic() {
+        return storage;
+    }
+
+    @Override
     protected List<Category> loadNextGroups(int offset, int limit) {
         return storage.getCategories(offset, limit);
     }

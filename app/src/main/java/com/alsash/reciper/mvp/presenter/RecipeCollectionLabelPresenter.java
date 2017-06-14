@@ -24,6 +24,11 @@ public class RecipeCollectionLabelPresenter
     }
 
     @Override
+    protected StorageLogic getStorageLogic() {
+        return storage;
+    }
+
+    @Override
     protected List<Label> loadNextGroups(int offset, int limit) {
         return storage.getLabels(offset, limit);
     }

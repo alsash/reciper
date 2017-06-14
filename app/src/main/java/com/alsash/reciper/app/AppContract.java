@@ -68,6 +68,7 @@ public final class AppContract {
     public static final class Payload {
         public static final String FLIP_BACK_TO_FRONT = TAG + ".payload_flip_back_to_front";
         public static final String FLIP_FRONT_TO_BACK = TAG + ".payload_flip_front_to_back";
+        public static final String CHANGE_FAVORITE = TAG + ".payload_change_favorite";
     }
 
     // Public entity keys

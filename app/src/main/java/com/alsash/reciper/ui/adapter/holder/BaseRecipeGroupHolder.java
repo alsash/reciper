@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 
 import com.alsash.reciper.mvp.model.entity.BaseEntity;
 import com.alsash.reciper.mvp.model.entity.Recipe;
-import com.alsash.reciper.mvp.presenter.BaseRecipeGroupInnerPresenter;
+import com.alsash.reciper.mvp.presenter.BaseRecipeListPresenter;
 import com.alsash.reciper.mvp.view.RecipeListView;
 import com.alsash.reciper.ui.adapter.RecipeCardListAdapter;
 import com.alsash.reciper.ui.adapter.interaction.RecipeListInteraction;
@@ -28,7 +28,7 @@ public abstract class BaseRecipeGroupHolder<G extends BaseEntity> extends Recycl
         implements RecipeListView {
 
     private RecipeListInteraction interaction;
-    private BaseRecipeGroupInnerPresenter<G> presenter;
+    private BaseRecipeListPresenter<RecipeListView> presenter;
     private RecyclerView groupList;
     private RecipeCardListAdapter adapter;
     private boolean viewVisible;
@@ -68,7 +68,7 @@ public abstract class BaseRecipeGroupHolder<G extends BaseEntity> extends Recycl
         this.interaction = interaction;
     }
 
-    public void setPresenter(BaseRecipeGroupInnerPresenter<G> newPresenter) {
+    public void setPresenter(BaseRecipeListPresenter<RecipeListView> newPresenter) {
         showLoading(false);
         if (presenter == null) {
             presenter = newPresenter;

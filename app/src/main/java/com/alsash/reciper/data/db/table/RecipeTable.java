@@ -49,6 +49,8 @@ public final class RecipeTable implements Table, RecipeFull {
     int servings;
     @NotNull
     double massFlowRateGps; // gram per second
+    @NotNull
+    boolean favorite;
     @Index(name = "CATEGORY_TO_RECIPE")
     String categoryUuid;
     @Index(name = "AUTHOR_TO_RECIPE")
@@ -76,9 +78,9 @@ public final class RecipeTable implements Table, RecipeFull {
     @Generated(hash = 1210201788)
     private transient RecipeTableDao myDao;
 
-    @Generated(hash = 1742398024)
-    public RecipeTable(Long id, String uuid, Date changedAt, Date createdAt, String name,
-                       String source, String description, int servings, double massFlowRateGps,
+    @Generated(hash = 1582739737)
+    public RecipeTable(Long id, String uuid, Date changedAt, Date createdAt, String name, String source,
+                       String description, int servings, double massFlowRateGps, boolean favorite,
                        String categoryUuid, String authorUuid) {
         this.id = id;
         this.uuid = uuid;
@@ -89,6 +91,7 @@ public final class RecipeTable implements Table, RecipeFull {
         this.description = description;
         this.servings = servings;
         this.massFlowRateGps = massFlowRateGps;
+        this.favorite = favorite;
         this.categoryUuid = categoryUuid;
         this.authorUuid = authorUuid;
     }
@@ -179,6 +182,19 @@ public final class RecipeTable implements Table, RecipeFull {
 
     public void setMassFlowRateGps(double massFlowRateGps) {
         this.massFlowRateGps = massFlowRateGps;
+    }
+
+    @Override
+    public boolean isFavorite() {
+        return favorite;
+    }
+
+    public boolean getFavorite() {
+        return isFavorite();
+    }
+
+    public void setFavorite(boolean favorite) {
+        this.favorite = favorite;
     }
 
     public String getCategoryUuid() {

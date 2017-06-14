@@ -6,9 +6,10 @@ import com.alsash.reciper.app.AppNavigator;
 import com.alsash.reciper.app.ReciperApp;
 import com.alsash.reciper.mvp.model.entity.Label;
 import com.alsash.reciper.mvp.model.entity.Recipe;
-import com.alsash.reciper.mvp.presenter.BaseRecipeGroupInnerPresenter;
+import com.alsash.reciper.mvp.presenter.BaseRecipeListPresenter;
 import com.alsash.reciper.mvp.presenter.RecipeCollectionLabelPresenter;
 import com.alsash.reciper.mvp.view.RecipeCollectionLabelView;
+import com.alsash.reciper.mvp.view.RecipeListView;
 import com.alsash.reciper.ui.adapter.RecipeLabelCardListAdapter;
 import com.alsash.reciper.ui.adapter.interaction.RecipeGroupInteraction;
 import com.alsash.reciper.ui.adapter.interaction.RecipeListInteraction;
@@ -44,7 +45,7 @@ public class RecipeCollectionLabelFragment
     }
 
     @Override
-    public BaseRecipeGroupInnerPresenter<Label> injectInnerPresenter(Label label) {
+    public BaseRecipeListPresenter<RecipeListView> injectInnerPresenter(Label label) {
         return presenter.getInnerPresenter(label);
     }
 

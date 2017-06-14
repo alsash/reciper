@@ -68,7 +68,9 @@ public class RecipeCardListAdapter extends RecyclerView.Adapter<RecipeCardHolder
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        interaction.onFavorite(recipeList.get(holder.getAdapterPosition()));
+                        Recipe recipe = recipeList.get(holder.getAdapterPosition());
+                        holder.setFavorite(!recipe.isFavorite(), true);
+                        interaction.onFavorite(recipe);
                     }
                 },
                 // Open Listener

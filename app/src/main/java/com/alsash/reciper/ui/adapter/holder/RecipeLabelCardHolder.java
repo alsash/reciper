@@ -18,7 +18,7 @@ public class RecipeLabelCardHolder extends BaseRecipeGroupHolder<Label> {
     private final ProgressBar bar;
 
     public RecipeLabelCardHolder(ViewGroup parent) {
-        super(parent, R.layout.item_label, R.id.item_label_inner_list);
+        super(parent, R.layout.item_label_group, R.id.item_label_inner_list);
         name = (TextView) itemView.findViewById(R.id.item_label_name);
         bar = (ProgressBar) itemView.findViewById(R.id.item_label_bar);
     }

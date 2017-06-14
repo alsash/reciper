@@ -36,7 +36,7 @@ public class RecipeCollectionGridFragment
 
     @Override
     public void onFavorite(Recipe recipe) {
-        // Do nothing
+        presenter.changeFavorite(recipe);
     }
 
     @Override

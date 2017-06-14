@@ -72,24 +72,28 @@ public class DbManager {
 
     public List<CategoryTable> getCategoryTable() {
         QueryBuilder<CategoryTable> builder = daoSession.getCategoryTableDao().queryBuilder();
+        builder.orderAsc(CategoryTableDao.Properties.Name);
         obtainRestriction(builder);
         return builder.build().list();
     }
 
     public List<LabelTable> getLabelTable() {
         QueryBuilder<LabelTable> builder = daoSession.getLabelTableDao().queryBuilder();
+        builder.orderAsc(LabelTableDao.Properties.Name);
         obtainRestriction(builder);
         return builder.build().list();
     }
 
     public List<RecipeTable> getRecipeTable() {
         QueryBuilder<RecipeTable> builder = daoSession.getRecipeTableDao().queryBuilder();
+        obtainSort(builder);
         obtainRestriction(builder);
         return builder.build().list();
     }
 
     public List<RecipeTable> getRecipeTable(CategoryTable categoryTable) {
         QueryBuilder<RecipeTable> builder = daoSession.getRecipeTableDao().queryBuilder();
+        obtainSort(builder);
         obtainRestriction(builder);
         builder
                 .join(
@@ -105,6 +109,7 @@ public class DbManager {
 
     public List<RecipeTable> getRecipeTable(LabelTable labelTable) {
         QueryBuilder<RecipeTable> builder = daoSession.getRecipeTableDao().queryBuilder();
+        obtainSort(builder);
         obtainRestriction(builder);
         builder
                 .join(
@@ -120,6 +125,7 @@ public class DbManager {
 
     public List<FoodTable> getFoodTable(boolean usdaFetched) {
         QueryBuilder<FoodTable> builder = daoSession.getFoodTableDao().queryBuilder();
+        builder.orderAsc(FoodTableDao.Properties.Name);
         obtainRestriction(builder);
         builder.join(FoodTableDao.Properties.Uuid,
                 FoodUsdaTable.class,
@@ -347,5 +353,10 @@ public class DbManager {
     private void obtainChangeDate(Table table) {
         if (table == null) return;
         table.setChangedAt(changeDate);
+    }
+
+    private void obtainSort(QueryBuilder<RecipeTable> builder) {
+        builder.orderDesc(RecipeTableDao.Properties.Favorite);
+        builder.orderAsc(RecipeTableDao.Properties.Name);
     }
 }

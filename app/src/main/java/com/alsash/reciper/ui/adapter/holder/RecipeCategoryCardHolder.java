@@ -23,7 +23,7 @@ public class RecipeCategoryCardHolder extends BaseRecipeGroupHolder<Category> {
     private final MutableBoolean barFree = new MutableBoolean().set(false);
 
     public RecipeCategoryCardHolder(ViewGroup parent) {
-        super(parent, R.layout.item_category, R.id.item_category_inner_list);
+        super(parent, R.layout.item_category_group, R.id.item_category_inner_list);
         image = (ImageView) itemView.findViewById(R.id.item_category_image);
         name = (TextView) itemView.findViewById(R.id.item_category_name);
         bar = (ProgressBar) itemView.findViewById(R.id.item_category_bar);

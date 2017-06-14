@@ -1,11 +1,15 @@
 package com.alsash.reciper.ui.adapter.holder;
 
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
+import android.animation.TimeInterpolator;
 import android.support.annotation.LayoutRes;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.OvershootInterpolator;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -24,6 +28,9 @@ import java.util.Locale;
  * and send interaction events ro receiver
  */
 public class RecipeCardHolder extends RecyclerView.ViewHolder {
+
+    private static final TimeInterpolator FAVORITE_INTERPOLATOR = new OvershootInterpolator(5);
+    private static final int FAVORITE_DURATION_MS = 400;
 
     private final CardView frontCard;
     private final ImageView frontImage;
@@ -78,6 +85,32 @@ public class RecipeCardHolder extends RecyclerView.ViewHolder {
         backSource.setText(recipe.getSource());
         backDate.setText(dateFormat.format(recipe.getCreatedAt()));
         backDescription.setText(recipe.getDescription());
+        setFavorite(recipe.isFavorite(), false);
+    }
+
+    public void setFavorite(boolean favorite, boolean animate) {
+        frontFavButton.setImageResource(favorite ?
+                R.drawable.item_recipe_bt_fav_on :
+                R.drawable.item_recipe_bt_fav_off);
+        backFavButton.setImageResource(favorite ?
+                R.drawable.item_recipe_bt_fav_on :
+                R.drawable.item_recipe_bt_fav_off);
+        if (animate) {
+            animateFavorite(frontCard.getVisibility() == View.VISIBLE ?
+                    frontFavButton : backFavButton);
+        }
+    }
+
+    private void animateFavorite(ImageButton favButton) {
+        AnimatorSet animatorSet = new AnimatorSet();
+        ObjectAnimator bounceAnimX = ObjectAnimator.ofFloat(favButton, "scaleX", 0.4f, 1f);
+        bounceAnimX.setDuration(FAVORITE_DURATION_MS);
+        bounceAnimX.setInterpolator(FAVORITE_INTERPOLATOR);
+        ObjectAnimator bounceAnimY = ObjectAnimator.ofFloat(favButton, "scaleY", 0.4f, 1f);
+        bounceAnimY.setDuration(FAVORITE_DURATION_MS);
+        bounceAnimY.setInterpolator(FAVORITE_INTERPOLATOR);
+        animatorSet.play(bounceAnimX).with(bounceAnimY);
+        animatorSet.start();
     }
 
     /**
@@ -120,5 +153,7 @@ public class RecipeCardHolder extends RecyclerView.ViewHolder {
         frontCard.setRotationY(0.0f);
         backCard.setAlpha(1.0f);
         backCard.setRotationY(0.0f);
+        frontFavButton.clearAnimation();
+        backFavButton.clearAnimation();
     }
 }

@@ -67,7 +67,6 @@ public abstract class BaseListFragment<M, V extends BaseListView<M>> extends Bas
 
     @Override
     public void showLoading(boolean loading) {
-        refreshIndicator.setEnabled(loading);
         refreshIndicator.setRefreshing(loading);
     }
 
@@ -98,6 +97,12 @@ public abstract class BaseListFragment<M, V extends BaseListView<M>> extends Bas
     }
 
     protected void setupRefresh() {
+        refreshIndicator.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                presenter.refresh(getThisView());
+            }
+        });
         refreshIndicator.setColorSchemeResources(
                 R.color.nutrition_carbohydrate,
                 R.color.nutrition_fat,
