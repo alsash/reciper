@@ -64,6 +64,12 @@ public abstract class BaseRecipeGroupHolder<G extends BaseEntity> extends Recycl
     @Override
     public abstract void showLoading(boolean loading);
 
+    @Override
+    public void showUpdate(int position) {
+        if (adapter == null) return;
+        adapter.notifyItemChanged(position);
+    }
+
     public void setInteraction(RecipeListInteraction interaction) {
         this.interaction = interaction;
     }

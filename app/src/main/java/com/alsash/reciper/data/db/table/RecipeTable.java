@@ -67,6 +67,11 @@ public final class RecipeTable implements Table, RecipeFull {
     List<RecipeFoodTable> recipeFoodTables;
     @ToMany(joinProperties = {@JoinProperty(name = "uuid", referencedName = "recipeUuid")})
     List<RecipeMethodTable> recipeMethodTables;
+    private transient List<Photo> photos = new ArrayList<>();
+    private transient List<Label> labels = new ArrayList<>();
+    private transient List<Ingredient> ingredients = new ArrayList<>();
+    private transient List<Method> methods = new ArrayList<>();
+
     /**
      * Used to resolve relations
      */
@@ -217,7 +222,7 @@ public final class RecipeTable implements Table, RecipeFull {
     public Photo getMainPhoto() {
         for (RecipePhotoTable recipePhotoTable : getRecipePhotoTables()) {
             if (recipePhotoTable.main)
-                return getRecipePhotoTables().size() > 0 ?
+                return recipePhotoTable.getPhotoTables().size() > 0 ?
                         recipePhotoTable.getPhotoTables().get(0) :
                         null;
         }
@@ -236,7 +241,7 @@ public final class RecipeTable implements Table, RecipeFull {
 
     @Override
     public List<Photo> getPhotos() {
-        List<Photo> photos = new ArrayList<>();
+        photos.clear();
         for (RecipePhotoTable recipePhotoTable : getRecipePhotoTables()) {
             photos.addAll(recipePhotoTable.getPhotoTables());
         }
@@ -245,7 +250,7 @@ public final class RecipeTable implements Table, RecipeFull {
 
     @Override
     public List<Label> getLabels() {
-        List<Label> labels = new ArrayList<>();
+        labels.clear();
         for (RecipeLabelTable recipeLabelTable : getRecipeLabelTables()) {
             labels.addAll(recipeLabelTable.getLabelTables());
         }
@@ -254,14 +259,14 @@ public final class RecipeTable implements Table, RecipeFull {
 
     @Override
     public List<Ingredient> getIngredients() {
-        List<Ingredient> ingredients = new ArrayList<>();
+        ingredients.clear();
         ingredients.addAll(getRecipeFoodTables());
         return ingredients;
     }
 
     @Override
     public List<Method> getMethods() {
-        List<Method> methods = new ArrayList<>();
+        methods.clear();
         methods.addAll(getRecipeMethodTables());
         return methods;
     }

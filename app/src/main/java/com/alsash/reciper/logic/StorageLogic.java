@@ -83,6 +83,12 @@ public class StorageLogic {
         return labels;
     }
 
+    public List<Label> getLabels(Recipe recipe) {
+        if (BuildConfig.DEBUG) MainThreadException.throwOnMainThread(TAG, "getLabels()");
+        RecipeTable recipeTable = (RecipeTable) recipe;
+        return recipeTable.getLabels();
+    }
+
     public List<Recipe> getRecipes(int offset, int limit) {
         if (BuildConfig.DEBUG) MainThreadException.throwOnMainThread(TAG, "getRecipes(int, int)");
         List<Recipe> recipes = new ArrayList<>();

@@ -36,7 +36,7 @@ public class RecipeCollectionLabelFragment
 
     @Override
     public void onFavorite(Recipe recipe) {
-
+        presenter.changeFavorite(recipe);
     }
 
     @Override

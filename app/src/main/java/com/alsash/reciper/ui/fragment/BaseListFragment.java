@@ -76,6 +76,11 @@ public abstract class BaseListFragment<M, V extends BaseListView<M>> extends Bas
     }
 
     @Override
+    public void showUpdate(int position) {
+        adapter.notifyItemChanged(position);
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View layout = inflater.inflate(R.layout.fragment_list_refresh, container, false);
