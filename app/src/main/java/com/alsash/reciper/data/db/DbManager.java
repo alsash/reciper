@@ -51,6 +51,8 @@ public class DbManager {
     private boolean restrict;
     private int offset;
     private int limit;
+    private boolean search;
+    private String searchPattern;
     private Date changeDate;
 
     public DbManager(DaoSession daoSession) {
@@ -62,6 +64,12 @@ public class DbManager {
         this.restrict = true;
         this.offset = offset;
         this.limit = limit;
+        return this;
+    }
+
+    public DbManager searchWith(String searchPattern) {
+        this.search = true;
+        this.searchPattern = searchPattern;
         return this;
     }
 
@@ -87,6 +95,7 @@ public class DbManager {
     public List<RecipeTable> getRecipeTable() {
         QueryBuilder<RecipeTable> builder = daoSession.getRecipeTableDao().queryBuilder();
         obtainSort(builder);
+        obtainSearch(builder);
         obtainRestriction(builder);
         return builder.build().list();
     }
@@ -94,6 +103,7 @@ public class DbManager {
     public List<RecipeTable> getRecipeTable(CategoryTable categoryTable) {
         QueryBuilder<RecipeTable> builder = daoSession.getRecipeTableDao().queryBuilder();
         obtainSort(builder);
+        obtainSearch(builder);
         obtainRestriction(builder);
         builder
                 .join(
@@ -110,6 +120,7 @@ public class DbManager {
     public List<RecipeTable> getRecipeTable(LabelTable labelTable) {
         QueryBuilder<RecipeTable> builder = daoSession.getRecipeTableDao().queryBuilder();
         obtainSort(builder);
+        obtainSearch(builder);
         obtainRestriction(builder);
         builder
                 .join(
@@ -340,6 +351,13 @@ public class DbManager {
         if (restrict) {
             builder.offset(offset).limit(limit);
             restrict = false;
+        }
+    }
+
+    private void obtainSearch(QueryBuilder<RecipeTable> builder) {
+        if (search) {
+            builder.where(RecipeTableDao.Properties.Name.like(searchPattern));
+            search = false;
         }
     }
 

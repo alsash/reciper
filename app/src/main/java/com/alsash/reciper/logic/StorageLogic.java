@@ -1,6 +1,7 @@
 package com.alsash.reciper.logic;
 
 
+import android.support.annotation.Nullable;
 import android.support.annotation.UiThread;
 
 import com.alsash.reciper.BuildConfig;
@@ -83,12 +84,6 @@ public class StorageLogic {
         return labels;
     }
 
-    public List<Label> getLabels(Recipe recipe) {
-        if (BuildConfig.DEBUG) MainThreadException.throwOnMainThread(TAG, "getLabels()");
-        RecipeTable recipeTable = (RecipeTable) recipe;
-        return recipeTable.getLabels();
-    }
-
     public List<Recipe> getRecipes(int offset, int limit) {
         if (BuildConfig.DEBUG) MainThreadException.throwOnMainThread(TAG, "getRecipes(int, int)");
         List<Recipe> recipes = new ArrayList<>();
@@ -117,6 +112,42 @@ public class StorageLogic {
         List<RecipeTable> recipeTables = dbManager
                 .restrictWith(offset, limit)
                 .getRecipeTable((LabelTable) label);
+        recipes.addAll(prefetchRecipeRelations(recipeTables));
+        return recipes;
+    }
+
+    public List<Recipe> searchRecipes(@Nullable String searchPattern,
+                                      @Nullable String groupUuid,
+                                      @Nullable Class<?> groupClass,
+                                      int offset, int limit) {
+        if (BuildConfig.DEBUG) {
+            MainThreadException.throwOnMainThread(TAG,
+                    "searchRecipes(String, Class, String, int, int)");
+        }
+        List<Recipe> recipes = new ArrayList<>();
+        if (searchPattern == null && groupUuid == null && groupClass == null) return recipes;
+
+        if (searchPattern != null) {
+            if (searchPattern.length() < 2) return recipes;
+            dbManager.searchWith(searchPattern);
+        }
+
+        List<RecipeTable> recipeTables;
+        if (groupUuid != null && groupClass != null) {
+            if (groupClass == Category.class || groupClass.isAssignableFrom(Category.class)) {
+                CategoryTable categoryTable = new CategoryTable();
+                categoryTable.setUuid(groupUuid);
+                recipeTables = dbManager.restrictWith(offset, limit).getRecipeTable(categoryTable);
+            } else if (groupClass == Label.class || groupClass.isAssignableFrom(Label.class)) {
+                LabelTable labelTable = new LabelTable();
+                labelTable.setUuid(groupUuid);
+                recipeTables = dbManager.restrictWith(offset, limit).getRecipeTable(labelTable);
+            } else {
+                return recipes;
+            }
+        } else {
+            recipeTables = dbManager.restrictWith(offset, limit).getRecipeTable();
+        }
         recipes.addAll(prefetchRecipeRelations(recipeTables));
         return recipes;
     }

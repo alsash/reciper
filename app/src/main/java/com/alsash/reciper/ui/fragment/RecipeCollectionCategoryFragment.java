@@ -1,5 +1,7 @@
 package com.alsash.reciper.ui.fragment;
 
+import android.content.Context;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import com.alsash.reciper.app.AppNavigator;
@@ -34,11 +36,6 @@ public class RecipeCollectionCategoryFragment
     }
 
     @Override
-    public void onOpen(Recipe recipe) {
-        navigator.fromActivity(getActivity()).toRecipeDetailsView(recipe.getId());
-    }
-
-    @Override
     public BaseRecipeListPresenter<RecipeListView> injectInnerPresenter(Category category) {
         return presenter.getInnerPresenter(category);
     }
@@ -46,6 +43,11 @@ public class RecipeCollectionCategoryFragment
     @Override
     public void onOpen(Category category) {
         // Do Nothing
+    }
+
+    @Override
+    public void onOpen(Recipe recipe) {
+        navigator.fromActivity(getActivity()).toRecipeDetailsView(recipe.getId());
     }
 
     @Override
@@ -59,5 +61,10 @@ public class RecipeCollectionCategoryFragment
     @Override
     protected RecyclerView.Adapter getAdapter(List<Category> categories) {
         return new RecipeCategoryCardListAdapter(categories, this);
+    }
+
+    @Override
+    protected RecyclerView.LayoutManager getLayoutManager(Context context) {
+        return new LinearLayoutManager(context);
     }
 }

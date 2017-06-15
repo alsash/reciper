@@ -3,7 +3,6 @@ package com.alsash.reciper.ui.fragment;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -48,6 +47,8 @@ public abstract class BaseListFragment<M extends BaseEntity, V extends BaseListV
 
     protected abstract RecyclerView.Adapter getAdapter(List<M> container);
 
+    protected abstract RecyclerView.LayoutManager getLayoutManager(Context context);
+
     public void onAttach(Context context) {
         super.onAttach(context);
         presenter = (BaseListPresenter<M, V>) getThisPresenter();
@@ -69,17 +70,20 @@ public abstract class BaseListFragment<M extends BaseEntity, V extends BaseListV
 
     @Override
     public void showLoading(boolean loading) {
-        refreshIndicator.setRefreshing(loading);
+        if (refreshIndicator != null)
+            refreshIndicator.setRefreshing(loading);
     }
 
     @Override
     public void showInsert(int insertPosition, int insertCount) {
-        adapter.notifyItemRangeInserted(insertPosition, insertCount);
+        if (adapter != null)
+            adapter.notifyItemRangeInserted(insertPosition, insertCount);
     }
 
     @Override
     public void showUpdate(int position) {
-        adapter.notifyItemChanged(position);
+        if (adapter != null)
+            adapter.notifyItemChanged(position);
     }
 
     @Override
@@ -114,9 +118,5 @@ public abstract class BaseListFragment<M extends BaseEntity, V extends BaseListV
                 R.color.nutrition_carbohydrate,
                 R.color.nutrition_fat,
                 R.color.nutrition_protein);
-    }
-
-    protected RecyclerView.LayoutManager getLayoutManager(Context context) {
-        return new LinearLayoutManager(context);
     }
 }

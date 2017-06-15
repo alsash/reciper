@@ -12,7 +12,6 @@ import com.alsash.reciper.mvp.view.RecipeCollectionLabelView;
 import com.alsash.reciper.mvp.view.RecipeListView;
 import com.alsash.reciper.ui.adapter.RecipeLabelCardListAdapter;
 import com.alsash.reciper.ui.adapter.interaction.RecipeGroupInteraction;
-import com.alsash.reciper.ui.adapter.interaction.RecipeListInteraction;
 
 import java.util.List;
 
@@ -23,7 +22,7 @@ import javax.inject.Inject;
  */
 public class RecipeCollectionLabelFragment
         extends BaseListFragment<Label, RecipeCollectionLabelView>
-        implements RecipeCollectionLabelView, RecipeGroupInteraction<Label>, RecipeListInteraction {
+        implements RecipeCollectionLabelView, RecipeGroupInteraction<Label> {
 
     @Inject
     RecipeCollectionLabelPresenter presenter;
@@ -35,16 +34,6 @@ public class RecipeCollectionLabelFragment
     }
 
     @Override
-    public void onFavorite(Recipe recipe) {
-        presenter.changeFavorite(recipe);
-    }
-
-    @Override
-    public void onOpen(Recipe recipe) {
-        navigator.fromActivity(getActivity()).toRecipeDetailsView(recipe.getId());
-    }
-
-    @Override
     public BaseRecipeListPresenter<RecipeListView> injectInnerPresenter(Label label) {
         return presenter.getInnerPresenter(label);
     }
@@ -52,6 +41,11 @@ public class RecipeCollectionLabelFragment
     @Override
     public void onOpen(Label label) {
         // Do Nothing
+    }
+
+    @Override
+    public void onOpen(Recipe recipe) {
+        navigator.fromActivity(getActivity()).toRecipeDetailsView(recipe.getId());
     }
 
     @Override

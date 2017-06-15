@@ -2,16 +2,11 @@ package com.alsash.reciper.mvp.presenter;
 
 import com.alsash.reciper.logic.BusinessLogic;
 import com.alsash.reciper.logic.StorageLogic;
-import com.alsash.reciper.logic.action.RecipeAction;
 import com.alsash.reciper.mvp.model.entity.Category;
 import com.alsash.reciper.mvp.model.entity.Recipe;
 import com.alsash.reciper.mvp.view.RecipeCollectionCategoryView;
 
 import java.util.List;
-
-import io.reactivex.Completable;
-import io.reactivex.functions.Action;
-import io.reactivex.schedulers.Schedulers;
 
 /**
  * A Presenter that represents collection of Recipes grouped by Categories
@@ -50,18 +45,5 @@ public class RecipeCollectionCategoryPresenter
     @Override
     public List<Recipe> loadNextRecipes(Category category, int offset, int limit) {
         return storageLogic.getRecipes(category, offset, limit);
-    }
-
-    public void changeFavorite(final Recipe recipe) {
-        storageLogic.updateSync(recipe, RecipeAction.FAVORITE);
-        getComposite().add(Completable
-                .fromAction(new Action() {
-                    @Override
-                    public void run() throws Exception {
-                        storageLogic.updateAsync(recipe);
-                    }
-                })
-                .subscribeOn(Schedulers.io())
-                .subscribe());
     }
 }
