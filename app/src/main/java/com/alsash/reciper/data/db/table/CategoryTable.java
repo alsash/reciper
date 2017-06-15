@@ -114,6 +114,19 @@ public final class CategoryTable implements Table, Category {
         return getPhotoTables().size() > 0 ? getPhotoTables().get(0) : null;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof CategoryTable)) return false;
+        CategoryTable that = (CategoryTable) o;
+        return getUuid() != null ? getUuid().equals(that.getUuid()) : that.getUuid() == null;
+    }
+
+    @Override
+    public int hashCode() {
+        return getUuid() != null ? getUuid().hashCode() : 0;
+    }
+
     /**
      * Convenient call for {@link org.greenrobot.greendao.AbstractDao#delete(Object)}.
      * Entity must attached to an entity context.

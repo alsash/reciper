@@ -91,6 +91,19 @@ public final class LabelTable implements Table, Label {
         this.name = name;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof LabelTable)) return false;
+        LabelTable that = (LabelTable) o;
+        return getUuid() != null ? getUuid().equals(that.getUuid()) : that.getUuid() == null;
+    }
+
+    @Override
+    public int hashCode() {
+        return getUuid() != null ? getUuid().hashCode() : 0;
+    }
+
     /**
      * Convenient call for {@link org.greenrobot.greendao.AbstractDao#delete(Object)}.
      * Entity must attached to an entity context.
