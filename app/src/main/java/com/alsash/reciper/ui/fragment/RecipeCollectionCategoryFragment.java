@@ -12,7 +12,6 @@ import com.alsash.reciper.mvp.view.RecipeCollectionCategoryView;
 import com.alsash.reciper.mvp.view.RecipeListView;
 import com.alsash.reciper.ui.adapter.RecipeCategoryCardListAdapter;
 import com.alsash.reciper.ui.adapter.interaction.RecipeGroupInteraction;
-import com.alsash.reciper.ui.adapter.interaction.RecipeListInteraction;
 
 import java.util.List;
 
@@ -23,8 +22,7 @@ import javax.inject.Inject;
  */
 public class RecipeCollectionCategoryFragment
         extends BaseListFragment<Category, RecipeCollectionCategoryView>
-        implements RecipeCollectionCategoryView, RecipeGroupInteraction<Category>,
-        RecipeListInteraction {
+        implements RecipeCollectionCategoryView, RecipeGroupInteraction<Category> {
 
     @Inject
     RecipeCollectionCategoryPresenter presenter;
@@ -33,11 +31,6 @@ public class RecipeCollectionCategoryFragment
 
     public static RecipeCollectionCategoryFragment newInstance() {
         return new RecipeCollectionCategoryFragment();
-    }
-
-    @Override
-    public void onFavorite(Recipe recipe) {
-        presenter.changeFavorite(recipe);
     }
 
     @Override
@@ -65,6 +58,6 @@ public class RecipeCollectionCategoryFragment
 
     @Override
     protected RecyclerView.Adapter getAdapter(List<Category> categories) {
-        return new RecipeCategoryCardListAdapter(categories, this, this);
+        return new RecipeCategoryCardListAdapter(categories, this);
     }
 }

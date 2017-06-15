@@ -3,6 +3,7 @@ package com.alsash.reciper.mvp.presenter;
 import android.support.annotation.UiThread;
 import android.support.annotation.WorkerThread;
 
+import com.alsash.reciper.logic.BusinessLogic;
 import com.alsash.reciper.logic.StorageLogic;
 import com.alsash.reciper.mvp.model.entity.BaseEntity;
 import com.alsash.reciper.mvp.model.entity.Recipe;
@@ -38,6 +39,8 @@ public abstract class BaseRecipeGroupPresenter<G extends BaseEntity, V extends B
     }
 
     protected abstract StorageLogic getStorageLogic();
+
+    protected abstract BusinessLogic getBusinessLogic();
 
     @WorkerThread
     protected abstract List<G> loadNextGroups(int offset, int limit);
@@ -89,7 +92,7 @@ public abstract class BaseRecipeGroupPresenter<G extends BaseEntity, V extends B
         public RecipeGroupInnerPresenter(int limit,
                                          G group,
                                          BaseRecipeGroupPresenter<G, ?> outerPresenter) {
-            super(limit, outerPresenter.getStorageLogic());
+            super(limit, outerPresenter.getStorageLogic(), outerPresenter.getBusinessLogic());
             this.group = group;
             this.outerPresenter = outerPresenter;
         }

@@ -64,6 +64,6 @@ public class RecipeCollectionLabelFragment
 
     @Override
     protected RecyclerView.Adapter getAdapter(List<Label> labels) {
-        return new RecipeLabelCardListAdapter(labels, this, this);
+        return new RecipeLabelCardListAdapter(labels, this);
     }
 }

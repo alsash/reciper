@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.alsash.reciper.R;
+import com.alsash.reciper.mvp.model.entity.BaseEntity;
 import com.alsash.reciper.mvp.presenter.BaseListPresenter;
 import com.alsash.reciper.mvp.view.BaseListView;
 import com.alsash.reciper.ui.view.RecyclerViewHelper;
@@ -24,7 +25,8 @@ import static android.support.v7.widget.RecyclerView.SCROLL_STATE_SETTLING;
  * @param <M> - Model of an entity
  * @param <V> - View interface
  */
-public abstract class BaseListFragment<M, V extends BaseListView<M>> extends BaseFragment<V>
+public abstract class BaseListFragment<M extends BaseEntity, V extends BaseListView<M>>
+        extends BaseFragment<V>
         implements BaseListView<M> {
 
     protected BaseListPresenter<M, V> presenter;

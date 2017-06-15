@@ -1,5 +1,6 @@
 package com.alsash.reciper.mvp.presenter;
 
+import com.alsash.reciper.logic.BusinessLogic;
 import com.alsash.reciper.logic.StorageLogic;
 import com.alsash.reciper.logic.action.RecipeAction;
 import com.alsash.reciper.mvp.model.entity.Category;
@@ -21,35 +22,43 @@ public class RecipeCollectionCategoryPresenter
     private static final int PAGINATION_CATEGORY_LIMIT = 10;
     private static final int PAGINATION_RECIPE_LIMIT = 10;
 
-    private final StorageLogic storage;
+    private final StorageLogic storageLogic;
+    private final BusinessLogic businessLogic;
 
-    public RecipeCollectionCategoryPresenter(StorageLogic storage) {
+    public RecipeCollectionCategoryPresenter(StorageLogic storageLogic,
+                                             BusinessLogic businessLogic) {
         super(PAGINATION_CATEGORY_LIMIT, PAGINATION_RECIPE_LIMIT);
-        this.storage = storage;
+        this.storageLogic = storageLogic;
+        this.businessLogic = businessLogic;
     }
 
     @Override
     protected StorageLogic getStorageLogic() {
-        return storage;
+        return storageLogic;
+    }
+
+    @Override
+    protected BusinessLogic getBusinessLogic() {
+        return businessLogic;
     }
 
     @Override
     protected List<Category> loadNextGroups(int offset, int limit) {
-        return storage.getCategories(offset, limit);
+        return storageLogic.getCategories(offset, limit);
     }
 
     @Override
     public List<Recipe> loadNextRecipes(Category category, int offset, int limit) {
-        return storage.getRecipes(category, offset, limit);
+        return storageLogic.getRecipes(category, offset, limit);
     }
 
     public void changeFavorite(final Recipe recipe) {
-        storage.updateSync(recipe, RecipeAction.FAVORITE);
+        storageLogic.updateSync(recipe, RecipeAction.FAVORITE);
         getComposite().add(Completable
                 .fromAction(new Action() {
                     @Override
                     public void run() throws Exception {
-                        storage.updateAsync(recipe);
+                        storageLogic.updateAsync(recipe);
                     }
                 })
                 .subscribeOn(Schedulers.io())

@@ -1,5 +1,6 @@
 package com.alsash.reciper.mvp.presenter;
 
+import com.alsash.reciper.logic.BusinessLogic;
 import com.alsash.reciper.logic.StorageLogic;
 import com.alsash.reciper.logic.action.RecipeAction;
 import com.alsash.reciper.mvp.model.entity.Label;
@@ -18,7 +19,7 @@ import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
 /**
- * A Presenter that represents collection of Recipes grouped by Labels
+ * A Presenter that represents collection of a Recipes grouped by Labels
  */
 public class RecipeCollectionLabelPresenter
         extends BaseRecipeGroupPresenter<Label, RecipeCollectionLabelView> {
@@ -26,36 +27,44 @@ public class RecipeCollectionLabelPresenter
     private static final int PAGINATION_LABEL_LIMIT = 10;
     private static final int PAGINATION_RECIPE_LIMIT = 10;
 
-    private final StorageLogic storage;
+    private final StorageLogic storageLogic;
+    private final BusinessLogic businessLogic;
 
-    public RecipeCollectionLabelPresenter(StorageLogic storage) {
+    public RecipeCollectionLabelPresenter(StorageLogic storageLogic,
+                                          BusinessLogic businessLogic) {
         super(PAGINATION_LABEL_LIMIT, PAGINATION_RECIPE_LIMIT);
-        this.storage = storage;
+        this.storageLogic = storageLogic;
+        this.businessLogic = businessLogic;
     }
 
     @Override
     protected StorageLogic getStorageLogic() {
-        return storage;
+        return storageLogic;
+    }
+
+    @Override
+    protected BusinessLogic getBusinessLogic() {
+        return businessLogic;
     }
 
     @Override
     protected List<Label> loadNextGroups(int offset, int limit) {
-        return storage.getLabels(offset, limit);
+        return storageLogic.getLabels(offset, limit);
     }
 
     @Override
     public List<Recipe> loadNextRecipes(Label label, int offset, int limit) {
-        return storage.getRecipes(label, offset, limit);
+        return storageLogic.getRecipes(label, offset, limit);
     }
 
     public void changeFavorite(final Recipe recipe) {
-        storage.updateSync(recipe, RecipeAction.FAVORITE);
+        storageLogic.updateSync(recipe, RecipeAction.FAVORITE);
         Flowable
                 .fromCallable(new Callable<List<Label>>() {
                     @Override
                     public List<Label> call() throws Exception {
-                        storage.updateAsync(recipe);
-                        return storage.getLabels(recipe);
+                        storageLogic.updateAsync(recipe);
+                        return storageLogic.getLabels(recipe);
                     }
                 })
                 .subscribeOn(Schedulers.io())

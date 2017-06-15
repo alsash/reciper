@@ -5,7 +5,6 @@ import android.view.ViewGroup;
 import com.alsash.reciper.mvp.model.entity.Category;
 import com.alsash.reciper.ui.adapter.holder.RecipeCategoryCardHolder;
 import com.alsash.reciper.ui.adapter.interaction.RecipeGroupInteraction;
-import com.alsash.reciper.ui.adapter.interaction.RecipeListInteraction;
 
 import java.util.List;
 
@@ -16,9 +15,8 @@ public class RecipeCategoryCardListAdapter
         extends BaseRecipeGroupAdapter<Category, RecipeCategoryCardHolder> {
 
     public RecipeCategoryCardListAdapter(List<Category> groupList,
-                                         RecipeGroupInteraction<Category> groupInteraction,
-                                         RecipeListInteraction recipeInteraction) {
-        super(groupList, groupInteraction, recipeInteraction);
+                                         RecipeGroupInteraction<Category> groupInteraction) {
+        super(groupList, groupInteraction);
     }
 
     @Override

@@ -1,5 +1,6 @@
 package com.alsash.reciper.mvp.presenter;
 
+import com.alsash.reciper.logic.BusinessLogic;
 import com.alsash.reciper.logic.StorageLogic;
 import com.alsash.reciper.mvp.model.entity.Recipe;
 import com.alsash.reciper.mvp.view.RecipeCollectionGridView;
@@ -14,15 +15,18 @@ public class RecipeCollectionGridPresenter
 
     private static final int PAGINATION_LIMIT = 15;
 
-    private final StorageLogic storage;
+    private final StorageLogic storageLogic;
+    private final BusinessLogic businessLogic;
 
-    public RecipeCollectionGridPresenter(StorageLogic storage) {
-        super(PAGINATION_LIMIT, storage);
-        this.storage = storage;
+    public RecipeCollectionGridPresenter(StorageLogic storageLogic,
+                                         BusinessLogic businessLogic) {
+        super(PAGINATION_LIMIT, storageLogic, businessLogic);
+        this.storageLogic = storageLogic;
+        this.businessLogic = businessLogic;
     }
 
     @Override
     protected List<Recipe> loadNext(int offset, int limit) {
-        return storage.getRecipes(offset, limit);
+        return storageLogic.getRecipes(offset, limit);
     }
 }

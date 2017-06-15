@@ -6,7 +6,6 @@ import android.view.View;
 import com.alsash.reciper.mvp.model.entity.BaseEntity;
 import com.alsash.reciper.ui.adapter.holder.BaseRecipeGroupHolder;
 import com.alsash.reciper.ui.adapter.interaction.RecipeGroupInteraction;
-import com.alsash.reciper.ui.adapter.interaction.RecipeListInteraction;
 
 import java.util.List;
 
@@ -21,14 +20,11 @@ public abstract class BaseRecipeGroupAdapter<G extends BaseEntity,
 
     private final List<G> groupList;
     private final RecipeGroupInteraction<G> groupInteraction;
-    private final RecipeListInteraction recipeInteraction;
 
     public BaseRecipeGroupAdapter(List<G> groupList,
-                                  RecipeGroupInteraction<G> groupInteraction,
-                                  RecipeListInteraction recipeInteraction) {
+                                  RecipeGroupInteraction<G> groupInteraction) {
         this.groupList = groupList;
         this.groupInteraction = groupInteraction;
-        this.recipeInteraction = recipeInteraction;
         setHasStableIds(true);
     }
 
@@ -41,14 +37,14 @@ public abstract class BaseRecipeGroupAdapter<G extends BaseEntity,
     public void onBindViewHolder(final VH holder, int position) {
         G group = groupList.get(position);
         holder.bindGroup(group);
+        holder.setInteraction(groupInteraction);
+        holder.setPresenter(groupInteraction.injectInnerPresenter(group));
         holder.setListeners(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 groupInteraction.onOpen(groupList.get(holder.getAdapterPosition()));
             }
         });
-        holder.setInteraction(recipeInteraction);
-        holder.setPresenter(groupInteraction.injectInnerPresenter(group));
     }
 
     @Override

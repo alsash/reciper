@@ -1,15 +1,16 @@
 package com.alsash.reciper.mvp.presenter;
 
+import android.support.annotation.Nullable;
 import android.support.annotation.WorkerThread;
 import android.util.Log;
 
+import com.alsash.reciper.mvp.model.entity.BaseEntity;
 import com.alsash.reciper.mvp.view.BaseListView;
 
 import org.reactivestreams.Publisher;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 
 import io.reactivex.BackpressureStrategy;
@@ -29,7 +30,7 @@ import io.reactivex.subscribers.DisposableSubscriber;
  * Base List Presenter, that fetch a data, represented by Model,
  * and holds BaseListView instance, witch represents a Model of a data.
  */
-public abstract class BaseListPresenter<M, V extends BaseListView<M>> implements BasePresenter<V> {
+public abstract class BaseListPresenter<M extends BaseEntity, V extends BaseListView<M>> implements BasePresenter<V> {
 
     private static final String TAG = "BaseListPresenter";
     private static final int DEFAULT_LIMIT = 10;
@@ -174,10 +175,16 @@ public abstract class BaseListPresenter<M, V extends BaseListView<M>> implements
     protected void addNext(List<M> newModels, WeakReference<V> viewRef) {
         int insertPosition = models.size();
         int insertCount = 0;
-        HashSet<M> checkSet = new HashSet<>(models);
-        for (M model : newModels) {
-            if (!checkSet.contains(model)) {
-                models.add(model);
+        for (M newModel : newModels) {
+            boolean exist = false;
+            for (M model : models) {
+                if (model.getUuid().equals(newModel.getUuid())) {
+                    exist = true;
+                    break;
+                }
+            }
+            if (!exist) {
+                models.add(newModel);
                 insertCount += 1;
             }
         }
@@ -189,6 +196,23 @@ public abstract class BaseListPresenter<M, V extends BaseListView<M>> implements
 
     protected List<M> getModels() {
         return models;
+    }
+
+    @Nullable
+    protected M getModel(String uuid) {
+        if (uuid == null) return null;
+        for (M model : models) {
+            if (model.getUuid().equals(uuid)) return model;
+        }
+        return null;
+    }
+
+    @Nullable
+    protected Integer getPosition(String uuid) {
+        for (int i = 0; i < models.size(); i++) {
+            if (models.get(i).getUuid().equals(uuid)) return i;
+        }
+        return null;
     }
 
     private boolean isIncreased(int visiblePosition) {

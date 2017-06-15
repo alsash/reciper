@@ -13,6 +13,7 @@ import com.alsash.reciper.mvp.model.entity.Recipe;
 import com.alsash.reciper.mvp.presenter.BaseRecipeListPresenter;
 import com.alsash.reciper.mvp.view.RecipeListView;
 import com.alsash.reciper.ui.adapter.RecipeCardListAdapter;
+import com.alsash.reciper.ui.adapter.interaction.RecipeGroupInteraction;
 import com.alsash.reciper.ui.adapter.interaction.RecipeListInteraction;
 import com.alsash.reciper.ui.animator.FlipCardListAnimator;
 import com.alsash.reciper.ui.view.RecyclerViewHelper;
@@ -25,9 +26,9 @@ import static android.support.v7.widget.RecyclerView.SCROLL_STATE_SETTLING;
  * An abstract view holder that shows list of Recipes with help of their Presenter
  */
 public abstract class BaseRecipeGroupHolder<G extends BaseEntity> extends RecyclerView.ViewHolder
-        implements RecipeListView {
+        implements RecipeListView, RecipeListInteraction {
 
-    private RecipeListInteraction interaction;
+    private RecipeGroupInteraction<G> interaction;
     private BaseRecipeListPresenter<RecipeListView> presenter;
     private RecyclerView groupList;
     private RecipeCardListAdapter adapter;
@@ -65,12 +66,27 @@ public abstract class BaseRecipeGroupHolder<G extends BaseEntity> extends Recycl
     public abstract void showLoading(boolean loading);
 
     @Override
+    public void onFavorite(Recipe recipe) {
+        presenter.changeFavorite(recipe);
+    }
+
+    @Override
+    public void onOpen(Recipe recipe) {
+        interaction.onOpen(recipe);
+    }
+
+    @Override
+    public void showInsert(int insertPosition, int insertCount) {
+        adapter.notifyItemRangeInserted(insertPosition, insertCount);
+    }
+
+    @Override
     public void showUpdate(int position) {
         if (adapter == null) return;
         adapter.notifyItemChanged(position);
     }
 
-    public void setInteraction(RecipeListInteraction interaction) {
+    public void setInteraction(RecipeGroupInteraction<G> interaction) {
         this.interaction = interaction;
     }
 
@@ -105,7 +121,7 @@ public abstract class BaseRecipeGroupHolder<G extends BaseEntity> extends Recycl
 
     @Override
     public void setContainer(List<Recipe> recipes) {
-        adapter = new RecipeCardListAdapter(interaction, recipes, getRecipeCardLayout());
+        adapter = new RecipeCardListAdapter(this, recipes, getRecipeCardLayout());
         LinearLayoutManager layoutManager = new LinearLayoutManager(groupList.getContext(),
                 LinearLayoutManager.HORIZONTAL, false);
         if (recipes.size() > layoutManager.getInitialPrefetchItemCount()) {
@@ -121,10 +137,5 @@ public abstract class BaseRecipeGroupHolder<G extends BaseEntity> extends Recycl
     @Override
     public void setPagination(boolean needPagination) {
         this.needPagination = needPagination;
-    }
-
-    @Override
-    public void showInsert(int insertPosition, int insertCount) {
-        adapter.notifyItemRangeInserted(insertPosition, insertCount);
     }
 }
