@@ -16,9 +16,7 @@ public class RecipeEvent {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof RecipeEvent)) return false;
-
         RecipeEvent event = (RecipeEvent) o;
-
         if (action != event.action) return false;
         return uuid != null ? uuid.equals(event.uuid) : event.uuid == null;
     }
