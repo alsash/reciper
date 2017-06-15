@@ -48,6 +48,13 @@ public abstract class BaseRecipeGroupPresenter<G extends BaseEntity, V extends B
     @WorkerThread
     protected abstract List<Recipe> loadNextRecipes(G group, int offset, int limit);
 
+    @Override
+    public void refresh(V view) {
+        prefetchedRecipes.clear();
+        presenters.clear();
+        super.refresh(view);
+    }
+
     @WorkerThread
     @Override
     protected List<G> loadNext(int offset, int limit) {
