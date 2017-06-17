@@ -13,7 +13,7 @@ import java.util.List;
 public class RecipeCollectionGridPresenter
         extends BaseRecipeListPresenter<RecipeCollectionGridView> {
 
-    private static final int PAGINATION_LIMIT = 15;
+    private static final int PAGINATION_LIMIT = 20;
 
     private final StorageLogic storageLogic;
     private final BusinessLogic businessLogic;

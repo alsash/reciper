@@ -2,6 +2,7 @@ package com.alsash.reciper.ui.adapter.holder;
 
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -14,11 +15,13 @@ import com.alsash.reciper.mvp.model.entity.Label;
  */
 public class RecipeLabelCardHolder extends BaseRecipeGroupHolder<Label> {
 
+    private final ImageView image;
     private final TextView name;
     private final ProgressBar bar;
 
     public RecipeLabelCardHolder(ViewGroup parent) {
         super(parent, R.layout.item_label_group, R.id.item_label_inner_list);
+        image = (ImageView) itemView.findViewById(R.id.item_label_image);
         name = (TextView) itemView.findViewById(R.id.item_label_name);
         bar = (ProgressBar) itemView.findViewById(R.id.item_label_bar);
     }
@@ -40,6 +43,7 @@ public class RecipeLabelCardHolder extends BaseRecipeGroupHolder<Label> {
      */
     @Override
     public void setListeners(View.OnClickListener... listeners) {
+        image.setOnClickListener(listeners[0]);
         name.setOnClickListener(listeners[0]);
     }
 

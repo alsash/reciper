@@ -76,14 +76,12 @@ public class StartPresenter implements BasePresenter<StartView> {
                 .fromAction(new Action() {
                     @Override
                     public void run() throws Exception {
-                        storage.createStartupEntitiesIfNeed();
                         if (BuildConfig.DEBUG) {
                             Context context = ((AppCompatActivity) viewRef.get())
                                     .getApplicationContext();
-                            Glide glide = Glide.get(context);
-                            glide.clearDiskCache();
-                            glide.clearMemory();
+                            Glide.get(context).clearDiskCache();
                         }
+                        storage.createStartupEntitiesIfNeed();
                     }
                 })
                 .delay(START_DELAY_MS, TimeUnit.MILLISECONDS)
@@ -96,6 +94,11 @@ public class StartPresenter implements BasePresenter<StartView> {
                         fetched = true;
                         if (viewRef.get() == null) return;
                         if (viewRef.get().isViewVisible()) visible(viewRef.get());
+                        if (BuildConfig.DEBUG) {
+                            Context context = ((AppCompatActivity) viewRef.get())
+                                    .getApplicationContext();
+                            Glide.get(context).clearMemory();
+                        }
                     }
 
                     @Override

@@ -29,8 +29,8 @@
         <item name="colorPrimaryDark">@color/primary_dark</item>
     </style>
 
-    <style name="IconButton" parent="@style/Widget.AppCompat.Button.Borderless">
-        <item name="android:background">@drawable/bg_light_icon_button</item>
+    <style name="RippleButton" parent="@style/Widget.AppCompat.Button.Borderless">
+        <item name="android:background">@drawable/bg_gray_solid</item>
     </style>
 
     <style name="LightIconView">

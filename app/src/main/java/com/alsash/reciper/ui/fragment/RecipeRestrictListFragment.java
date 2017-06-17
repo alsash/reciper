@@ -1,6 +1,10 @@
 package com.alsash.reciper.ui.fragment;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
@@ -8,8 +12,8 @@ import com.alsash.reciper.R;
 import com.alsash.reciper.app.AppNavigator;
 import com.alsash.reciper.app.ReciperApp;
 import com.alsash.reciper.mvp.model.entity.Recipe;
-import com.alsash.reciper.mvp.presenter.RecipeCollectionGridPresenter;
-import com.alsash.reciper.mvp.view.RecipeCollectionGridView;
+import com.alsash.reciper.mvp.presenter.RecipeRestrictListPresenter;
+import com.alsash.reciper.mvp.view.RecipeRestrictListView;
 import com.alsash.reciper.ui.adapter.RecipeCardListAdapter;
 import com.alsash.reciper.ui.adapter.interaction.RecipeListInteraction;
 import com.alsash.reciper.ui.animator.FlipCardListAnimator;
@@ -21,17 +25,21 @@ import javax.inject.Inject;
 /**
  * A fragment that represent list of recipe cards
  */
-public class RecipeCollectionGridFragment
-        extends BaseListFragment<Recipe, RecipeCollectionGridView>
-        implements RecipeCollectionGridView, RecipeListInteraction {
+public class RecipeRestrictListFragment extends BaseListFragment<Recipe, RecipeRestrictListView>
+        implements RecipeRestrictListView, RecipeListInteraction {
 
     @Inject
-    RecipeCollectionGridPresenter presenter;
+    RecipeRestrictListPresenter presenter;
     @Inject
     AppNavigator navigator;
 
-    public static RecipeCollectionGridFragment newInstance() {
-        return new RecipeCollectionGridFragment();
+
+    public static RecipeRestrictListFragment newInstance(Intent intent) {
+        RecipeRestrictListFragment fragment = new RecipeRestrictListFragment();
+        Bundle args = new Bundle();
+        args.putParcelable(Intent.EXTRA_INTENT, intent);
+        fragment.setArguments(args);
+        return fragment;
     }
 
     @Override
@@ -45,11 +53,19 @@ public class RecipeCollectionGridFragment
     }
 
     @Override
-    protected RecipeCollectionGridPresenter inject() {
+    public void setTitle(String title) {
+        ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
+        if (actionBar != null) actionBar.setTitle(title);
+    }
+
+    @Override
+    protected RecipeRestrictListPresenter inject() {
         ((ReciperApp) getActivity().getApplicationContext())
-                .getUiRecipeCollectionsComponent()
+                .getUiRecipeSearchComponent()
                 .inject(this);
-        return presenter; // Presenter will be embedded in fragment lifecycle
+        return presenter.setRestriction(navigator.getRestriction((Intent)
+                getArguments().getParcelable(Intent.EXTRA_INTENT))
+        );
     }
 
     @Override
@@ -61,6 +77,12 @@ public class RecipeCollectionGridFragment
     protected void setupList() {
         super.setupList();
         list.setItemAnimator(new FlipCardListAnimator());
+    }
+
+    @Override
+    public void showLoading(boolean loading) {
+        if (refreshIndicator != null)
+            refreshIndicator.setRefreshing(loading);
     }
 
     @Override

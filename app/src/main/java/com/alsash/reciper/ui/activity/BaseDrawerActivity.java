@@ -48,9 +48,9 @@ public abstract class BaseDrawerActivity<V extends BaseView> extends BaseActivit
     }
 
     private void bindViews() {
-        drawerLayout = (DrawerLayout) findViewById(R.id.base_drawer_layout);
-        drawerContent = (ViewGroup) findViewById(R.id.base_drawer_view_group);
-        drawerNav = (NavigationView) findViewById(R.id.base_drawer_nav);
+        drawerLayout = (DrawerLayout) findViewById(R.id.activity_base_drawer_layout);
+        drawerContent = (ViewGroup) findViewById(R.id.activity_base_drawer_container);
+        drawerNav = (NavigationView) findViewById(R.id.activity_base_drawer_navigation);
         drawerNavHeader = drawerNav.getHeaderView(0);
     }
 

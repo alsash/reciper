@@ -74,6 +74,8 @@ public final class AppContract {
     // Public entity keys
     public static final class Key {
         public static final String RECIPE_ID = TAG + ".key_recipe_id";
+        public static final String CATEGORY_ID = TAG + ".key_category_id";
+        public static final String LABEL_ID = TAG + ".key_label_id";
     }
 
 }

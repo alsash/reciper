@@ -1,5 +1,7 @@
 package com.alsash.reciper.ui.fragment;
 
+import android.content.Context;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import com.alsash.reciper.app.AppNavigator;
@@ -40,12 +42,12 @@ public class RecipeCollectionLabelFragment
 
     @Override
     public void onOpen(Label label) {
-        // Do Nothing
+        navigator.fromActivity(getActivity()).toRecipeListView(label);
     }
 
     @Override
     public void onOpen(Recipe recipe) {
-        navigator.fromActivity(getActivity()).toRecipeDetailsView(recipe.getId());
+        navigator.fromActivity(getActivity()).toRecipeDetailsView(recipe);
     }
 
     @Override
@@ -59,5 +61,10 @@ public class RecipeCollectionLabelFragment
     @Override
     protected RecyclerView.Adapter getAdapter(List<Label> labels) {
         return new RecipeLabelCardListAdapter(labels, this);
+    }
+
+    @Override
+    protected RecyclerView.LayoutManager getLayoutManager(Context context) {
+        return new LinearLayoutManager(context);
     }
 }

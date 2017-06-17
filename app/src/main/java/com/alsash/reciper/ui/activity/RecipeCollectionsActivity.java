@@ -7,9 +7,11 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
 import android.view.MenuItem;
 
 import com.alsash.reciper.R;
+import com.alsash.reciper.app.AppNavigator;
 import com.alsash.reciper.app.ReciperApp;
 import com.alsash.reciper.mvp.presenter.BasePresenter;
 import com.alsash.reciper.mvp.presenter.RecipeCollectionsPresenter;
@@ -24,6 +26,8 @@ public class RecipeCollectionsActivity extends BaseDrawerActivity<RecipeCollecti
 
     @Inject
     RecipeCollectionsPresenter presenter;
+    @Inject
+    AppNavigator navigator;
 
     private BottomNavigationView navigation;
     private SwipePagerAdapter adapter;
@@ -44,17 +48,43 @@ public class RecipeCollectionsActivity extends BaseDrawerActivity<RecipeCollecti
     }
 
     @Override
+    public int shownCollection() {
+        Integer position = convertIdToPosition(navigation.getSelectedItemId());
+        if (position != null) return position;
+        return 0;
+    }
+
+    @Override
     protected BasePresenter<RecipeCollectionsView> inject() {
         ((ReciperApp) getApplicationContext())
                 .getUiRecipeCollectionsComponent()
                 .inject(this);
-        return presenter; // BasePresenter will be embedded in the activity lifecycle
+        // Presenter will be embedded in the activity lifecycle
+        return presenter.setCollections(
+                navigator.getFragmentCollections(getIntent()));
     }
 
     @Nullable
     @Override
     protected Integer getNavItemId() {
         return null;
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        super.onCreateOptionsMenu(menu);
+        getMenuInflater().inflate(R.menu.activity_recipe_collections_appbar, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.activity_recipe_collections_appbar_add:
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     @Override

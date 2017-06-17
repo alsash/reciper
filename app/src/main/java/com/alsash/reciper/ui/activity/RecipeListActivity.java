@@ -27,7 +27,7 @@ public class RecipeListActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_recipe_list); // Include Fragment?
+        setContentView(R.layout.activity_base_frame); // Include Fragment?
         bindViews();
         setupToolbar();
         setupFab();

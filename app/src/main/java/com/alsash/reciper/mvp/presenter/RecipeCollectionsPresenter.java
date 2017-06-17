@@ -3,24 +3,25 @@ package com.alsash.reciper.mvp.presenter;
 import android.support.v4.app.Fragment;
 
 import com.alsash.reciper.mvp.view.RecipeCollectionsView;
-import com.alsash.reciper.ui.fragment.RecipeCollectionCategoryFragment;
-import com.alsash.reciper.ui.fragment.RecipeCollectionGridFragment;
-import com.alsash.reciper.ui.fragment.RecipeCollectionLabelFragment;
 
 /**
  * A RecipeCollectionsPresenter
  */
 public class RecipeCollectionsPresenter implements BasePresenter<RecipeCollectionsView> {
 
-    private static final int MAIN_COLLECTION_POSITION = 1;
+    private int shownCollection;
 
-    private final Fragment[] collections = new Fragment[]{
-            RecipeCollectionCategoryFragment.newInstance(),
-            RecipeCollectionGridFragment.newInstance(),
-            RecipeCollectionLabelFragment.newInstance()
-    };
-
+    private Fragment[] collections;
     private boolean mainCollectionShowed;
+
+    public RecipeCollectionsPresenter() {
+    }
+
+    public RecipeCollectionsPresenter setCollections(Fragment[] collections) {
+        this.collections = collections;
+        if (collections.length > 0) shownCollection = 1;
+        return this;
+    }
 
     @Override
     public void attach(RecipeCollectionsView view) {
@@ -30,13 +31,13 @@ public class RecipeCollectionsPresenter implements BasePresenter<RecipeCollectio
     @Override
     public void visible(RecipeCollectionsView view) {
         if (mainCollectionShowed) return;
-        view.showCollection(MAIN_COLLECTION_POSITION);
+        view.showCollection(shownCollection);
         mainCollectionShowed = true;
     }
 
     @Override
     public void invisible(RecipeCollectionsView view) {
-        // Do nothing
+        shownCollection = view.shownCollection();
     }
 
     @Override

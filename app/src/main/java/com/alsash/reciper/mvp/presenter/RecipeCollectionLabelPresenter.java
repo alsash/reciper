@@ -15,7 +15,7 @@ public class RecipeCollectionLabelPresenter
         extends BaseRecipeGroupPresenter<Label, RecipeCollectionLabelView> {
 
     private static final int PAGINATION_LABEL_LIMIT = 10;
-    private static final int PAGINATION_RECIPE_LIMIT = 10;
+    private static final int PAGINATION_RECIPE_LIMIT = 20;
 
     private final StorageLogic storageLogic;
     private final BusinessLogic businessLogic;

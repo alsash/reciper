@@ -13,7 +13,8 @@
         android:label="@string/app_name"
         android:supportsRtl="false"
         android:theme="@style/AppTheme">
-        <!--Glide Framework-->
+
+        <!-- Glide Framework -->
         <meta-data
             android:name="com.alsash.reciper.di.module.AppGlideModule"
             android:value="GlideModule" />
@@ -40,9 +41,15 @@
                     android:scheme="https" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.activity.RecipeCollectionsActivity" />
-        <activity android:name=".ui.activity.RecipeListActivity" />
-        <activity android:name=".ui.activity.RecipeDetailActivity" />
+        <activity
+            android:name=".ui.activity.RecipeCollectionsActivity"
+            android:launchMode="singleTop" />
+        <activity
+            android:name=".ui.activity.RecipeDetailActivity"
+            android:launchMode="singleTop" />
+        <activity
+            android:name=".ui.activity.SingleFragmentActivity"
+            android:launchMode="singleTop" />
     </application>
 
 </manifest>

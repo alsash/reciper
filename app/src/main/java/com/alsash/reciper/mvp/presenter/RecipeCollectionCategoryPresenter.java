@@ -15,7 +15,7 @@ public class RecipeCollectionCategoryPresenter
         extends BaseRecipeGroupPresenter<Category, RecipeCollectionCategoryView> {
 
     private static final int PAGINATION_CATEGORY_LIMIT = 10;
-    private static final int PAGINATION_RECIPE_LIMIT = 10;
+    private static final int PAGINATION_RECIPE_LIMIT = 20;
 
     private final StorageLogic storageLogic;
     private final BusinessLogic businessLogic;

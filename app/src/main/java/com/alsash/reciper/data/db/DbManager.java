@@ -85,11 +85,27 @@ public class DbManager {
         return builder.build().list();
     }
 
+    public CategoryTable getCategoryTable(String uuid) {
+        List<CategoryTable> categoryTables = daoSession.getCategoryTableDao().queryBuilder()
+                .where(CategoryTableDao.Properties.Uuid.eq(uuid))
+                .list();
+        if (categoryTables.size() > 0) return categoryTables.get(0);
+        return null;
+    }
+
     public List<LabelTable> getLabelTable() {
         QueryBuilder<LabelTable> builder = daoSession.getLabelTableDao().queryBuilder();
         builder.orderAsc(LabelTableDao.Properties.Name);
         obtainRestriction(builder);
         return builder.build().list();
+    }
+
+    public LabelTable getLabelTable(String uuid) {
+        List<LabelTable> labelTables = daoSession.getLabelTableDao().queryBuilder()
+                .where(LabelTableDao.Properties.Uuid.eq(uuid))
+                .list();
+        if (labelTables.size() > 0) return labelTables.get(0);
+        return null;
     }
 
     public List<RecipeTable> getRecipeTable() {

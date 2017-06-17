@@ -75,17 +75,26 @@ public abstract class BaseListPresenter<M extends BaseEntity, V extends BaseList
         composite.dispose(); // set Observers to null, so they are not holds any shadow references
         composite.clear();   // in v.2.1.0 - same as dispose(), but without set isDispose()
         composite = new CompositeDisposable(); // Recreate Composite for correct refreshing
-        loading = false;
+        setLoading(false);
     }
 
     @Override
     public void refresh(V view) {
         detach();
         models.clear();
+        resetPreviousPosition();
         WeakReference<V> viewRef = new WeakReference<>(view);
         setFetched(false, viewRef);
         setLoading(false, viewRef);
         attach(view);
+    }
+
+    protected void refresh() {
+        detach();
+        models.clear();
+        resetPreviousPosition();
+        setFetched(false);
+        setLoading(false);
     }
 
     /**
@@ -221,7 +230,7 @@ public abstract class BaseListPresenter<M extends BaseEntity, V extends BaseList
         return increased;
     }
 
-    private void resetPreviousPosition() {
+    protected void resetPreviousPosition() {
         previousPosition = -2;
     }
 
@@ -239,6 +248,10 @@ public abstract class BaseListPresenter<M extends BaseEntity, V extends BaseList
         return loading;
     }
 
+    protected void setLoading(boolean loading) {
+        this.loading = loading;
+    }
+
     protected void setLoading(boolean loading, WeakReference<V> viewRef) {
         if (this.loading == loading) return;
         this.loading = loading;
@@ -249,6 +262,10 @@ public abstract class BaseListPresenter<M extends BaseEntity, V extends BaseList
 
     protected boolean isFetched() {
         return fetched;
+    }
+
+    protected void setFetched(boolean fetched) {
+        this.fetched = fetched;
     }
 
     protected void setFetched(boolean fetched, WeakReference<V> viewRef) {

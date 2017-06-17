@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.OvershootInterpolator;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -36,7 +37,8 @@ public class RecipeCardHolder extends RecyclerView.ViewHolder {
     private final ImageView frontImage;
     private final ProgressBar frontBar;
     private final TextView frontName;
-    private final ImageButton frontFavButton;
+    private final FrameLayout frontFavFrame;
+    private final ImageView frontFavIcon;
     private final ImageButton frontFlipButton;
 
     private final CardView backCard;
@@ -45,7 +47,8 @@ public class RecipeCardHolder extends RecyclerView.ViewHolder {
     private final TextView backSource;
     private final TextView backDate;
     private final TextView backDescription;
-    private final ImageButton backFavButton;
+    private final FrameLayout backFavFrame;
+    private final ImageView backFavIcon;
     private final ImageButton backFlipButton;
 
     private final SimpleDateFormat dateFormat;
@@ -57,7 +60,8 @@ public class RecipeCardHolder extends RecyclerView.ViewHolder {
         frontImage = (ImageView) itemView.findViewById(R.id.item_recipe_front_image);
         frontBar = (ProgressBar) itemView.findViewById(R.id.item_recipe_front_image_bar);
         frontName = (TextView) itemView.findViewById(R.id.item_recipe_front_name);
-        frontFavButton = (ImageButton) itemView.findViewById(R.id.item_recipe_front_bt_fav);
+        frontFavFrame = (FrameLayout) itemView.findViewById(R.id.item_recipe_front_bt_fav_frame);
+        frontFavIcon = (ImageView) itemView.findViewById(R.id.item_recipe_front_bt_fav_icon);
         frontFlipButton = (ImageButton) itemView.findViewById(R.id.item_recipe_front_bt_flip);
 
         backCard = (CardView) itemView.findViewById(R.id.item_recipe_card_back);
@@ -66,7 +70,8 @@ public class RecipeCardHolder extends RecyclerView.ViewHolder {
         backSource = (TextView) itemView.findViewById(R.id.item_recipe_back_source);
         backDate = (TextView) itemView.findViewById(R.id.item_recipe_back_date);
         backDescription = (TextView) itemView.findViewById(R.id.item_recipe_back_description);
-        backFavButton = (ImageButton) itemView.findViewById(R.id.item_recipe_back_bt_fav);
+        backFavFrame = (FrameLayout) itemView.findViewById(R.id.item_recipe_back_bt_fav_frame);
+        backFavIcon = (ImageView) itemView.findViewById(R.id.item_recipe_back_bt_fav_icon);
         backFlipButton = (ImageButton) itemView.findViewById(R.id.item_recipe_back_bt_flip);
 
         dateFormat = new SimpleDateFormat(
@@ -89,24 +94,24 @@ public class RecipeCardHolder extends RecyclerView.ViewHolder {
     }
 
     public void setFavorite(boolean favorite, boolean animate) {
-        frontFavButton.setImageResource(favorite ?
+        frontFavIcon.setImageResource(favorite ?
                 R.drawable.item_recipe_bt_fav_on :
                 R.drawable.item_recipe_bt_fav_off);
-        backFavButton.setImageResource(favorite ?
+        backFavIcon.setImageResource(favorite ?
                 R.drawable.item_recipe_bt_fav_on :
                 R.drawable.item_recipe_bt_fav_off);
         if (animate) {
             animateFavorite(frontCard.getVisibility() == View.VISIBLE ?
-                    frontFavButton : backFavButton);
+                    frontFavIcon : backFavIcon);
         }
     }
 
-    private void animateFavorite(ImageButton favButton) {
+    private void animateFavorite(View favView) {
         AnimatorSet animatorSet = new AnimatorSet();
-        ObjectAnimator bounceAnimX = ObjectAnimator.ofFloat(favButton, "scaleX", 0.4f, 1f);
+        ObjectAnimator bounceAnimX = ObjectAnimator.ofFloat(favView, "scaleX", 0.4f, 1f);
         bounceAnimX.setDuration(FAVORITE_DURATION_MS);
         bounceAnimX.setInterpolator(FAVORITE_INTERPOLATOR);
-        ObjectAnimator bounceAnimY = ObjectAnimator.ofFloat(favButton, "scaleY", 0.4f, 1f);
+        ObjectAnimator bounceAnimY = ObjectAnimator.ofFloat(favView, "scaleY", 0.4f, 1f);
         bounceAnimY.setDuration(FAVORITE_DURATION_MS);
         bounceAnimY.setInterpolator(FAVORITE_INTERPOLATOR);
         animatorSet.play(bounceAnimX).with(bounceAnimY);
@@ -127,8 +132,8 @@ public class RecipeCardHolder extends RecyclerView.ViewHolder {
                     backFlipButton.setOnClickListener(listeners[i]);
                     frontFlipButton.setOnClickListener(listeners[i]);
                 case 1:
-                    backFavButton.setOnClickListener(listeners[i]);
-                    frontFavButton.setOnClickListener(listeners[i]);
+                    backFavFrame.setOnClickListener(listeners[i]);
+                    frontFavFrame.setOnClickListener(listeners[i]);
                     break;
                 case 2:
                     backCard.setOnClickListener(listeners[i]);
@@ -153,7 +158,7 @@ public class RecipeCardHolder extends RecyclerView.ViewHolder {
         frontCard.setRotationY(0.0f);
         backCard.setAlpha(1.0f);
         backCard.setRotationY(0.0f);
-        frontFavButton.clearAnimation();
-        backFavButton.clearAnimation();
+        frontFavIcon.clearAnimation();
+        backFavIcon.clearAnimation();
     }
 }

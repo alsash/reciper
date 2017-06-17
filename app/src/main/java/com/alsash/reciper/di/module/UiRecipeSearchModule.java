@@ -3,7 +3,7 @@ package com.alsash.reciper.di.module;
 import com.alsash.reciper.di.scope.RecipeSearchScope;
 import com.alsash.reciper.logic.BusinessLogic;
 import com.alsash.reciper.logic.StorageLogic;
-import com.alsash.reciper.mvp.presenter.RecipeSearchListPresenter;
+import com.alsash.reciper.mvp.presenter.RecipeRestrictListPresenter;
 
 import dagger.Module;
 import dagger.Provides;
@@ -16,9 +16,9 @@ public class UiRecipeSearchModule {
 
     @Provides
     @RecipeSearchScope
-    static RecipeSearchListPresenter provideSearchListPresenter(StorageLogic storageLogic,
-                                                                BusinessLogic businessLogic) {
-        return new RecipeSearchListPresenter(storageLogic, businessLogic);
+    static RecipeRestrictListPresenter provideSearchListPresenter(StorageLogic storageLogic,
+                                                                  BusinessLogic businessLogic) {
+        return new RecipeRestrictListPresenter(storageLogic, businessLogic);
     }
 
 }

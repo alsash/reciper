@@ -1,7 +1,6 @@
 package com.alsash.reciper.logic;
 
 
-import android.support.annotation.Nullable;
 import android.support.annotation.UiThread;
 
 import com.alsash.reciper.BuildConfig;
@@ -14,9 +13,11 @@ import com.alsash.reciper.data.db.table.LabelTable;
 import com.alsash.reciper.data.db.table.RecipeTable;
 import com.alsash.reciper.logic.action.RecipeAction;
 import com.alsash.reciper.logic.exception.MainThreadException;
+import com.alsash.reciper.mvp.model.entity.BaseEntity;
 import com.alsash.reciper.mvp.model.entity.Category;
 import com.alsash.reciper.mvp.model.entity.Label;
 import com.alsash.reciper.mvp.model.entity.Recipe;
+import com.alsash.reciper.mvp.model.restriction.EntityRestriction;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -51,10 +52,12 @@ public class StorageLogic {
     public void createStartupEntitiesIfNeed() throws Exception {
         if (BuildConfig.DEBUG)
             MainThreadException.throwOnMainThread(TAG, "createStartupEntitiesIfNeed()");
-        if (isDbUpToDate()) return;
         Date createdAt = new Date();
-        if (createStartupEntities(createdAt)) {
+        if (isDbUpToDate()) {
+            updateFoodUsda(createdAt);
+        } else if (createStartupEntities(createdAt)) {
             dbManager.setSettingsUpdateDate(createdAt);
+            updateFoodUsda(createdAt);
         } else {
             deleteAllEntitiesCreatedAt(createdAt);
         }
@@ -116,40 +119,37 @@ public class StorageLogic {
         return recipes;
     }
 
-    public List<Recipe> searchRecipes(@Nullable String searchPattern,
-                                      @Nullable String groupUuid,
-                                      @Nullable Class<?> groupClass,
-                                      int offset, int limit) {
-        if (BuildConfig.DEBUG) {
-            MainThreadException.throwOnMainThread(TAG,
-                    "searchRecipes(String, Class, String, int, int)");
-        }
-        List<Recipe> recipes = new ArrayList<>();
-        if (searchPattern == null && groupUuid == null && groupClass == null) return recipes;
-
-        if (searchPattern != null) {
-            if (searchPattern.length() < 2) return recipes;
-            dbManager.searchWith(searchPattern);
-        }
-
-        List<RecipeTable> recipeTables;
-        if (groupUuid != null && groupClass != null) {
-            if (groupClass == Category.class || groupClass.isAssignableFrom(Category.class)) {
-                CategoryTable categoryTable = new CategoryTable();
-                categoryTable.setUuid(groupUuid);
-                recipeTables = dbManager.restrictWith(offset, limit).getRecipeTable(categoryTable);
-            } else if (groupClass == Label.class || groupClass.isAssignableFrom(Label.class)) {
-                LabelTable labelTable = new LabelTable();
-                labelTable.setUuid(groupUuid);
-                recipeTables = dbManager.restrictWith(offset, limit).getRecipeTable(labelTable);
+    public BaseEntity getRestrictionEntity(EntityRestriction restriction) {
+        if (restriction.entityClass == Category.class
+                || restriction.entityClass.isAssignableFrom(Category.class)) {
+            return dbManager.getCategoryTable(restriction.entityUuid);
+        } else if (restriction.entityClass == Label.class
+                || restriction.entityClass.isAssignableFrom(Label.class)) {
+            return dbManager.getLabelTable(restriction.entityUuid);
             } else {
-                return recipes;
+            return null;
             }
+    }
+
+    public List<Recipe> getRestrictRecipes(EntityRestriction restriction, int offset, int limit) {
+        List<Recipe> recipes = new ArrayList<>();
+        if (restriction == null
+                || restriction.entityUuid == null
+                || restriction.entityClass == null)
+            return recipes;
+        if (restriction.entityClass == Category.class
+                || restriction.entityClass.isAssignableFrom(Category.class)) {
+            CategoryTable categoryTable = new CategoryTable();
+            categoryTable.setUuid(restriction.entityUuid);
+            return getRecipes(categoryTable, offset, limit);
+        } else if (restriction.entityClass == Label.class
+                || restriction.entityClass.isAssignableFrom(Label.class)) {
+            LabelTable labelTable = new LabelTable();
+            labelTable.setUuid(restriction.entityUuid);
+            return getRecipes(labelTable, offset, limit);
         } else {
-            recipeTables = dbManager.restrictWith(offset, limit).getRecipeTable();
+            return recipes;
         }
-        recipes.addAll(prefetchRecipeRelations(recipeTables));
-        return recipes;
     }
 
     @UiThread
@@ -194,7 +194,7 @@ public class StorageLogic {
         String dbLanguage = cloudManager.getDbLanguage(Locale.getDefault());
         if (dbLanguage == null) dbLanguage = cloudManager.getDbLanguage(Locale.ENGLISH);
         if (dbLanguage == null) return false;
-        boolean modify = dbManager
+        return dbManager
                 .changeWith(createdAt)
                 .modifyAll(
                         cloudManager.getDbAuthorTable(dbLanguage),
@@ -210,8 +210,10 @@ public class StorageLogic {
                         cloudManager.getDbRecipePhotoTable(dbLanguage),
                         cloudManager.getDbRecipeTable(dbLanguage)
                 );
-        boolean update = updateFoodUsda(createdAt);
-        return modify && update;
+    }
+
+    public boolean updateFoodUsda() {
+        return updateFoodUsda(new Date());
     }
 
     private boolean updateFoodUsda(Date updateDate) {

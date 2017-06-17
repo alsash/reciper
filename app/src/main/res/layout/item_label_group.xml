@@ -10,27 +10,33 @@
         android:id="@+id/item_label_image"
         android:layout_width="24dp"
         android:layout_height="24dp"
+        android:layout_marginBottom="0dp"
         android:layout_marginLeft="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="0dp"
+        app:layout_constraintBottom_toBottomOf="@+id/item_label_name"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/item_label_name"
         app:srcCompat="@drawable/item_label_image"
         tools:ignore="ContentDescription,RtlHardcoded" />
 
     <TextView
         android:id="@+id/item_label_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="0dp"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginLeft="0dp"
+        android:layout_marginRight="0dp"
+        android:layout_marginTop="8dp"
         android:fontFamily="serif"
+        android:gravity="left|center_vertical"
+        android:paddingLeft="40dp"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textSize="16sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/item_label_image"
-        app:layout_constraintLeft_toRightOf="@+id/item_label_image"
-        app:layout_constraintTop_toTopOf="@+id/item_label_image"
-        tools:ignore="RtlHardcoded"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="RtlHardcoded,RtlSymmetry"
         tools:text="Label name" />
 
     <ProgressBar
@@ -38,12 +44,14 @@
         style="?android:attr/progressBarStyle"
         android:layout_width="24dp"
         android:layout_height="24dp"
+        android:layout_marginBottom="0dp"
         android:layout_marginRight="4dp"
-        android:layout_marginTop="2dp"
+        android:layout_marginTop="0dp"
         android:indeterminate="true"
-        android:indeterminateTint="@color/gray_400"
+        android:indeterminateTint="@color/primary"
+        app:layout_constraintBottom_toTopOf="@+id/item_label_inner_list"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/item_label_name"
         tools:ignore="RtlHardcoded"
         tools:targetApi="lollipop" />
 
@@ -65,7 +73,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/item_label_image"
+        app:layout_constraintTop_toBottomOf="@+id/item_label_name"
         tools:listitem="@layout/item_label_recipe_card" />
 
 </android.support.constraint.ConstraintLayout>

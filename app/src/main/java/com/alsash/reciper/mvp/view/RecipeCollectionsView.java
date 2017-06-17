@@ -10,4 +10,6 @@ public interface RecipeCollectionsView extends BaseView {
     void setCollections(Fragment[] collections);
 
     void showCollection(int position);
+
+    int shownCollection();
 }

@@ -42,12 +42,12 @@ public class RecipeCollectionCategoryFragment
 
     @Override
     public void onOpen(Category category) {
-        // Do Nothing
+        navigator.fromActivity(getActivity()).toRecipeListView(category);
     }
 
     @Override
     public void onOpen(Recipe recipe) {
-        navigator.fromActivity(getActivity()).toRecipeDetailsView(recipe.getId());
+        navigator.fromActivity(getActivity()).toRecipeDetailsView(recipe);
     }
 
     @Override
