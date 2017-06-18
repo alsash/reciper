@@ -15,8 +15,10 @@ import com.alsash.reciper.logic.action.RecipeAction;
 import com.alsash.reciper.logic.exception.MainThreadException;
 import com.alsash.reciper.mvp.model.entity.BaseEntity;
 import com.alsash.reciper.mvp.model.entity.Category;
+import com.alsash.reciper.mvp.model.entity.Ingredient;
 import com.alsash.reciper.mvp.model.entity.Label;
 import com.alsash.reciper.mvp.model.entity.Recipe;
+import com.alsash.reciper.mvp.model.entity.RecipeFull;
 import com.alsash.reciper.mvp.model.restriction.EntityRestriction;
 
 import java.util.ArrayList;
@@ -70,9 +72,7 @@ public class StorageLogic {
                 .restrictWith(offset, limit)
                 .getCategoryTable();
         for (CategoryTable categoryTable : categoryTables) {
-            // Prefetch to-one relations
-            categoryTable.getPhoto();
-            categories.add(categoryTable);
+            categories.add(prefetchRelations(categoryTable));
         }
         return categories;
     }
@@ -93,7 +93,7 @@ public class StorageLogic {
         List<RecipeTable> recipeTables = dbManager
                 .restrictWith(offset, limit)
                 .getRecipeTable();
-        recipes.addAll(prefetchRecipeRelations(recipeTables));
+        recipes.addAll(prefetchRelations(recipeTables));
         return recipes;
     }
 
@@ -104,7 +104,7 @@ public class StorageLogic {
         List<RecipeTable> recipeTables = dbManager
                 .restrictWith(offset, limit)
                 .getRecipeTable((CategoryTable) category);
-        recipes.addAll(prefetchRecipeRelations(recipeTables));
+        recipes.addAll(prefetchRelations(recipeTables));
         return recipes;
     }
 
@@ -115,20 +115,37 @@ public class StorageLogic {
         List<RecipeTable> recipeTables = dbManager
                 .restrictWith(offset, limit)
                 .getRecipeTable((LabelTable) label);
-        recipes.addAll(prefetchRecipeRelations(recipeTables));
+        recipes.addAll(prefetchRelations(recipeTables));
         return recipes;
     }
 
     public BaseEntity getRestrictionEntity(EntityRestriction restriction) {
         if (restriction.entityClass == Category.class
                 || restriction.entityClass.isAssignableFrom(Category.class)) {
-            return dbManager.getCategoryTable(restriction.entityUuid);
+            return prefetchRelations(
+                    dbManager.getCategoryTable(restriction.entityUuid)
+            );
+
         } else if (restriction.entityClass == Label.class
                 || restriction.entityClass.isAssignableFrom(Label.class)) {
+
             return dbManager.getLabelTable(restriction.entityUuid);
-            } else {
+
+        } else if (restriction.entityClass == RecipeFull.class
+                || restriction.entityClass.isAssignableFrom(RecipeFull.class)) {
+
+            return prefetchRelationsFull(
+                    dbManager.getRecipeTable(restriction.entityUuid)
+            );
+        } else if (restriction.entityClass == Recipe.class
+                || restriction.entityClass.isAssignableFrom(Recipe.class)) {
+
+            return prefetchRelations(
+                    dbManager.getRecipeTable(restriction.entityUuid)
+            );
+        } else {
             return null;
-            }
+        }
     }
 
     public List<Recipe> getRestrictRecipes(EntityRestriction restriction, int offset, int limit) {
@@ -157,15 +174,19 @@ public class StorageLogic {
         RecipeTable recipeTable = (RecipeTable) recipe;
         switch (action) {
             case FAVORITE:
-                recipeTable.setFavorite(!recipeTable.isFavorite());
+                recipeTable.setFavorite((Boolean) values[0]);
                 break;
         }
     }
 
-    public void updateAsync(Recipe recipe) {
+    public void updateAsync(Recipe recipe, RecipeAction action) {
         if (BuildConfig.DEBUG) MainThreadException.throwOnMainThread(TAG, "updateAsync()");
         RecipeTable recipeTable = (RecipeTable) recipe;
-        recipeTable.update();
+        switch (action) {
+            case FAVORITE:
+                recipeTable.update();
+                break;
+        }
     }
 
     private boolean isDbUpToDate() {
@@ -257,28 +278,45 @@ public class StorageLogic {
         return true;
     }
 
-    private List<RecipeTable> prefetchRecipeRelations(List<RecipeTable> recipeTables) {
-        for (RecipeTable recipeTable : recipeTables) prefetchRecipeRelations(recipeTable);
+    /**
+     * Prefetch to-one relations
+     *
+     * @param categoryTable - category
+     * @return categoryTable
+     */
+    private CategoryTable prefetchRelations(CategoryTable categoryTable) {
+        if (categoryTable == null) return null;
+        categoryTable.getPhoto();
+        return categoryTable;
+    }
+
+    private List<RecipeTable> prefetchRelations(List<RecipeTable> recipeTables) {
+        for (RecipeTable recipeTable : recipeTables) prefetchRelations(recipeTable);
         return recipeTables;
     }
 
-    private List<RecipeTable> prefetchRecipeRelationsFull(List<RecipeTable> recipeTables) {
-        for (RecipeTable recipeTable : recipeTables) prefetchRecipeRelationsFull(recipeTable);
-        return recipeTables;
-    }
-
-    private RecipeTable prefetchRecipeRelations(RecipeTable recipeTable) {
+    /**
+     * Prefetch to-many relations
+     *
+     * @param recipeTable - recipe
+     * @return recipeTable
+     */
+    private RecipeTable prefetchRelations(RecipeTable recipeTable) {
+        if (recipeTable == null) return null;
         recipeTable.getAuthor();
         recipeTable.getCategory();
         recipeTable.getMainPhoto();
         return recipeTable;
     }
 
-    private RecipeTable prefetchRecipeRelationsFull(RecipeTable recipeTable) {
-        prefetchRecipeRelations(recipeTable);
+    private RecipeTable prefetchRelationsFull(RecipeTable recipeTable) {
+        if (recipeTable == null) return null;
+        prefetchRelations(recipeTable);
         recipeTable.getPhotos();
         recipeTable.getLabels();
-        recipeTable.getIngredients();
+        for (Ingredient ingredient : recipeTable.getIngredients()) {
+            ingredient.getFood().getMeasure();
+        }
         recipeTable.getMethods();
         return recipeTable;
     }

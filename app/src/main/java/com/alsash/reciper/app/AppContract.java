@@ -66,16 +66,18 @@ public final class AppContract {
 
     // Animation payloads
     public static final class Payload {
-        public static final String FLIP_BACK_TO_FRONT = TAG + ".payload_flip_back_to_front";
-        public static final String FLIP_FRONT_TO_BACK = TAG + ".payload_flip_front_to_back";
-        public static final String CHANGE_FAVORITE = TAG + ".payload_change_favorite";
+        public static final String FLIP_BACK_TO_FRONT = TAG + ".flip_back_to_front";
+        public static final String FLIP_FRONT_TO_BACK = TAG + ".flip_front_to_back";
+        private static final String PAYLOAD_TAG = TAG + ".Payload";
     }
 
     // Public entity keys
     public static final class Key {
-        public static final String RECIPE_ID = TAG + ".key_recipe_id";
-        public static final String CATEGORY_ID = TAG + ".key_category_id";
-        public static final String LABEL_ID = TAG + ".key_label_id";
+        private static final String KEY_TAG = TAG + ".Key";
+        public static final String NO_ID = KEY_TAG + ".no_id";
+        public static final String RECIPE_ID = KEY_TAG + ".recipe_id";
+        public static final String CATEGORY_ID = KEY_TAG + ".category_id";
+        public static final String LABEL_ID = KEY_TAG + ".label_id";
     }
 
 }

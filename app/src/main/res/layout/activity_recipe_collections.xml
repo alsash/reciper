@@ -20,7 +20,8 @@
             android:background="?attr/colorPrimary"
             android:title="@string/activity_recipe_collections_title"
             app:layout_scrollFlags="scroll|enterAlways"
-            app:popupTheme="@style/AppTheme.PopupOverlay">
+            app:popupTheme="@style/AppTheme.PopupOverlay"
+            app:titleTextAppearance="@style/TextAppearance.RecipeTitle">
 
         </android.support.v7.widget.Toolbar>
 

@@ -217,10 +217,10 @@
     <string name="activity_recipe_collections_nav_categories">Categories</string>
     <string name="activity_recipe_collections_nav_grid">Grid</string>
     <string name="activity_recipe_collections_nav_labels">Labels</string>
-    <string name="activity_recipe_collections_nav_bookmarks">Bookmarks</string>
-    <string name="fragment_recipe_search_appbar_icon">Search</string>
-    <string name="activity_recipe_collections_appbar_search">Search recipes</string>
     <string name="activity_recipe_collections_appbar_add">Add recipe</string>
     <string name="fragment_recipe_restrict_list_subtitle_category">Category</string>
     <string name="fragment_recipe_restrict_list_subtitle_label">Label</string>
+    <string name="fragment_recipe_detail_descriptions_title">Description</string>
+    <string name="fragment_recipe_detail_ingredients_title">Ingredients</string>
+    <string name="fragment_recipe_detail_methods_title">Methods</string>
 </resources>

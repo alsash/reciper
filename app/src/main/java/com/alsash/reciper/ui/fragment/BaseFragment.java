@@ -1,6 +1,8 @@
 package com.alsash.reciper.ui.fragment;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 
 import com.alsash.reciper.mvp.presenter.BasePresenter;
@@ -13,6 +15,17 @@ public abstract class BaseFragment<V extends BaseView> extends Fragment implemen
 
     private BasePresenter<V> presenter;
     private boolean visible;
+
+    protected static <F extends Fragment> F getThisFragment(F fragment, Intent intent) {
+        Bundle args = new Bundle();
+        args.putParcelable(Intent.EXTRA_INTENT, intent);
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+    protected static Intent getThisIntent(Fragment fragment) {
+        return (Intent) fragment.getArguments().getParcelable(Intent.EXTRA_INTENT);
+    }
 
     /**
      * Called in {@link #onAttach(Context)} before super.onAttach() and any other methods.
@@ -54,8 +67,9 @@ public abstract class BaseFragment<V extends BaseView> extends Fragment implemen
         presenter = null;
     }
 
-    protected BasePresenter<V> getThisPresenter() {
-        return presenter;
+    @SuppressWarnings("unchecked")
+    protected <P> P getThisPresenter() {
+        return (P) presenter;
     }
 
     @SuppressWarnings("unchecked")

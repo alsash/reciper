@@ -49,9 +49,9 @@ public abstract class BaseRecipeListPresenter<V extends RecipeListView>
                                 RecipeEvent event = notification.getValue();
                                 switch (event.action) {
                                     case FAVORITE:
-                                        Integer fromPosition = getPosition(event.uuid);
-                                        if (fromPosition == null) return;
-                                        viewRef.get().showUpdate(fromPosition);
+                                        Integer position = getPosition(event.uuid);
+                                        if (position == null) return;
+                                        viewRef.get().showUpdate(position);
                                         break;
                                 }
                             }
@@ -60,13 +60,13 @@ public abstract class BaseRecipeListPresenter<V extends RecipeListView>
     }
 
     public void changeFavorite(final Recipe recipe) {
-        RecipeEvent event = new RecipeEvent(RecipeAction.FAVORITE, recipe.getUuid());
-        storageLogic.updateSync(recipe, event.action);
+        final RecipeEvent event = new RecipeEvent(RecipeAction.FAVORITE, recipe.getUuid());
+        storageLogic.updateSync(recipe, event.action, !recipe.isFavorite());
         getComposite().add(Completable
                 .fromAction(new Action() {
                     @Override
                     public void run() throws Exception {
-                        storageLogic.updateAsync(recipe);
+                        storageLogic.updateAsync(recipe, event.action);
                     }
                 })
                 .subscribeOn(Schedulers.io())

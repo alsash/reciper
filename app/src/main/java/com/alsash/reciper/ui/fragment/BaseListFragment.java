@@ -51,7 +51,7 @@ public abstract class BaseListFragment<M extends BaseEntity, V extends BaseListV
 
     public void onAttach(Context context) {
         super.onAttach(context);
-        presenter = (BaseListPresenter<M, V>) getThisPresenter();
+        presenter = getThisPresenter();
     }
 
     @Override

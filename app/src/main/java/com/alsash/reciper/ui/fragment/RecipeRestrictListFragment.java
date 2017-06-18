@@ -2,7 +2,6 @@ package com.alsash.reciper.ui.fragment;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
@@ -35,11 +34,7 @@ public class RecipeRestrictListFragment extends BaseListFragment<Recipe, RecipeR
 
 
     public static RecipeRestrictListFragment newInstance(Intent intent) {
-        RecipeRestrictListFragment fragment = new RecipeRestrictListFragment();
-        Bundle args = new Bundle();
-        args.putParcelable(Intent.EXTRA_INTENT, intent);
-        fragment.setArguments(args);
-        return fragment;
+        return getThisFragment(new RecipeRestrictListFragment(), intent);
     }
 
     @Override
@@ -61,11 +56,9 @@ public class RecipeRestrictListFragment extends BaseListFragment<Recipe, RecipeR
     @Override
     protected RecipeRestrictListPresenter inject() {
         ((ReciperApp) getActivity().getApplicationContext())
-                .getUiRecipeSearchComponent()
+                .getUiRecipeRestrictListComponent()
                 .inject(this);
-        return presenter.setRestriction(navigator.getRestriction((Intent)
-                getArguments().getParcelable(Intent.EXTRA_INTENT))
-        );
+        return presenter.setRestriction(navigator.getRestriction(getThisIntent(this)));
     }
 
     @Override

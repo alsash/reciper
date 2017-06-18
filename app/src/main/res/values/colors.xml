@@ -7,7 +7,9 @@
     <color name="white">#ffffff</color>
     <color name="white_a020">#33ffffff</color>
     <color name="white_a050">#7fffffff</color>
+    <color name="white_a070">#b4ffffff</color>
     <color name="white_a080">#ccffffff</color>
+    <color name="white_a090">#e6ffffff</color>
     <color name="black">#000000</color>
     <color name="black_a054">#8a000000</color>
     <color name="gray_100">#F5F5F5</color>

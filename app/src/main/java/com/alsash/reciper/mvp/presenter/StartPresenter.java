@@ -1,14 +1,10 @@
 package com.alsash.reciper.mvp.presenter;
 
-import android.content.Context;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
-import com.alsash.reciper.BuildConfig;
 import com.alsash.reciper.app.AppNavigator;
 import com.alsash.reciper.logic.StorageLogic;
 import com.alsash.reciper.mvp.view.StartView;
-import com.bumptech.glide.Glide;
 
 import java.lang.ref.WeakReference;
 import java.util.concurrent.TimeUnit;
@@ -76,11 +72,11 @@ public class StartPresenter implements BasePresenter<StartView> {
                 .fromAction(new Action() {
                     @Override
                     public void run() throws Exception {
-                        if (BuildConfig.DEBUG) {
-                            Context context = ((AppCompatActivity) viewRef.get())
-                                    .getApplicationContext();
-                            Glide.get(context).clearDiskCache();
-                        }
+//                        if (BuildConfig.DEBUG) {
+//                            Context context = ((AppCompatActivity) viewRef.get())
+//                                    .getApplicationContext();
+//                            Glide.get(context).clearDiskCache();
+//                        }
                         storage.createStartupEntitiesIfNeed();
                     }
                 })
@@ -94,11 +90,11 @@ public class StartPresenter implements BasePresenter<StartView> {
                         fetched = true;
                         if (viewRef.get() == null) return;
                         if (viewRef.get().isViewVisible()) visible(viewRef.get());
-                        if (BuildConfig.DEBUG) {
-                            Context context = ((AppCompatActivity) viewRef.get())
-                                    .getApplicationContext();
-                            Glide.get(context).clearMemory();
-                        }
+//                        if (BuildConfig.DEBUG) {
+//                            Context context = ((AppCompatActivity) viewRef.get())
+//                                    .getApplicationContext();
+//                            Glide.get(context).clearMemory();
+//                        }
                     }
 
                     @Override

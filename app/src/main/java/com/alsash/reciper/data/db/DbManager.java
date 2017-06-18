@@ -150,6 +150,14 @@ public class DbManager {
         return builder.build().list();
     }
 
+    public RecipeTable getRecipeTable(String uuid) {
+        List<RecipeTable> recipeTables = daoSession.getRecipeTableDao().queryBuilder()
+                .where(RecipeTableDao.Properties.Uuid.eq(uuid))
+                .list();
+        if (recipeTables.size() > 0) return recipeTables.get(0);
+        return null;
+    }
+
     public List<FoodTable> getFoodTable(boolean usdaFetched) {
         QueryBuilder<FoodTable> builder = daoSession.getFoodTableDao().queryBuilder();
         builder.orderAsc(FoodTableDao.Properties.Name);

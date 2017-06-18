@@ -4,17 +4,21 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.widget.Toast;
 
 import com.alsash.reciper.mvp.model.entity.Category;
 import com.alsash.reciper.mvp.model.entity.Label;
 import com.alsash.reciper.mvp.model.entity.Recipe;
+import com.alsash.reciper.mvp.model.entity.RecipeFull;
 import com.alsash.reciper.mvp.model.restriction.EntityRestriction;
 import com.alsash.reciper.ui.activity.RecipeCollectionsActivity;
+import com.alsash.reciper.ui.activity.RecipeDetailsActivity;
 import com.alsash.reciper.ui.activity.SingleFragmentActivity;
 import com.alsash.reciper.ui.fragment.RecipeCollectionCategoryFragment;
 import com.alsash.reciper.ui.fragment.RecipeCollectionGridFragment;
 import com.alsash.reciper.ui.fragment.RecipeCollectionLabelFragment;
+import com.alsash.reciper.ui.fragment.RecipeDetailDescriptionsFragment;
+import com.alsash.reciper.ui.fragment.RecipeDetailIngredientsFragment;
+import com.alsash.reciper.ui.fragment.RecipeDetailMethodsFragment;
 import com.alsash.reciper.ui.fragment.RecipeRestrictListFragment;
 
 import java.lang.ref.WeakReference;
@@ -48,9 +52,18 @@ public class AppNavigator {
         Context context = getContext();
         if (context == null) return;
         context.startActivity(
-                obtainRestriction(AppContract.Key.RECIPE_ID, "",
+                obtainRestriction(AppContract.Key.RECIPE_ID, AppContract.Key.NO_ID,
                         obtainFlags(new Intent(context, RecipeCollectionsActivity.class)))
-        );
+        ); // goto getFragmentCollections();
+    }
+
+    public void toRecipeDetailsView(Recipe recipe) {
+        Context context = getContext();
+        if (context == null) return;
+        context.startActivity(
+                obtainRestriction(AppContract.Key.RECIPE_ID, recipe.getUuid(),
+                        obtainFlags(new Intent(context, RecipeDetailsActivity.class)))
+        ); // goto getRestriction();
     }
 
     public void toRecipeListView(Category category) {
@@ -59,7 +72,7 @@ public class AppNavigator {
         context.startActivity(
                 obtainRestriction(AppContract.Key.CATEGORY_ID, category.getUuid(),
                         obtainFlags(new Intent(context, SingleFragmentActivity.class)))
-        );
+        ); // goto getFragmentSingle();
     }
 
     public void toRecipeListView(Label label) {
@@ -68,15 +81,24 @@ public class AppNavigator {
         context.startActivity(
                 obtainRestriction(AppContract.Key.LABEL_ID, label.getUuid(),
                         obtainFlags(new Intent(context, SingleFragmentActivity.class)))
-        );
+        ); // goto getFragmentSingle();
     }
 
     public Fragment[] getFragmentCollections(Intent intent) {
-        if (intent.getStringExtra(AppContract.Key.RECIPE_ID) != null)
-            return new Fragment[]{
-                    RecipeCollectionCategoryFragment.newInstance(),
-                    RecipeCollectionGridFragment.newInstance(),
-                    RecipeCollectionLabelFragment.newInstance()};
+        if (intent.getStringExtra(AppContract.Key.RECIPE_ID) != null) {
+            if (intent.getStringExtra(AppContract.Key.RECIPE_ID).equals(AppContract.Key.NO_ID)) {
+                return new Fragment[]{
+                        RecipeCollectionCategoryFragment.newInstance(),
+                        RecipeCollectionGridFragment.newInstance(),
+                        RecipeCollectionLabelFragment.newInstance()};
+            } else {
+                return new Fragment[]{
+                        RecipeDetailDescriptionsFragment.newInstance(intent),
+                        RecipeDetailIngredientsFragment.newInstance(intent),
+                        RecipeDetailMethodsFragment.newInstance(intent)
+                }; // goto getRestriction();
+            }
+        }
         return null;
     }
 
@@ -99,18 +121,20 @@ public class AppNavigator {
                     intent.getStringExtra(AppContract.Key.LABEL_ID),
                     Label.class
             );
+        } else if (intent.getStringExtra(AppContract.Key.RECIPE_ID) != null) {
+            return new EntityRestriction(
+                    intent.getStringExtra(AppContract.Key.RECIPE_ID),
+                    RecipeFull.class
+            );
         }
         return null;
     }
 
 
-    public void toRecipeDetailsView(Recipe recipe) {
-        Toast.makeText(getContext(), "Recipe id = " + recipe.getId(), Toast.LENGTH_SHORT).show();
-    }
-
     public void toRecipeAddView() {
         // Do nothing...
     }
+
 
     private Intent obtainRestriction(String restrictionName,
                                      String restrictionValue,

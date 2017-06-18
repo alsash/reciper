@@ -2,6 +2,7 @@ package com.alsash.reciper.ui.view;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
@@ -34,14 +35,22 @@ public class SwipeViewPager extends ViewPager {
         }
     }
 
+    public boolean isSwipeEnabled() {
+        return isSwipeEnabled;
+    }
+
+    public void setSwipeEnabled(boolean isSwipeEnabled) {
+        this.isSwipeEnabled = isSwipeEnabled;
+    }
+
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        return this.isSwipeEnabled && super.onTouchEvent(event);
+        return isSwipeEnabled() && super.onTouchEvent(event);
     }
 
     @Override
     public boolean onInterceptTouchEvent(MotionEvent event) {
-        return this.isSwipeEnabled && super.onInterceptTouchEvent(event);
+        return isSwipeEnabled() && super.onInterceptTouchEvent(event);
     }
 
     public void setAdapter(SwipePagerAdapter adapter) {
@@ -57,12 +66,28 @@ public class SwipeViewPager extends ViewPager {
         }
     }
 
-    public boolean isSwipeEnabled() {
-        return isSwipeEnabled;
-    }
+    public void setTabs(TabLayout tabs) {
+        tabs.setupWithViewPager(this);
+        SwipePagerAdapter adapter = (getAdapter() instanceof SwipePagerAdapter) ?
+                (SwipePagerAdapter) getAdapter() : null;
+        if (adapter == null) return;
 
-    public void setSwipeEnabled(boolean isSwipeEnabled) {
-        this.isSwipeEnabled = isSwipeEnabled;
+        for (int i = 0; i < tabs.getTabCount(); i++) {
+            TabLayout.Tab tab = tabs.getTabAt(i);
+            if (tab == null) break;
+            Integer resId = adapter.getPageTitleRes(i);
+            if (resId == null) {
+                tab.setText(null);
+            } else {
+                tab.setText(resId);
+            }
+            resId = adapter.getPageIconRes(i);
+            if (resId == null) {
+                tab.setIcon(null);
+            } else {
+                tab.setIcon(resId);
+            }
+        }
     }
 
     public interface OnPageSelectListener {

@@ -1,7 +1,7 @@
 package com.alsash.reciper.di.component;
 
-import com.alsash.reciper.di.module.UiRecipeSearchModule;
-import com.alsash.reciper.di.scope.RecipeSearchScope;
+import com.alsash.reciper.di.module.UiRecipeRestrictListModule;
+import com.alsash.reciper.di.scope.RecipeRestrictListScope;
 import com.alsash.reciper.ui.fragment.RecipeRestrictListFragment;
 
 import dagger.Subcomponent;
@@ -9,18 +9,18 @@ import dagger.Subcomponent;
 /**
  * DI Component that build bridge between RecipeRestrictListFragment and its dependencies
  */
-@RecipeSearchScope
+@RecipeRestrictListScope
 @Subcomponent(
         modules = {
-                UiRecipeSearchModule.class
+                UiRecipeRestrictListModule.class
         }
 )
-public interface UiRecipeSearchComponent {
+public interface UiRecipeRestrictListComponent {
 
     void inject(RecipeRestrictListFragment recipeRestrictListFragment);
 
     @Subcomponent.Builder
     interface Builder {
-        UiRecipeSearchComponent build();
+        UiRecipeRestrictListComponent build();
     }
 }

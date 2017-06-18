@@ -33,6 +33,23 @@
         <item name="android:background">@drawable/bg_gray_solid</item>
     </style>
 
+    <style name="TextAppearance.RecipeTitle" parent="@style/TextAppearance.AppCompat.Title">
+        <item name="android:fontFamily">serif</item>
+    </style>
+
+    <style name="TextAppearance.RecipeTitle.Expanded" parent="@style/TextAppearance.AppCompat.Title.Inverse">
+        <item name="android:fontFamily">serif</item>
+        <item name="android:textSize">28sp</item>
+    </style>
+
+    <style name="TextAppearance.RecipeTitle.Collapsed">
+        <!--<item name="android:fontFamily">serif</item>-->
+    </style>
+
+    <style name="TextAppearance.RecipeTitle.Tab" parent="TextAppearance.Design.Tab">
+        <item name="android:textSize">13sp</item>
+    </style>
+
     <style name="LightIconView">
         <item name="android:tint">@color/gray_400</item>
         <item name="android:scaleType">center</item>

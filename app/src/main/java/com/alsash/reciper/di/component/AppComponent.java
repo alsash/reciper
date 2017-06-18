@@ -36,5 +36,7 @@ public interface AppComponent {
 
     UiRecipeCollectionsComponent.Builder getRecipeCollectionsComponentBuilder();
 
-    UiRecipeSearchComponent.Builder getRecipeSearchComponentBuilder();
+    UiRecipeRestrictListComponent.Builder getRecipeRestrictListComponentBuilder();
+
+    UiRecipeDetailsComponent.Builder getRecipeDetailsComponentBuilder();
 }
