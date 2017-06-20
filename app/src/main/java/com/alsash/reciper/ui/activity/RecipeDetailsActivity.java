@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.content.res.AppCompatResources;
@@ -44,6 +45,7 @@ public class RecipeDetailsActivity extends BaseActivity<RecipeDetailsView>
     private TabLayout tabs;
     private SwipeViewPager pager;
     private SwipePagerAdapter adapter;
+    private FloatingActionButton fab;
     private ImageView image;
 
     private TextView peakWeight;
@@ -133,10 +135,10 @@ public class RecipeDetailsActivity extends BaseActivity<RecipeDetailsView>
     }
 
     private void setupToolbar() {
+        appbar.addOnOffsetChangedListener(new TabsColorChanger(this, tabs));
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) actionBar.setDisplayHomeAsUpEnabled(true);
-        appbar.addOnOffsetChangedListener(new TabColorListener(this, tabs));
     }
 
     private void setupPager() {
@@ -181,40 +183,38 @@ public class RecipeDetailsActivity extends BaseActivity<RecipeDetailsView>
         });
     }*/
 
-    private static class TabColorListener implements AppBarLayout.OnOffsetChangedListener {
+    private static class TabsColorChanger implements AppBarLayout.OnOffsetChangedListener {
         private WeakReference<TabLayout> tabsRef;
         private ColorStateList colorDark;
         private ColorStateList colorLight;
-        private boolean collapsed;
+        private Boolean collapsed;
 
-        public TabColorListener(Context context, TabLayout tabs) {
+        public TabsColorChanger(Context context, TabLayout tabs) {
             tabsRef = new WeakReference<>(tabs);
             colorDark = AppCompatResources.getColorStateList(context,
-                    R.color.activity_recipe_details_tab_dark_bg_light);
+                    R.color.gray_def_600_sel_800);
             colorLight = AppCompatResources.getColorStateList(context,
-                    R.color.activity_recipe_details_tab_light_bg_dark);
+                    R.color.white_def_a080_sel_a100);
+        }
+
+        private static boolean isCollapse(int verticalOffset) {
+            return verticalOffset != 0;
         }
 
         @Override
         public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
-/*            if ((collapse(verticalOffset) && collapsed())
-                    || (!collapse(verticalOffset) && !collapsed()))
-                return;*/
-            setCollapsed(verticalOffset);
-            tabsRef.get().setTabTextColors(collapsed() ? colorDark : colorLight);
+            if (tabsRef.get() == null) return;
+            if (isCollapsed() != null && (isCollapse(verticalOffset) == isCollapsed())) return;
+            setCollapsed(isCollapse(verticalOffset));
+            tabsRef.get().setTabTextColors(isCollapsed() ? colorDark : colorLight);
         }
 
-        private void setCollapsed(int verticalOffset) {
-            collapsed = collapse(verticalOffset);
-        }
-
-        private boolean collapsed() {
+        public Boolean isCollapsed() {
             return collapsed;
         }
 
-        private boolean collapse(int verticalOffset) {
-            return verticalOffset != 0;
+        private void setCollapsed(boolean collapsed) {
+            this.collapsed = collapsed;
         }
     }
-
 }
