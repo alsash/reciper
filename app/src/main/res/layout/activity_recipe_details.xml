@@ -20,7 +20,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:fitsSystemWindows="true"
-            app:collapsedTitleGravity="start|top"
+            app:collapsedTitleGravity="top|left"
             app:collapsedTitleTextAppearance="@style/TextAppearance.RecipeTitle.Collapsed"
             app:contentScrim="?attr/colorPrimary"
             app:expandedTitleMargin="32dp"
@@ -47,7 +47,8 @@
                 android:layout_height="96dp"
                 app:layout_collapseMode="pin"
                 app:popupTheme="@style/AppTheme.PopupOverlay"
-                app:titleMarginTop="16dp" />
+                app:titleMarginTop="16dp"
+                app:titleTextAppearance="@style/TextAppearance.RecipeTitle" />
 
             <android.support.design.widget.TabLayout
                 android:id="@+id/activity_recipe_details_tabs"
