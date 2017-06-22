@@ -3,6 +3,9 @@ package com.alsash.reciper.di.component;
 import com.alsash.reciper.di.module.UiRecipeDetailsModule;
 import com.alsash.reciper.di.scope.RecipeDetailsScope;
 import com.alsash.reciper.ui.activity.RecipeDetailsActivity;
+import com.alsash.reciper.ui.fragment.RecipeDetailsDescriptionFragment;
+import com.alsash.reciper.ui.fragment.RecipeDetailsIngredientsFragment;
+import com.alsash.reciper.ui.fragment.RecipeDetailsMethodsFragment;
 
 import dagger.Subcomponent;
 
@@ -18,6 +21,12 @@ import dagger.Subcomponent;
 public interface UiRecipeDetailsComponent {
 
     void inject(RecipeDetailsActivity recipeDetailsActivity);
+
+    void inject(RecipeDetailsDescriptionFragment recipeDetailsDescriptionFragment);
+
+    void inject(RecipeDetailsIngredientsFragment recipeDetailsIngredientsFragment);
+
+    void inject(RecipeDetailsMethodsFragment recipeDetailsMethodsFragment);
 
     @Subcomponent.Builder
     interface Builder {

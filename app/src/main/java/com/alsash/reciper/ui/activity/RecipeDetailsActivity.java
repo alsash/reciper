@@ -20,7 +20,6 @@ import com.alsash.reciper.app.AppNavigator;
 import com.alsash.reciper.app.ReciperApp;
 import com.alsash.reciper.mvp.model.entity.Photo;
 import com.alsash.reciper.mvp.model.tab.SwipeTab;
-import com.alsash.reciper.mvp.presenter.BasePresenter;
 import com.alsash.reciper.mvp.presenter.RecipeDetailsPresenter;
 import com.alsash.reciper.mvp.view.RecipeDetailsView;
 import com.alsash.reciper.ui.adapter.SwipePagerAdapter;
@@ -83,7 +82,7 @@ public class RecipeDetailsActivity extends BaseActivity<RecipeDetailsView>
     }
 
     @Override
-    protected BasePresenter<RecipeDetailsView> inject() {
+    protected RecipeDetailsPresenter inject() {
         ((ReciperApp) getApplicationContext())
                 .getUiRecipeDetailsComponent()
                 .inject(this);
@@ -97,8 +96,8 @@ public class RecipeDetailsActivity extends BaseActivity<RecipeDetailsView>
         super.onNewIntent(intent);
         setIntent(intent);
         presenter.setRestriction(navigator.getRestriction(intent))
-                .setFragments(navigator.getFragmentCollections(intent));
-        presenter.attach(getThisView());
+                .setFragments(navigator.getFragmentCollections(intent))
+                .attach(getThisView());
     }
 
     @Override

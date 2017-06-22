@@ -9,11 +9,11 @@ import com.alsash.reciper.mvp.view.BaseView;
  * Created by alsash on 6/18/17.
  */
 
-public class RecipeDetailIngredientsFragment extends BaseFragment<BaseView> {
+public class RecipeDetailsIngredientsFragment extends BaseFragment<BaseView> {
 
 
-    public static RecipeDetailIngredientsFragment newInstance(Intent intent) {
-        return getThisFragment(new RecipeDetailIngredientsFragment(), intent);
+    public static RecipeDetailsIngredientsFragment newInstance(Intent intent) {
+        return getThisFragment(new RecipeDetailsIngredientsFragment(), intent);
     }
 
     @Override

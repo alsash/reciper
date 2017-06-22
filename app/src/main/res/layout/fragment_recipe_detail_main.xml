@@ -5,6 +5,6 @@
     android:layout_height="wrap_content"
     app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-    <include layout="@layout/card_nutrition" />
+    <include layout="@layout/view_recipe_nutrition" />
 
 </android.support.v4.widget.NestedScrollView>

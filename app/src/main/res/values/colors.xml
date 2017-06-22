@@ -27,4 +27,6 @@
     <color name="nutrition_carbohydrate_bg">#e8f5e9</color>
     <color name="nutrition_protein_bg">#ffebee</color>
     <color name="nutrition_fat_bg">#fff8e1</color>
+    <color name="nutrition_energy">#1de9b6</color>
+    <color name="nutrition_energy_dark">#00bfa5</color>
 </resources>

@@ -82,7 +82,7 @@
         android:tint="@color/primary"
         app:backgroundTint="@color/gray_100"
         app:elevation="4dp"
-        app:fabSize="normal"
+        app:fabSize="mini"
         app:layout_anchor="@id/activity_recipe_details_appbar"
         app:layout_anchorGravity="bottom|end"
         app:srcCompat="@drawable/ic_photo" />

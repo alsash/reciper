@@ -55,7 +55,7 @@ public class RecipeRestrictListFragment extends BaseListFragment<Recipe, RecipeR
 
     @Override
     protected RecipeRestrictListPresenter inject() {
-        ((ReciperApp) getActivity().getApplicationContext())
+        ((ReciperApp) getContext().getApplicationContext())
                 .getUiRecipeRestrictListComponent()
                 .inject(this);
         return presenter.setRestriction(navigator.getRestriction(getThisIntent(this)));

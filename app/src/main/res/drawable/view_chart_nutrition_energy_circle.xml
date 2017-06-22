@@ -1,11 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <shape xmlns:android="http://schemas.android.com/apk/res/android"
     android:shape="oval">
-
-    <solid android:color="@color/accent" />
-
+    <solid android:color="@color/nutrition_energy" />
     <stroke
-        android:width="8dp"
-        android:color="@color/accent_dark" />
-
+        android:width="4dp"
+        android:color="@color/nutrition_energy_dark" />
 </shape>

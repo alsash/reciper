@@ -64,16 +64,16 @@ public class RecipeRestrictListPresenter extends BaseRecipeListPresenter<RecipeR
                         @Override
                         public void accept(@NonNull BaseEntity loadedEntity) throws Exception {
                             entity = loadedEntity;
-                            setTitleAndLogo(viewRef.get());
+                            setTitle(viewRef.get());
                         }
                     })
             );
         } else {
-            setTitleAndLogo(view);
+            setTitle(view);
         }
     }
 
-    private void setTitleAndLogo(RecipeRestrictListView view) {
+    private void setTitle(RecipeRestrictListView view) {
         if (view == null || entity == null) return;
         if (entity instanceof Category) {
             view.setTitle(((Category) entity).getName());

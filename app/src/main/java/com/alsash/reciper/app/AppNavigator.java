@@ -16,9 +16,9 @@ import com.alsash.reciper.ui.activity.SingleFragmentActivity;
 import com.alsash.reciper.ui.fragment.RecipeCollectionCategoryFragment;
 import com.alsash.reciper.ui.fragment.RecipeCollectionGridFragment;
 import com.alsash.reciper.ui.fragment.RecipeCollectionLabelFragment;
-import com.alsash.reciper.ui.fragment.RecipeDetailDescriptionsFragment;
-import com.alsash.reciper.ui.fragment.RecipeDetailIngredientsFragment;
-import com.alsash.reciper.ui.fragment.RecipeDetailMethodsFragment;
+import com.alsash.reciper.ui.fragment.RecipeDetailsDescriptionFragment;
+import com.alsash.reciper.ui.fragment.RecipeDetailsIngredientsFragment;
+import com.alsash.reciper.ui.fragment.RecipeDetailsMethodsFragment;
 import com.alsash.reciper.ui.fragment.RecipeRestrictListFragment;
 
 import java.lang.ref.WeakReference;
@@ -93,9 +93,9 @@ public class AppNavigator {
                         RecipeCollectionLabelFragment.newInstance()};
             } else {
                 return new Fragment[]{
-                        RecipeDetailDescriptionsFragment.newInstance(intent),
-                        RecipeDetailIngredientsFragment.newInstance(intent),
-                        RecipeDetailMethodsFragment.newInstance(intent)
+                        RecipeDetailsDescriptionFragment.newInstance(intent),
+                        RecipeDetailsIngredientsFragment.newInstance(intent),
+                        RecipeDetailsMethodsFragment.newInstance(intent)
                 }; // goto getRestriction();
             }
         }

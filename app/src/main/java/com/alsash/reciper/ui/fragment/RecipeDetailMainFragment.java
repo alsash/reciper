@@ -1,7 +1,6 @@
 package com.alsash.reciper.ui.fragment;
 
 import android.animation.ValueAnimator;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -34,7 +33,7 @@ public class RecipeDetailMainFragment extends Fragment {
     // Views
     private SwitchCompat nutritionSwitch;
     private ArcProgressStackView nutritionChart;
-    private TextView nutritionEnergy;
+    private TextView nutritionEnergyValue;
     private TextView nutritionCarbohydrate;
     private TextView nutritionProtein;
     private TextView nutritionFat;
@@ -101,9 +100,9 @@ public class RecipeDetailMainFragment extends Fragment {
     }
 
     private void bindViews(View layout) {
-        nutritionSwitch = (SwitchCompat) layout.findViewById(R.id.card_nutrition_quantity_switch);
+        nutritionSwitch = (SwitchCompat) layout.findViewById(R.id.recipe_nutrition_switch);
         nutritionChart = (ArcProgressStackView) layout.findViewById(R.id.nutrition_chart);
-        nutritionEnergy = (TextView) layout.findViewById(R.id.nutrition_energy);
+        nutritionEnergyValue = (TextView) layout.findViewById(R.id.nutrition_energy_value);
         nutritionCarbohydrate = (TextView) layout.findViewById(R.id.nutrition_carbohydrate_value);
         nutritionProtein = (TextView) layout.findViewById(R.id.nutrition_protein_value);
         nutritionFat = (TextView) layout.findViewById(R.id.nutrition_fat_value);
@@ -152,7 +151,6 @@ public class RecipeDetailMainFragment extends Fragment {
                     .setProgressConverter(null));
         }
         nutritionChart.setModels(models);
-        nutritionChart.setTypeface(Typeface.create("sans-serif-condensed", Typeface.NORMAL));
         nutritionChart.setAnimatorUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
@@ -161,7 +159,7 @@ public class RecipeDetailMainFragment extends Fragment {
 //                int carbohydrate = (int) (fraction * recipe.getNutrition().getCarbohydrate());
 //                int protein = (int) (fraction * recipe.getNutrition().getProtein());
 //                int fat = (int) (fraction * recipe.getNutrition().getFat());
-//                nutritionEnergy.setText(getResources().getString(R.string.nutrition_energy_value, energy));
+//                nutritionEnergyValue.setText(getResources().getString(R.string.nutrition_energy_value, energy));
 //                nutritionCarbohydrate.setText(getString(R.string.percent, carbohydrate));
 //                nutritionProtein.setText(getString(R.string.percent, protein));
 //                nutritionFat.setText(getString(R.string.percent, fat));

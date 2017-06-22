@@ -4,7 +4,7 @@ import com.alsash.reciper.mvp.model.entity.Photo;
 import com.alsash.reciper.mvp.model.tab.SwipeTab;
 
 /**
- * A BaseView interface, which can be attached to BasePresenter.
+ * Simple view for its presenter
  */
 public interface RecipeDetailsView extends BaseView {
 

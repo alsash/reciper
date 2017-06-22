@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/recipe_nutrition_constraint"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/recipe_nutrition_title"
+        android:layout_width="0dp"
+        android:layout_height="24dp"
+        android:fontFamily="serif"
+        android:gravity="center_vertical|start"
+        android:maxLines="1"
+        android:text="@string/nutrition_value"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:textSize="14sp"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <android.support.v7.widget.SwitchCompat
+        android:id="@+id/recipe_nutrition_switch"
+        android:layout_width="0dp"
+        android:layout_height="28dp"
+        android:checked="false"
+        android:fontFamily="serif"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+        android:textColor="?android:attr/textColorSecondary"
+        android:textSize="12sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/recipe_nutrition_title"
+        tools:text="Per 100 gram" />
+
+    <View
+        android:id="@+id/recipe_nutrition_horizontal_divider"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginTop="4dp"
+        android:background="@color/gray_100"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/recipe_nutrition_switch" />
+
+    <android.support.percent.PercentFrameLayout
+        android:id="@+id/recipe_nutrition_chart_container"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/recipe_nutrition_horizontal_divider">
+
+        <include
+            layout="@layout/view_nutrition_chart"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_aspectRatio="100%"
+            app:layout_widthPercent="100%" />
+    </android.support.percent.PercentFrameLayout>
+</android.support.constraint.ConstraintLayout>
