@@ -3,8 +3,8 @@ package com.alsash.reciper.mvp.presenter;
 import android.support.annotation.Nullable;
 
 import com.alsash.reciper.logic.StorageLogic;
+import com.alsash.reciper.logic.restriction.EntityRestriction;
 import com.alsash.reciper.mvp.model.entity.BaseEntity;
-import com.alsash.reciper.mvp.model.restriction.EntityRestriction;
 import com.alsash.reciper.mvp.view.BaseView;
 
 import java.lang.ref.WeakReference;

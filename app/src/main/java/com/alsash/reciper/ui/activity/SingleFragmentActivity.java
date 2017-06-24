@@ -10,15 +10,15 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
 import com.alsash.reciper.R;
-import com.alsash.reciper.app.AppNavigator;
 import com.alsash.reciper.app.ReciperApp;
+import com.alsash.reciper.logic.NavigationLogic;
 
 import javax.inject.Inject;
 
 public class SingleFragmentActivity extends AppCompatActivity {
 
     @Inject
-    AppNavigator navigator;
+    NavigationLogic navigator;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

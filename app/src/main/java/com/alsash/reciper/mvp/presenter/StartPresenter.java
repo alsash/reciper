@@ -2,7 +2,7 @@ package com.alsash.reciper.mvp.presenter;
 
 import android.util.Log;
 
-import com.alsash.reciper.app.AppNavigator;
+import com.alsash.reciper.logic.NavigationLogic;
 import com.alsash.reciper.logic.StorageLogic;
 import com.alsash.reciper.mvp.view.StartView;
 
@@ -26,11 +26,11 @@ public class StartPresenter implements BasePresenter<StartView> {
     private static final String TAG = "StartPresenter";
 
     private final StorageLogic storage;
-    private final AppNavigator navigator;
+    private final NavigationLogic navigator;
     private final CompositeDisposable composite = new CompositeDisposable();
     private boolean fetched;
 
-    public StartPresenter(StorageLogic storage, AppNavigator navigator) {
+    public StartPresenter(StorageLogic storage, NavigationLogic navigator) {
         this.storage = storage;
         this.navigator = navigator;
     }

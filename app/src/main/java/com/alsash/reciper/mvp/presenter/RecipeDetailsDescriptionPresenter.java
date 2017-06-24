@@ -4,9 +4,10 @@ import android.support.annotation.Nullable;
 
 import com.alsash.reciper.logic.BusinessLogic;
 import com.alsash.reciper.logic.StorageLogic;
+import com.alsash.reciper.logic.restriction.EntityRestriction;
+import com.alsash.reciper.logic.unit.RecipeUnit;
 import com.alsash.reciper.mvp.model.entity.BaseEntity;
 import com.alsash.reciper.mvp.model.entity.RecipeFull;
-import com.alsash.reciper.mvp.model.restriction.EntityRestriction;
 import com.alsash.reciper.mvp.view.RecipeDetailsDescriptionView;
 
 /**
@@ -17,15 +18,16 @@ public class RecipeDetailsDescriptionPresenter
 
     private final StorageLogic storageLogic;
     private final BusinessLogic businessLogic;
-    private EntityRestriction restriction;
     private RecipeFull recipeFull;
-    private boolean recipeShown;
+    private RecipeUnit recipeUnit;
+    private boolean animateNutrition;
 
     public RecipeDetailsDescriptionPresenter(StorageLogic storageLogic,
                                              BusinessLogic businessLogic) {
         super(storageLogic);
         this.storageLogic = storageLogic;
         this.businessLogic = businessLogic;
+        this.recipeUnit = RecipeUnit.GRAM;
     }
 
     @Override
@@ -33,9 +35,18 @@ public class RecipeDetailsDescriptionPresenter
         return (RecipeDetailsDescriptionPresenter) super.setRestriction(restriction);
     }
 
+    public void onNutritionSwitch(boolean switchOn, RecipeDetailsDescriptionView view) {
+        recipeUnit = switchOn ? RecipeUnit.SERVING : RecipeUnit.GRAM;
+        animateNutrition = true;
+        visible(view);
+        animateNutrition = false;
+    }
+
     @Override
     public void visible(RecipeDetailsDescriptionView view) {
-
+        view.showNutritionSwitch(recipeUnit.getDefaultQuantity(), recipeUnit);
+        if (recipeFull != null)
+            view.showNutritionValue(businessLogic.getNutrient(recipeFull, recipeUnit), animateNutrition);
     }
 
     @Override

@@ -8,8 +8,8 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import com.alsash.reciper.R;
-import com.alsash.reciper.app.AppNavigator;
 import com.alsash.reciper.app.ReciperApp;
+import com.alsash.reciper.logic.NavigationLogic;
 import com.alsash.reciper.mvp.model.entity.Recipe;
 import com.alsash.reciper.mvp.presenter.RecipeRestrictListPresenter;
 import com.alsash.reciper.mvp.view.RecipeRestrictListView;
@@ -30,7 +30,7 @@ public class RecipeRestrictListFragment extends BaseListFragment<Recipe, RecipeR
     @Inject
     RecipeRestrictListPresenter presenter;
     @Inject
-    AppNavigator navigator;
+    NavigationLogic navigator;
 
 
     public static RecipeRestrictListFragment newInstance(Intent intent) {

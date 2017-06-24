@@ -5,7 +5,7 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.support.annotation.NonNull;
 
-import com.alsash.reciper.app.AppNavigator;
+import com.alsash.reciper.logic.NavigationLogic;
 
 import javax.inject.Singleton;
 
@@ -39,8 +39,8 @@ public class AppContextModule {
 
     @Provides
     @Singleton
-    AppNavigator provideAppNavigator() {
-        return new AppNavigator(appContext);
+    NavigationLogic provideAppNavigator() {
+        return new NavigationLogic(appContext);
     }
 
     @Provides

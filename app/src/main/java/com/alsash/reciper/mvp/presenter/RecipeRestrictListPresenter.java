@@ -2,11 +2,11 @@ package com.alsash.reciper.mvp.presenter;
 
 import com.alsash.reciper.logic.BusinessLogic;
 import com.alsash.reciper.logic.StorageLogic;
+import com.alsash.reciper.logic.restriction.EntityRestriction;
 import com.alsash.reciper.mvp.model.entity.BaseEntity;
 import com.alsash.reciper.mvp.model.entity.Category;
 import com.alsash.reciper.mvp.model.entity.Label;
 import com.alsash.reciper.mvp.model.entity.Recipe;
-import com.alsash.reciper.mvp.model.restriction.EntityRestriction;
 import com.alsash.reciper.mvp.view.RecipeRestrictListView;
 
 import java.lang.ref.WeakReference;

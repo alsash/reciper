@@ -1,4 +1,4 @@
-package com.alsash.reciper.mvp.model.restriction;
+package com.alsash.reciper.logic.restriction;
 
 /**
  * Created by alsash on 6/17/17.

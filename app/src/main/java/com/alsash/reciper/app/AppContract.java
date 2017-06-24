@@ -11,20 +11,6 @@ import java.util.concurrent.TimeUnit;
 public final class AppContract {
     private static final String TAG = "com.alsash.reciper.app.AppContract";
 
-    public enum UNIT {
-        GRAM("g"), KILOGRAM("kg"), KCAL("kcal");
-        private final String unitString;
-
-        UNIT(String unitString) {
-            this.unitString = unitString;
-        }
-
-        @Override
-        public String toString() {
-            return unitString;
-        }
-    }
-
     // Cloud service urls
     public static final class Cloud {
         public static final int CONNECT_TIMEOUT_MS = 5000;

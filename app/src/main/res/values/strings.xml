@@ -70,6 +70,15 @@
         <item quantity="many">%d grams</item>
         <item quantity="other">%d grams</item>
     </plurals>
+    <plurals name="quantity_weight_kilogram">
+        <item quantity="other">%d kg</item>
+    </plurals>
+    <plurals name="quantity_energy_calorie">
+        <item quantity="other">%d\nCal</item>
+    </plurals>
+    <plurals name="quantity_energy_kilocalorie">
+        <item quantity="other">%d\nkCal</item>
+    </plurals>
     <string name="nutrition_value">Nutrition value</string>
     <string name="nutrition_quantity_switch">Per %s</string>
     <string name="nutrition_carbohydrate">Carbs</string>

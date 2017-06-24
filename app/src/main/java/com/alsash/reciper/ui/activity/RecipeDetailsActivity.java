@@ -16,8 +16,8 @@ import android.widget.NumberPicker;
 import android.widget.TextView;
 
 import com.alsash.reciper.R;
-import com.alsash.reciper.app.AppNavigator;
 import com.alsash.reciper.app.ReciperApp;
+import com.alsash.reciper.logic.NavigationLogic;
 import com.alsash.reciper.mvp.model.entity.Photo;
 import com.alsash.reciper.mvp.model.tab.SwipeTab;
 import com.alsash.reciper.mvp.presenter.RecipeDetailsPresenter;
@@ -37,7 +37,7 @@ public class RecipeDetailsActivity extends BaseActivity<RecipeDetailsView>
     @Inject
     RecipeDetailsPresenter presenter;
     @Inject
-    AppNavigator navigator;
+    NavigationLogic navigator;
 
     private AppBarLayout appbar;
     private Toolbar toolbar;

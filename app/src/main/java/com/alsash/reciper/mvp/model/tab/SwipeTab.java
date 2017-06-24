@@ -1,5 +1,6 @@
 package com.alsash.reciper.mvp.model.tab;
 
+import android.os.Bundle;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.StringRes;
 import android.support.v4.app.Fragment;
@@ -9,9 +10,8 @@ import android.support.v4.app.Fragment;
  */
 public class SwipeTab {
 
-    private static Builder builder = new Builder();
-
-    private Fragment fragment;
+    private Class<? extends Fragment> fragmentClass;
+    private Bundle fragmentArgs;
     private Integer title;
     private Integer icon;
     private boolean swiped;
@@ -19,22 +19,18 @@ public class SwipeTab {
     private SwipeTab() {
     }
 
-    public SwipeTab(Fragment fragment,
-                    @StringRes Integer title,
-                    @DrawableRes Integer icon,
-                    boolean swiped) {
-        this.fragment = fragment;
-        this.title = title;
-        this.icon = icon;
-        this.swiped = swiped;
-    }
-
     public static Builder builder() {
-        return builder.refresh();
+        return new Builder();
     }
 
     public Fragment getFragment() {
-        return fragment;
+        try {
+            Fragment fragment = fragmentClass.newInstance();
+            fragment.setArguments(fragmentArgs);
+            return fragment;
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     @StringRes
@@ -55,15 +51,12 @@ public class SwipeTab {
         private SwipeTab tab;
 
         private Builder() {
-        }
-
-        private Builder refresh() {
             tab = new SwipeTab();
-            return this;
         }
 
         public Builder fragment(Fragment fragment) {
-            tab.fragment = fragment;
+            tab.fragmentClass = fragment.getClass();
+            tab.fragmentArgs = fragment.getArguments();
             return this;
         }
 

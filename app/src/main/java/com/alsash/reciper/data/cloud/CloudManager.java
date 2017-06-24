@@ -3,7 +3,6 @@ package com.alsash.reciper.data.cloud;
 import android.net.ConnectivityManager;
 import android.support.annotation.Nullable;
 
-import com.alsash.reciper.app.AppContract;
 import com.alsash.reciper.app.AppContract.Cloud.Usda;
 import com.alsash.reciper.data.cloud.request.GithubDbRequest;
 import com.alsash.reciper.data.cloud.request.UsdaRequest;
@@ -21,6 +20,8 @@ import com.alsash.reciper.data.db.table.RecipeLabelTable;
 import com.alsash.reciper.data.db.table.RecipeMethodTable;
 import com.alsash.reciper.data.db.table.RecipePhotoTable;
 import com.alsash.reciper.data.db.table.RecipeTable;
+import com.alsash.reciper.logic.unit.EnergyUnit;
+import com.alsash.reciper.logic.unit.WeightUnit;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -79,11 +80,11 @@ public class CloudManager {
             FoodTable foodTable = new FoodTable();
             result.put(foodContainer.food.desc.ndbno, foodTable);
 
-            foodTable.setWeightUnit(AppContract.UNIT.GRAM.toString());
-            foodTable.setEnergyUnit(AppContract.UNIT.KCAL.toString());
-            foodTable.setName(response.foods.get(0).food.desc.name);
+            foodTable.setWeightUnit(WeightUnit.GRAM.toString());
+            foodTable.setEnergyUnit(EnergyUnit.CALORIE.toString());
+            foodTable.setName(foodContainer.food.desc.name);
 
-            if (response.foods.get(0).food.nutrients != null) {
+            if (foodContainer.food.nutrients != null) {
                 for (UsdaFoodsResponse.Nutrient nutrient : foodContainer.food.nutrients) {
                     switch (nutrient.nutrientId) {
                         case USDA_NUTRITION_ID_PROTEIN:
@@ -96,7 +97,7 @@ public class CloudManager {
                             foodTable.setCarbs(nutrient.value / 100);
                             break;
                         case USDA_NUTRITION_ID_ENERGY:
-                            foodTable.setEnergy(nutrient.value);
+                            foodTable.setEnergy(nutrient.value / 100);
                             break;
                     }
                 }

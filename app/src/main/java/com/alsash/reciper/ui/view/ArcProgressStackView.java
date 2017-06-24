@@ -575,6 +575,12 @@ public class ArcProgressStackView extends View {
         return mTypeface;
     }
 
+    public void setTypeface(final Typeface typeface) {
+        mTypeface = typeface;
+        mTextPaint.setTypeface(typeface);
+        postInvalidate();
+    }
+
     public void setTypeface(final String typeface) {
         Typeface tempTypeface;
         try {
@@ -584,12 +590,6 @@ public class ArcProgressStackView extends View {
             tempTypeface = Typeface.create("sans-serif-condensed", Typeface.NORMAL);
         }
         setTypeface(tempTypeface);
-    }
-
-    public void setTypeface(final Typeface typeface) {
-        mTypeface = typeface;
-        mTextPaint.setTypeface(typeface);
-        postInvalidate();
     }
 
     public IndicatorOrientation getIndicatorOrientation() {
@@ -892,7 +892,7 @@ public class ArcProgressStackView extends View {
             if (isInEditMode()) continue;
 
             // Get model title bounds
-            mTextPaint.setTextSize(mProgressModelSize * 0.4F);
+            mTextPaint.setTextSize(mProgressModelSize * 0.35F);
             mTextPaint.getTextBounds(
                     model.getTitle(),
                     0, model.getTitle().length(),
@@ -1025,14 +1025,14 @@ public class ArcProgressStackView extends View {
 
     public static class Model {
 
-        private static ProgressConverter defaultProgressConverter = new ProgressConverter() {
+        /*private static ProgressConverter defaultProgressConverter = new ProgressConverter() {
             @SuppressLint("DefaultLocale")
             @Nullable
             @Override
             public String getConvertedProgress(float progress) {
                 return String.format("%d%%", (int) progress);
             }
-        };
+        };*/
 
         private final RectF mBounds = new RectF();
         private final Rect mTextBounds = new Rect();
@@ -1047,7 +1047,7 @@ public class ArcProgressStackView extends View {
         private int mBgColor;
         private int[] mColors;
         private SweepGradient mSweepGradient;
-        private ProgressConverter progressConverter = defaultProgressConverter;
+        private ProgressConverter progressConverter; // = defaultProgressConverter;
 
         public Model(final String title, final float progress, final int color) {
             setTitle(title);

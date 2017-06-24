@@ -1,15 +1,16 @@
-package com.alsash.reciper.app;
+package com.alsash.reciper.logic;
 
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 
+import com.alsash.reciper.app.AppContract;
+import com.alsash.reciper.logic.restriction.EntityRestriction;
 import com.alsash.reciper.mvp.model.entity.Category;
 import com.alsash.reciper.mvp.model.entity.Label;
 import com.alsash.reciper.mvp.model.entity.Recipe;
 import com.alsash.reciper.mvp.model.entity.RecipeFull;
-import com.alsash.reciper.mvp.model.restriction.EntityRestriction;
 import com.alsash.reciper.ui.activity.RecipeCollectionsActivity;
 import com.alsash.reciper.ui.activity.RecipeDetailsActivity;
 import com.alsash.reciper.ui.activity.SingleFragmentActivity;
@@ -29,20 +30,20 @@ import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
 import static android.support.v4.content.IntentCompat.FLAG_ACTIVITY_CLEAR_TASK;
 
 /**
- * A Navigator class for controlling transitions between application views
+ * A Navigation Logic for controlling transitions between application views
  */
 @Singleton
-public class AppNavigator {
+public class NavigationLogic {
 
     private WeakReference<Context> contextRef;
     private WeakReference<Context> activityContextRef;
     private boolean contextIsActivity;
 
-    public AppNavigator(Context context) {
+    public NavigationLogic(Context context) {
         this.contextRef = new WeakReference<>(context);
     }
 
-    public AppNavigator fromActivity(Context activityContext) {
+    public NavigationLogic fromActivity(Context activityContext) {
         this.activityContextRef = new WeakReference<>(activityContext);
         this.contextIsActivity = true;
         return this;

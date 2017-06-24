@@ -13,13 +13,13 @@ import com.alsash.reciper.data.db.table.LabelTable;
 import com.alsash.reciper.data.db.table.RecipeTable;
 import com.alsash.reciper.logic.action.RecipeAction;
 import com.alsash.reciper.logic.exception.MainThreadException;
+import com.alsash.reciper.logic.restriction.EntityRestriction;
 import com.alsash.reciper.mvp.model.entity.BaseEntity;
 import com.alsash.reciper.mvp.model.entity.Category;
 import com.alsash.reciper.mvp.model.entity.Ingredient;
 import com.alsash.reciper.mvp.model.entity.Label;
 import com.alsash.reciper.mvp.model.entity.Recipe;
 import com.alsash.reciper.mvp.model.entity.RecipeFull;
-import com.alsash.reciper.mvp.model.restriction.EntityRestriction;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -28,7 +28,7 @@ import java.util.Locale;
 import java.util.Map;
 
 /**
- * Logic for processing data in storage.
+ * A Storage Logic for processing data in storage.
  * All methods, except explicit annotated, must be called on the background thread.
  */
 public class StorageLogic {

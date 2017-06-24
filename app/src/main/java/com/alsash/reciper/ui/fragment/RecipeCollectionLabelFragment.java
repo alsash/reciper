@@ -4,8 +4,8 @@ import android.content.Context;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
-import com.alsash.reciper.app.AppNavigator;
 import com.alsash.reciper.app.ReciperApp;
+import com.alsash.reciper.logic.NavigationLogic;
 import com.alsash.reciper.mvp.model.entity.Label;
 import com.alsash.reciper.mvp.model.entity.Recipe;
 import com.alsash.reciper.mvp.presenter.BaseRecipeListPresenter;
@@ -29,7 +29,7 @@ public class RecipeCollectionLabelFragment
     @Inject
     RecipeCollectionLabelPresenter presenter;
     @Inject
-    AppNavigator navigator;
+    NavigationLogic navigator;
 
     public static RecipeCollectionLabelFragment newInstance() {
         return new RecipeCollectionLabelFragment();

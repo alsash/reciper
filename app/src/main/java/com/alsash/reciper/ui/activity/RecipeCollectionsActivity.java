@@ -11,8 +11,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.alsash.reciper.R;
-import com.alsash.reciper.app.AppNavigator;
 import com.alsash.reciper.app.ReciperApp;
+import com.alsash.reciper.logic.NavigationLogic;
 import com.alsash.reciper.mvp.presenter.BasePresenter;
 import com.alsash.reciper.mvp.presenter.RecipeCollectionsPresenter;
 import com.alsash.reciper.mvp.view.RecipeCollectionsView;
@@ -27,7 +27,7 @@ public class RecipeCollectionsActivity extends BaseDrawerActivity<RecipeCollecti
     @Inject
     RecipeCollectionsPresenter presenter;
     @Inject
-    AppNavigator navigator;
+    NavigationLogic navigator;
 
     private BottomNavigationView navigation;
     private SwipePagerAdapter adapter;

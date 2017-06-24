@@ -3,7 +3,7 @@ package com.alsash.reciper.logic.exception;
 import android.os.Looper;
 
 /**
- * An logical exception caused by internet connection unavailable
+ * An logical exception caused by invoking method on main thread
  */
 public class MainThreadException extends RuntimeException {
     private MainThreadException(String owner, String action) {
