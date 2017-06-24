@@ -60,46 +60,48 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/recipe_description_author_image" />
 
-    <android.support.percent.PercentFrameLayout
-        android:id="@+id/recipe_description_body_container"
+    <TextView
+        android:id="@+id/recipe_description_body"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
+        android:fontFamily="serif"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:textSize="16sp"
+        android:textStyle="italic"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/recipe_description_horizontal_divider">
+        app:layout_constraintTop_toBottomOf="@+id/recipe_description_horizontal_divider"
+        tools:text="Recipe description" />
 
-        <TextView
-            android:id="@+id/recipe_description_body"
-            android:layout_width="0dp"
-            android:fontFamily="serif"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-            android:textSize="16sp"
-            android:textStyle="italic"
-            app:layout_aspectRatio="100%"
-            app:layout_widthPercent="100%"
-            tools:text="Recipe description" />
+    <TextView
+        android:id="@+id/recipe_description_source"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="serif"
+        android:gravity="right"
+        android:textAlignment="center"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+        android:textSize="12sp"
+        android:textStyle="italic"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/recipe_description_body"
+        tools:ignore="RtlHardcoded"
+        tools:text="Recipe source" />
 
-    </android.support.percent.PercentFrameLayout>
-
-
-    <!--    <TextView
-            android:id="@+id/recipe_description_source"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="serif"
-            android:gravity="right"
-            android:maxLines="2"
-            android:textAlignment="center"
-            android:textAppearance="@style/TextAppearance.AppCompat.Small"
-            android:textSize="12sp"
-            android:textStyle="italic"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/recipe_description_body_container"
-            tools:ignore="RtlHardcoded"
-            tools:text="Recipe source" />-->
+    <ImageButton
+        android:id="@+id/recipe_description_edit"
+        style="@style/RippleButton"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="0dp"
+        android:tint="@color/gray_400"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_edit"
+        tools:ignore="ContentDescription" />
 
 </android.support.constraint.ConstraintLayout>

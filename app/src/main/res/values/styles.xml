@@ -43,11 +43,11 @@
     </style>
 
     <style name="TextAppearance.RecipeTitle.Collapsed">
-        <!--<item name="android:fontFamily">serif</item>-->
+        <item name="android:textSize">14sp</item>
     </style>
 
     <style name="TextAppearance.RecipeTitle.Tab" parent="TextAppearance.Design.Tab">
-        <item name="android:textSize">13sp</item>
+        <item name="android:textSize">12sp</item>
     </style>
 
     <style name="LightIconView">

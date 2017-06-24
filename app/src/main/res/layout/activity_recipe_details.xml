@@ -47,7 +47,7 @@
                 android:layout_height="96dp"
                 app:layout_collapseMode="pin"
                 app:popupTheme="@style/AppTheme.PopupOverlay"
-                app:titleMarginTop="16dp"
+                app:titleMarginTop="20dp"
                 app:titleTextAppearance="@style/TextAppearance.RecipeTitle" />
 
             <android.support.design.widget.TabLayout

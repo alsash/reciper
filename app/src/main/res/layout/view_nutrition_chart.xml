@@ -23,7 +23,7 @@
             android:gravity="center"
             android:orientation="vertical"
             app:layout_aspectRatio="100%"
-            app:layout_widthPercent="24%">
+            app:layout_widthPercent="25%">
 
             <TextView
                 android:id="@+id/nutrition_energy_value"
@@ -31,7 +31,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="sans-serif-condensed"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large.Inverse"
-                android:textSize="12sp"
+                android:textSize="14sp"
                 tools:text="200" />
 
             <TextView
@@ -40,7 +40,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="sans-serif-condensed"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large.Inverse"
-                android:textSize="12sp"
+                android:textSize="14sp"
                 tools:text="kCal" />
 
         </LinearLayout>
@@ -108,7 +108,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="0dp"
-        android:layout_marginRight="4dp"
+        android:layout_marginRight="8dp"
         android:background="@drawable/bg_rectangle_stroke_c"
         android:fontFamily="sans-serif-condensed"
         android:padding="2dp"
@@ -125,7 +125,7 @@
         android:id="@+id/nutrition_protein_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginRight="4dp"
+        android:layout_marginRight="8dp"
         android:background="@drawable/bg_rectangle_stroke_p"
         android:fontFamily="sans-serif-condensed"
         android:padding="2dp"
@@ -142,7 +142,7 @@
         android:id="@+id/nutrition_fat_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginRight="4dp"
+        android:layout_marginRight="8dp"
         android:background="@drawable/bg_rectangle_stroke_f"
         android:fontFamily="sans-serif-condensed"
         android:padding="2dp"
@@ -157,7 +157,7 @@
 
     <View
         android:id="@+id/nutrition_carbohydrate_title_bg_line"
-        android:layout_width="4dp"
+        android:layout_width="8dp"
         android:layout_height="1dp"
         android:background="@color/nutrition_carbohydrate_bg"
         app:layout_constraintBottom_toTopOf="@+id/nutrition_carbohydrate_horizontal_guideline"
@@ -166,7 +166,7 @@
 
     <View
         android:id="@+id/nutrition_protein_title_bg_line"
-        android:layout_width="4dp"
+        android:layout_width="8dp"
         android:layout_height="1dp"
         android:background="@color/nutrition_protein_bg"
         app:layout_constraintBottom_toTopOf="@+id/nutrition_protein_horizontal_guideline"
@@ -175,7 +175,7 @@
 
     <View
         android:id="@+id/nutrition_fat_title_bg_line"
-        android:layout_width="4dp"
+        android:layout_width="8dp"
         android:layout_height="1dp"
         android:background="@color/nutrition_fat_bg"
         app:layout_constraintBottom_toTopOf="@+id/nutrition_fat_horizontal_guideline"
@@ -186,13 +186,13 @@
         android:id="@+id/nutrition_carbohydrate_value"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="4dp"
+        android:layout_marginBottom="8dp"
         android:background="@drawable/bg_rectangle_stroke_c"
         android:fontFamily="sans-serif-condensed"
         android:padding="2dp"
         android:textAppearance="@style/TextAppearance.AppCompat.Small"
         android:textColor="@color/nutrition_carbohydrate"
-        android:textSize="12sp"
+        android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="@id/nutrition_horizontal_guideline"
         app:layout_constraintHorizontal_bias="0.49"
         app:layout_constraintLeft_toLeftOf="@id/nutrition_carbohydrate_vertical_guideline"
@@ -203,13 +203,13 @@
         android:id="@+id/nutrition_protein_value"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="4dp"
+        android:layout_marginBottom="8dp"
         android:background="@drawable/bg_rectangle_stroke_p"
         android:fontFamily="sans-serif-condensed"
         android:padding="2dp"
         android:textAppearance="@style/TextAppearance.AppCompat.Small"
         android:textColor="@color/nutrition_protein"
-        android:textSize="12sp"
+        android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="@id/nutrition_horizontal_guideline"
         app:layout_constraintLeft_toLeftOf="@id/nutrition_protein_vertical_guideline"
         app:layout_constraintRight_toLeftOf="@id/nutrition_protein_vertical_guideline"
@@ -219,13 +219,13 @@
         android:id="@+id/nutrition_fat_value"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="4dp"
+        android:layout_marginBottom="8dp"
         android:background="@drawable/bg_rectangle_stroke_f"
         android:fontFamily="sans-serif-condensed"
         android:padding="2dp"
         android:textAppearance="@style/TextAppearance.AppCompat.Small"
         android:textColor="@color/nutrition_fat"
-        android:textSize="12sp"
+        android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="@id/nutrition_horizontal_guideline"
         app:layout_constraintLeft_toLeftOf="@id/nutrition_fat_vertical_guideline"
         app:layout_constraintRight_toLeftOf="@id/nutrition_fat_vertical_guideline"
@@ -234,7 +234,7 @@
     <View
         android:id="@+id/nutrition_carbohydrate_value_bg_line"
         android:layout_width="1dp"
-        android:layout_height="4dp"
+        android:layout_height="8dp"
         android:background="@color/nutrition_carbohydrate_bg"
         app:layout_constraintLeft_toLeftOf="@id/nutrition_carbohydrate_vertical_guideline"
         app:layout_constraintRight_toLeftOf="@id/nutrition_carbohydrate_vertical_guideline"
