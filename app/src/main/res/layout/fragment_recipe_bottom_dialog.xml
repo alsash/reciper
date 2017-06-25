@@ -85,7 +85,7 @@
         tools:ignore="ContentDescription" />
 
     <TextView
-        android:id="@+id/recipe_time"
+        android:id="@+id/recipe_time_value"
         style="@style/LightIconText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -177,7 +177,7 @@
         app:layout_constraintBottom_toBottomOf="@+id/recipe_creation_date"
         app:layout_constraintLeft_toLeftOf="@+id/guideline_vertical"
         app:layout_constraintTop_toTopOf="@+id/recipe_creation_date"
-        app:srcCompat="@drawable/ic_date_top"
+        app:srcCompat="@drawable/recipe_time_icon"
         tools:ignore="ContentDescription" />
 
     <TextView
@@ -189,7 +189,7 @@
         android:layout_marginStart="16dp"
         android:text="Creation changedAt"
         app:layout_constraintLeft_toRightOf="@+id/recipe_creation_date_icon"
-        app:layout_constraintTop_toTopOf="@+id/recipe_time"
+        app:layout_constraintTop_toTopOf="@+id/recipe_time_value"
         tools:text="Creation changedAt" />
 
     <ImageView

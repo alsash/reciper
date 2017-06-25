@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/item_label_recipe_name"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_margin="4dp"
+    android:background="@drawable/label_recipe_shape"
+    android:fontFamily="serif"
+    android:paddingBottom="4dp"
+    android:paddingEnd="8dp"
+    android:paddingStart="8dp"
+    android:paddingTop="4dp"
+    android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+    android:textSize="14sp"
+    tools:text="Label name" />

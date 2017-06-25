@@ -14,7 +14,9 @@ import com.alsash.reciper.mvp.model.entity.Ingredient;
 import com.alsash.reciper.mvp.model.entity.Recipe;
 import com.alsash.reciper.mvp.model.entity.RecipeFull;
 
+import java.util.Calendar;
 import java.util.Comparator;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -41,6 +43,19 @@ public class BusinessLogic {
                 return r1.getName().compareTo(r2.getName());
             }
         };
+    }
+
+    public Calendar getCookTime(RecipeFull recipe) {
+        Calendar calendar = new GregorianCalendar(0, 0, 0);
+
+        double gramPerSecond = recipe.getMassFlowRateGps();
+        if (gramPerSecond == 0) return calendar;
+
+        double recipeWeightInGrams = getRecipeWeight(recipe, WeightUnit.GRAM);
+
+        int seconds = (int) Math.round(recipeWeightInGrams / gramPerSecond);
+        calendar.setTimeInMillis(seconds * 1000);
+        return calendar;
     }
 
     public Nutrient getNutrient(RecipeFull recipe, RecipeUnit recipeUnit) {
@@ -124,6 +139,25 @@ public class BusinessLogic {
                 .energy(energy)
                 .unit(EnergyUnit.CALORIE)
                 .build();
+    }
+
+    private double getRecipeWeight(RecipeFull recipe, WeightUnit weightUnit) throws UnitException {
+        double recipeWeight = 0.0D;
+        try {
+            for (Ingredient ingredient : recipe.getIngredients()) {
+                // Getting ingredient weight unit
+                WeightUnit ingredientWeightUnit = WeightUnit.getValueOf(ingredient.getWeightUnit());
+                if (ingredientWeightUnit == null)
+                    throw new UnitException(ingredient, "weightUnit", ingredient.getWeightUnit());
+                // Calculating recipe weight
+                recipeWeight += ingredient.getWeight() *
+                        getWeightMultiplier(weightUnit, ingredientWeightUnit);
+
+            }
+        } catch (Throwable e) {
+            Log.d(TAG, e.getMessage(), e);
+        }
+        return recipeWeight;
     }
 
     private double getWeightMultiplier(WeightUnit requiredUnit, WeightUnit... units) {

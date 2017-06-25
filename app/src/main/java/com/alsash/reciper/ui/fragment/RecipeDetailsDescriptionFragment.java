@@ -4,11 +4,15 @@ import android.animation.ValueAnimator;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SwitchCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.alsash.reciper.R;
@@ -17,12 +21,21 @@ import com.alsash.reciper.logic.NavigationLogic;
 import com.alsash.reciper.logic.unit.EnergyUnit;
 import com.alsash.reciper.logic.unit.RecipeUnit;
 import com.alsash.reciper.mvp.model.derivative.Nutrient;
+import com.alsash.reciper.mvp.model.entity.Category;
+import com.alsash.reciper.mvp.model.entity.Label;
+import com.alsash.reciper.mvp.model.entity.Recipe;
 import com.alsash.reciper.mvp.presenter.RecipeDetailsDescriptionPresenter;
 import com.alsash.reciper.mvp.view.RecipeDetailsDescriptionView;
+import com.alsash.reciper.ui.adapter.RecipeLabelListAdapter;
+import com.alsash.reciper.ui.adapter.interaction.LabelInteraction;
+import com.alsash.reciper.ui.loader.ImageLoader;
 import com.alsash.reciper.ui.view.ArcProgressStackView;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 
 import javax.inject.Inject;
 
@@ -37,15 +50,92 @@ public class RecipeDetailsDescriptionFragment extends BaseFragment<RecipeDetails
     @Inject
     NavigationLogic navigator;
 
+    // Description card
+    private ImageView authorImage;
+    private TextView authorName;
+    private TextView recipeSource;
+    private TextView recipeDate;
+    private TextView recipeDescription;
+    // Category card
+    private ImageView categoryImage;
+    private TextView categoryName;
+    private ImageButton categoryEdit;
+    // Labels card
+    private ImageButton labelAdd;
+    private View.OnClickListener labelAddListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            presenter.onLabelAdd();
+        }
+    };
+    private RecyclerView labelList;
+    private RecipeLabelListAdapter labelAdapter;
+    private LabelInteraction labelInteraction = new LabelInteraction() {
+        @Override
+        public void onPress(Label label) {
+            presenter.onLabelDelete(label);
+        }
+    };
+    // Time card
+    private TextView recipeTime;
+    private ImageButton recipeTimeEdit;
+
+    // Nutrition card
     private SwitchCompat nutritionSwitch;
+    private CompoundButton.OnCheckedChangeListener nutritionSwitchListener =
+            new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    presenter.onNutritionSwitch(isChecked, getThisView());
+                }
+            };
     private ArcProgressStackView nutritionChart;
     private TextView nutritionEnergy;
     private TextView nutritionCarbsPercent;
     private TextView nutritionProteinPercent;
     private TextView nutritionFatPercent;
 
+    private SimpleDateFormat recipeDateFormat; // created at OnCreate()
+
     public static RecipeDetailsDescriptionFragment newInstance(Intent intent) {
         return getThisFragment(new RecipeDetailsDescriptionFragment(), intent);
+    }
+
+    @Override
+    public void showDescription(Recipe recipe) {
+        ImageLoader.get().source(recipe.getAuthor()).load(authorImage);
+        authorName.setText(recipe.getAuthor().getName());
+        recipeSource.setText(recipe.getSource());
+        recipeDate.setText(recipeDateFormat.format(recipe.getCreatedAt()));
+        recipeDescription.setText(recipe.getDescription());
+    }
+
+    @Override
+    public void showCategory(Category category) {
+        ImageLoader.get().source(category.getPhoto()).load(categoryImage);
+        categoryName.setText(category.getName());
+    }
+
+    @Override
+    public void showLabels(List<Label> labels) {
+        if (labelList == null) return;
+        labelAdapter = new RecipeLabelListAdapter(labels, labelInteraction);
+        labelList.setAdapter(labelAdapter);
+        int spanCount = labels.size() / 3;
+        if (spanCount == 0) spanCount = 1;
+        GridLayoutManager layoutManager = (GridLayoutManager) labelList.getLayoutManager();
+        layoutManager.setSpanCount(spanCount);
+        layoutManager.setInitialPrefetchItemCount(labels.size());
+        labelList.setLayoutManager(layoutManager);
+    }
+
+    @Override
+    public void showCookTime(Calendar calendar) {
+        int h = calendar.get(Calendar.HOUR);
+        int m = calendar.get(Calendar.MINUTE);
+        String hours = getResources().getQuantityString(R.plurals.time_format_hours, h, h);
+        String minutes = getResources().getQuantityString(R.plurals.time_format_minutes, m, m);
+        recipeTime.setText((hours + " " + minutes).trim());
     }
 
     @Override
@@ -154,19 +244,39 @@ public class RecipeDetailsDescriptionFragment extends BaseFragment<RecipeDetails
         nutritionFatPercent.setText(getString(R.string.quantity_percent, fatPercent));
     }
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        recipeDateFormat = new SimpleDateFormat(getString(R.string.date_format_recipe),
+                Locale.getDefault());
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View layout = inflater.inflate(R.layout.fragment_recipe_details_description,
                 container, false);
+        // Description card
+        authorImage = (ImageView) layout.findViewById(R.id.recipe_description_author_image);
+        authorName = (TextView) layout.findViewById(R.id.recipe_description_author_name);
+        recipeSource = (TextView) layout.findViewById(R.id.recipe_description_source);
+        recipeDate = (TextView) layout.findViewById(R.id.recipe_description_date);
+        recipeDescription = (TextView) layout.findViewById(R.id.recipe_description_body);
+        // Category card
+        categoryImage = (ImageView) layout.findViewById(R.id.recipe_category_image);
+        categoryName = (TextView) layout.findViewById(R.id.recipe_category_name);
+        categoryEdit = (ImageButton) layout.findViewById(R.id.recipe_category_edit);
+        // Labels card
+        labelAdd = (ImageButton) layout.findViewById(R.id.recipe_labels_add);
+        labelAdd.setOnClickListener(labelAddListener);
+        labelList = (RecyclerView) layout.findViewById(R.id.recipe_labels_list);
+        // Time card
+        recipeTimeEdit = (ImageButton) layout.findViewById(R.id.recipe_time_edit);
+        recipeTime = (TextView) layout.findViewById(R.id.recipe_time_value);
+        // Nutrition card
         nutritionSwitch = (SwitchCompat) layout.findViewById(R.id.recipe_nutrition_switch);
-        nutritionSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                presenter.onNutritionSwitch(isChecked, getThisView());
-            }
-        });
+        nutritionSwitch.setOnCheckedChangeListener(nutritionSwitchListener);
         nutritionChart = (ArcProgressStackView) layout.findViewById(R.id.nutrition_chart);
         nutritionEnergy = (TextView) layout.findViewById(R.id.nutrition_energy);
         nutritionCarbsPercent = (TextView) layout.findViewById(R.id.nutrition_carbohydrate_value);

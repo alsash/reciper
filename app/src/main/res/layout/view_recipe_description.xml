@@ -15,6 +15,18 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="ContentDescription" />
 
+    <ImageButton
+        android:id="@+id/recipe_description_edit"
+        style="@style/RippleButton"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="0dp"
+        android:tint="@color/gray_400"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/edit_icon"
+        tools:ignore="ContentDescription" />
+
     <TextView
         android:id="@+id/recipe_description_author_name"
         android:layout_width="wrap_content"
@@ -64,7 +76,7 @@
         android:id="@+id/recipe_description_body"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="8dp"
         android:fontFamily="serif"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         android:textSize="16sp"
@@ -79,29 +91,20 @@
         android:id="@+id/recipe_description_source"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="8dp"
         android:fontFamily="serif"
         android:gravity="right"
         android:textAlignment="center"
         android:textAppearance="@style/TextAppearance.AppCompat.Small"
-        android:textSize="12sp"
+        android:textSize="14sp"
         android:textStyle="italic"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/recipe_description_body"
         tools:ignore="RtlHardcoded"
         tools:text="Recipe source" />
-
-    <ImageButton
-        android:id="@+id/recipe_description_edit"
-        style="@style/RippleButton"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:layout_marginTop="0dp"
-        android:tint="@color/gray_400"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_edit"
-        tools:ignore="ContentDescription" />
 
 </android.support.constraint.ConstraintLayout>

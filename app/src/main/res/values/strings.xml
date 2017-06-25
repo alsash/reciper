@@ -1,7 +1,15 @@
 <resources>
     <string name="app_name">Recipes</string>
-    <string name="recipe_card_date_format">MMMM yyyy</string>
-
+    <string name="date_format_recipe">MMMM yyyy</string>
+    <plurals name="time_format_hours">
+        <item quantity="zero"> </item>
+        <item quantity="one">%d hour</item>
+        <item quantity="other">%d hours</item>
+    </plurals>
+    <plurals name="time_format_minutes">
+        <item quantity="one">%d minute</item>
+        <item quantity="other">%d minutes</item>
+    </plurals>
     <!--Recipe tabs-->
     <string name="tab_recipe_category">Categories</string>
     <string name="tab_recipe_grid">Grid</string>
@@ -91,4 +99,5 @@
     <string name="fragment_recipe_details_description_title">Description</string>
     <string name="fragment_recipe_details_ingredients_title">Ingredients</string>
     <string name="fragment_recipe_details_methods_title">Methods</string>
+    <string name="view_recipe_labels_title">Labels</string>
 </resources>

@@ -56,7 +56,7 @@
                     android:title="@string/list_sort_account" />
                 <item
                     android:id="@+id/sort_date_top"
-                    android:icon="@drawable/ic_date_top"
+                    android:icon="@drawable/recipe_time_icon"
                     android:title="@string/list_sort_date_top" />
                 <item
                     android:id="@+id/sort_date_end"
@@ -115,7 +115,7 @@
                     android:title="@string/list_sort_account" />
                 <item
                     android:id="@+id/filter_date_top"
-                    android:icon="@drawable/ic_date_top"
+                    android:icon="@drawable/recipe_time_icon"
                     android:title="@string/list_sort_date_top" />
                 <item
                     android:id="@+id/filter_date_end"

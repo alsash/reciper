@@ -7,6 +7,7 @@ import com.alsash.reciper.logic.StorageLogic;
 import com.alsash.reciper.logic.restriction.EntityRestriction;
 import com.alsash.reciper.logic.unit.RecipeUnit;
 import com.alsash.reciper.mvp.model.entity.BaseEntity;
+import com.alsash.reciper.mvp.model.entity.Label;
 import com.alsash.reciper.mvp.model.entity.RecipeFull;
 import com.alsash.reciper.mvp.view.RecipeDetailsDescriptionView;
 
@@ -34,18 +35,30 @@ public class RecipeDetailsDescriptionPresenter
         return (RecipeDetailsDescriptionPresenter) super.setRestriction(restriction);
     }
 
+    public void onLabelDelete(Label label) {
+
+    }
+
+    public void onLabelAdd() {
+
+    }
+
     public void onNutritionSwitch(boolean switchOn, RecipeDetailsDescriptionView view) {
         recipeUnit = switchOn ? RecipeUnit.SERVING : RecipeUnit.GRAM;
-        visible(view);
-        if (recipeFull != null) view.showNutritionAnimation();
+        if (recipeFull == null) return;
+        view.showNutritionChart(businessLogic.getNutrient(recipeFull, recipeUnit));
+        view.showNutritionAnimation();
     }
 
     @Override
     public void visible(RecipeDetailsDescriptionView view) {
         view.showNutritionQuantity(recipeUnit.getDefaultQuantity(), recipeUnit);
-        if (recipeFull != null) {
-            view.showNutritionChart(businessLogic.getNutrient(recipeFull, recipeUnit));
-        }
+        if (recipeFull == null) return;
+        view.showDescription(recipeFull);
+        view.showCategory(recipeFull.getCategory());
+        view.showLabels(recipeFull.getLabels());
+        view.showCookTime(businessLogic.getCookTime(recipeFull));
+        view.showNutritionChart(businessLogic.getNutrient(recipeFull, recipeUnit));
     }
 
     @Override

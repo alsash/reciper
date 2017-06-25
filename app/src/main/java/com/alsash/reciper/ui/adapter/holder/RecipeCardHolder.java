@@ -51,7 +51,7 @@ public class RecipeCardHolder extends RecyclerView.ViewHolder {
     private final ImageView backFavIcon;
     private final ImageButton backFlipButton;
 
-    private final SimpleDateFormat dateFormat;
+    private final SimpleDateFormat recipeDateFormat;
 
     public RecipeCardHolder(ViewGroup parent, @LayoutRes int recipeCardLayoutId) {
         super(LayoutInflater.from(parent.getContext()).inflate(recipeCardLayoutId, parent, false));
@@ -74,8 +74,8 @@ public class RecipeCardHolder extends RecyclerView.ViewHolder {
         backFavIcon = (ImageView) itemView.findViewById(R.id.item_recipe_back_bt_fav_icon);
         backFlipButton = (ImageButton) itemView.findViewById(R.id.item_recipe_back_bt_flip);
 
-        dateFormat = new SimpleDateFormat(
-                parent.getResources().getString(R.string.recipe_card_date_format),
+        recipeDateFormat = new SimpleDateFormat(
+                parent.getResources().getString(R.string.date_format_recipe),
                 Locale.getDefault()
         );
 
@@ -88,7 +88,7 @@ public class RecipeCardHolder extends RecyclerView.ViewHolder {
         ImageLoader.get().source(recipe.getAuthor()).load(backAuthorImage);
         backAuthorName.setText(recipe.getAuthor().getName());
         backSource.setText(recipe.getSource());
-        backDate.setText(dateFormat.format(recipe.getCreatedAt()));
+        backDate.setText(recipeDateFormat.format(recipe.getCreatedAt()));
         backDescription.setText(recipe.getDescription());
         setFavorite(recipe.isFavorite(), false);
     }
