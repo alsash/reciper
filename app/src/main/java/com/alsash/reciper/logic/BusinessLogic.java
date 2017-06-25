@@ -99,10 +99,13 @@ public class BusinessLogic {
             double nutrientMultiplier = recipeUnit.getDefaultQuantity();
             switch (recipeUnit) {
                 case GRAM:
+                    // * 100 gram / all weight
                     nutrientMultiplier /= recipeWeightInGrams;
                     break;
                 case SERVING:
-                    nutrientMultiplier /= recipeWeightInGrams / recipe.getServings();
+                    //  [1 serving = ( all weight / all servings )] / all weight
+                    // * 1 serving / all servings
+                    nutrientMultiplier /= recipe.getServings();
             }
             protein = recipeProteinInGrams * nutrientMultiplier;
             carbs = recipeCarbsInGrams * nutrientMultiplier;

@@ -20,7 +20,6 @@ public class RecipeDetailsDescriptionPresenter
     private final BusinessLogic businessLogic;
     private RecipeFull recipeFull;
     private RecipeUnit recipeUnit;
-    private boolean animateNutrition;
 
     public RecipeDetailsDescriptionPresenter(StorageLogic storageLogic,
                                              BusinessLogic businessLogic) {
@@ -37,21 +36,21 @@ public class RecipeDetailsDescriptionPresenter
 
     public void onNutritionSwitch(boolean switchOn, RecipeDetailsDescriptionView view) {
         recipeUnit = switchOn ? RecipeUnit.SERVING : RecipeUnit.GRAM;
-        animateNutrition = true;
         visible(view);
-        animateNutrition = false;
+        if (recipeFull != null) view.showNutritionAnimation();
     }
 
     @Override
     public void visible(RecipeDetailsDescriptionView view) {
-        view.showNutritionSwitch(recipeUnit.getDefaultQuantity(), recipeUnit);
-        if (recipeFull != null)
-            view.showNutritionValue(businessLogic.getNutrient(recipeFull, recipeUnit), animateNutrition);
+        view.showNutritionQuantity(recipeUnit.getDefaultQuantity(), recipeUnit);
+        if (recipeFull != null) {
+            view.showNutritionChart(businessLogic.getNutrient(recipeFull, recipeUnit));
+        }
     }
 
     @Override
     public void invisible(RecipeDetailsDescriptionView view) {
-
+        // do nothing
     }
 
     @Nullable

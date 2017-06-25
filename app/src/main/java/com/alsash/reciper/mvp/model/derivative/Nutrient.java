@@ -8,9 +8,9 @@ import com.alsash.reciper.logic.unit.WeightUnit;
  */
 public class Nutrient {
 
-    private int protein;
-    private int fat;
-    private int carbs;
+    private float protein;
+    private float fat;
+    private float carbs;
     private int energy;
     private WeightUnit weightUnit;
     private EnergyUnit energyUnit;
@@ -22,31 +22,31 @@ public class Nutrient {
         return new Builder();
     }
 
-    public int getProtein() {
+    public float getProtein() {
         return protein;
     }
 
     public int getProteinPercent() {
         if (getWeight() == 0 || protein == 0) return 0;
-        return Math.round(protein / getWeight()) * 100;
+        return Math.round((protein * 100) / getWeight());
     }
 
-    public int getFat() {
+    public float getFat() {
         return fat;
     }
 
     public int getFatPercent() {
         if (getWeight() == 0 || fat == 0) return 0;
-        return Math.round(fat / getWeight()) * 100;
+        return Math.round((fat * 100) / getWeight());
     }
 
-    public int getCarbs() {
+    public float getCarbs() {
         return carbs;
     }
 
     public int getCarbsPercent() {
         if (getWeight() == 0 || carbs == 0) return 0;
-        return Math.round(carbs / getWeight()) * 100;
+        return Math.round((carbs * 100) / getWeight());
     }
 
     public int getEnergy() {
@@ -61,7 +61,7 @@ public class Nutrient {
         return energyUnit;
     }
 
-    private int getWeight() {
+    private float getWeight() {
         return protein + fat + carbs;
     }
 
@@ -74,17 +74,17 @@ public class Nutrient {
         }
 
         public Builder protein(double protein) {
-            nutrient.protein = (int) Math.round(protein);
+            nutrient.protein = (float) protein;
             return this;
         }
 
         public Builder fat(double fat) {
-            nutrient.fat = (int) Math.round(fat);
+            nutrient.fat = (float) fat;
             return this;
         }
 
         public Builder carbs(double carbs) {
-            nutrient.carbs = (int) Math.round(carbs);
+            nutrient.carbs = (float) carbs;
             return this;
         }
 

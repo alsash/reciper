@@ -29,6 +29,7 @@ public abstract class BaseRestrictPresenter<V extends BaseView> implements BaseP
     }
 
     public BaseRestrictPresenter<V> setRestriction(EntityRestriction restriction) {
+        if (!isNewRestriction(restriction)) return this;
         this.restriction = restriction;
         setEntity(null);
         detach();
@@ -73,6 +74,10 @@ public abstract class BaseRestrictPresenter<V extends BaseView> implements BaseP
     protected abstract BaseEntity getEntity();
 
     protected abstract void setEntity(@Nullable BaseEntity entity);
+
+    protected boolean isNewRestriction(EntityRestriction restriction) {
+        return this.restriction == null || !this.restriction.equals(restriction);
+    }
 
     protected CompositeDisposable getComposite() {
         return composite;

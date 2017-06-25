@@ -8,8 +8,10 @@ import com.alsash.reciper.mvp.model.derivative.Nutrient;
  */
 public interface RecipeDetailsDescriptionView extends BaseView {
 
-    void showNutritionSwitch(int quantity, RecipeUnit recipeUnit);
+    void showNutritionQuantity(int quantity, RecipeUnit recipeUnit);
 
-    void showNutritionValue(Nutrient nutrient, boolean animated);
+    void showNutritionChart(Nutrient nutrient);
+
+    void showNutritionAnimation();
 
 }

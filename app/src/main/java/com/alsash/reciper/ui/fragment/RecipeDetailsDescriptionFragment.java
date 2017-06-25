@@ -32,9 +32,6 @@ import javax.inject.Inject;
 public class RecipeDetailsDescriptionFragment extends BaseFragment<RecipeDetailsDescriptionView>
         implements RecipeDetailsDescriptionView {
 
-    private static final String TAG = "RecipeDetailsDescriptionFragment";
-    private static final String KEY_STATE_CHART_ANIMATED = TAG + ".key_state_chart_animated";
-
     @Inject
     RecipeDetailsDescriptionPresenter presenter;
     @Inject
@@ -52,7 +49,7 @@ public class RecipeDetailsDescriptionFragment extends BaseFragment<RecipeDetails
     }
 
     @Override
-    public void showNutritionSwitch(int quantity, RecipeUnit recipeUnit) {
+    public void showNutritionQuantity(int quantity, RecipeUnit recipeUnit) {
         switch (recipeUnit) {
             case GRAM:
                 nutritionSwitch.setText(
@@ -70,34 +67,35 @@ public class RecipeDetailsDescriptionFragment extends BaseFragment<RecipeDetails
     }
 
     @Override
-    public void showNutritionValue(final Nutrient nutrient, boolean animated) {
+    public void showNutritionChart(final Nutrient nutrient) {
         // Energy
-        setupEnergy(nutrient.getEnergyUnit(), nutrient.getEnergy());
+        setupEnergy(nutrient.getEnergy(), nutrient.getEnergyUnit());
         // Nutrition in percent
-        nutritionCarbsPercent.setText(getString(R.string.percent, nutrient.getCarbsPercent()));
-        nutritionProteinPercent.setText(getString(R.string.percent, nutrient.getProteinPercent()));
-        nutritionFatPercent.setText(getString(R.string.percent, nutrient.getFatPercent()));
-
+        setupWeightPercent(
+                nutrient.getCarbsPercent(),
+                nutrient.getProteinPercent(),
+                nutrient.getFatPercent()
+        );
         // Nutrition chart title
-        int weightPlurals;
+        String[] title;
         switch (nutrient.getWeightUnit()) {
             case GRAM:
-                weightPlurals = R.plurals.quantity_weight_gram;
+                title = new String[]{
+                        getString(R.string.quantity_weight_exact_gram, nutrient.getCarbs()),
+                        getString(R.string.quantity_weight_exact_gram, nutrient.getProtein()),
+                        getString(R.string.quantity_weight_exact_gram, nutrient.getFat())
+                };
                 break;
             case KILOGRAM:
-                weightPlurals = R.plurals.quantity_weight_kilogram;
+                title = new String[]{
+                        getString(R.string.quantity_weight_exact_kilogram, nutrient.getCarbs()),
+                        getString(R.string.quantity_weight_exact_kilogram, nutrient.getProtein()),
+                        getString(R.string.quantity_weight_exact_kilogram, nutrient.getFat())
+                };
                 break;
             default:
                 return;
         }
-        String[] title = new String[]{
-                getResources().getQuantityString(weightPlurals,
-                        nutrient.getCarbs(), nutrient.getCarbs()),
-                getResources().getQuantityString(weightPlurals,
-                        nutrient.getProtein(), nutrient.getProtein()),
-                getResources().getQuantityString(weightPlurals,
-                        nutrient.getFat(), nutrient.getFat()),
-        };
         // Nutrition chart progress
         final int[] progress = new int[]{
                 nutrient.getCarbsPercent(),
@@ -116,37 +114,44 @@ public class RecipeDetailsDescriptionFragment extends BaseFragment<RecipeDetails
                     backgrounds[i],
                     colors[i]));
         }
-        nutritionChart.setIsAnimated(true);
         nutritionChart.setModels(models);
         nutritionChart.setAnimatorUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             public void onAnimationUpdate(ValueAnimator animation) {
                 float fraction = (float) animation.getAnimatedValue();
-                nutritionCarbsPercent.setText(getString(R.string.percent,
-                        Math.round(fraction * nutrient.getCarbsPercent())));
-                nutritionProteinPercent.setText(getString(R.string.percent,
-                        Math.round(fraction * nutrient.getProteinPercent())));
-                nutritionFatPercent.setText(getString(R.string.percent,
-                        Math.round(fraction * nutrient.getFatPercent())));
-                setupEnergy(nutrient.getEnergyUnit(),
-                        Math.round(fraction * nutrient.getEnergy()));
+                setupWeightPercent(
+                        Math.round(fraction * nutrient.getCarbsPercent()),
+                        Math.round(fraction * nutrient.getProteinPercent()),
+                        Math.round(fraction * nutrient.getFatPercent())
+                );
+                setupEnergy(
+                        Math.round(fraction * nutrient.getEnergy()),
+                        nutrient.getEnergyUnit()
+                );
             }
         });
-        if (animated) nutritionChart.startAnimateProgress();
     }
 
-    private void setupEnergy(EnergyUnit unit, int quantity) {
+    @Override
+    public void showNutritionAnimation() {
+        nutritionChart.startAnimateProgress();
+    }
+
+    private void setupEnergy(int quantity, EnergyUnit unit) {
         switch (unit) {
             case CALORIE:
-                nutritionEnergy.setText(
-                        getResources().getQuantityString(R.plurals.quantity_energy_calorie,
-                                quantity, quantity));
+                nutritionEnergy.setText(getString(R.string.quantity_energy_calorie_n, quantity));
                 break;
             case KILOCALORIE:
-                nutritionEnergy.setText(
-                        getResources().getQuantityString(R.plurals.quantity_energy_kilocalorie,
-                                quantity, quantity));
+                nutritionEnergy.setText(getString(R.string.quantity_energy_kilocalorie_n,
+                        quantity));
                 break;
         }
+    }
+
+    private void setupWeightPercent(int carbsPercent, int proteinPercent, int fatPercent) {
+        nutritionCarbsPercent.setText(getString(R.string.quantity_percent, carbsPercent));
+        nutritionProteinPercent.setText(getString(R.string.quantity_percent, proteinPercent));
+        nutritionFatPercent.setText(getString(R.string.quantity_percent, fatPercent));
     }
 
     @Nullable
