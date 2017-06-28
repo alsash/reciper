@@ -131,6 +131,7 @@ public class RecipeCardHolder extends RecyclerView.ViewHolder {
                 case 0:
                     backFlipButton.setOnClickListener(listeners[i]);
                     frontFlipButton.setOnClickListener(listeners[i]);
+                    break;
                 case 1:
                     backFavFrame.setOnClickListener(listeners[i]);
                     frontFavFrame.setOnClickListener(listeners[i]);

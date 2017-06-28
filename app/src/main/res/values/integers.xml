@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <integer name="recipe_list_span">2</integer>
-    <integer name="recipe_ingredients_list_span">1</integer>
     <integer name="recipe_labels_list_span">3</integer>
     <integer name="flip_full_time_ms">500</integer>
     <integer name="flip_half_time_ms">250</integer>

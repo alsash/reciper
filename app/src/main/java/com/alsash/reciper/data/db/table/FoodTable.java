@@ -1,5 +1,7 @@
 package com.alsash.reciper.data.db.table;
 
+import android.support.annotation.Nullable;
+
 import com.alsash.reciper.mvp.model.entity.Food;
 import com.alsash.reciper.mvp.model.entity.Measure;
 
@@ -171,6 +173,7 @@ public final class FoodTable implements Table, Food {
         this.energyUnit = energyUnit;
     }
 
+    @Nullable
     @Override
     public Measure getMeasure() {
         return getFoodMeasureTables().size() > 0 ? getFoodMeasureTables().get(0) : null;

@@ -1,5 +1,7 @@
 package com.alsash.reciper.mvp.model.entity;
 
+import android.support.annotation.Nullable;
+
 /**
  * A Food entity
  */
@@ -19,5 +21,6 @@ public interface Food extends BaseEntity {
 
     String getEnergyUnit();
 
+    @Nullable
     Measure getMeasure();
 }

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <integer name="recipe_list_span">4</integer>
-    <integer name="recipe_ingredients_list_span">3</integer>
     <integer name="recipe_labels_list_span">5</integer>
 </resources>

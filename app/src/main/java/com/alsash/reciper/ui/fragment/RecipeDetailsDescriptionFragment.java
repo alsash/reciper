@@ -61,17 +61,17 @@ public class RecipeDetailsDescriptionFragment extends BaseFragment<RecipeDetails
     private TextView categoryName;
     private ImageButton categoryEdit;
     // Labels card
-    private ImageButton labelAdd;
-    private TextView labelTitle;
-    private View.OnClickListener labelAddListener = new View.OnClickListener() {
+    private ImageButton labelsAdd;
+    private TextView labelsTitle;
+    private View.OnClickListener labelsAddListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             presenter.onLabelAdd();
         }
     };
-    private RecyclerView labelList;
-    private RecipeLabelListAdapter labelAdapter;
-    private LabelInteraction labelInteraction = new LabelInteraction() {
+    private RecyclerView labelsList;
+    private RecipeLabelListAdapter labelsListAdapter;
+    private LabelInteraction labelsListInteraction = new LabelInteraction() {
         @Override
         public void onPress(Label label) {
             presenter.onLabelDelete(label);
@@ -119,13 +119,13 @@ public class RecipeDetailsDescriptionFragment extends BaseFragment<RecipeDetails
 
     @Override
     public void showLabels(List<Label> labels) {
-        labelTitle.setText(getResources().getQuantityString(R.plurals.quantity_label,
+        labelsTitle.setText(getResources().getQuantityString(R.plurals.quantity_label,
                 labels.size(), labels.size()));
-        if (labelList == null) return;
-        labelAdapter = new RecipeLabelListAdapter(labels, labelInteraction);
-        labelList.setAdapter(labelAdapter);
-        labelList.setNestedScrollingEnabled(false);
-        StaggeredGridLayoutManager lm = (StaggeredGridLayoutManager) labelList.getLayoutManager();
+        if (labelsList == null) return;
+        labelsListAdapter = new RecipeLabelListAdapter(labels, labelsListInteraction);
+        labelsList.setAdapter(labelsListAdapter);
+        labelsList.setNestedScrollingEnabled(false);
+        StaggeredGridLayoutManager lm = (StaggeredGridLayoutManager) labelsList.getLayoutManager();
         lm.setGapStrategy(StaggeredGridLayoutManager.GAP_HANDLING_MOVE_ITEMS_BETWEEN_SPANS);
         // Calculating span count
         int maxSpans = getResources().getInteger(R.integer.recipe_labels_list_span);
@@ -133,7 +133,7 @@ public class RecipeDetailsDescriptionFragment extends BaseFragment<RecipeDetails
         if (spanCount <= 0) spanCount = 1;
         if (spanCount > maxSpans) spanCount = maxSpans;
         lm.setSpanCount(spanCount);
-        labelList.setLayoutManager(lm);
+        labelsList.setLayoutManager(lm);
     }
 
     @Override
@@ -260,8 +260,9 @@ public class RecipeDetailsDescriptionFragment extends BaseFragment<RecipeDetails
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater,
+                             @Nullable ViewGroup container,
+                             @Nullable Bundle savedInstanceState) {
         View layout = inflater.inflate(R.layout.fragment_recipe_details_description,
                 container, false);
         // Description card
@@ -275,10 +276,10 @@ public class RecipeDetailsDescriptionFragment extends BaseFragment<RecipeDetails
         categoryName = (TextView) layout.findViewById(R.id.recipe_category_name);
         categoryEdit = (ImageButton) layout.findViewById(R.id.recipe_category_edit);
         // Labels card
-        labelAdd = (ImageButton) layout.findViewById(R.id.recipe_labels_add);
-        labelAdd.setOnClickListener(labelAddListener);
-        labelTitle = (TextView) layout.findViewById(R.id.recipe_labels_title);
-        labelList = (RecyclerView) layout.findViewById(R.id.recipe_labels_list);
+        labelsAdd = (ImageButton) layout.findViewById(R.id.recipe_labels_add);
+        labelsAdd.setOnClickListener(labelsAddListener);
+        labelsTitle = (TextView) layout.findViewById(R.id.recipe_labels_title);
+        labelsList = (RecyclerView) layout.findViewById(R.id.recipe_labels_list);
         // Time card
         recipeTimeEdit = (ImageButton) layout.findViewById(R.id.recipe_time_edit);
         recipeTime = (TextView) layout.findViewById(R.id.recipe_time_value);
@@ -301,6 +302,4 @@ public class RecipeDetailsDescriptionFragment extends BaseFragment<RecipeDetails
         // Presenter will be embedded in the activity lifecycle
         return presenter.setRestriction(navigator.getRestriction(getThisIntent(this)));
     }
-
-
 }
