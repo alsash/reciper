@@ -6,30 +6,30 @@
     android:layout_height="wrap_content">
 
     <ImageView
-        android:id="@+id/recipe_labels_image"
+        android:id="@+id/recipe_ingredients_image"
         android:layout_width="52dp"
         android:layout_height="52dp"
         android:padding="8dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/item_label_icon"
+        app:srcCompat="@drawable/item_ingredient_icon"
         tools:ignore="ContentDescription" />
 
     <TextView
-        android:id="@+id/recipe_labels_title"
+        android:id="@+id/recipe_ingredients_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:fontFamily="serif"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         android:textSize="14sp"
-        app:layout_constraintBottom_toBottomOf="@+id/recipe_labels_image"
-        app:layout_constraintLeft_toRightOf="@+id/recipe_labels_image"
-        app:layout_constraintTop_toTopOf="@+id/recipe_labels_image"
-        tools:text="2 Labels" />
+        app:layout_constraintBottom_toBottomOf="@+id/recipe_ingredients_image"
+        app:layout_constraintLeft_toRightOf="@+id/recipe_ingredients_image"
+        app:layout_constraintTop_toTopOf="@+id/recipe_ingredients_image"
+        tools:text="2 Ingredients" />
 
     <ImageButton
-        android:id="@+id/recipe_labels_add"
+        android:id="@+id/recipe_ingredients_add"
         style="@style/RippleButton"
         android:layout_width="48dp"
         android:layout_height="48dp"
@@ -40,30 +40,27 @@
         tools:ignore="ContentDescription" />
 
     <View
-        android:id="@+id/recipe_labels_horizontal_divider"
+        android:id="@+id/recipe_ingredients_horizontal_divider"
         android:layout_width="0dp"
         android:layout_height="1dp"
         android:layout_marginTop="0dp"
         android:background="@color/gray_100"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/recipe_labels_image" />
+        app:layout_constraintTop_toBottomOf="@+id/recipe_ingredients_image" />
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/recipe_labels_list"
+        android:id="@+id/recipe_ingredients_list"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="4dp"
         android:layout_marginTop="8dp"
-        android:orientation="horizontal"
+        android:orientation="vertical"
         android:scrollbars="none"
-        app:layoutManager="android.support.v7.widget.StaggeredGridLayoutManager"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layoutManager="android.support.v7.widget.GridLayoutManager"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/recipe_labels_horizontal_divider"
-        app:layout_constraintVertical_bias="0.0"
-        app:spanCount="@integer/recipe_labels_list_span"
-        tools:listitem="@layout/item_label_recipe" />
+        app:layout_constraintTop_toBottomOf="@+id/recipe_ingredients_horizontal_divider"
+        app:spanCount="@integer/recipe_ingredients_list_span"
+        tools:listitem="@layout/item_ingredient" />
 
 </android.support.constraint.ConstraintLayout>

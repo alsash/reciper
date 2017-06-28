@@ -4,8 +4,8 @@ import android.animation.ValueAnimator;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.SwitchCompat;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -62,6 +62,7 @@ public class RecipeDetailsDescriptionFragment extends BaseFragment<RecipeDetails
     private ImageButton categoryEdit;
     // Labels card
     private ImageButton labelAdd;
+    private TextView labelTitle;
     private View.OnClickListener labelAddListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -118,15 +119,21 @@ public class RecipeDetailsDescriptionFragment extends BaseFragment<RecipeDetails
 
     @Override
     public void showLabels(List<Label> labels) {
+        labelTitle.setText(getResources().getQuantityString(R.plurals.quantity_label,
+                labels.size(), labels.size()));
         if (labelList == null) return;
         labelAdapter = new RecipeLabelListAdapter(labels, labelInteraction);
         labelList.setAdapter(labelAdapter);
-        int spanCount = labels.size() / 3;
-        if (spanCount == 0) spanCount = 1;
-        GridLayoutManager layoutManager = (GridLayoutManager) labelList.getLayoutManager();
-        layoutManager.setSpanCount(spanCount);
-        layoutManager.setInitialPrefetchItemCount(labels.size());
-        labelList.setLayoutManager(layoutManager);
+        labelList.setNestedScrollingEnabled(false);
+        StaggeredGridLayoutManager lm = (StaggeredGridLayoutManager) labelList.getLayoutManager();
+        lm.setGapStrategy(StaggeredGridLayoutManager.GAP_HANDLING_MOVE_ITEMS_BETWEEN_SPANS);
+        // Calculating span count
+        int maxSpans = getResources().getInteger(R.integer.recipe_labels_list_span);
+        int spanCount = (int) Math.ceil((double) labels.size() / (double) maxSpans);
+        if (spanCount <= 0) spanCount = 1;
+        if (spanCount > maxSpans) spanCount = maxSpans;
+        lm.setSpanCount(spanCount);
+        labelList.setLayoutManager(lm);
     }
 
     @Override
@@ -270,6 +277,7 @@ public class RecipeDetailsDescriptionFragment extends BaseFragment<RecipeDetails
         // Labels card
         labelAdd = (ImageButton) layout.findViewById(R.id.recipe_labels_add);
         labelAdd.setOnClickListener(labelAddListener);
+        labelTitle = (TextView) layout.findViewById(R.id.recipe_labels_title);
         labelList = (RecyclerView) layout.findViewById(R.id.recipe_labels_list);
         // Time card
         recipeTimeEdit = (ImageButton) layout.findViewById(R.id.recipe_time_edit);

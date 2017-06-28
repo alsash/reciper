@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/ingredient_image"
+        android:layout_width="52dp"
+        android:layout_height="52dp"
+        android:src="@color/gray_200"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="ContentDescription" />
+
+    <TextView
+        android:id="@+id/ingredient_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="72dp"
+        android:layout_marginStart="8dp"
+        android:fontFamily="serif"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="@+id/ingredient_image"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_chainStyle="spread_inside"
+        app:layout_constraintLeft_toRightOf="@+id/ingredient_image"
+        app:layout_constraintRight_toLeftOf="@+id/ingredient_expand"
+        app:layout_constraintTop_toTopOf="@+id/ingredient_image"
+        tools:text="Ingredient name" />
+
+    <TextView
+        android:id="@+id/ingredient_weight"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:fontFamily="serif"
+        android:labelFor="@+id/ingredient_expand_weight"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toTopOf="@+id/ingredient_quantity"
+        app:layout_constraintRight_toLeftOf="@+id/ingredient_expand"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="packed"
+        tools:text="120 g" />
+
+    <TextView
+        android:id="@+id/ingredient_quantity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:fontFamily="serif"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+        android:textSize="13sp"
+        app:layout_constraintBottom_toBottomOf="@+id/ingredient_image"
+        app:layout_constraintRight_toLeftOf="@+id/ingredient_expand"
+        app:layout_constraintTop_toBottomOf="@+id/ingredient_weight"
+        tools:text="(5 pieces)" />
+
+    <ImageButton
+        android:id="@+id/ingredient_expand"
+        style="@style/RippleButton"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:tint="@color/gray_400"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/expand_icon"
+        tools:ignore="ContentDescription" />
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/ingredient_expand_constraint"
+        android:layout_width="0dp"
+        android:layout_height="49dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ingredient_image">
+
+        <View
+            android:id="@+id/ingredient_expand_horizontal_divider"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_marginTop="0dp"
+            android:background="@color/gray_100"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <SeekBar
+            android:id="@+id/ingredient_expand_weight_bar"
+            style="@style/Widget.AppCompat.SeekBar"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginTop="1dp"
+            android:max="100"
+            android:progress="50"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@+id/ingredient_expand_weight_edit"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <EditText
+            android:id="@+id/ingredient_expand_weight_edit"
+            style="@style/Widget.AppCompat.EditText"
+            android:layout_width="56dp"
+            android:layout_height="48dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginTop="1dp"
+            android:ems="10"
+            android:fontFamily="serif"
+            android:gravity="center_horizontal"
+            android:inputType="number"
+            android:maxLines="1"
+            android:selectAllOnFocus="true"
+            android:textSize="16sp"
+            app:layout_constraintRight_toLeftOf="@+id/ingredient_expand_menu"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="10000" />
+
+        <ImageButton
+            android:id="@+id/ingredient_expand_menu"
+            style="@style/RippleButton"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="1dp"
+            android:tint="@color/gray_400"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/menu_dots_icon"
+            tools:ignore="ContentDescription" />
+
+    </android.support.constraint.ConstraintLayout>
+</android.support.constraint.ConstraintLayout>

@@ -62,7 +62,18 @@
     <string name="action_settings">Settings</string>
     <string name="action_edit">Edit</string>
     <string name="action_delete">Delete</string>
-
+    <plurals name="quantity_label">
+        <item quantity="one">%d Label</item>
+        <item quantity="other">%d Labels</item>
+    </plurals>
+    <plurals name="quantity_ingredient">
+        <item quantity="one">%d Ingredient</item>
+        <item quantity="other">%d Ingredients</item>
+    </plurals>
+    <plurals name="quantity_method">
+        <item quantity="one">%d Method</item>
+        <item quantity="other">%d Methods</item>
+    </plurals>
     <plurals name="quantity_serving">
         <item quantity="zero">%d serving</item>
         <item quantity="one">%d serving</item>
@@ -84,11 +95,13 @@
     <string name="quantity_energy_calorie_n">%d\nCal</string>
     <string name="quantity_energy_kilocalorie_n">%d\nkCal</string>
     <string name="quantity_percent">%d%%</string>
+
     <string name="nutrition_value">Nutrition value</string>
     <string name="nutrition_quantity_switch">Per %s</string>
     <string name="nutrition_carbohydrate">Carbs</string>
     <string name="nutrition_protein">Protein</string>
     <string name="nutrition_fat">Fat</string>
+
     <string name="activity_recipe_collections_title">Recipes</string>
     <string name="activity_recipe_collections_nav_categories">Categories</string>
     <string name="activity_recipe_collections_nav_grid">Grid</string>
@@ -99,5 +112,4 @@
     <string name="fragment_recipe_details_description_title">Description</string>
     <string name="fragment_recipe_details_ingredients_title">Ingredients</string>
     <string name="fragment_recipe_details_methods_title">Methods</string>
-    <string name="view_recipe_labels_title">Labels</string>
 </resources>

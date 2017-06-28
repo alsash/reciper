@@ -16,7 +16,7 @@
         app:layout_constraintBottom_toBottomOf="@+id/item_label_name"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="@+id/item_label_name"
-        app:srcCompat="@drawable/item_label_image"
+        app:srcCompat="@drawable/item_label_icon"
         tools:ignore="ContentDescription,RtlHardcoded" />
 
     <TextView
