@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * An Ingredient list adapter
+ * A recipe ingredient list adapter
  */
 public class IngredientListAdapter extends RecyclerView.Adapter<IngredientHolder> {
 

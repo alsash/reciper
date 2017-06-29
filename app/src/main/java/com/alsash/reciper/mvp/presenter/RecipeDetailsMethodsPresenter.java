@@ -7,38 +7,37 @@ import com.alsash.reciper.logic.StorageLogic;
 import com.alsash.reciper.logic.restriction.EntityRestriction;
 import com.alsash.reciper.mvp.model.entity.BaseEntity;
 import com.alsash.reciper.mvp.model.entity.RecipeFull;
-import com.alsash.reciper.mvp.view.RecipeDetailsIngredientsView;
+import com.alsash.reciper.mvp.view.RecipeDetailsMethodsView;
 
 /**
  * Simple presenter for its view
  */
-public class RecipeDetailsIngredientsPresenter
-        extends BaseRestrictPresenter<RecipeDetailsIngredientsView> {
+public class RecipeDetailsMethodsPresenter extends BaseRestrictPresenter<RecipeDetailsMethodsView> {
 
     private final StorageLogic storageLogic;
     private final BusinessLogic businessLogic;
 
     private RecipeFull recipeFull;
 
-    public RecipeDetailsIngredientsPresenter(StorageLogic storageLogic, BusinessLogic businessLogic) {
+    public RecipeDetailsMethodsPresenter(StorageLogic storageLogic, BusinessLogic businessLogic) {
         super(storageLogic);
         this.storageLogic = storageLogic;
         this.businessLogic = businessLogic;
     }
 
     @Override
-    public RecipeDetailsIngredientsPresenter setRestriction(EntityRestriction restriction) {
-        return (RecipeDetailsIngredientsPresenter) super.setRestriction(restriction);
+    public RecipeDetailsMethodsPresenter setRestriction(EntityRestriction restriction) {
+        return (RecipeDetailsMethodsPresenter) super.setRestriction(restriction);
     }
 
     @Override
-    public void visible(RecipeDetailsIngredientsView view) {
+    public void visible(RecipeDetailsMethodsView view) {
         if (recipeFull == null) return;
-        view.showIngredients(recipeFull.getIngredients());
+        view.showMethods(recipeFull.getMethods());
     }
 
     @Override
-    public void invisible(RecipeDetailsIngredientsView view) {
+    public void invisible(RecipeDetailsMethodsView view) {
         // do nothing
     }
 

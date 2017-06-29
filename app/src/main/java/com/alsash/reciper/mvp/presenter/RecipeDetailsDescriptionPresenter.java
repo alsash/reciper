@@ -45,6 +45,7 @@ public class RecipeDetailsDescriptionPresenter
 
     public void onNutritionSwitch(boolean switchOn, RecipeDetailsDescriptionView view) {
         recipeUnit = switchOn ? RecipeUnit.SERVING : RecipeUnit.GRAM;
+        view.showNutritionQuantity(recipeUnit.getDefaultQuantity(), recipeUnit);
         if (recipeFull == null) return;
         view.showNutritionChart(businessLogic.getNutrient(recipeFull, recipeUnit));
         view.showNutritionAnimation();
