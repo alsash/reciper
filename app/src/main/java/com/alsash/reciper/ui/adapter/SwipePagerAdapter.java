@@ -5,7 +5,7 @@ import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentStatePagerAdapter;
 
 import com.alsash.reciper.mvp.model.tab.SwipeTab;
 import com.alsash.reciper.ui.view.SwipeViewPager;
@@ -13,11 +13,12 @@ import com.alsash.reciper.ui.view.SwipeViewPager;
 /**
  * SwipePagerAdapter that represents tabs model from presenter
  */
-public class SwipePagerAdapter extends FragmentPagerAdapter
+public class SwipePagerAdapter extends FragmentStatePagerAdapter
         implements SwipeViewPager.OnPageSelectListener {
 
     private SwipeTab[] tabs;
     private Fragment[] fragments;
+    private int position = POSITION_UNCHANGED;
 
     public SwipePagerAdapter(FragmentManager fm, Fragment[] fragments) {
         super(fm);
@@ -27,6 +28,22 @@ public class SwipePagerAdapter extends FragmentPagerAdapter
     public SwipePagerAdapter(FragmentManager fm, SwipeTab[] tabs) {
         super(fm);
         this.tabs = tabs;
+    }
+
+    public void setTabs(SwipeTab[] tabs) {
+        this.tabs = tabs;
+        this.fragments = null;
+        position = POSITION_NONE;
+        notifyDataSetChanged();
+        this.position = POSITION_UNCHANGED;
+    }
+
+    public void setFragments(Fragment[] fragments) {
+        tabs = null;
+        this.fragments = fragments;
+        position = POSITION_NONE;
+        notifyDataSetChanged();
+        this.position = POSITION_UNCHANGED;
     }
 
     @Override
@@ -39,6 +56,11 @@ public class SwipePagerAdapter extends FragmentPagerAdapter
     public Fragment getItem(int position) {
         if (tabs == null) return fragments[position];
         return tabs[position].getFragment();
+    }
+
+    @Override
+    public int getItemPosition(Object object) {
+        return position;
     }
 
     @Override

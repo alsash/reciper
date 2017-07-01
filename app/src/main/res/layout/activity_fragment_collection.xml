@@ -2,23 +2,22 @@
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_recipe_collections_coordinator"
+    android:id="@+id/activity_fragment_collection_coordinator"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.activity.RecipeCollectionsActivity">
+    tools:context=".ui.activity.FragmentCollectionActivity">
 
     <android.support.design.widget.AppBarLayout
-        android:id="@+id/activity_recipe_collections_appbar"
+        android:id="@+id/activity_fragment_collection_appbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:theme="@style/AppTheme.AppBarOverlay">
 
         <android.support.v7.widget.Toolbar
-            android:id="@+id/activity_recipe_collections_toolbar"
+            android:id="@+id/activity_fragment_collection_toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
-            android:title="@string/activity_recipe_collections_title"
             app:layout_scrollFlags="scroll|enterAlways"
             app:popupTheme="@style/AppTheme.PopupOverlay"
             app:titleTextAppearance="@style/TextAppearance.RecipeTitle">
@@ -28,20 +27,21 @@
     </android.support.design.widget.AppBarLayout>
 
     <com.alsash.reciper.ui.view.SwipeViewPager
-        android:id="@+id/activity_recipe_collections_pager"
+        android:id="@+id/activity_fragment_collection_pager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         app:svp_is_swipe_enabled="false" />
 
     <android.support.design.widget.BottomNavigationView
-        android:id="@+id/activity_recipe_collections_nav"
+        android:id="@+id/activity_fragment_collection_nav"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
         android:background="?android:attr/windowBackground"
-        android:theme="@style/AppTheme.NavigationView"
+        android:theme="@style/AppTheme.BottomNavigationView"
         app:layout_behavior="com.alsash.reciper.ui.view.behavior.BottomNavigationBehavior"
-        app:menu="@menu/activity_recipe_collections_nav" />
+        app:menu="@menu/navigation_recipe"
+        tools:visibility="visible" />
 
 </android.support.design.widget.CoordinatorLayout>

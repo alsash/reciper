@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group
+        android:id="@+id/navigation_app_group_void"
+        android:checkableBehavior="single" />
+
+    <group
+        android:id="@+id/navigation_app_group_recipe"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/navigation_app_recipe"
+            android:icon="@drawable/navigation_app_recipe"
+            android:title="@string/navigation_app_recipe" />
+    </group>
+
+    <group
+        android:id="@+id/navigation_app_group_category"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/navigation_app_category"
+            android:icon="@drawable/navigation_app_category"
+            android:title="@string/navigation_app_category" />
+    </group>
+
+    <group
+        android:id="@+id/navigation_app_group_label"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/navigation_app_label"
+            android:icon="@drawable/navigation_app_label"
+            android:title="@string/navigation_app_label" />
+    </group>
+
+    <group
+        android:id="@+id/navigation_app_group_food"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/navigation_app_food"
+            android:icon="@drawable/navigation_app_food"
+            android:title="@string/navigation_app_food" />
+    </group>
+
+    <group
+        android:id="@+id/navigation_app_group_author"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/navigation_app_author"
+            android:icon="@drawable/navigation_app_author"
+            android:title="@string/navigation_app_author" />
+    </group>
+
+</menu>

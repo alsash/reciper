@@ -2,12 +2,10 @@ package com.alsash.reciper.mvp.presenter;
 
 import android.util.Log;
 
-import com.alsash.reciper.logic.NavigationLogic;
 import com.alsash.reciper.logic.StorageLogic;
 import com.alsash.reciper.mvp.view.StartView;
 
 import java.lang.ref.WeakReference;
-import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Completable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -22,17 +20,14 @@ import io.reactivex.schedulers.Schedulers;
  */
 public class StartPresenter implements BasePresenter<StartView> {
 
-    private static final long START_DELAY_MS = 1000; // For debug
     private static final String TAG = "StartPresenter";
 
     private final StorageLogic storage;
-    private final NavigationLogic navigator;
     private final CompositeDisposable composite = new CompositeDisposable();
     private boolean fetched;
 
-    public StartPresenter(StorageLogic storage, NavigationLogic navigator) {
+    public StartPresenter(StorageLogic storage) {
         this.storage = storage;
-        this.navigator = navigator;
     }
 
     @Override
@@ -45,8 +40,6 @@ public class StartPresenter implements BasePresenter<StartView> {
     public void visible(StartView view) {
         if (!fetched) return;
         view.finishView();
-        detach();
-        navigator.toRecipeCollectionsView();
     }
 
     @Override
@@ -72,15 +65,9 @@ public class StartPresenter implements BasePresenter<StartView> {
                 .fromAction(new Action() {
                     @Override
                     public void run() throws Exception {
-//                        if (BuildConfig.DEBUG) {
-//                            Context context = ((AppCompatActivity) viewRef.get())
-//                                    .getApplicationContext();
-//                            Glide.get(context).clearDiskCache();
-//                        }
                         storage.createStartupEntitiesIfNeed();
                     }
                 })
-                .delay(START_DELAY_MS, TimeUnit.MILLISECONDS)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(new DisposableCompletableObserver() {
@@ -90,11 +77,6 @@ public class StartPresenter implements BasePresenter<StartView> {
                         fetched = true;
                         if (viewRef.get() == null) return;
                         if (viewRef.get().isViewVisible()) visible(viewRef.get());
-//                        if (BuildConfig.DEBUG) {
-//                            Context context = ((AppCompatActivity) viewRef.get())
-//                                    .getApplicationContext();
-//                            Glide.get(context).clearMemory();
-//                        }
                     }
 
                     @Override

@@ -48,7 +48,7 @@
         android:layout_marginRight="4dp"
         android:layout_marginTop="0dp"
         android:indeterminate="true"
-        android:indeterminateTint="@color/primary"
+        android:indeterminateTint="@color/orange_500"
         app:layout_constraintBottom_toTopOf="@+id/item_label_inner_list"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="@+id/item_label_name"

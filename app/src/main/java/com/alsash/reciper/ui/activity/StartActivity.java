@@ -5,6 +5,7 @@ import android.os.Handler;
 import android.view.View;
 
 import com.alsash.reciper.app.ReciperApp;
+import com.alsash.reciper.logic.NavigationLogic;
 import com.alsash.reciper.mvp.presenter.BasePresenter;
 import com.alsash.reciper.mvp.presenter.StartPresenter;
 import com.alsash.reciper.mvp.view.StartView;
@@ -39,6 +40,8 @@ public class StartActivity extends BaseActivity<StartView> implements StartView 
 
     @Inject
     StartPresenter presenter;
+    @Inject
+    NavigationLogic navigator;
 
     @Override
     protected BasePresenter<StartView> inject() {
@@ -55,7 +58,7 @@ public class StartActivity extends BaseActivity<StartView> implements StartView 
 
     @Override
     public void finishView() {
-        finish(); //Actually no need to finish, because this activity has noHistory tag in manifest
+        navigator.fromActivity(getThisContext()).toRecipesView();
     }
 
     @Override

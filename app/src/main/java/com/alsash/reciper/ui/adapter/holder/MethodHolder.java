@@ -51,7 +51,7 @@ public class MethodHolder extends RecyclerView.ViewHolder implements DragAndDrop
             }
         });
 
-        editColor = ResourcesCompat.getColor(edit.getResources(), R.color.primary, null);
+        editColor = ResourcesCompat.getColor(edit.getResources(), R.color.orange_500, null);
         nonEditColor = ResourcesCompat.getColor(edit.getResources(), R.color.gray_400, null);
     }
 

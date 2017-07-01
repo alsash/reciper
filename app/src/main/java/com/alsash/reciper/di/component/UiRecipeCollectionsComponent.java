@@ -2,7 +2,6 @@ package com.alsash.reciper.di.component;
 
 import com.alsash.reciper.di.module.UiRecipeCollectionsModule;
 import com.alsash.reciper.di.scope.RecipeCollectionsScope;
-import com.alsash.reciper.ui.activity.RecipeCollectionsActivity;
 import com.alsash.reciper.ui.fragment.RecipeCollectionCategoryFragment;
 import com.alsash.reciper.ui.fragment.RecipeCollectionGridFragment;
 import com.alsash.reciper.ui.fragment.RecipeCollectionLabelFragment;
@@ -19,8 +18,6 @@ import dagger.Subcomponent;
         }
 )
 public interface UiRecipeCollectionsComponent {
-
-    void inject(RecipeCollectionsActivity recipeCollectionsActivity);
 
     void inject(RecipeCollectionCategoryFragment recipeCollectionCategoryFragment);
 

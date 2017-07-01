@@ -3,7 +3,7 @@
     <style name="BaseTheme" parent="Theme.AppCompat.Light">
         <item name="colorPrimary">@color/white</item>
         <item name="colorPrimaryDark">@color/gray_400</item>
-        <item name="colorAccent">@color/primary</item>
+        <item name="colorAccent">@color/orange_500</item>
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
@@ -24,9 +24,15 @@
         <item name="colorAccent">?android:attr/textColorPrimary</item>
     </style>
 
-    <style name="AppTheme.NavigationView" parent="Widget.Design.BottomNavigationView">
-        <item name="colorPrimary">@color/primary</item>
-        <item name="colorPrimaryDark">@color/primary_dark</item>
+    <style name="AppTheme.NavigationView" parent="@style/Widget.Design.NavigationView">
+        <item name="colorPrimary">@color/orange_500</item>
+        <item name="colorPrimaryDark">@color/orange_700</item>
+        <item name="android:background">@null</item>
+    </style>
+
+    <style name="AppTheme.BottomNavigationView" parent="Widget.Design.BottomNavigationView">
+        <item name="colorPrimary">@color/orange_500</item>
+        <item name="colorPrimaryDark">@color/orange_700</item>
     </style>
 
     <style name="RippleButton" parent="@style/Widget.AppCompat.Button.Borderless">

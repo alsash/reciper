@@ -128,7 +128,7 @@ public class RecipeDetailsMethodsFragment extends BaseFragment<RecipeDetailsMeth
                             reject.set(false);
                     }
                 })
-                .setActionTextColor(ResourcesCompat.getColor(getResources(), R.color.primary, null))
+                .setActionTextColor(ResourcesCompat.getColor(getResources(), R.color.orange_500, null))
                 .show();
     }
 

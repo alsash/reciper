@@ -6,7 +6,6 @@ import com.alsash.reciper.di.module.AppDataDbModule;
 import com.alsash.reciper.di.module.AppGlideModule;
 import com.alsash.reciper.di.module.AppHttpModule;
 import com.alsash.reciper.di.module.AppLogicModule;
-import com.alsash.reciper.ui.activity.SingleFragmentActivity;
 
 import javax.inject.Singleton;
 
@@ -29,8 +28,6 @@ import dagger.Component;
 public interface AppComponent {
 
     void inject(AppGlideModule appGlideModule);
-
-    void inject(SingleFragmentActivity singleFragmentActivity);
 
     UiStartComponent.Builder getStartComponentBuilder();
 

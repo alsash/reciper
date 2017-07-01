@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:contextRef=".ui.activity.BaseDrawerActivity"
+    tools:context=".ui.activity.BaseDrawerActivity"
     tools:openDrawer="start">
 
     <!--CoordinatorLayout used instead of FrameLayout or other ViewGroup inheritor -->
@@ -23,7 +23,8 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:fitsSystemWindows="true"
-        app:headerLayout="@layout/drawer_base_header"
-        app:menu="@menu/app_navigation" />
+        app:headerLayout="@layout/activity_base_drawer_header"
+        app:menu="@menu/navigation_app"
+        app:theme="@style/AppTheme.NavigationView" />
 
 </android.support.v4.widget.DrawerLayout>

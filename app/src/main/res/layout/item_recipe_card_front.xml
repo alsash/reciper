@@ -32,7 +32,7 @@
             android:layout_height="24dp"
             android:layout_gravity="center"
             android:indeterminate="true"
-            android:indeterminateTint="@color/primary"
+            android:indeterminateTint="@color/orange_500"
             tools:targetApi="lollipop" />
 
     </android.support.percent.PercentFrameLayout>

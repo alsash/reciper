@@ -42,13 +42,13 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.activity.RecipeCollectionsActivity"
+            android:name=".ui.activity.FragmentCollectionActivity"
+            android:launchMode="singleTop" />
+        <activity
+            android:name=".ui.activity.FragmentSingleActivity"
             android:launchMode="singleTop" />
         <activity
             android:name=".ui.activity.RecipeDetailsActivity"
-            android:launchMode="singleTop" />
-        <activity
-            android:name=".ui.activity.SingleFragmentActivity"
             android:launchMode="singleTop" />
     </application>
 

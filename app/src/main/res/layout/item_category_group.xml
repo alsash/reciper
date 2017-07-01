@@ -50,7 +50,7 @@
         android:layout_marginRight="8dp"
         android:layout_marginTop="0dp"
         android:indeterminate="true"
-        android:indeterminateTint="@color/primary"
+        android:indeterminateTint="@color/orange_500"
         app:layout_constraintBottom_toBottomOf="@+id/item_category_name"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="@+id/item_category_name"

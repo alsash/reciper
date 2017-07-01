@@ -64,6 +64,8 @@ public final class AppContract {
         public static final String RECIPE_ID = KEY_TAG + ".recipe_id";
         public static final String CATEGORY_ID = KEY_TAG + ".category_id";
         public static final String LABEL_ID = KEY_TAG + ".label_id";
+        public static final String FOOD_ID = KEY_TAG + ".food_id";
+        public static final String AUTHOR_ID = KEY_TAG + ".author_id";
     }
 
 }

@@ -6,7 +6,6 @@ import com.alsash.reciper.logic.StorageLogic;
 import com.alsash.reciper.mvp.presenter.RecipeCollectionCategoryPresenter;
 import com.alsash.reciper.mvp.presenter.RecipeCollectionGridPresenter;
 import com.alsash.reciper.mvp.presenter.RecipeCollectionLabelPresenter;
-import com.alsash.reciper.mvp.presenter.RecipeCollectionsPresenter;
 
 import dagger.Module;
 import dagger.Provides;
@@ -16,12 +15,6 @@ import dagger.Provides;
  */
 @Module
 public abstract class UiRecipeCollectionsModule {
-
-    @Provides
-    @RecipeCollectionsScope
-    static RecipeCollectionsPresenter provideRecipeCollectionsPresenter() {
-        return new RecipeCollectionsPresenter();
-    }
 
     @Provides
     @RecipeCollectionsScope

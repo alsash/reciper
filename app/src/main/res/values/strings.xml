@@ -19,8 +19,7 @@
     <!--Navigation-->
     <string name="drawer_open">Open navigation drawer</string>
     <string name="drawer_close">Close navigation drawer</string>
-    <string name="navigation_recipes">Recipes</string>
-    <string name="navigation_cart">Cart</string>
+
 
     <string name="drawer_account_image_description">Your account\'s image</string>
     <string name="drawer_account_details_description">Account details</string>
@@ -102,10 +101,18 @@
     <string name="nutrition_protein">Protein</string>
     <string name="nutrition_fat">Fat</string>
 
-    <string name="activity_recipe_collections_title">Recipes</string>
-    <string name="activity_recipe_collections_nav_categories">Categories</string>
-    <string name="activity_recipe_collections_nav_grid">Grid</string>
-    <string name="activity_recipe_collections_nav_labels">Labels</string>
+    <!-- App Navigation -->
+    <string name="navigation_app_recipe">Recipes</string>
+    <string name="navigation_app_category">Categories</string>
+    <string name="navigation_app_label">Labels</string>
+    <string name="navigation_app_food">Foods</string>
+    <string name="navigation_app_author">Authors</string>
+
+    <!-- Recipe bottom Navigation -->
+    <string name="navigation_recipe_categories">Categories</string>
+    <string name="navigation_recipe_grid">Grid</string>
+    <string name="navigation_recipe_labels">Labels</string>
+
     <string name="activity_recipe_collections_appbar_add">Add recipe</string>
     <string name="fragment_recipe_restrict_list_subtitle_category">Category</string>
     <string name="fragment_recipe_restrict_list_subtitle_label">Label</string>
@@ -114,4 +121,5 @@
     <string name="fragment_recipe_details_methods_title">Methods</string>
     <string name="fragment_recipe_details_methods_delete_action">Method %d has been removed</string>
     <string name="fragment_recipe_details_methods_delete_reject">UNDO</string>
+
 </resources>

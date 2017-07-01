@@ -54,8 +54,11 @@ public class RecipeDetailsActivity extends BaseActivity<RecipeDetailsView>
 
     @Override
     public void setDetails(SwipeTab[] details) {
-        if (adapter != null) return;
-        adapter = new SwipePagerAdapter(getSupportFragmentManager(), details);
+        if (adapter == null) {
+            adapter = new SwipePagerAdapter(getSupportFragmentManager(), details);
+        } else {
+            adapter.setTabs(details);
+        }
     }
 
     @Override
@@ -88,7 +91,7 @@ public class RecipeDetailsActivity extends BaseActivity<RecipeDetailsView>
                 .inject(this);
         // Presenter will be embedded in the activity lifecycle
         return presenter.setRestriction(navigator.getRestriction(getIntent()))
-                .setFragments(navigator.getFragmentCollections(getIntent()));
+                .setFragments(navigator.getFragmentCollection(getIntent()));
     }
 
     @Override
@@ -96,7 +99,7 @@ public class RecipeDetailsActivity extends BaseActivity<RecipeDetailsView>
         super.onNewIntent(intent);
         setIntent(intent);
         presenter.setRestriction(navigator.getRestriction(intent))
-                .setFragments(navigator.getFragmentCollections(intent))
+                .setFragments(navigator.getFragmentCollection(intent))
                 .attach(getThisView());
     }
 
