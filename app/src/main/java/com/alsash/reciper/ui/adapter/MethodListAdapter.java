@@ -1,6 +1,8 @@
 package com.alsash.reciper.ui.adapter;
 
+import android.support.v4.view.MotionEventCompat;
 import android.support.v7.widget.RecyclerView;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -48,6 +50,16 @@ public class MethodListAdapter extends RecyclerView.Adapter<MethodHolder> {
                         holder.setEditable(editable);
                         if (!editable)
                             interaction.onMethodEdit(methods.get(position), holder.getBody());
+                    }
+                },
+                // Drag listener
+                new View.OnTouchListener() {
+                    @Override
+                    public boolean onTouch(View v, MotionEvent event) {
+                        if (MotionEventCompat.getActionMasked(event) == MotionEvent.ACTION_DOWN) {
+                            interaction.onMethodDrag(holder);
+                        }
+                        return false;
                     }
                 }
         );

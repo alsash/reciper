@@ -220,6 +220,16 @@ public class StorageLogic {
         recipeMethodTable.update();
     }
 
+    public void deleteAsync(BaseEntity entity) {
+        if (BuildConfig.DEBUG) MainThreadException.throwOnMainThread(TAG, "deleteAsync()");
+        if (entity.getClass() == Method.class) {
+            RecipeMethodTable recipeMethodTable = (RecipeMethodTable) entity;
+            RecipeTable recipeTable = dbManager.getRecipeTable(recipeMethodTable.getRecipeUuid());
+            if (recipeTable != null) recipeTable.getRecipeMethodTables().remove(recipeMethodTable);
+            recipeMethodTable.delete();
+        }
+    }
+
     private boolean isDbUpToDate() {
         Date localUpdateDate = dbManager.getSettingsUpdateDate();
         // First access

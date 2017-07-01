@@ -18,7 +18,7 @@ import com.alsash.reciper.mvp.model.entity.Method;
 /**
  * A recipe method view holder
  */
-public class MethodHolder extends RecyclerView.ViewHolder {
+public class MethodHolder extends RecyclerView.ViewHolder implements DragAndDropHolder {
 
     private final TextView number;
     private final ImageButton edit;
@@ -28,6 +28,7 @@ public class MethodHolder extends RecyclerView.ViewHolder {
     private final int editColor;
     @ColorInt
     private final int nonEditColor;
+
 
     public MethodHolder(ViewGroup parent, @LayoutRes int layoutId) {
         super(LayoutInflater.from(parent.getContext()).inflate(layoutId, parent, false));
@@ -54,6 +55,11 @@ public class MethodHolder extends RecyclerView.ViewHolder {
         nonEditColor = ResourcesCompat.getColor(edit.getResources(), R.color.gray_400, null);
     }
 
+    @Override
+    public void onMoveAtDragAndDrop() {
+        number.setText(String.valueOf(getAdapterPosition() + 1));
+    }
+
     public void bindMethod(Method method) {
         number.setText(String.valueOf(getAdapterPosition() + 1));
         body.setText(method.getBody());
@@ -72,14 +78,17 @@ public class MethodHolder extends RecyclerView.ViewHolder {
     /**
      * Set the listeners in the following sequence:
      *
-     * @param listeners 0. editListener
+     * @param listeners 0. editListener - must implement View.OnClickListener
+     *                  1. dragListener - must implement View.OnTouchListener
      */
-    public void setListeners(final View.OnClickListener... listeners) {
+    public void setListeners(Object... listeners) {
         for (int i = 0; i < listeners.length; i++) {
             switch (i) {
                 case 0:
-                    edit.setOnClickListener(listeners[i]);
+                    edit.setOnClickListener((View.OnClickListener) listeners[i]);
                     break;
+                case 1:
+                    number.setOnTouchListener((View.OnTouchListener) listeners[i]);
             }
         }
     }

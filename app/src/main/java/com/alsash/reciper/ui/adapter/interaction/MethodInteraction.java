@@ -1,5 +1,7 @@
 package com.alsash.reciper.ui.adapter.interaction;
 
+import android.support.v7.widget.RecyclerView;
+
 import com.alsash.reciper.mvp.model.entity.Method;
 
 /**
@@ -8,4 +10,6 @@ import com.alsash.reciper.mvp.model.entity.Method;
 public interface MethodInteraction {
 
     void onMethodEdit(Method method, String newBody);
+
+    void onMethodDrag(RecyclerView.ViewHolder holder);
 }
