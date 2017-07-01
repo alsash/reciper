@@ -39,8 +39,13 @@ public class RecipeDetailsMethodsFragment extends BaseFragment<RecipeDetailsMeth
     private RecyclerView methodsList;
     private MethodListAdapter methodsAdapter;
 
-    public static RecipeDetailsIngredientsFragment newInstance(Intent intent) {
-        return getThisFragment(new RecipeDetailsIngredientsFragment(), intent);
+    public static RecipeDetailsMethodsFragment newInstance(Intent intent) {
+        return getThisFragment(new RecipeDetailsMethodsFragment(), intent);
+    }
+
+    @Override
+    public void onMethodEdit(Method method, String newBody) {
+        presenter.onMethodEdit(method, newBody);
     }
 
     @Override

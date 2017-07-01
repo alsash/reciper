@@ -10,6 +10,7 @@ import com.alsash.reciper.data.db.DbManager;
 import com.alsash.reciper.data.db.table.CategoryTable;
 import com.alsash.reciper.data.db.table.FoodTable;
 import com.alsash.reciper.data.db.table.LabelTable;
+import com.alsash.reciper.data.db.table.RecipeMethodTable;
 import com.alsash.reciper.data.db.table.RecipeTable;
 import com.alsash.reciper.logic.action.RecipeAction;
 import com.alsash.reciper.logic.exception.MainThreadException;
@@ -18,10 +19,13 @@ import com.alsash.reciper.mvp.model.entity.BaseEntity;
 import com.alsash.reciper.mvp.model.entity.Category;
 import com.alsash.reciper.mvp.model.entity.Ingredient;
 import com.alsash.reciper.mvp.model.entity.Label;
+import com.alsash.reciper.mvp.model.entity.Method;
 import com.alsash.reciper.mvp.model.entity.Recipe;
 import com.alsash.reciper.mvp.model.entity.RecipeFull;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -40,6 +44,15 @@ public class StorageLogic {
 
     private final CloudManager cloudManager;
     private final DbManager dbManager;
+
+    private final Comparator<RecipeMethodTable> methodComparator
+            = new Comparator<RecipeMethodTable>() {
+        @Override
+        public int compare(RecipeMethodTable o1, RecipeMethodTable o2) {
+            return (o1.getIndex() < o2.getIndex()) ? -1 :
+                    ((o1.getIndex() == o2.getIndex()) ? 0 : 1);
+        }
+    };
 
     @UiThread
     public StorageLogic(DbManager dbManager, CloudManager cloudManager) {
@@ -189,6 +202,24 @@ public class StorageLogic {
         }
     }
 
+    @UiThread
+    public void updateSync(Method method, String body) {
+        RecipeMethodTable recipeMethodTable = (RecipeMethodTable) method;
+        recipeMethodTable.setBody(body);
+    }
+
+    @UiThread
+    public void updateSync(Method method, int index) {
+        RecipeMethodTable recipeMethodTable = (RecipeMethodTable) method;
+        recipeMethodTable.setIndex(index);
+    }
+
+    public void updateAsync(Method method) {
+        if (BuildConfig.DEBUG) MainThreadException.throwOnMainThread(TAG, "updateAsync()");
+        RecipeMethodTable recipeMethodTable = (RecipeMethodTable) method;
+        recipeMethodTable.update();
+    }
+
     private boolean isDbUpToDate() {
         Date localUpdateDate = dbManager.getSettingsUpdateDate();
         // First access
@@ -317,7 +348,7 @@ public class StorageLogic {
         for (Ingredient ingredient : recipeTable.getIngredients()) {
             ingredient.getFood().getMeasure();
         }
-        recipeTable.getMethods();
+        Collections.sort(recipeTable.getRecipeMethodTables(), methodComparator);
         return recipeTable;
     }
 }

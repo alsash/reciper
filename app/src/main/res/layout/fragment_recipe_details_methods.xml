@@ -10,7 +10,8 @@
     <android.support.constraint.ConstraintLayout
         android:id="@+id/fragment_recipe_details_methods_constraint"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp">
 
         <TextView
             android:id="@+id/recipe_methods_title"
@@ -43,7 +44,6 @@
             android:id="@+id/recipe_methods_list"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="0dp"
             android:orientation="vertical"
             android:scrollbars="none"
             app:layoutManager="android.support.v7.widget.LinearLayoutManager"
