@@ -8,10 +8,7 @@
     app:cardElevation="4dp"
     app:cardPreventCornerOverlap="false"
     app:cardUseCompatPadding="true"
-    app:contentPadding="0dp"
-    app:layout_constraintLeft_toLeftOf="parent"
-    app:layout_constraintRight_toRightOf="parent"
-    app:layout_constraintTop_toTopOf="parent">
+    app:contentPadding="0dp">
 
     <android.support.constraint.ConstraintLayout
         android:id="@+id/item_method_constraint"
@@ -38,7 +35,7 @@
             android:layout_height="48dp"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/edit_icon_off"
+            app:srcCompat="@drawable/edit_icon_gray"
             tools:ignore="ContentDescription" />
 
         <View

@@ -7,7 +7,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.alsash.reciper.R;
-import com.alsash.reciper.app.util.MutableBoolean;
+import com.alsash.reciper.app.lib.MutableBoolean;
 import com.alsash.reciper.mvp.model.entity.Category;
 import com.alsash.reciper.ui.loader.ImageLoader;
 
@@ -17,15 +17,15 @@ import com.alsash.reciper.ui.loader.ImageLoader;
  */
 public class RecipeCategoryCardHolder extends BaseRecipeGroupHolder<Category> {
 
-    private final ImageView imageBackground;
-    private final TextView nameButton;
+    private final ImageView image;
+    private final TextView name;
     private final ProgressBar bar;
     private final MutableBoolean barFree = new MutableBoolean().set(false);
 
     public RecipeCategoryCardHolder(ViewGroup parent) {
         super(parent, R.layout.item_category_group, R.id.item_category_inner_list);
-        imageBackground = (ImageView) itemView.findViewById(R.id.item_category_image);
-        nameButton = (TextView) itemView.findViewById(R.id.item_category_name);
+        image = (ImageView) itemView.findViewById(R.id.item_category_image);
+        name = (TextView) itemView.findViewById(R.id.item_category_name);
         bar = (ProgressBar) itemView.findViewById(R.id.item_category_bar);
     }
 
@@ -36,12 +36,8 @@ public class RecipeCategoryCardHolder extends BaseRecipeGroupHolder<Category> {
 
     @Override
     public void bindGroup(Category category) {
-        ImageLoader.get()
-                .source(category.getPhoto())
-                .bar(bar)
-                .completer(barFree)
-                .load(imageBackground);
-        nameButton.setText(category.getName());
+        ImageLoader.get().source(category.getPhoto()).bar(bar).completer(barFree).load(image);
+        name.setText(category.getName());
     }
 
     /**
@@ -51,7 +47,7 @@ public class RecipeCategoryCardHolder extends BaseRecipeGroupHolder<Category> {
      */
     @Override
     public void setListeners(View.OnClickListener... listeners) {
-        nameButton.setOnClickListener(listeners[0]);
+        name.setOnClickListener(listeners[0]);
     }
 
     @Override

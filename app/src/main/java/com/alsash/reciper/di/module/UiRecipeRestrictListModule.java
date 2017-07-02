@@ -9,15 +9,15 @@ import dagger.Module;
 import dagger.Provides;
 
 /**
- * DI Module that provide presenters for views, that represent search of recipes.
+ * DI Module that provide presenters for views, that represent restriction of recipes.
  */
 @Module
-public class UiRecipeRestrictListModule {
+public abstract class UiRecipeRestrictListModule {
 
     @Provides
     @RecipeRestrictListScope
-    static RecipeRestrictListPresenter provideSearchListPresenter(StorageLogic storageLogic,
-                                                                  BusinessLogic businessLogic) {
+    static RecipeRestrictListPresenter provideRestrictListPresenter(StorageLogic storageLogic,
+                                                                    BusinessLogic businessLogic) {
         return new RecipeRestrictListPresenter(storageLogic, businessLogic);
     }
 

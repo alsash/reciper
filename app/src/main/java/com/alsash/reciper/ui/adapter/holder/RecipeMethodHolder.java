@@ -18,7 +18,7 @@ import com.alsash.reciper.mvp.model.entity.Method;
 /**
  * A recipe method view holder
  */
-public class MethodHolder extends RecyclerView.ViewHolder implements DragAndDropHolder {
+public class RecipeMethodHolder extends RecyclerView.ViewHolder implements DragAndDropHolder {
 
     private final TextView number;
     private final ImageButton edit;
@@ -30,7 +30,7 @@ public class MethodHolder extends RecyclerView.ViewHolder implements DragAndDrop
     private final int nonEditColor;
 
 
-    public MethodHolder(ViewGroup parent, @LayoutRes int layoutId) {
+    public RecipeMethodHolder(ViewGroup parent, @LayoutRes int layoutId) {
         super(LayoutInflater.from(parent.getContext()).inflate(layoutId, parent, false));
 
         number = (TextView) itemView.findViewById(R.id.item_method_number);
@@ -71,7 +71,7 @@ public class MethodHolder extends RecyclerView.ViewHolder implements DragAndDrop
     }
 
     public void setEditable(boolean editable) {
-        edit.setImageResource(editable ? R.drawable.edit_icon_on : R.drawable.edit_icon_off);
+        edit.setImageResource(editable ? R.drawable.edit_icon_orange : R.drawable.edit_icon_gray);
         body.setEnabled(editable);
     }
 

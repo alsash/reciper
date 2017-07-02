@@ -31,6 +31,8 @@ public interface AppComponent {
 
     UiStartComponent.Builder getStartComponentBuilder();
 
+    UiEntityListComponent.Builder getEntityListComponentBuilder();
+
     UiRecipeCollectionsComponent.Builder getRecipeCollectionsComponentBuilder();
 
     UiRecipeRestrictListComponent.Builder getRecipeRestrictListComponentBuilder();

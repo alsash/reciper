@@ -7,7 +7,7 @@ import android.widget.ProgressBar;
 
 import com.alsash.reciper.R;
 import com.alsash.reciper.app.AppContract;
-import com.alsash.reciper.app.util.MutableBoolean;
+import com.alsash.reciper.app.lib.MutableBoolean;
 import com.alsash.reciper.mvp.model.entity.Author;
 import com.alsash.reciper.mvp.model.entity.Photo;
 import com.bumptech.glide.Glide;

@@ -5,6 +5,7 @@ import android.app.Application;
 import com.alsash.reciper.BuildConfig;
 import com.alsash.reciper.di.component.AppComponent;
 import com.alsash.reciper.di.component.DaggerAppComponent;
+import com.alsash.reciper.di.component.UiEntityListComponent;
 import com.alsash.reciper.di.component.UiRecipeCollectionsComponent;
 import com.alsash.reciper.di.component.UiRecipeDetailsComponent;
 import com.alsash.reciper.di.component.UiRecipeRestrictListComponent;
@@ -19,6 +20,7 @@ public class ReciperApp extends Application {
 
     private AppComponent appComponent;
     private UiStartComponent uiStartComponent;
+    private UiEntityListComponent uiEntityListComponent;
     private UiRecipeCollectionsComponent uiRecipeCollectionsComponent;
     private UiRecipeRestrictListComponent uiRecipeRestrictListComponent;
     private UiRecipeDetailsComponent uiRecipeDetailsComponent;
@@ -36,6 +38,9 @@ public class ReciperApp extends Application {
                 .build();
         uiStartComponent = appComponent
                 .getStartComponentBuilder()
+                .build();
+        uiEntityListComponent = appComponent
+                .getEntityListComponentBuilder()
                 .build();
         uiRecipeCollectionsComponent = appComponent
                 .getRecipeCollectionsComponentBuilder()
@@ -58,6 +63,10 @@ public class ReciperApp extends Application {
 
     public UiStartComponent getUiStartComponent() {
         return uiStartComponent;
+    }
+
+    public UiEntityListComponent getUiEntityListComponent() {
+        return uiEntityListComponent;
     }
 
     public UiRecipeCollectionsComponent getUiRecipeCollectionsComponent() {

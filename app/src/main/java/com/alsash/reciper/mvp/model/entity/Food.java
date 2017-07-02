@@ -22,5 +22,8 @@ public interface Food extends BaseEntity {
     String getEnergyUnit();
 
     @Nullable
+    String getNdbNo();
+
+    @Nullable
     Measure getMeasure();
 }

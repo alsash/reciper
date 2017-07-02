@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 
 import com.alsash.reciper.R;
 import com.alsash.reciper.mvp.model.entity.Method;
-import com.alsash.reciper.ui.adapter.holder.MethodHolder;
+import com.alsash.reciper.ui.adapter.holder.RecipeMethodHolder;
 import com.alsash.reciper.ui.adapter.interaction.MethodInteraction;
 
 import java.util.HashSet;
@@ -18,7 +18,7 @@ import java.util.Set;
 /**
  * A recipe method list adapter
  */
-public class MethodListAdapter extends RecyclerView.Adapter<MethodHolder> {
+public class MethodListAdapter extends RecyclerView.Adapter<RecipeMethodHolder> {
 
     private final MethodInteraction interaction;
     private final List<Method> methods;
@@ -31,12 +31,12 @@ public class MethodListAdapter extends RecyclerView.Adapter<MethodHolder> {
     }
 
     @Override
-    public MethodHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new MethodHolder(parent, R.layout.item_method_card);
+    public RecipeMethodHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        return new RecipeMethodHolder(parent, R.layout.item_method_card);
     }
 
     @Override
-    public void onBindViewHolder(final MethodHolder holder, int position) {
+    public void onBindViewHolder(final RecipeMethodHolder holder, int position) {
         holder.setEditable(editPositions.contains(position));
         holder.bindMethod(methods.get(position));
         holder.setListeners(
@@ -56,9 +56,8 @@ public class MethodListAdapter extends RecyclerView.Adapter<MethodHolder> {
                 new View.OnTouchListener() {
                     @Override
                     public boolean onTouch(View v, MotionEvent event) {
-                        if (MotionEventCompat.getActionMasked(event) == MotionEvent.ACTION_DOWN) {
+                        if (MotionEventCompat.getActionMasked(event) == MotionEvent.ACTION_DOWN)
                             interaction.onMethodDrag(holder);
-                        }
                         return false;
                     }
                 }

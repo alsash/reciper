@@ -2,7 +2,7 @@ package com.alsash.reciper.mvp.presenter;
 
 import android.support.annotation.Nullable;
 
-import com.alsash.reciper.app.util.MutableBoolean;
+import com.alsash.reciper.app.lib.MutableBoolean;
 import com.alsash.reciper.logic.BusinessLogic;
 import com.alsash.reciper.logic.StorageLogic;
 import com.alsash.reciper.logic.restriction.EntityRestriction;

@@ -22,7 +22,7 @@ import com.alsash.reciper.mvp.model.entity.Ingredient;
 /**
  * A view that holds ingredient representation views
  */
-public class IngredientHolder extends RecyclerView.ViewHolder {
+public class RecipeIngredientHolder extends RecyclerView.ViewHolder {
 
     private final TextView name;
     private final TextView weight;
@@ -33,7 +33,7 @@ public class IngredientHolder extends RecyclerView.ViewHolder {
     private final EditText weightEdit;
     private final ImageButton menu;
 
-    public IngredientHolder(ViewGroup parent, @LayoutRes int layoutId) {
+    public RecipeIngredientHolder(ViewGroup parent, @LayoutRes int layoutId) {
         super(LayoutInflater.from(parent.getContext()).inflate(layoutId, parent, false));
         name = (TextView) itemView.findViewById(R.id.ingredient_name);
         weight = (TextView) itemView.findViewById(R.id.ingredient_weight);

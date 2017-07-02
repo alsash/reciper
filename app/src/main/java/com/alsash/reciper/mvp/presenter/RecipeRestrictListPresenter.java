@@ -55,7 +55,7 @@ public class RecipeRestrictListPresenter extends BaseRecipeListPresenter<RecipeR
                     .fromCallable(new Callable<BaseEntity>() {
                         @Override
                         public BaseEntity call() throws Exception {
-                            return storageLogic.getRestrictionEntity(restriction);
+                            return storageLogic.getRestrictEntity(restriction);
                         }
                     })
                     .subscribeOn(Schedulers.io())

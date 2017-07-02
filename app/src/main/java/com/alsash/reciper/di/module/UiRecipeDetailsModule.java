@@ -15,7 +15,7 @@ import dagger.Provides;
  * DI Module that provide presenters for views, that represent search of recipes.
  */
 @Module
-public class UiRecipeDetailsModule {
+public abstract class UiRecipeDetailsModule {
 
     @Provides
     @RecipeDetailsScope

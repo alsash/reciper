@@ -1,7 +1,7 @@
-package com.alsash.reciper.app.util;
+package com.alsash.reciper.app.lib;
 
 /**
- * Simple mutable boolean object
+ * Simple mutable boolean class
  */
 public class MutableBoolean {
     private boolean value;

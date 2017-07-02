@@ -27,7 +27,7 @@
     <style name="AppTheme.NavigationView" parent="@style/Widget.Design.NavigationView">
         <item name="colorPrimary">@color/orange_500</item>
         <item name="colorPrimaryDark">@color/orange_700</item>
-        <item name="android:background">@null</item>
+        <item name="android:background">@android:color/transparent</item>
     </style>
 
     <style name="AppTheme.BottomNavigationView" parent="Widget.Design.BottomNavigationView">

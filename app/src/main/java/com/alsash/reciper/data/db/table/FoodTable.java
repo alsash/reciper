@@ -175,6 +175,12 @@ public final class FoodTable implements Table, Food {
 
     @Nullable
     @Override
+    public String getNdbNo() {
+        return getFoodUsdaTables().size() > 0 ? getFoodUsdaTables().get(0).getNdbNo() : null;
+    }
+
+    @Nullable
+    @Override
     public Measure getMeasure() {
         return getFoodMeasureTables().size() > 0 ? getFoodMeasureTables().get(0) : null;
     }

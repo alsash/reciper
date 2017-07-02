@@ -16,7 +16,7 @@ import android.widget.TextView;
 
 import com.alsash.reciper.R;
 import com.alsash.reciper.app.ReciperApp;
-import com.alsash.reciper.app.util.MutableBoolean;
+import com.alsash.reciper.app.lib.MutableBoolean;
 import com.alsash.reciper.logic.NavigationLogic;
 import com.alsash.reciper.mvp.model.entity.Method;
 import com.alsash.reciper.mvp.presenter.RecipeDetailsMethodsPresenter;

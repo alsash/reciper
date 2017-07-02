@@ -158,6 +158,12 @@ public class DbManager {
         return null;
     }
 
+    public List<FoodTable> getFoodTable() {
+        QueryBuilder<FoodTable> builder = daoSession.getFoodTableDao().queryBuilder();
+        obtainRestriction(builder);
+        return builder.build().list();
+    }
+
     public List<FoodTable> getFoodTable(boolean usdaFetched) {
         QueryBuilder<FoodTable> builder = daoSession.getFoodTableDao().queryBuilder();
         builder.orderAsc(FoodTableDao.Properties.Name);
@@ -189,6 +195,12 @@ public class DbManager {
                 daoSession.getFoodMeasureTableDao().insertOrReplaceInTx(foodMeasureTableList);
             }
         });
+    }
+
+    public List<AuthorTable> getAuthorTable() {
+        QueryBuilder<AuthorTable> builder = daoSession.getAuthorTableDao().queryBuilder();
+        obtainRestriction(builder);
+        return builder.build().list();
     }
 
     /**

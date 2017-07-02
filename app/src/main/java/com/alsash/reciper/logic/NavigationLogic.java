@@ -20,6 +20,7 @@ import com.alsash.reciper.mvp.model.entity.RecipeFull;
 import com.alsash.reciper.ui.activity.FragmentCollectionActivity;
 import com.alsash.reciper.ui.activity.FragmentSingleActivity;
 import com.alsash.reciper.ui.activity.RecipeDetailsActivity;
+import com.alsash.reciper.ui.fragment.EntityListFragment;
 import com.alsash.reciper.ui.fragment.RecipeCollectionCategoryFragment;
 import com.alsash.reciper.ui.fragment.RecipeCollectionGridFragment;
 import com.alsash.reciper.ui.fragment.RecipeCollectionLabelFragment;
@@ -109,25 +110,32 @@ public class NavigationLogic {
     }
 
     public void toNavigationItemId(@IdRes int id) {
+        Context context = getContext();
+        if (context == null) return;
+        String key;
         switch (id) {
             case R.id.navigation_app_recipe:
-                toRecipesView();
+                key = AppContract.Key.RECIPE_ID;
                 break;
             case R.id.navigation_app_category:
-                toCategoriesView();
+                key = AppContract.Key.CATEGORY_ID;
                 break;
             case R.id.navigation_app_label:
-                toLabelsView();
+                key = AppContract.Key.LABEL_ID;
                 break;
             case R.id.navigation_app_food:
-                toFoodsView();
+                key = AppContract.Key.FOOD_ID;
                 break;
             case R.id.navigation_app_author:
-                toAuthorsView();
+                key = AppContract.Key.AUTHOR_ID;
                 break;
             default:
-                getContext(); // Cleanup activity context
+                return;
         }
+        context.startActivity(
+                obtainRestriction(key, AppContract.Key.NO_ID,
+                        obtainFlags(context, new Intent(context, FragmentCollectionActivity.class)))
+        );
     }
 
     public void toRecipesView() {
@@ -137,47 +145,6 @@ public class NavigationLogic {
                 obtainRestriction(AppContract.Key.RECIPE_ID, AppContract.Key.NO_ID,
                         obtainFlags(context, new Intent(context, FragmentCollectionActivity.class)))
         ); // goto getFragmentCollection();
-        // finishIfActivity(context);
-    }
-
-    public void toCategoriesView() {
-        Context context = getContext();
-        if (context == null) return;
-        context.startActivity(
-                obtainRestriction(AppContract.Key.CATEGORY_ID, AppContract.Key.NO_ID,
-                        obtainFlags(context, new Intent(context, FragmentCollectionActivity.class)))
-        ); // goto getFragmentCollection();
-        // finishIfActivity(context);
-    }
-
-    public void toLabelsView() {
-        Context context = getContext();
-        if (context == null) return;
-        context.startActivity(
-                obtainRestriction(AppContract.Key.LABEL_ID, AppContract.Key.NO_ID,
-                        obtainFlags(context, new Intent(context, FragmentCollectionActivity.class)))
-        ); // goto getFragmentCollection();
-        // finishIfActivity(context);
-    }
-
-    public void toFoodsView() {
-        Context context = getContext();
-        if (context == null) return;
-        context.startActivity(
-                obtainRestriction(AppContract.Key.FOOD_ID, AppContract.Key.NO_ID,
-                        obtainFlags(context, new Intent(context, FragmentCollectionActivity.class)))
-        ); // goto getFragmentCollection();
-        // finishIfActivity(context);
-    }
-
-    public void toAuthorsView() {
-        Context context = getContext();
-        if (context == null) return;
-        context.startActivity(
-                obtainRestriction(AppContract.Key.AUTHOR_ID, AppContract.Key.NO_ID,
-                        obtainFlags(context, new Intent(context, FragmentCollectionActivity.class)))
-        ); // goto getFragmentCollection();
-        //  finishIfActivity(context);
     }
 
     public void toRecipeDetailsView(Recipe recipe) {
@@ -207,6 +174,10 @@ public class NavigationLogic {
         );
     }
 
+    public void toFoodSearchView() {
+
+    }
+
     public Fragment[] getFragmentCollection(Intent intent) {
 
         EntityRestriction restriction = getRestriction(intent);
@@ -220,17 +191,11 @@ public class NavigationLogic {
                         RecipeCollectionGridFragment.newInstance(),
                         RecipeCollectionLabelFragment.newInstance()};
 
-            if (restriction.entityClass.equals(Category.class))
-                return new Fragment[]{new Fragment()}; // TODO: Add category list fragment
-
-            if (restriction.entityClass.equals(Label.class))
-                return new Fragment[]{new Fragment()}; // TODO: Add label list fragment
-
-            if (restriction.entityClass.equals(Food.class))
-                return new Fragment[]{new Fragment()}; // TODO: Add food list fragment
-
-            if (restriction.entityClass.equals(Author.class))
-                return new Fragment[]{new Fragment()}; // TODO: Add author list fragment
+            if (restriction.entityClass.equals(Category.class)
+                    || restriction.entityClass.equals(Label.class)
+                    || restriction.entityClass.equals(Food.class)
+                    || restriction.entityClass.equals(Author.class))
+                return new Fragment[]{EntityListFragment.newInstance(intent)};
         }
 
         // With ID
@@ -318,13 +283,5 @@ public class NavigationLogic {
         if (context instanceof AppCompatActivity) return intent;
         intent.setFlags(FLAG_ACTIVITY_CLEAR_TASK | FLAG_ACTIVITY_NEW_TASK);
         return intent;
-    }
-
-    private void finishIfActivity(Context context) {
-        if (context instanceof AppCompatActivity) {
-            AppCompatActivity activity = (AppCompatActivity) context;
-            activity.overridePendingTransition(0, 0); // No animation on finishView
-            activity.finish();
-        }
     }
 }

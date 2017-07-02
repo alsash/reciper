@@ -6,7 +6,7 @@ import android.view.ViewGroup;
 
 import com.alsash.reciper.R;
 import com.alsash.reciper.mvp.model.entity.Ingredient;
-import com.alsash.reciper.ui.adapter.holder.IngredientHolder;
+import com.alsash.reciper.ui.adapter.holder.RecipeIngredientHolder;
 import com.alsash.reciper.ui.adapter.interaction.IngredientInteraction;
 
 import java.util.HashSet;
@@ -16,7 +16,7 @@ import java.util.Set;
 /**
  * A recipe ingredient list adapter
  */
-public class IngredientListAdapter extends RecyclerView.Adapter<IngredientHolder> {
+public class IngredientListAdapter extends RecyclerView.Adapter<RecipeIngredientHolder> {
 
     private final IngredientInteraction interaction;
     private final List<Ingredient> ingredients;
@@ -29,12 +29,12 @@ public class IngredientListAdapter extends RecyclerView.Adapter<IngredientHolder
     }
 
     @Override
-    public IngredientHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new IngredientHolder(parent, R.layout.item_ingredient);
+    public RecipeIngredientHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        return new RecipeIngredientHolder(parent, R.layout.item_ingredient);
     }
 
     @Override
-    public void onBindViewHolder(final IngredientHolder holder, int position) {
+    public void onBindViewHolder(final RecipeIngredientHolder holder, int position) {
         holder.bindIngredient(ingredients.get(position));
         holder.setExpanded(expendedPositions.contains(position), false);
         holder.setListeners(

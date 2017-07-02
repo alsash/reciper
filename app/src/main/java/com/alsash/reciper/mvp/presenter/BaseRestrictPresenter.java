@@ -44,7 +44,7 @@ public abstract class BaseRestrictPresenter<V extends BaseView> implements BaseP
                 .fromCallable(new Callable<BaseEntity>() {
                     @Override
                     public BaseEntity call() throws Exception {
-                        return storageLogic.getRestrictionEntity(restriction);
+                        return storageLogic.getRestrictEntity(restriction);
                     }
                 }).subscribe(new Consumer<BaseEntity>() {
                     @Override

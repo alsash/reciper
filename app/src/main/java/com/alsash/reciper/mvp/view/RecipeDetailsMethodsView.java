@@ -1,6 +1,6 @@
 package com.alsash.reciper.mvp.view;
 
-import com.alsash.reciper.app.util.MutableBoolean;
+import com.alsash.reciper.app.lib.MutableBoolean;
 import com.alsash.reciper.mvp.model.entity.Method;
 
 import java.util.List;

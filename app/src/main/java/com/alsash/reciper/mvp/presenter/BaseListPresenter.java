@@ -30,7 +30,8 @@ import io.reactivex.subscribers.DisposableSubscriber;
  * Base List Presenter, that fetch a data, represented by Model,
  * and holds BaseListView instance, witch represents a Model of a data.
  */
-public abstract class BaseListPresenter<M extends BaseEntity, V extends BaseListView<M>> implements BasePresenter<V> {
+public abstract class BaseListPresenter<M extends BaseEntity, V extends BaseListView<M>>
+        implements BasePresenter<V> {
 
     private static final String TAG = "BaseListPresenter";
     private static final int DEFAULT_LIMIT = 10;

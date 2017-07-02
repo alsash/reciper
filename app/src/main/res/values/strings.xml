@@ -94,6 +94,10 @@
     <string name="quantity_energy_calorie_n">%d\nCal</string>
     <string name="quantity_energy_kilocalorie_n">%d\nkCal</string>
     <string name="quantity_percent">%d%%</string>
+    <string name="quantity_food_carbs_gram">Carbs %.2f g</string>
+    <string name="quantity_food_protein_gram">Protein %.2f g</string>
+    <string name="quantity_food_fat_gram">Fat %.2f g</string>
+    <string name="quantity_food_energy_calorie">Energy %d cal</string>
 
     <string name="nutrition_value">Nutrition value</string>
     <string name="nutrition_quantity_switch">Per %s</string>
@@ -121,5 +125,13 @@
     <string name="fragment_recipe_details_methods_title">Methods</string>
     <string name="fragment_recipe_details_methods_delete_action">Method %d has been removed</string>
     <string name="fragment_recipe_details_methods_delete_reject">UNDO</string>
+    <string name="fragment_entity_list_appbar_add">Add</string>
+    <string name="fragment_entity_list_appbar_search">Search</string>
+    <string name="hint_label_name">Label name</string>
+    <string name="hint_category_name">Category name</string>
+    <string name="hint_author_name">Author name</string>
+    <string name="hint_food_ndbno">ID (search)</string>
+    <string name="hint_food_nutrition_value">Nutrition value per 100 g:</string>
+    <string name="hint_food_name">Food name</string>
 
 </resources>
