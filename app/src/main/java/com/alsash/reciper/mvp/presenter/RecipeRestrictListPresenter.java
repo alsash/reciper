@@ -4,8 +4,6 @@ import com.alsash.reciper.logic.BusinessLogic;
 import com.alsash.reciper.logic.StorageLogic;
 import com.alsash.reciper.logic.restriction.EntityRestriction;
 import com.alsash.reciper.mvp.model.entity.BaseEntity;
-import com.alsash.reciper.mvp.model.entity.Category;
-import com.alsash.reciper.mvp.model.entity.Label;
 import com.alsash.reciper.mvp.model.entity.Recipe;
 import com.alsash.reciper.mvp.view.RecipeRestrictListView;
 
@@ -64,23 +62,13 @@ public class RecipeRestrictListPresenter extends BaseRecipeListPresenter<RecipeR
                         @Override
                         public void accept(@NonNull BaseEntity loadedEntity) throws Exception {
                             entity = loadedEntity;
-                            setTitle(viewRef.get());
+                            if (viewRef.get() != null)
+                                viewRef.get().setTitle(businessLogic.getEntityName(entity));
                         }
                     })
             );
         } else {
-            setTitle(view);
-        }
-    }
-
-    private void setTitle(RecipeRestrictListView view) {
-        if (view == null || entity == null) return;
-        if (entity instanceof Category) {
-            view.setTitle(((Category) entity).getName());
-        } else if (entity instanceof Label) {
-            view.setTitle(((Label) entity).getName());
-        } else {
-            view.setTitle(entity.toString());
+            view.setTitle(businessLogic.getEntityName(entity));
         }
     }
 

@@ -1,4 +1,4 @@
-package com.alsash.reciper.ui.vector;
+package com.alsash.reciper.ui.view.helper;
 
 import android.content.Context;
 import android.content.res.ColorStateList;

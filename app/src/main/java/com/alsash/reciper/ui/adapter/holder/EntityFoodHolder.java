@@ -1,9 +1,12 @@
 package com.alsash.reciper.ui.adapter.holder;
 
+import android.animation.TimeInterpolator;
 import android.content.Context;
 import android.support.annotation.LayoutRes;
+import android.support.constraint.ConstraintLayout;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -11,11 +14,17 @@ import android.widget.TextView;
 import com.alsash.reciper.R;
 import com.alsash.reciper.mvp.model.entity.BaseEntity;
 import com.alsash.reciper.mvp.model.entity.Food;
+import com.alsash.reciper.ui.animator.ExpandAnimatorHelper;
 
 /**
  * A Food item holder
  */
 public class EntityFoodHolder extends BaseEntityHolder {
+
+    private static final TimeInterpolator EXPAND_INTERPOLATOR
+            = new AccelerateDecelerateInterpolator();
+    private static final int EXPAND_DURATION_MS = 400;
+    private static final int EXPAND_HEIGHT_DP = 180;
 
     private final EditText name;
     private final EditText ndbno;
@@ -24,6 +33,8 @@ public class EntityFoodHolder extends BaseEntityHolder {
     private final TextView carbs;
     private final TextView energy;
     private final ImageButton valueEdit;
+    private final ImageButton expand;
+    private final ConstraintLayout expandLayout;
 
     public EntityFoodHolder(ViewGroup parent, @LayoutRes int layoutId) {
         super(parent, layoutId);
@@ -34,6 +45,8 @@ public class EntityFoodHolder extends BaseEntityHolder {
         carbs = (TextView) itemView.findViewById(R.id.item_food_carbs);
         energy = (TextView) itemView.findViewById(R.id.item_food_energy);
         valueEdit = (ImageButton) itemView.findViewById(R.id.item_food_edit);
+        expand = (ImageButton) itemView.findViewById(R.id.item_food_expand);
+        expandLayout = (ConstraintLayout) itemView.findViewById(R.id.item_food_expand_constraint);
     }
 
     @Override
@@ -67,12 +80,25 @@ public class EntityFoodHolder extends BaseEntityHolder {
                 R.drawable.edit_icon_gray);
         name.setEnabled(editable);
         ndbno.setEnabled(editable);
+        if (editable) name.requestFocus();
+    }
+
+    public void setExpanded(boolean expanded, boolean animate) {
+        ExpandAnimatorHelper.get()
+                .expand(expanded)
+                .interpolator(animate ? EXPAND_INTERPOLATOR : null)
+                .durationMillis(animate ? EXPAND_DURATION_MS : 0)
+                .translationDp(EXPAND_HEIGHT_DP)
+                .button(expand)
+                .layout(expandLayout)
+                .start();
     }
 
     /**
      * Set the listeners in the following sequence:
      *
      * @param listeners 0. editValuesListener - must implement View.OnClickListener
+     *                  1. expandListener     - must implement View.OnClickListener
      */
     @Override
     public void setListeners(Object... listeners) {
@@ -80,6 +106,9 @@ public class EntityFoodHolder extends BaseEntityHolder {
             switch (i) {
                 case 0:
                     valueEdit.setOnClickListener((View.OnClickListener) listeners[i]);
+                    break;
+                case 1:
+                    expand.setOnClickListener((View.OnClickListener) listeners[i]);
                     break;
             }
         }

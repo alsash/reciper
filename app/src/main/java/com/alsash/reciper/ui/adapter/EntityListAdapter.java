@@ -34,6 +34,7 @@ public class EntityListAdapter extends RecyclerView.Adapter<BaseEntityHolder> {
     private final EntityListInteraction interaction;
     private final List<BaseEntity> entityList;
     private final Set<Integer> editPositions;
+    private final Set<Integer> expandPositions;
     private final int viewType;
 
     public EntityListAdapter(EntityListInteraction interaction,
@@ -42,6 +43,7 @@ public class EntityListAdapter extends RecyclerView.Adapter<BaseEntityHolder> {
         this.interaction = interaction;
         this.entityList = entityList;
         this.editPositions = new HashSet<>();
+        this.expandPositions = new HashSet<>();
         if (entityClass.equals(Category.class)) {
             viewType = VIEW_TYPE_CATEGORY;
         } else if (entityClass.equals(Label.class)) {
@@ -59,13 +61,13 @@ public class EntityListAdapter extends RecyclerView.Adapter<BaseEntityHolder> {
     public BaseEntityHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         switch (viewType) {
             case VIEW_TYPE_CATEGORY:
-                return new EntityCategoryHolder(parent, R.layout.item_category);
+                return new EntityCategoryHolder(parent, R.layout.item_category_entity);
             case VIEW_TYPE_LABEL:
-                return new EntityLabelHolder(parent, R.layout.item_label);
+                return new EntityLabelHolder(parent, R.layout.item_label_entity);
             case VIEW_TYPE_FOOD:
-                return new EntityFoodHolder(parent, R.layout.item_food);
+                return new EntityFoodHolder(parent, R.layout.item_food_entity);
             case VIEW_TYPE_AUTHOR:
-                return new EntityAuthorHolder(parent, R.layout.item_author);
+                return new EntityAuthorHolder(parent, R.layout.item_author_entity);
             default:
                 return null;
         }
@@ -106,10 +108,34 @@ public class EntityListAdapter extends RecyclerView.Adapter<BaseEntityHolder> {
                 );
                 break;
             case VIEW_TYPE_LABEL:
-            case VIEW_TYPE_FOOD:
                 holder.setListeners(valuesEditListener);
                 break;
+            case VIEW_TYPE_FOOD:
+                ((EntityFoodHolder) holder).setExpanded(expandPositions.contains(position), false);
+                holder.setListeners(valuesEditListener,
+                        // ExpandListener
+                        new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                int position = holder.getAdapterPosition();
+                                boolean expanded = !expandPositions.remove(position)
+                                        && expandPositions.add(position);
+                                ((EntityFoodHolder) holder).setExpanded(expanded, true);
+                            }
+                        }
+                );
+                break;
         }
+
+        // Open Listener
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int position = holder.getAdapterPosition();
+                if (editPositions.contains(position)) return;
+                interaction.onOpen(entityList.get(position));
+            }
+        });
     }
 
     @Override

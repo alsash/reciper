@@ -133,7 +133,7 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_chainStyle="packed"
-        app:srcCompat="@drawable/expand_icon"
+        app:srcCompat="@drawable/expand_icon_gray"
         tools:ignore="ContentDescription" />
 
 </android.support.constraint.ConstraintLayout>

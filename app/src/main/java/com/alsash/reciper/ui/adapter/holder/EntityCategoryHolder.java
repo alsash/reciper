@@ -37,6 +37,7 @@ public class EntityCategoryHolder extends BaseEntityHolder {
     public void bindEntity(BaseEntity entity) {
         Category category = (Category) entity;
         ImageLoader.get().source(category.getPhoto()).bar(imageBar).load(image);
+        name.setText(category.getName());
     }
 
     @Override
@@ -51,6 +52,7 @@ public class EntityCategoryHolder extends BaseEntityHolder {
                 R.drawable.edit_icon_gray);
         name.setEnabled(editable);
         imageEdit.setVisibility(editable ? View.VISIBLE : View.GONE);
+        if (editable) name.requestFocus();
     }
 
     /**

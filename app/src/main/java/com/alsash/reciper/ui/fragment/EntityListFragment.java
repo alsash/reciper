@@ -13,8 +13,11 @@ import android.view.MenuItem;
 import com.alsash.reciper.R;
 import com.alsash.reciper.app.ReciperApp;
 import com.alsash.reciper.logic.NavigationLogic;
+import com.alsash.reciper.mvp.model.entity.Author;
 import com.alsash.reciper.mvp.model.entity.BaseEntity;
+import com.alsash.reciper.mvp.model.entity.Category;
 import com.alsash.reciper.mvp.model.entity.Food;
+import com.alsash.reciper.mvp.model.entity.Label;
 import com.alsash.reciper.mvp.presenter.EntityListPresenter;
 import com.alsash.reciper.mvp.view.EntityListView;
 import com.alsash.reciper.ui.adapter.EntityListAdapter;
@@ -39,6 +42,18 @@ public class EntityListFragment extends BaseListFragment<BaseEntity, EntityListV
 
     public static EntityListFragment newInstance(Intent intent) {
         return getThisFragment(new EntityListFragment(), intent);
+    }
+
+    @Override
+    public void onOpen(BaseEntity entity) {
+        if (entity instanceof Category)
+            navigator.fromActivity(getActivity()).toRecipeListView((Category) entity);
+        if (entity instanceof Label)
+            navigator.fromActivity(getActivity()).toRecipeListView((Label) entity);
+        if (entity instanceof Food)
+            navigator.fromActivity(getActivity()).toRecipeListView((Food) entity);
+        if (entity instanceof Author)
+            navigator.fromActivity(getActivity()).toRecipeListView((Author) entity);
     }
 
     @Override

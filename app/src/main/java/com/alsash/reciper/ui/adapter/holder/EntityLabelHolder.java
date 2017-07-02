@@ -41,6 +41,7 @@ public class EntityLabelHolder extends BaseEntityHolder {
                 R.drawable.edit_icon_orange :
                 R.drawable.edit_icon_gray);
         name.setEnabled(editable);
+        if (editable) name.requestFocus();
     }
 
     /**

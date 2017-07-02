@@ -158,30 +158,54 @@ public class StorageLogic {
         return recipes;
     }
 
-    public BaseEntity getRestrictEntity(EntityRestriction restriction) {
-        if (restriction.entityClass == Category.class
-                || restriction.entityClass.isAssignableFrom(Category.class)) {
-            return prefetchRelation(
-                    dbManager.getCategoryTable(restriction.entityUuid)
-            );
+    public List<Recipe> getRecipes(Food food, int offset, int limit) {
+        if (BuildConfig.DEBUG)
+            MainThreadException.throwOnMainThread(TAG, "getRecipes(Food, int, int)");
+        List<Recipe> recipes = new ArrayList<>();
+        List<RecipeTable> recipeTables = dbManager
+                .restrictWith(offset, limit)
+                .getRecipeTable((FoodTable) food);
+        recipes.addAll(prefetchRecipeRelations(recipeTables));
+        return recipes;
+    }
 
-        } else if (restriction.entityClass == Label.class
-                || restriction.entityClass.isAssignableFrom(Label.class)) {
+    public List<Recipe> getRecipes(Author author, int offset, int limit) {
+        if (BuildConfig.DEBUG)
+            MainThreadException.throwOnMainThread(TAG, "getRecipes(Author, int, int)");
+        List<Recipe> recipes = new ArrayList<>();
+        List<RecipeTable> recipeTables = dbManager
+                .restrictWith(offset, limit)
+                .getRecipeTable((AuthorTable) author);
+        recipes.addAll(prefetchRecipeRelations(recipeTables));
+        return recipes;
+    }
+
+    public BaseEntity getRestrictEntity(EntityRestriction restriction) {
+
+        if (restriction.entityClass.equals(Category.class)) {
+
+            return prefetchRelation(dbManager.getCategoryTable(restriction.entityUuid));
+
+        } else if (restriction.entityClass.equals(Label.class)) {
 
             return dbManager.getLabelTable(restriction.entityUuid);
 
-        } else if (restriction.entityClass == RecipeFull.class
-                || restriction.entityClass.isAssignableFrom(RecipeFull.class)) {
+        } else if (restriction.entityClass.equals(Food.class)) {
 
-            return prefetchRelationFull(
-                    dbManager.getRecipeTable(restriction.entityUuid)
-            );
-        } else if (restriction.entityClass == Recipe.class
-                || restriction.entityClass.isAssignableFrom(Recipe.class)) {
+            return dbManager.getFoodTable(restriction.entityUuid);
 
-            return prefetchRelation(
-                    dbManager.getRecipeTable(restriction.entityUuid)
-            );
+        } else if (restriction.entityClass.equals(Author.class)) {
+
+            return dbManager.getAuthorTable(restriction.entityUuid);
+
+        } else if (restriction.entityClass.equals(Recipe.class)) {
+
+            return prefetchRelation(dbManager.getRecipeTable(restriction.entityUuid));
+
+        } else if (restriction.entityClass.equals(RecipeFull.class)) {
+
+            return prefetchRelationFull(dbManager.getRecipeTable(restriction.entityUuid));
+
         } else {
             return null;
         }
@@ -193,16 +217,30 @@ public class StorageLogic {
                 || restriction.entityUuid == null
                 || restriction.entityClass == null)
             return recipes;
-        if (restriction.entityClass == Category.class
-                || restriction.entityClass.isAssignableFrom(Category.class)) {
+        if (restriction.entityClass.equals(Category.class)) {
+
             CategoryTable categoryTable = new CategoryTable();
             categoryTable.setUuid(restriction.entityUuid);
             return getRecipes(categoryTable, offset, limit);
-        } else if (restriction.entityClass == Label.class
-                || restriction.entityClass.isAssignableFrom(Label.class)) {
+
+        } else if (restriction.entityClass.equals(Label.class)) {
+
             LabelTable labelTable = new LabelTable();
             labelTable.setUuid(restriction.entityUuid);
             return getRecipes(labelTable, offset, limit);
+
+        } else if (restriction.entityClass.equals(Food.class)) {
+
+            FoodTable foodTable = new FoodTable();
+            foodTable.setUuid(restriction.entityUuid);
+            return getRecipes(foodTable, offset, limit);
+
+        } else if (restriction.entityClass.equals(Author.class)) {
+
+            AuthorTable authorTable = new AuthorTable();
+            authorTable.setUuid(restriction.entityUuid);
+            return getRecipes(authorTable, offset, limit);
+
         } else {
             return recipes;
         }

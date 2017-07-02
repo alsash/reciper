@@ -174,6 +174,24 @@ public class NavigationLogic {
         );
     }
 
+    public void toRecipeListView(Food food) {
+        Context context = getContext();
+        if (context == null) return;
+        context.startActivity(
+                obtainRestriction(AppContract.Key.FOOD_ID, food.getUuid(),
+                        obtainFlags(context, new Intent(context, FragmentSingleActivity.class)))
+        );
+    }
+
+    public void toRecipeListView(Author author) {
+        Context context = getContext();
+        if (context == null) return;
+        context.startActivity(
+                obtainRestriction(AppContract.Key.AUTHOR_ID, author.getUuid(),
+                        obtainFlags(context, new Intent(context, FragmentSingleActivity.class)))
+        );
+    }
+
     public void toFoodSearchView() {
 
     }
@@ -213,7 +231,9 @@ public class NavigationLogic {
         if (restriction == null) return null;
 
         if (restriction.entityClass.equals(Category.class)
-                || restriction.entityClass.equals(Label.class))
+                || restriction.entityClass.equals(Label.class)
+                || restriction.entityClass.equals(Food.class)
+                || restriction.entityClass.equals(Author.class))
             return RecipeRestrictListFragment.newInstance(intent);
 
         return null;

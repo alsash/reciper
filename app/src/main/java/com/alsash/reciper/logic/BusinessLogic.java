@@ -9,8 +9,12 @@ import com.alsash.reciper.logic.unit.EnergyUnit;
 import com.alsash.reciper.logic.unit.RecipeUnit;
 import com.alsash.reciper.logic.unit.WeightUnit;
 import com.alsash.reciper.mvp.model.derivative.Nutrient;
+import com.alsash.reciper.mvp.model.entity.Author;
+import com.alsash.reciper.mvp.model.entity.BaseEntity;
+import com.alsash.reciper.mvp.model.entity.Category;
 import com.alsash.reciper.mvp.model.entity.Food;
 import com.alsash.reciper.mvp.model.entity.Ingredient;
+import com.alsash.reciper.mvp.model.entity.Label;
 import com.alsash.reciper.mvp.model.entity.Recipe;
 import com.alsash.reciper.mvp.model.entity.RecipeFull;
 
@@ -43,6 +47,22 @@ public class BusinessLogic {
                 return r1.getName().compareTo(r2.getName());
             }
         };
+    }
+
+    public String getEntityName(BaseEntity entity) {
+        if (entity instanceof Author)
+            return ((Author) entity).getName();
+        if (entity instanceof Category)
+            return ((Category) entity).getName();
+        if (entity instanceof Food)
+            return ((Food) entity).getName();
+        if (entity instanceof Ingredient)
+            return ((Ingredient) entity).getName();
+        if (entity instanceof Label)
+            return ((Label) entity).getName();
+        if (entity instanceof Recipe)
+            return ((Recipe) entity).getName();
+        return "";
     }
 
     public Calendar getCookTime(RecipeFull recipe) {

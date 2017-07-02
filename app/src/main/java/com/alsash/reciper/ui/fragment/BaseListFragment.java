@@ -13,7 +13,7 @@ import com.alsash.reciper.R;
 import com.alsash.reciper.mvp.model.entity.BaseEntity;
 import com.alsash.reciper.mvp.presenter.BaseListPresenter;
 import com.alsash.reciper.mvp.view.BaseListView;
-import com.alsash.reciper.ui.view.RecyclerViewHelper;
+import com.alsash.reciper.ui.view.helper.RecyclerViewHelper;
 
 import java.util.List;
 

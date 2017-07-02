@@ -8,6 +8,8 @@ import com.alsash.reciper.mvp.model.entity.BaseEntity;
 
 public interface EntityListInteraction {
 
+    void onOpen(BaseEntity entity);
+
     void onEditValues(BaseEntity entity, String... values);
 
     void onEditPhoto(BaseEntity entity);

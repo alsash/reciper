@@ -34,6 +34,7 @@ public class EntityAuthorHolder extends BaseEntityHolder {
     public void bindEntity(BaseEntity entity) {
         Author author = (Author) entity;
         ImageLoader.get().source(author).load(image);
+        name.setText(author.getName());
     }
 
     @Override
@@ -48,6 +49,7 @@ public class EntityAuthorHolder extends BaseEntityHolder {
                 R.drawable.edit_icon_gray);
         name.setEnabled(editable);
         imageEdit.setVisibility(editable ? View.VISIBLE : View.GONE);
+        if (editable) name.requestFocus();
     }
 
     /**

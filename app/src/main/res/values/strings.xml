@@ -97,7 +97,7 @@
     <string name="quantity_food_carbs_gram">Carbs %.2f g</string>
     <string name="quantity_food_protein_gram">Protein %.2f g</string>
     <string name="quantity_food_fat_gram">Fat %.2f g</string>
-    <string name="quantity_food_energy_calorie">Energy %d cal</string>
+    <string name="quantity_food_energy_calorie">Energy %d Cal</string>
 
     <string name="nutrition_value">Nutrition value</string>
     <string name="nutrition_quantity_switch">Per %s</string>
@@ -130,8 +130,9 @@
     <string name="hint_label_name">Label name</string>
     <string name="hint_category_name">Category name</string>
     <string name="hint_author_name">Author name</string>
-    <string name="hint_food_ndbno">ID (search)</string>
-    <string name="hint_food_nutrition_value">Nutrition value per 100 g:</string>
+    <string name="hint_food_ndbno">USDA ID (from search)</string>
+    <string name="hint_food_nutrition_value">Nutrition value</string>
+    <string name="hint_food_nutrition_quantity">per 100 grams</string>
     <string name="hint_food_name">Food name</string>
 
 </resources>

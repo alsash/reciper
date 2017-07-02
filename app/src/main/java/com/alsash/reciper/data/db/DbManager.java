@@ -89,8 +89,7 @@ public class DbManager {
         List<CategoryTable> categoryTables = daoSession.getCategoryTableDao().queryBuilder()
                 .where(CategoryTableDao.Properties.Uuid.eq(uuid))
                 .list();
-        if (categoryTables.size() > 0) return categoryTables.get(0);
-        return null;
+        return categoryTables.get(0);
     }
 
     public List<LabelTable> getLabelTable() {
@@ -104,8 +103,7 @@ public class DbManager {
         List<LabelTable> labelTables = daoSession.getLabelTableDao().queryBuilder()
                 .where(LabelTableDao.Properties.Uuid.eq(uuid))
                 .list();
-        if (labelTables.size() > 0) return labelTables.get(0);
-        return null;
+        return labelTables.get(0);
     }
 
     public List<RecipeTable> getRecipeTable() {
@@ -114,6 +112,13 @@ public class DbManager {
         obtainSearch(builder);
         obtainRestriction(builder);
         return builder.build().list();
+    }
+
+    public RecipeTable getRecipeTable(String uuid) {
+        List<RecipeTable> recipeTables = daoSession.getRecipeTableDao().queryBuilder()
+                .where(RecipeTableDao.Properties.Uuid.eq(uuid))
+                .list();
+        return recipeTables.get(0);
     }
 
     public List<RecipeTable> getRecipeTable(CategoryTable categoryTable) {
@@ -150,18 +155,41 @@ public class DbManager {
         return builder.build().list();
     }
 
-    public RecipeTable getRecipeTable(String uuid) {
+    public List<RecipeTable> getRecipeTable(FoodTable foodTable) {
+        QueryBuilder<RecipeTable> builder = daoSession.getRecipeTableDao().queryBuilder();
+        obtainSort(builder);
+        obtainSearch(builder);
+        obtainRestriction(builder);
+        builder
+                .join(
+                        RecipeTableDao.Properties.Uuid,
+                        RecipeFoodTable.class,
+                        RecipeFoodTableDao.Properties.RecipeUuid
+                )
+                .where(
+                        RecipeFoodTableDao.Properties.FoodUuid.eq(foodTable.getUuid())
+                );
+        return builder.build().list();
+    }
+
+    public List<RecipeTable> getRecipeTable(AuthorTable authorTable) {
         List<RecipeTable> recipeTables = daoSession.getRecipeTableDao().queryBuilder()
-                .where(RecipeTableDao.Properties.Uuid.eq(uuid))
+                .where(RecipeTableDao.Properties.AuthorUuid.eq(authorTable.getUuid()))
                 .list();
-        if (recipeTables.size() > 0) return recipeTables.get(0);
-        return null;
+        return recipeTables;
     }
 
     public List<FoodTable> getFoodTable() {
         QueryBuilder<FoodTable> builder = daoSession.getFoodTableDao().queryBuilder();
         obtainRestriction(builder);
         return builder.build().list();
+    }
+
+    public FoodTable getFoodTable(String uuid) {
+        List<FoodTable> foodTables = daoSession.getFoodTableDao().queryBuilder()
+                .where(FoodTableDao.Properties.Uuid.eq(uuid))
+                .list();
+        return foodTables.get(0);
     }
 
     public List<FoodTable> getFoodTable(boolean usdaFetched) {
@@ -201,6 +229,13 @@ public class DbManager {
         QueryBuilder<AuthorTable> builder = daoSession.getAuthorTableDao().queryBuilder();
         obtainRestriction(builder);
         return builder.build().list();
+    }
+
+    public AuthorTable getAuthorTable(String uuid) {
+        List<AuthorTable> authorTables = daoSession.getAuthorTableDao().queryBuilder()
+                .where(AuthorTableDao.Properties.Uuid.eq(uuid))
+                .list();
+        return authorTables.get(0);
     }
 
     /**

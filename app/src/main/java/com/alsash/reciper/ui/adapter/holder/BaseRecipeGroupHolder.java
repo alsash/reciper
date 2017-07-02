@@ -16,7 +16,7 @@ import com.alsash.reciper.ui.adapter.RecipeCardListAdapter;
 import com.alsash.reciper.ui.adapter.interaction.RecipeGroupInteraction;
 import com.alsash.reciper.ui.adapter.interaction.RecipeListInteraction;
 import com.alsash.reciper.ui.animator.FlipCardListAnimator;
-import com.alsash.reciper.ui.view.RecyclerViewHelper;
+import com.alsash.reciper.ui.view.helper.RecyclerViewHelper;
 
 import java.util.List;
 
