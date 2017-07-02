@@ -24,6 +24,7 @@
         android:layout_gravity="start"
         android:fitsSystemWindows="true"
         app:headerLayout="@layout/activity_base_drawer_header"
+        app:itemTextAppearance="@style/TextAppearance.NavigationView"
         app:menu="@menu/navigation_app"
         app:theme="@style/AppTheme.NavigationView" />
 

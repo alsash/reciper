@@ -20,7 +20,7 @@
     </style>
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light">
-        <item name="colorControlNormal">@color/black_a054</item>
+        <!--<item name="colorControlNormal">@color/black_a054</item>-->
         <item name="colorAccent">?android:attr/textColorPrimary</item>
     </style>
 
@@ -33,6 +33,12 @@
     <style name="AppTheme.BottomNavigationView" parent="Widget.Design.BottomNavigationView">
         <item name="colorPrimary">@color/orange_500</item>
         <item name="colorPrimaryDark">@color/orange_700</item>
+    </style>
+
+    <style name="TextAppearance.NavigationView" parent="@style/TextAppearance.AppCompat.Title">
+        <item name="android:fontFamily">serif</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">@color/text_def_primary_check_orange</item>
     </style>
 
     <style name="RippleButton" parent="@style/Widget.AppCompat.Button.Borderless">
