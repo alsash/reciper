@@ -1,5 +1,7 @@
 package com.alsash.reciper.di.module;
 
+import android.content.Context;
+
 import com.alsash.reciper.data.cloud.CloudManager;
 import com.alsash.reciper.data.db.DbManager;
 import com.alsash.reciper.logic.BusinessLogic;
@@ -18,8 +20,8 @@ public abstract class AppLogicModule {
 
     @Provides
     @Singleton
-    static BusinessLogic provideBusinessLogic() {
-        return new BusinessLogic();
+    static BusinessLogic provideBusinessLogic(Context context) {
+        return new BusinessLogic(context);
     }
 
     @Provides

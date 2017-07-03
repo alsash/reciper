@@ -76,7 +76,11 @@ public class CloudManager {
         }
 
         for (UsdaFoodsResponse.FoodContainer foodContainer : response.foods) {
-            if (foodContainer.food.desc.ndbno == null) continue;
+            if (foodContainer.food == null
+                    || foodContainer.food.desc == null
+                    || foodContainer.food.desc.ndbno == null) {
+                continue;
+            }
             FoodTable foodTable = new FoodTable();
             result.put(foodContainer.food.desc.ndbno, foodTable);
 

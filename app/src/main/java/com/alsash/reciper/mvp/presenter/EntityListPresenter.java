@@ -1,6 +1,7 @@
 package com.alsash.reciper.mvp.presenter;
 
 import com.alsash.reciper.app.lib.MutableBoolean;
+import com.alsash.reciper.app.lib.MutableString;
 import com.alsash.reciper.logic.BusinessLogic;
 import com.alsash.reciper.logic.StorageLogic;
 import com.alsash.reciper.logic.restriction.EntityRestriction;
@@ -9,6 +10,7 @@ import com.alsash.reciper.mvp.model.entity.BaseEntity;
 import com.alsash.reciper.mvp.model.entity.Category;
 import com.alsash.reciper.mvp.model.entity.Food;
 import com.alsash.reciper.mvp.model.entity.Label;
+import com.alsash.reciper.mvp.model.entity.Photo;
 import com.alsash.reciper.mvp.view.EntityListView;
 
 import java.lang.ref.WeakReference;
@@ -54,8 +56,25 @@ public class EntityListPresenter extends BaseListPresenter<BaseEntity, EntityLis
         super.attach(view);
     }
 
-    public void addEntity(EntityListView view) {
+    public void addEntity(final EntityListView view) {
+        final WeakReference<EntityListView> viewRef = new WeakReference<>(view);
 
+        getComposite().add(Maybe
+                .fromCallable(new Callable<BaseEntity>() {
+                    @Override
+                    public BaseEntity call() throws Exception {
+                        return storageLogic.createAsync(restriction.entityClass);
+                    }
+                }).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<BaseEntity>() {
+                    @Override
+                    public void accept(@NonNull BaseEntity entity) throws Exception {
+                        getModels().add(0, entity);
+                        if (viewRef.get() != null) viewRef.get().showInsert(0);
+                    }
+                })
+        );
     }
 
     public void deleteEntity(final EntityListView view, final int position) {
@@ -94,7 +113,110 @@ public class EntityListPresenter extends BaseListPresenter<BaseEntity, EntityLis
                 }));
     }
 
-    public void editValues(EntityListView view, BaseEntity entity, String... values) {
+    public void editValues(EntityListView view, final BaseEntity entity, String... values) {
+
+        if (entity instanceof Author) {
+            storageLogic.updateSync((Author) entity, values[0], false);
+            getComposite().add(Completable
+                    .fromAction(new Action() {
+                        @Override
+                        public void run() throws Exception {
+                            storageLogic.updateAsync((Author) entity);
+                        }
+                    })
+                    .subscribeOn(Schedulers.io())
+                    .subscribe());
+        } else if (entity instanceof Category) {
+            storageLogic.updateSync((Category) entity, values[0], false);
+            getComposite().add(Completable
+                    .fromAction(new Action() {
+                        @Override
+                        public void run() throws Exception {
+                            storageLogic.updateAsync((Category) entity);
+                        }
+                    })
+                    .subscribeOn(Schedulers.io())
+                    .subscribe());
+        } else if (entity instanceof Label) {
+            storageLogic.updateSync((Label) entity, values[0]);
+            getComposite().add(Completable
+                    .fromAction(new Action() {
+                        @Override
+                        public void run() throws Exception {
+                            storageLogic.updateAsync((Label) entity);
+                        }
+                    })
+                    .subscribeOn(Schedulers.io())
+                    .subscribe());
+        } else if (entity instanceof Food) {
+            storageLogic.updateSync((Food) entity, values[0]);
+            if (values.length > 1) {
+                final String ndbNo = values[1];
+                final WeakReference<EntityListView> viewRef = new WeakReference<>(view);
+                getComposite().add(Maybe
+                        .fromCallable(new Callable<Boolean>() {
+                            @Override
+                            public Boolean call() throws Exception {
+                                return storageLogic.updateAsync((Food) entity, ndbNo);
+                            }
+                        })
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new Consumer<Boolean>() {
+                            @Override
+                            public void accept(@NonNull Boolean cloudUpdate) throws Exception {
+                                if (cloudUpdate && viewRef.get() != null)
+                                    viewRef.get().showUpdate(getModels().indexOf(entity));
+                            }
+                        })
+                );
+            }
+        }
+    }
+
+    public void editPhoto(EntityListView view, final BaseEntity entity) {
+
+        final boolean isAuthor;
+        Photo photo;
+        if (entity instanceof Author) {
+            photo = ((Author) entity).getPhoto();
+            isAuthor = true;
+        } else if (entity instanceof Category) {
+            photo = ((Category) entity).getPhoto();
+            isAuthor = false;
+        } else {
+            return;
+        }
+
+        final WeakReference<EntityListView> viewRef = new WeakReference<>(view);
+
+        view.showPhotoEditDialog(photo, new MutableString() {
+            @Override
+            public synchronized MutableString set(final String value) {
+                if (isAuthor) {
+                    storageLogic.updateSync((Author) entity, value, true);
+                } else {
+                    storageLogic.updateSync((Category) entity, value, true);
+                }
+                if (viewRef.get() != null)
+                    viewRef.get().showUpdate(getModels().indexOf(entity));
+
+                getComposite().add(Completable
+                        .fromAction(new Action() {
+                            @Override
+                            public void run() throws Exception {
+                                if (isAuthor) {
+                                    storageLogic.updateAsync((Author) entity);
+                                } else {
+                                    storageLogic.updateAsync((Category) entity);
+                                }
+                            }
+                        })
+                        .subscribeOn(Schedulers.io())
+                        .subscribe());
+                return super.set(value);
+            }
+        });
 
     }
 

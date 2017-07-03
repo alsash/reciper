@@ -35,6 +35,7 @@ public final class AppContract {
             public static final String API_KEY = BuildConfig.USDA_API_KEY;
             public static final String BASE_URL = "https://api.nal.usda.gov/";
             public static final String HEADER_CONTENT = "Content-Type: application/json";
+            public static final String SEARCH_URL = "https://ndb.nal.usda.gov/ndb/search/list";
         }
     }
 

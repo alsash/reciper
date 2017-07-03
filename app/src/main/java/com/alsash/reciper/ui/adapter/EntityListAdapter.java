@@ -16,6 +16,7 @@ import com.alsash.reciper.ui.adapter.holder.EntityCategoryHolder;
 import com.alsash.reciper.ui.adapter.holder.EntityFoodHolder;
 import com.alsash.reciper.ui.adapter.holder.EntityLabelHolder;
 import com.alsash.reciper.ui.adapter.interaction.EntityListInteraction;
+import com.alsash.reciper.ui.adapter.observer.AdapterPositionSetObserver;
 
 import java.util.HashSet;
 import java.util.List;
@@ -44,6 +45,8 @@ public class EntityListAdapter extends RecyclerView.Adapter<BaseEntityHolder> {
         this.entityList = entityList;
         this.editPositions = new HashSet<>();
         this.expandPositions = new HashSet<>();
+        registerAdapterDataObserver(new AdapterPositionSetObserver(editPositions, expandPositions));
+
         if (entityClass.equals(Category.class)) {
             viewType = VIEW_TYPE_CATEGORY;
         } else if (entityClass.equals(Label.class)) {

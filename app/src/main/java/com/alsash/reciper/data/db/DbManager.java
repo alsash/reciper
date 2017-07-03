@@ -237,6 +237,34 @@ public class DbManager {
         return authorTables.get(0);
     }
 
+    public void modify(Table table) {
+        obtainChangeDate(table);
+        if (table instanceof AuthorTable)
+            daoSession.getAuthorTableDao().saveInTx(((AuthorTable) table));
+        if (table instanceof CategoryTable)
+            daoSession.getCategoryTableDao().saveInTx((CategoryTable) table);
+        if (table instanceof FoodMeasureTable)
+            daoSession.getFoodMeasureTableDao().saveInTx((FoodMeasureTable) table);
+        if (table instanceof FoodTable)
+            daoSession.getFoodTableDao().saveInTx((FoodTable) table);
+        if (table instanceof FoodUsdaTable)
+            daoSession.getFoodUsdaTableDao().saveInTx((FoodUsdaTable) table);
+        if (table instanceof LabelTable)
+            daoSession.getLabelTableDao().saveInTx((LabelTable) table);
+        if (table instanceof PhotoTable)
+            daoSession.getPhotoTableDao().saveInTx((PhotoTable) table);
+        if (table instanceof RecipeFoodTable)
+            daoSession.getRecipeFoodTableDao().saveInTx((RecipeFoodTable) table);
+        if (table instanceof RecipeLabelTable)
+            daoSession.getRecipeLabelTableDao().saveInTx((RecipeLabelTable) table);
+        if (table instanceof RecipeMethodTable)
+            daoSession.getRecipeMethodTableDao().saveInTx((RecipeMethodTable) table);
+        if (table instanceof RecipePhotoTable)
+            daoSession.getRecipePhotoTableDao().saveInTx((RecipePhotoTable) table);
+        if (table instanceof RecipeTable)
+            daoSession.getRecipeTableDao().saveInTx((RecipeTable) table);
+    }
+
     /**
      * Update all entities in database, set {@link #changeDate} to all entities
      *

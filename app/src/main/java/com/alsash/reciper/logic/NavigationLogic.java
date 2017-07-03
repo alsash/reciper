@@ -2,6 +2,7 @@ package com.alsash.reciper.logic;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.support.annotation.IdRes;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
@@ -193,7 +194,10 @@ public class NavigationLogic {
     }
 
     public void toFoodSearchView() {
-
+        Context context = getContext();
+        if (context == null) return;
+        context.startActivity(new Intent(Intent.ACTION_VIEW,
+                Uri.parse(AppContract.Cloud.Usda.SEARCH_URL)));
     }
 
     public Fragment[] getFragmentCollection(Intent intent) {

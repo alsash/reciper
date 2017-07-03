@@ -10,7 +10,9 @@ import com.alsash.reciper.data.db.DbManager;
 import com.alsash.reciper.data.db.table.AuthorTable;
 import com.alsash.reciper.data.db.table.CategoryTable;
 import com.alsash.reciper.data.db.table.FoodTable;
+import com.alsash.reciper.data.db.table.FoodUsdaTable;
 import com.alsash.reciper.data.db.table.LabelTable;
+import com.alsash.reciper.data.db.table.PhotoTable;
 import com.alsash.reciper.data.db.table.RecipeFoodTable;
 import com.alsash.reciper.data.db.table.RecipeMethodTable;
 import com.alsash.reciper.data.db.table.RecipePhotoTable;
@@ -18,12 +20,17 @@ import com.alsash.reciper.data.db.table.RecipeTable;
 import com.alsash.reciper.logic.action.RecipeAction;
 import com.alsash.reciper.logic.exception.MainThreadException;
 import com.alsash.reciper.logic.restriction.EntityRestriction;
+import com.alsash.reciper.logic.unit.EnergyUnit;
+import com.alsash.reciper.logic.unit.WeightUnit;
 import com.alsash.reciper.mvp.model.entity.Author;
 import com.alsash.reciper.mvp.model.entity.BaseEntity;
 import com.alsash.reciper.mvp.model.entity.Category;
 import com.alsash.reciper.mvp.model.entity.Food;
+import com.alsash.reciper.mvp.model.entity.Ingredient;
 import com.alsash.reciper.mvp.model.entity.Label;
+import com.alsash.reciper.mvp.model.entity.Measure;
 import com.alsash.reciper.mvp.model.entity.Method;
+import com.alsash.reciper.mvp.model.entity.Photo;
 import com.alsash.reciper.mvp.model.entity.Recipe;
 import com.alsash.reciper.mvp.model.entity.RecipeFull;
 
@@ -34,6 +41,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.UUID;
 
 /**
  * A Storage Logic for processing data in storage.
@@ -305,13 +313,215 @@ public class StorageLogic {
         recipeMethodTable.update();
     }
 
+    @UiThread
+    public void updateSync(Category category, String value, boolean isPhoto) {
+        if (value == null) return;
+        CategoryTable categoryTable = (CategoryTable) category;
+        categoryTable.setChangedAt(new Date());
+        if (isPhoto) {
+            PhotoTable photoTable = (PhotoTable) category.getPhoto();
+            photoTable.setUrl(value);
+        } else {
+            categoryTable.setName(value);
+        }
+    }
+
+    public void updateAsync(Category category) {
+        if (BuildConfig.DEBUG) MainThreadException.throwOnMainThread(TAG, "updateAsync()");
+        CategoryTable categoryTable = (CategoryTable) category;
+        for (PhotoTable photoTable : categoryTable.getPhotoTables()) photoTable.update();
+        categoryTable.update();
+    }
+
+    @UiThread
+    public void updateSync(Author author, String value, boolean isPhoto) {
+        if (value == null) return;
+        AuthorTable authorTable = (AuthorTable) author;
+        authorTable.setChangedAt(new Date());
+        if (isPhoto) {
+            PhotoTable photoTable = (PhotoTable) author.getPhoto();
+            photoTable.setUrl(value);
+        } else {
+            authorTable.setName(value);
+        }
+    }
+
+    public void updateAsync(Author author) {
+        if (BuildConfig.DEBUG) MainThreadException.throwOnMainThread(TAG, "updateAsync()");
+        AuthorTable authorTable = (AuthorTable) author;
+        for (PhotoTable photoTable : authorTable.getPhotoTables()) photoTable.update();
+        authorTable.update();
+    }
+
+    public void updateSync(Food food, String name) {
+        FoodTable foodTable = (FoodTable) food;
+        foodTable.setName(name);
+    }
+
+    public boolean updateAsync(Food food, String ndbNo) {
+        FoodTable foodTable = (FoodTable) food;
+
+        boolean cloudUpdate = (ndbNo != null &&
+                (food.getNdbNo() == null || !food.getNdbNo().equals(ndbNo)));
+        if (cloudUpdate) {
+            Map<String, FoodTable> update = cloudManager.getUsdaFoodTable(ndbNo);
+            if (update.size() > 0 && update.get(ndbNo) != null) {
+                FoodTable ndbNoTable = update.get(ndbNo);
+
+                foodTable.setProtein(ndbNoTable.getProtein());
+                foodTable.setFat(ndbNoTable.getFat());
+                foodTable.setCarbs(ndbNoTable.getCarbs());
+                foodTable.setWeightUnit(ndbNoTable.getWeightUnit());
+                foodTable.setEnergy(ndbNoTable.getEnergy());
+                foodTable.setEnergyUnit(ndbNoTable.getEnergyUnit());
+
+                foodTable.setName(ndbNoTable.getName());
+
+                FoodUsdaTable foodUsdaTable;
+                if (foodTable.getFoodUsdaTables().size() == 0) {
+                    foodUsdaTable = new FoodUsdaTable();
+                    foodUsdaTable.setUuid(UUID.randomUUID().toString());
+                    foodUsdaTable.setChangedAt(new Date());
+                    foodUsdaTable.setFoodUuid(foodTable.getUuid());
+                    foodTable.getFoodUsdaTables().add(foodUsdaTable);
+                } else {
+                    foodUsdaTable = foodTable.getFoodUsdaTables().get(0);
+                }
+                foodUsdaTable.setNdbNo(ndbNo);
+                foodUsdaTable.setFetched(true);
+                dbManager.modify(foodUsdaTable);
+            }
+        }
+
+        foodTable.update();
+        return cloudUpdate;
+    }
+
+    @UiThread
+    public void updateSync(Label label, String name) {
+        LabelTable labelTable = (LabelTable) label;
+        labelTable.setChangedAt(new Date());
+        labelTable.setName(name);
+    }
+
+    public void updateAsync(Label label) {
+        LabelTable labelTable = (LabelTable) label;
+        labelTable.setChangedAt(new Date());
+        labelTable.update();
+    }
+
     public void deleteAsync(BaseEntity entity) {
         if (BuildConfig.DEBUG) MainThreadException.throwOnMainThread(TAG, "deleteAsync()");
-        if (entity.getClass() == Method.class) {
+
+        if (entity instanceof AuthorTable) {
+            if (getRelatedRecipesSize(entity) > 0) return;
+            ((AuthorTable) entity).delete();
+
+        } else if (entity instanceof CategoryTable) {
+
+            if (getRelatedRecipesSize(entity) > 0) return;
+            ((CategoryTable) entity).delete();
+
+        } else if (entity instanceof LabelTable) {
+
+            if (getRelatedRecipesSize(entity) > 0) return;
+            ((LabelTable) entity).delete();
+
+        } else if (entity instanceof FoodTable) {
+
+            if (getRelatedRecipesSize(entity) > 0) return;
+            ((FoodTable) entity).delete();
+
+        } else if (entity instanceof RecipeMethodTable) {
             RecipeMethodTable recipeMethodTable = (RecipeMethodTable) entity;
             RecipeTable recipeTable = dbManager.getRecipeTable(recipeMethodTable.getRecipeUuid());
             if (recipeTable != null) recipeTable.getRecipeMethodTables().remove(recipeMethodTable);
             recipeMethodTable.delete();
+        }
+    }
+
+    public BaseEntity createAsync(Class<?> entityClass) {
+
+        if (BuildConfig.DEBUG) MainThreadException.throwOnMainThread(TAG, "createAsync()");
+
+        if (entityClass.equals(Author.class)) {
+            AuthorTable authorTable = new AuthorTable();
+            authorTable.setUuid(UUID.randomUUID().toString());
+            authorTable.setChangedAt(new Date());
+            authorTable.setName("");
+            authorTable.setMail("");
+            authorTable.setPhotoUuid(createAsync(Photo.class).getUuid());
+
+            dbManager.modify(authorTable);
+            return prefetchRelation(authorTable);
+
+        } else if (entityClass.equals(Category.class)) {
+            CategoryTable categoryTable = new CategoryTable();
+            categoryTable.setUuid(UUID.randomUUID().toString());
+            categoryTable.setChangedAt(new Date());
+            categoryTable.setName("");
+            categoryTable.setPhotoUuid(createAsync(Photo.class).getUuid());
+
+            dbManager.modify(categoryTable);
+            return prefetchRelation(categoryTable);
+
+        } else if (entityClass.equals(Food.class)) {
+
+            FoodTable foodTable = new FoodTable();
+            foodTable.setUuid(UUID.randomUUID().toString());
+            foodTable.setChangedAt(new Date());
+            foodTable.setName("");
+            foodTable.setWeightUnit(WeightUnit.GRAM.toString());
+            foodTable.setEnergyUnit(EnergyUnit.CALORIE.toString());
+
+            dbManager.modify(foodTable);
+            return prefetchRelation(foodTable);
+
+        } else if (entityClass.equals(Ingredient.class)) {
+            return null; // goto...
+        } else if (entityClass.equals(Label.class)) {
+
+            LabelTable labelTable = new LabelTable();
+            labelTable.setUuid(UUID.randomUUID().toString());
+            labelTable.setChangedAt(new Date());
+            labelTable.setName("");
+
+            dbManager.modify(labelTable);
+            return labelTable;
+
+        } else if (entityClass.equals(Measure.class)) {
+            return null; // goto...
+        } else if (entityClass.equals(Method.class)) {
+            return null; // goto...
+        } else if (entityClass.equals(Photo.class)) {
+
+            PhotoTable photoTable = new PhotoTable();
+            photoTable.setUuid(UUID.randomUUID().toString());
+            photoTable.setChangedAt(new Date());
+            dbManager.modify(photoTable);
+            return photoTable;
+
+        } else if (entityClass.equals(Recipe.class) || entityClass.equals(RecipeFull.class)) {
+
+            RecipeTable recipeTable = new RecipeTable();
+            recipeTable.setUuid(UUID.randomUUID().toString());
+            recipeTable.setChangedAt(new Date());
+            recipeTable.setCreatedAt(new Date());
+            recipeTable.setName("");
+            recipeTable.setDescription("");
+            dbManager.modify(recipeTable);
+
+            RecipePhotoTable recipePhotoTable = new RecipePhotoTable();
+            recipePhotoTable.setUuid(UUID.randomUUID().toString());
+            recipePhotoTable.setChangedAt(new Date());
+            recipePhotoTable.setMain(true);
+            recipePhotoTable.setPhotoUuid(createAsync(Photo.class).getUuid());
+            recipePhotoTable.setRecipeUuid(recipeTable.getUuid());
+            dbManager.modify(recipePhotoTable);
+
+            return prefetchRelation(recipeTable);
+        } else {
+            return null;
         }
     }
 

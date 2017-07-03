@@ -14,20 +14,24 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import com.alsash.reciper.R;
 import com.alsash.reciper.app.ReciperApp;
 import com.alsash.reciper.app.lib.MutableBoolean;
+import com.alsash.reciper.app.lib.MutableString;
 import com.alsash.reciper.logic.NavigationLogic;
 import com.alsash.reciper.mvp.model.entity.Author;
 import com.alsash.reciper.mvp.model.entity.BaseEntity;
 import com.alsash.reciper.mvp.model.entity.Category;
 import com.alsash.reciper.mvp.model.entity.Food;
 import com.alsash.reciper.mvp.model.entity.Label;
+import com.alsash.reciper.mvp.model.entity.Photo;
 import com.alsash.reciper.mvp.presenter.EntityListPresenter;
 import com.alsash.reciper.mvp.view.EntityListView;
 import com.alsash.reciper.ui.adapter.EntityListAdapter;
 import com.alsash.reciper.ui.adapter.interaction.EntityListInteraction;
+import com.alsash.reciper.ui.view.helper.PhotoDialogHelper;
 
 import java.util.List;
 
@@ -91,7 +95,7 @@ public class EntityListFragment extends BaseListFragment<BaseEntity, EntityListV
 
     @Override
     public void onEditPhoto(BaseEntity entity) {
-
+        presenter.editPhoto(getThisView(), entity);
     }
 
     @Override
@@ -102,6 +106,7 @@ public class EntityListFragment extends BaseListFragment<BaseEntity, EntityListV
     @Override
     public void showInsert(int position) {
         adapter.notifyItemInserted(position);
+        list.scrollToPosition(position);
     }
 
     @Override
@@ -149,6 +154,11 @@ public class EntityListFragment extends BaseListFragment<BaseEntity, EntityListV
     }
 
     @Override
+    public void showPhotoEditDialog(Photo photo, MutableString listener) {
+        PhotoDialogHelper.show(getActivity(), photo, listener);
+    }
+
+    @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
@@ -169,6 +179,9 @@ public class EntityListFragment extends BaseListFragment<BaseEntity, EntityListV
                 presenter.addEntity(getThisView());
                 return true;
             case R.id.appbar_search:
+                Toast.makeText(getContext(), R.string.fragment_entity_list_food_search,
+                        Toast.LENGTH_SHORT)
+                        .show();
                 navigator.fromActivity(getActivity()).toFoodSearchView();
                 return true;
             default:

@@ -10,6 +10,7 @@ import com.alsash.reciper.R;
 import com.alsash.reciper.mvp.model.entity.Method;
 import com.alsash.reciper.ui.adapter.holder.RecipeMethodHolder;
 import com.alsash.reciper.ui.adapter.interaction.MethodInteraction;
+import com.alsash.reciper.ui.adapter.observer.AdapterPositionSetObserver;
 
 import java.util.HashSet;
 import java.util.List;
@@ -28,6 +29,7 @@ public class MethodListAdapter extends RecyclerView.Adapter<RecipeMethodHolder> 
         this.interaction = interaction;
         this.methods = methods;
         this.editPositions = new HashSet<>();
+        registerAdapterDataObserver(new AdapterPositionSetObserver(editPositions));
     }
 
     @Override

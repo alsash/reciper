@@ -1,8 +1,10 @@
 package com.alsash.reciper.logic;
 
+import android.content.Context;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
+import com.alsash.reciper.R;
 import com.alsash.reciper.logic.event.RecipeEvent;
 import com.alsash.reciper.logic.exception.UnitException;
 import com.alsash.reciper.logic.unit.EnergyUnit;
@@ -15,13 +17,17 @@ import com.alsash.reciper.mvp.model.entity.Category;
 import com.alsash.reciper.mvp.model.entity.Food;
 import com.alsash.reciper.mvp.model.entity.Ingredient;
 import com.alsash.reciper.mvp.model.entity.Label;
+import com.alsash.reciper.mvp.model.entity.Measure;
+import com.alsash.reciper.mvp.model.entity.Photo;
 import com.alsash.reciper.mvp.model.entity.Recipe;
 import com.alsash.reciper.mvp.model.entity.RecipeFull;
 
 import java.util.Calendar;
 import java.util.Comparator;
 import java.util.GregorianCalendar;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.subjects.BehaviorSubject;
@@ -33,10 +39,13 @@ import io.reactivex.subjects.Subject;
 public class BusinessLogic {
 
     private static final String TAG = "BusinessLogic";
+
     private final Subject<RecipeEvent> recipeEventSubject;
     private final Comparator<Recipe> recipeComparator;
+    private final Map<Class<?>, String> defaultNames;
 
-    public BusinessLogic() {
+    public BusinessLogic(Context context) {
+        defaultNames = getDefaultNames(context);
         recipeEventSubject = BehaviorSubject.create();
         recipeEventSubject.subscribeOn(AndroidSchedulers.mainThread());
         recipeComparator = new Comparator<Recipe>() {
@@ -49,20 +58,41 @@ public class BusinessLogic {
         };
     }
 
+    private Map<Class<?>, String> getDefaultNames(Context context) {
+        Map<Class<?>, String> result = new HashMap<>();
+        result.put(Author.class, context.getString(R.string.entity_author));
+        result.put(Category.class, context.getString(R.string.entity_category));
+        result.put(Food.class, context.getString(R.string.entity_food));
+        result.put(Ingredient.class, context.getString(R.string.entity_ingredient));
+        result.put(Label.class, context.getString(R.string.entity_label));
+        result.put(Measure.class, context.getString(R.string.entity_measure));
+        result.put(Photo.class, context.getString(R.string.entity_photo));
+        result.put(Recipe.class, context.getString(R.string.entity_recipe));
+        return result;
+    }
+
     public String getEntityName(BaseEntity entity) {
-        if (entity instanceof Author)
-            return ((Author) entity).getName();
-        if (entity instanceof Category)
-            return ((Category) entity).getName();
-        if (entity instanceof Food)
-            return ((Food) entity).getName();
-        if (entity instanceof Ingredient)
-            return ((Ingredient) entity).getName();
-        if (entity instanceof Label)
-            return ((Label) entity).getName();
-        if (entity instanceof Recipe)
-            return ((Recipe) entity).getName();
-        return "";
+        String result = null;
+        if (entity instanceof Author) {
+            result = ((Author) entity).getName();
+            if (result == null || result.equals("")) result = defaultNames.get(Author.class);
+        } else if (entity instanceof Category) {
+            result = ((Category) entity).getName();
+            if (result == null || result.equals("")) result = defaultNames.get(Category.class);
+        } else if (entity instanceof Food) {
+            result = ((Food) entity).getName();
+            if (result == null || result.equals("")) result = defaultNames.get(Food.class);
+        } else if (entity instanceof Ingredient) {
+            result = ((Ingredient) entity).getName();
+            if (result == null || result.equals("")) result = defaultNames.get(Ingredient.class);
+        } else if (entity instanceof Label) {
+            result = ((Label) entity).getName();
+            if (result == null || result.equals("")) result = defaultNames.get(Label.class);
+        } else if (entity instanceof Recipe) {
+            result = ((Recipe) entity).getName();
+            if (result == null || result.equals("")) result = defaultNames.get(Recipe.class);
+        }
+        return (result == null) ? "" : result;
     }
 
     public Calendar getCookTime(RecipeFull recipe) {

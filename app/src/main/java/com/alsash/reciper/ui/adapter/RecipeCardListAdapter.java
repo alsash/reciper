@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import com.alsash.reciper.mvp.model.entity.Recipe;
 import com.alsash.reciper.ui.adapter.holder.RecipeCardHolder;
 import com.alsash.reciper.ui.adapter.interaction.RecipeListInteraction;
+import com.alsash.reciper.ui.adapter.observer.AdapterPositionSetObserver;
 
 import java.util.HashSet;
 import java.util.List;
@@ -32,6 +33,7 @@ public class RecipeCardListAdapter extends RecyclerView.Adapter<RecipeCardHolder
         this.backCardPositions = new HashSet<>();
         this.recipeCardLayoutId = recipeCardLayoutId;
         setHasStableIds(true);
+        registerAdapterDataObserver(new AdapterPositionSetObserver(backCardPositions));
     }
 
     @Override

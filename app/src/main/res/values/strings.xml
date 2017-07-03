@@ -109,6 +109,17 @@
     <string name="nutrition_protein">Protein</string>
     <string name="nutrition_fat">Fat</string>
 
+    <!--App entities -->
+    <string name="entity_author">Author</string>
+    <string name="entity_category">Category</string>
+    <string name="entity_food">Food</string>
+    <string name="entity_ingredient">Ingredient</string>
+    <string name="entity_label">Label</string>
+    <string name="entity_measure">Measure</string>
+    <string name="entity_method">Method</string>
+    <string name="entity_photo">Photo</string>
+    <string name="entity_recipe">Recipe</string>
+
     <!-- App Navigation -->
     <string name="navigation_app_recipe">Recipes</string>
     <string name="navigation_app_category">Categories</string>
@@ -131,11 +142,10 @@
     <string name="fragment_recipe_details_methods_delete_reject">UNDO</string>
     <string name="fragment_entity_list_appbar_add">Add</string>
     <string name="fragment_entity_list_appbar_search">Search</string>
-    <string name="fragment_entity_list_delete_success">%1$s has been removed</string>
+    <string name="fragment_entity_list_delete_success">%s has been removed</string>
     <string name="fragment_entity_list_delete_reject">UNDO</string>
-    <string name="fragment_entity_list_delete_fail">
-        %1$s has %2$s. Remove related recipes first.
-    </string>
+    <string name="fragment_entity_list_delete_fail">%1$s has %2$s. Remove related recipes first.</string>
+    <string name="fragment_entity_list_food_search">Copy the food ID and paste it into any food</string>
     <string name="hint_label_name">Label name</string>
     <string name="hint_category_name">Category name</string>
     <string name="hint_author_name">Author name</string>

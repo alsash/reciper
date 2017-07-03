@@ -1,6 +1,5 @@
 package com.alsash.reciper.ui.loader;
 
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -92,7 +91,6 @@ public class ImageLoader {
                                    String model,
                                    Target<GlideDrawable> target,
                                    boolean isFirstResource) {
-            Log.d(TAG, e.getMessage(), e);
             setComplete(true);
             return false;
         }
