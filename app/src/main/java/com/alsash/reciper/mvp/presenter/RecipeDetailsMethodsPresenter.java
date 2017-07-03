@@ -113,7 +113,6 @@ public class RecipeDetailsMethodsPresenter extends BaseRestrictPresenter<RecipeD
         };
         view.showMethodsTitle(methods.size());
         view.showMethodDelete(position, reject);
-
     }
 
     @Nullable

@@ -82,6 +82,23 @@ public class StorageLogic {
         }
     }
 
+    public int getRelatedRecipesSize(BaseEntity entity) {
+        if (entity instanceof CategoryTable) {
+            CategoryTable categoryTable = (CategoryTable) entity;
+            return dbManager.getRecipeTable(categoryTable).size(); // Distinct count.
+        } else if (entity instanceof LabelTable) {
+            LabelTable labelTable = (LabelTable) entity;
+            return dbManager.getRecipeTable(labelTable).size();
+        } else if (entity instanceof FoodTable) {
+            FoodTable foodTable = (FoodTable) entity;
+            return dbManager.getRecipeTable(foodTable).size();
+        } else if (entity instanceof AuthorTable) {
+            AuthorTable authorTable = (AuthorTable) entity;
+            return dbManager.getRecipeTable(authorTable).size();
+        }
+        return 0;
+    }
+
     public List<Category> getCategories(int offset, int limit) {
         if (BuildConfig.DEBUG) MainThreadException.throwOnMainThread(TAG, "getCategories()");
         List<Category> categories = new ArrayList<>();

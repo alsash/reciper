@@ -4,14 +4,20 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.BaseTransientBottomBar;
+import android.support.design.widget.Snackbar;
+import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.alsash.reciper.R;
 import com.alsash.reciper.app.ReciperApp;
+import com.alsash.reciper.app.lib.MutableBoolean;
 import com.alsash.reciper.logic.NavigationLogic;
 import com.alsash.reciper.mvp.model.entity.Author;
 import com.alsash.reciper.mvp.model.entity.BaseEntity;
@@ -39,6 +45,28 @@ public class EntityListFragment extends BaseListFragment<BaseEntity, EntityListV
     NavigationLogic navigator;
 
     private Class<?> entityClass;
+    private ItemTouchHelper.Callback entityTouchCallback = new ItemTouchHelper.SimpleCallback(
+            ItemTouchHelper.DOWN, ItemTouchHelper.START) {
+
+        @Override
+        public boolean isLongPressDragEnabled() {
+            return false;
+        }
+
+        @Override
+        public boolean onMove(RecyclerView recyclerView,
+                              RecyclerView.ViewHolder source,
+                              RecyclerView.ViewHolder target) {
+            return false;
+        }
+
+        @Override
+        public void onSwiped(RecyclerView.ViewHolder holder, int direction) {
+            presenter.deleteEntity(getThisView(), holder.getAdapterPosition());
+        }
+    };
+    private ItemTouchHelper entityTouchHelper = new ItemTouchHelper(entityTouchCallback);
+
 
     public static EntityListFragment newInstance(Intent intent) {
         return getThisFragment(new EntityListFragment(), intent);
@@ -69,6 +97,55 @@ public class EntityListFragment extends BaseListFragment<BaseEntity, EntityListV
     @Override
     public void setEntityClass(Class<?> entityClass) {
         this.entityClass = entityClass;
+    }
+
+    @Override
+    public void showInsert(int position) {
+        adapter.notifyItemInserted(position);
+    }
+
+    @Override
+    public void showDelete(int position) {
+        adapter.notifyItemRemoved(position);
+    }
+
+    @Override
+    public void showDeleteSuccessMessage(String entityName, final MutableBoolean reject) {
+        if (getView() == null) {
+            reject.set(false);
+            return;
+        }
+        Snackbar.make(getView(),
+                getString(R.string.fragment_entity_list_delete_success, entityName),
+                Snackbar.LENGTH_LONG)
+                .setAction(R.string.fragment_entity_list_delete_reject,
+                        new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                reject.set(true);
+                            }
+                        })
+                .addCallback(new BaseTransientBottomBar.BaseCallback<Snackbar>() {
+                    @Override
+                    public void onDismissed(Snackbar transientBottomBar, int event) {
+                        if (event != BaseTransientBottomBar.BaseCallback.DISMISS_EVENT_ACTION)
+                            reject.set(false);
+                    }
+                })
+                .setActionTextColor(ResourcesCompat.getColor(getResources(),
+                        R.color.orange_500, null))
+                .show();
+    }
+
+    @Override
+    public void showDeleteFailMessage(String entityName, int recipesCount) {
+        if (getView() == null) return;
+        Snackbar.make(getView(),
+                getString(R.string.fragment_entity_list_delete_fail, entityName,
+                        getResources().getQuantityString(R.plurals.quantity_recipe, recipesCount,
+                                recipesCount)),
+                Snackbar.LENGTH_LONG)
+                .show();
     }
 
     @Override
@@ -105,6 +182,12 @@ public class EntityListFragment extends BaseListFragment<BaseEntity, EntityListV
                 .getUiEntityListComponent()
                 .inject(this);
         return presenter.setEntityRestriction(navigator.getRestriction(getThisIntent(this)));
+    }
+
+    @Override
+    protected void setupList() {
+        super.setupList();
+        entityTouchHelper.attachToRecyclerView(list);
     }
 
     @Override

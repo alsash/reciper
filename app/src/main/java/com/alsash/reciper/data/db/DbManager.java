@@ -135,7 +135,7 @@ public class DbManager {
                 .where(
                         CategoryTableDao.Properties.Uuid.eq(categoryTable.getUuid())
                 );
-        return builder.build().list();
+        return builder.distinct().build().list();
     }
 
     public List<RecipeTable> getRecipeTable(LabelTable labelTable) {
@@ -152,7 +152,7 @@ public class DbManager {
                 .where(
                         RecipeLabelTableDao.Properties.LabelUuid.eq(labelTable.getUuid())
                 );
-        return builder.build().list();
+        return builder.distinct().build().list();
     }
 
     public List<RecipeTable> getRecipeTable(FoodTable foodTable) {
@@ -169,14 +169,13 @@ public class DbManager {
                 .where(
                         RecipeFoodTableDao.Properties.FoodUuid.eq(foodTable.getUuid())
                 );
-        return builder.build().list();
+        return builder.distinct().build().list();
     }
 
     public List<RecipeTable> getRecipeTable(AuthorTable authorTable) {
-        List<RecipeTable> recipeTables = daoSession.getRecipeTableDao().queryBuilder()
+        return daoSession.getRecipeTableDao().queryBuilder()
                 .where(RecipeTableDao.Properties.AuthorUuid.eq(authorTable.getUuid()))
-                .list();
-        return recipeTables;
+                .distinct().list();
     }
 
     public List<FoodTable> getFoodTable() {
