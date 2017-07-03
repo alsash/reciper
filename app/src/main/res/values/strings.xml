@@ -61,6 +61,7 @@
     <string name="action_settings">Settings</string>
     <string name="action_edit">Edit</string>
     <string name="action_delete">Delete</string>
+
     <plurals name="quantity_recipe">
         <item quantity="one">%d Recipe</item>
         <item quantity="other">%d Recipes</item>
@@ -153,5 +154,6 @@
     <string name="hint_food_nutrition_value">Nutrition value</string>
     <string name="hint_food_nutrition_quantity">per 100 grams</string>
     <string name="hint_food_name">Food name</string>
+    <string name="photo_dialog_title">Photo url</string>
 
 </resources>

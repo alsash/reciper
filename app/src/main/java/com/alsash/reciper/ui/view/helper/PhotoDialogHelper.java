@@ -6,8 +6,10 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.text.InputType;
+import android.util.TypedValue;
 import android.widget.EditText;
 
+import com.alsash.reciper.R;
 import com.alsash.reciper.app.lib.MutableString;
 import com.alsash.reciper.mvp.model.entity.Photo;
 
@@ -20,25 +22,30 @@ public class PhotoDialogHelper {
                             @Nullable Photo photo,
                             @NonNull final MutableString listener) {
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(context);
-
         final EditText editText = new EditText(context);
         editText.setInputType(InputType.TYPE_TEXT_VARIATION_URI);
+        editText.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
 
         final String url = (photo != null) ? photo.getUrl() : null;
         if (url != null) editText.setText(url);
 
-        builder.setView(editText);
-        builder.setPositiveButton(context.getString(android.R.string.copyUrl),
-                new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        String newUrl = editText.getText().toString();
-                        if (!newUrl.equals(url)) listener.set(newUrl);
-                        dialog.dismiss();
-                    }
-                });
-        builder.setNegativeButton(context.getString(android.R.string.cancel), null);
-        builder.show();
+        new AlertDialog.Builder(context)
+                .setTitle(R.string.photo_dialog_title)
+                .setView(editText)
+                .setPositiveButton(context.getString(android.R.string.ok),
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                String newUrl = editText.getText().toString();
+                                if (!newUrl.startsWith("https://")
+                                        && !newUrl.startsWith("http://")) {
+                                    newUrl = "https://" + newUrl;
+                                }
+                                if (!newUrl.equals(url)) listener.set(newUrl);
+                                dialog.dismiss();
+                            }
+                        })
+                .setNegativeButton(context.getString(android.R.string.cancel), null)
+                .show();
     }
 }

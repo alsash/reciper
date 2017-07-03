@@ -40,8 +40,8 @@ public class ImageLoader {
                     .load(source)
                     .listener(new GlideRequestListener(barRef, completer))
                     .diskCacheStrategy(AppContract.Glide.DEFAULT_CACHE_STRATEGY)
-                    .fallback(R.color.gray_200)
-                    .crossFade()
+                    .error(R.color.gray_500)
+                    .crossFade(AppContract.Glide.DEFAULT_CROSS_FADE_DURATION_MS)
                     .into(imageView);
         }
         clear();

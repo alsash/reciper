@@ -10,7 +10,6 @@ import com.alsash.reciper.mvp.model.entity.BaseEntity;
 import com.alsash.reciper.mvp.model.entity.Category;
 import com.alsash.reciper.mvp.model.entity.Food;
 import com.alsash.reciper.mvp.model.entity.Label;
-import com.alsash.reciper.mvp.model.entity.Photo;
 import com.alsash.reciper.mvp.view.EntityListView;
 
 import java.lang.ref.WeakReference;
@@ -174,50 +173,57 @@ public class EntityListPresenter extends BaseListPresenter<BaseEntity, EntityLis
         }
     }
 
-    public void editPhoto(EntityListView view, final BaseEntity entity) {
-
-        final boolean isAuthor;
-        Photo photo;
-        if (entity instanceof Author) {
-            photo = ((Author) entity).getPhoto();
-            isAuthor = true;
-        } else if (entity instanceof Category) {
-            photo = ((Category) entity).getPhoto();
-            isAuthor = false;
-        } else {
-            return;
-        }
+    public void editPhoto(EntityListView view, BaseEntity entity) {
 
         final WeakReference<EntityListView> viewRef = new WeakReference<>(view);
 
-        view.showPhotoEditDialog(photo, new MutableString() {
-            @Override
-            public synchronized MutableString set(final String value) {
-                if (isAuthor) {
-                    storageLogic.updateSync((Author) entity, value, true);
-                } else {
-                    storageLogic.updateSync((Category) entity, value, true);
-                }
-                if (viewRef.get() != null)
-                    viewRef.get().showUpdate(getModels().indexOf(entity));
+        if (entity instanceof Author) {
+            final Author author = (Author) entity;
+            view.showPhotoEditDialog(author.getPhoto(), new MutableString() {
+                @Override
+                public synchronized MutableString set(final String value) {
+                    storageLogic.updateSync(author, value, true);
+                    if (viewRef.get() != null)
+                        viewRef.get().showUpdate(getModels().indexOf(author));
 
-                getComposite().add(Completable
-                        .fromAction(new Action() {
-                            @Override
-                            public void run() throws Exception {
-                                if (isAuthor) {
-                                    storageLogic.updateAsync((Author) entity);
-                                } else {
-                                    storageLogic.updateAsync((Category) entity);
+                    getComposite().add(Completable
+                            .fromAction(new Action() {
+                                @Override
+                                public void run() throws Exception {
+                                    storageLogic.updateAsync(author);
                                 }
-                            }
-                        })
-                        .subscribeOn(Schedulers.io())
-                        .subscribe());
-                return super.set(value);
-            }
-        });
+                            })
+                            .subscribeOn(Schedulers.io())
+                            .subscribe());
+                    return super.set(value);
+                }
+            });
+            return;
+        }
 
+        if (entity instanceof Category) {
+            final Category category = (Category) entity;
+            view.showPhotoEditDialog(category.getPhoto(), new MutableString() {
+                @Override
+                public synchronized MutableString set(final String value) {
+                    storageLogic.updateSync(category, value, true);
+                    if (viewRef.get() != null)
+                        viewRef.get().showUpdate(getModels().indexOf(category));
+
+                    getComposite().add(Completable
+                            .fromAction(new Action() {
+                                @Override
+                                public void run() throws Exception {
+                                    storageLogic.updateAsync(category);
+                                }
+                            })
+                            .subscribeOn(Schedulers.io())
+                            .subscribe());
+                    return super.set(value);
+                }
+            });
+            return;
+        }
     }
 
     @Override

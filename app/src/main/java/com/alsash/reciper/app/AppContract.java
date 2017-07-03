@@ -40,7 +40,7 @@ public final class AppContract {
     }
 
     public static final class Db {
-        public static final String DATABASE_NAME = "reciper_db";
+        public static final String DATABASE_NAME = "com.alsash.reciper.db";
     }
 
     // Glide framework
@@ -49,13 +49,14 @@ public final class AppContract {
         public static final double BITMAP_POOL_FACTOR = 1.5D;
         public static final int DISK_CACHE_SIZE_BYTES = 512 * 1024 * 1024; // 512 MiB
         public static final DiskCacheStrategy DEFAULT_CACHE_STRATEGY = DiskCacheStrategy.SOURCE;
+        public static final int DEFAULT_CROSS_FADE_DURATION_MS = 300;
     }
 
     // Animation payloads
     public static final class Payload {
-        public static final String FLIP_BACK_TO_FRONT = TAG + ".flip_back_to_front";
-        public static final String FLIP_FRONT_TO_BACK = TAG + ".flip_front_to_back";
         private static final String PAYLOAD_TAG = TAG + ".Payload";
+        public static final String FLIP_BACK_TO_FRONT = PAYLOAD_TAG + ".flip_back_to_front";
+        public static final String FLIP_FRONT_TO_BACK = PAYLOAD_TAG + ".flip_front_to_back";
     }
 
     // Public entity keys

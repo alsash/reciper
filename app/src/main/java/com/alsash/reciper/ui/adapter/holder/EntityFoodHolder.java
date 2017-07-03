@@ -92,8 +92,7 @@ public class EntityFoodHolder extends BaseEntityHolder {
                 .button(expand)
                 .layout(expandLayout)
                 .start();
-        if (expanded) ndbno.requestFocus();
-        name.requestFocus();
+        if (expanded) name.requestFocus();
     }
 
     /**
