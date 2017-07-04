@@ -71,20 +71,28 @@ public abstract class BaseListFragment<M extends BaseEntity, V extends BaseListV
 
     @Override
     public void showLoading(boolean loading) {
-        if (refreshIndicator != null)
-            refreshIndicator.setRefreshing(loading);
+        if (refreshIndicator != null) refreshIndicator.setRefreshing(loading);
+    }
+
+    @Override
+    public void showInsert(int position) {
+        if (adapter != null) adapter.notifyItemInserted(position);
+        if (list != null) list.scrollToPosition(position);
     }
 
     @Override
     public void showInsert(int insertPosition, int insertCount) {
-        if (adapter != null)
-            adapter.notifyItemRangeInserted(insertPosition, insertCount);
+        if (adapter != null) adapter.notifyItemRangeInserted(insertPosition, insertCount);
     }
 
     @Override
     public void showUpdate(int position) {
-        if (adapter != null)
-            adapter.notifyItemChanged(position);
+        if (adapter != null) adapter.notifyItemChanged(position);
+    }
+
+    @Override
+    public void showDelete(int position) {
+        if (adapter != null) adapter.notifyItemRemoved(position);
     }
 
     @Override
@@ -117,8 +125,8 @@ public abstract class BaseListFragment<M extends BaseEntity, V extends BaseListV
             }
         });
         refreshIndicator.setColorSchemeResources(
-                R.color.nutrition_carbohydrate,
-                R.color.nutrition_fat,
-                R.color.nutrition_protein);
+                R.color.green_500,
+                R.color.amber_500,
+                R.color.red_500);
     }
 }

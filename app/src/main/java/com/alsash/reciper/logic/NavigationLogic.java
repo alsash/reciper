@@ -28,6 +28,7 @@ import com.alsash.reciper.ui.fragment.RecipeCollectionLabelFragment;
 import com.alsash.reciper.ui.fragment.RecipeDetailsDescriptionFragment;
 import com.alsash.reciper.ui.fragment.RecipeDetailsIngredientsFragment;
 import com.alsash.reciper.ui.fragment.RecipeDetailsMethodsFragment;
+import com.alsash.reciper.ui.fragment.RecipeDetailsNutritionFragment;
 import com.alsash.reciper.ui.fragment.RecipeRestrictListFragment;
 
 import java.lang.ref.WeakReference;
@@ -224,6 +225,7 @@ public class NavigationLogic {
         if (restriction.entityClass.equals(RecipeFull.class))
             return new Fragment[]{
                     RecipeDetailsDescriptionFragment.newInstance(intent),
+                    RecipeDetailsNutritionFragment.newInstance(intent),
                     RecipeDetailsIngredientsFragment.newInstance(intent),
                     RecipeDetailsMethodsFragment.newInstance(intent)};
 

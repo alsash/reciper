@@ -14,7 +14,11 @@ public interface BaseListView<M> extends BaseView {
 
     void showLoading(boolean loading);
 
+    void showInsert(int position);
+
     void showInsert(int insertPosition, int insertCount);
 
     void showUpdate(int position);
+
+    void showDelete(int position);
 }

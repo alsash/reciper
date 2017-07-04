@@ -35,31 +35,21 @@ public class RecipeDetailsDescriptionPresenter
         return (RecipeDetailsDescriptionPresenter) super.setRestriction(restriction);
     }
 
-    public void onLabelDelete(Label label) {
+    public void deleteLabel(Label label) {
 
     }
 
-    public void onLabelAdd() {
+    public void addLabel() {
 
-    }
-
-    public void onNutritionSwitch(boolean switchOn, RecipeDetailsDescriptionView view) {
-        recipeUnit = switchOn ? RecipeUnit.SERVING : RecipeUnit.GRAM;
-        view.showNutritionQuantity(recipeUnit.getDefaultQuantity(), recipeUnit);
-        if (recipeFull == null) return;
-        view.showNutritionChart(businessLogic.getNutrient(recipeFull, recipeUnit));
-        view.showNutritionAnimation();
     }
 
     @Override
     public void visible(RecipeDetailsDescriptionView view) {
-        view.showNutritionQuantity(recipeUnit.getDefaultQuantity(), recipeUnit);
         if (recipeFull == null) return;
         view.showDescription(recipeFull);
         view.showCategory(recipeFull.getCategory());
         view.showLabels(recipeFull.getLabels());
         view.showCookTime(businessLogic.getCookTime(recipeFull));
-        view.showNutritionChart(businessLogic.getNutrient(recipeFull, recipeUnit));
     }
 
     @Override

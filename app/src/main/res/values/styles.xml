@@ -59,6 +59,7 @@
     </style>
 
     <style name="TextAppearance.RecipeTitle.Tab" parent="TextAppearance.Design.Tab">
+        <item name="android:fontFamily">sans-serif</item>
         <item name="android:textSize">12sp</item>
     </style>
 

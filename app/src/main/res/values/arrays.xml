@@ -9,13 +9,13 @@
     </string-array>
     <!--Nutrition-->
     <integer-array name="nutrition_colors">
-        <item>@color/nutrition_carbohydrate</item>
-        <item>@color/nutrition_protein</item>
-        <item>@color/nutrition_fat</item>
+        <item>@color/green_500</item>
+        <item>@color/red_500</item>
+        <item>@color/amber_500</item>
     </integer-array>
     <integer-array name="nutrition_backgrounds">
-        <item>@color/nutrition_carbohydrate_bg</item>
-        <item>@color/nutrition_protein_bg</item>
-        <item>@color/nutrition_fat_bg</item>
+        <item>@color/green_050</item>
+        <item>@color/red_050</item>
+        <item>@color/amber_050</item>
     </integer-array>
 </resources>

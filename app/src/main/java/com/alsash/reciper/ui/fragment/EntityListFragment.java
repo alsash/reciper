@@ -104,17 +104,6 @@ public class EntityListFragment extends BaseListFragment<BaseEntity, EntityListV
     }
 
     @Override
-    public void showInsert(int position) {
-        adapter.notifyItemInserted(position);
-        list.scrollToPosition(position);
-    }
-
-    @Override
-    public void showDelete(int position) {
-        adapter.notifyItemRemoved(position);
-    }
-
-    @Override
     public void showDeleteSuccessMessage(String entityName, final MutableBoolean reject) {
         if (getView() == null) {
             reject.set(false);

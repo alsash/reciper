@@ -12,9 +12,9 @@ public interface RecipeDetailsView extends BaseView {
 
     void showDetail(int position);
 
+    int shownDetail();
+
     void showTitle(String title);
 
     void showPhoto(Photo photo);
-
-    int shownDetail();
 }

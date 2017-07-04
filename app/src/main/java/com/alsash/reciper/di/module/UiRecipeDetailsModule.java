@@ -6,6 +6,7 @@ import com.alsash.reciper.logic.StorageLogic;
 import com.alsash.reciper.mvp.presenter.RecipeDetailsDescriptionPresenter;
 import com.alsash.reciper.mvp.presenter.RecipeDetailsIngredientsPresenter;
 import com.alsash.reciper.mvp.presenter.RecipeDetailsMethodsPresenter;
+import com.alsash.reciper.mvp.presenter.RecipeDetailsNutritionPresenter;
 import com.alsash.reciper.mvp.presenter.RecipeDetailsPresenter;
 
 import dagger.Module;
@@ -26,9 +27,16 @@ public abstract class UiRecipeDetailsModule {
 
     @Provides
     @RecipeDetailsScope
-    static RecipeDetailsDescriptionPresenter provideDescriptionsPresenter(StorageLogic sLogic,
-                                                                          BusinessLogic bLogic) {
+    static RecipeDetailsDescriptionPresenter provideDescriptionPresenter(StorageLogic sLogic,
+                                                                         BusinessLogic bLogic) {
         return new RecipeDetailsDescriptionPresenter(sLogic, bLogic);
+    }
+
+    @Provides
+    @RecipeDetailsScope
+    static RecipeDetailsNutritionPresenter provideNutritionPresenter(StorageLogic sLogic,
+                                                                     BusinessLogic bLogic) {
+        return new RecipeDetailsNutritionPresenter(sLogic, bLogic);
     }
 
     @Provides

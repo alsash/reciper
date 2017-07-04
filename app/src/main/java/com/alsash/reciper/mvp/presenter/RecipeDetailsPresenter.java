@@ -14,6 +14,7 @@ import com.alsash.reciper.mvp.view.RecipeDetailsView;
 import com.alsash.reciper.ui.fragment.RecipeDetailsDescriptionFragment;
 import com.alsash.reciper.ui.fragment.RecipeDetailsIngredientsFragment;
 import com.alsash.reciper.ui.fragment.RecipeDetailsMethodsFragment;
+import com.alsash.reciper.ui.fragment.RecipeDetailsNutritionFragment;
 
 /**
  * A Presenter that represents details of a single recipe
@@ -25,7 +26,7 @@ public class RecipeDetailsPresenter extends BaseRestrictPresenter<RecipeDetailsV
 
     private RecipeFull recipeFull;
     private SwipeTab[] swipeTabs;
-    private boolean recipeShown;
+    private int shownPosition;
 
     public RecipeDetailsPresenter(StorageLogic storageLogic, BusinessLogic businessLogic) {
         super(storageLogic);
@@ -46,21 +47,24 @@ public class RecipeDetailsPresenter extends BaseRestrictPresenter<RecipeDetailsV
                 swipeTabs[i] = SwipeTab.builder()
                         .fragment(fragments[i])
                         .title(R.string.fragment_recipe_details_description_title)
-                        // .icon(R.drawable.activity_recipe_details_tab_description)
+                        .swiped(true)
+                        .build();
+            } else if (fragments[i] instanceof RecipeDetailsNutritionFragment) {
+                swipeTabs[i] = SwipeTab.builder()
+                        .fragment(fragments[i])
+                        .title(R.string.fragment_recipe_details_nutrition_title)
                         .swiped(true)
                         .build();
             } else if (fragments[i] instanceof RecipeDetailsIngredientsFragment) {
                 swipeTabs[i] = SwipeTab.builder()
                         .fragment(fragments[i])
                         .title(R.string.fragment_recipe_details_ingredients_title)
-                        // .icon(R.drawable.activity_recipe_details_tab_ingredients)
                         .swiped(true)
                         .build();
             } else if (fragments[i] instanceof RecipeDetailsMethodsFragment) {
                 swipeTabs[i] = SwipeTab.builder()
                         .fragment(fragments[i])
                         .title(R.string.fragment_recipe_details_methods_title)
-                        // .icon(R.drawable.activity_recipe_details_tab_methods)
                         .swiped(true)
                         .build();
             } else {
@@ -81,21 +85,15 @@ public class RecipeDetailsPresenter extends BaseRestrictPresenter<RecipeDetailsV
 
     @Override
     public void visible(RecipeDetailsView view) {
-        if (recipeFull == null || recipeShown) return;
+        view.showDetail(shownPosition);
+        if (recipeFull == null) return;
         view.showTitle(recipeFull.getName());
         view.showPhoto(recipeFull.getMainPhoto());
-        recipeShown = true;
     }
 
     @Override
     public void invisible(RecipeDetailsView view) {
-
-    }
-
-    @Override
-    public void detach() {
-        super.detach();
-        recipeShown = false;
+        shownPosition = view.shownDetail();
     }
 
     @Nullable

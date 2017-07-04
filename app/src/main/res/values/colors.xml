@@ -19,12 +19,12 @@
     <color name="gray_700">#616161</color>
     <color name="gray_800">#424242</color>
     <color name="gray_900">#212121</color>
-    <color name="nutrition_carbohydrate">#8bc34a</color>
-    <color name="nutrition_protein">#f44336</color>
-    <color name="nutrition_fat">#ffc107</color>
-    <color name="nutrition_carbohydrate_bg">#e8f5e9</color>
-    <color name="nutrition_protein_bg">#ffebee</color>
-    <color name="nutrition_fat_bg">#fff8e1</color>
-    <color name="nutrition_energy">#1de9b6</color>
-    <color name="nutrition_energy_dark">#00bfa5</color>
+    <color name="green_050">#e8f5e9</color>
+    <color name="green_500">#8bc34a</color>
+    <color name="red_050">#ffebee</color>
+    <color name="red_500">#f44336</color>
+    <color name="amber_050">#fff8e1</color>
+    <color name="amber_500">#ffc107</color>
+    <color name="teal_accent_400">#1de9b6</color>
+    <color name="teal_accent_700">#00bfa5</color>
 </resources>

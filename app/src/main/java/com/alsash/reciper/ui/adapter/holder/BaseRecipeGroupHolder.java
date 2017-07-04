@@ -81,9 +81,20 @@ public abstract class BaseRecipeGroupHolder<G extends BaseEntity> extends Recycl
     }
 
     @Override
+    public void showInsert(int position) {
+        if (adapter != null) adapter.notifyItemInserted(position);
+        if (groupList != null) groupList.scrollToPosition(position);
+    }
+
+    @Override
     public void showUpdate(int position) {
         if (adapter == null) return;
         adapter.notifyItemChanged(position);
+    }
+
+    @Override
+    public void showDelete(int position) {
+        if (adapter != null) adapter.notifyItemRemoved(position);
     }
 
     public void setInteraction(RecipeGroupInteraction<G> interaction) {
