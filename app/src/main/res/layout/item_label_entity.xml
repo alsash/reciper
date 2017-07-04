@@ -35,7 +35,6 @@
             android:layout_marginLeft="24dp"
             android:layout_marginRight="24dp"
             android:fontFamily="serif"
-            android:gravity="center"
             android:hint="@string/hint_label_name"
             android:inputType="text"
             android:overScrollMode="ifContentScrolls"

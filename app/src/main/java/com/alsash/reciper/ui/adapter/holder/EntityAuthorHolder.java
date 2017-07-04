@@ -1,5 +1,6 @@
 package com.alsash.reciper.ui.adapter.holder;
 
+import android.graphics.drawable.Drawable;
 import android.support.annotation.LayoutRes;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +20,7 @@ public class EntityAuthorHolder extends BaseEntityHolder {
 
     private final ImageView image;
     private final EditText name;
+    private final Drawable nameBackground;
     private final ImageButton imageEdit;
     private final ImageButton valueEdit;
 
@@ -26,6 +28,7 @@ public class EntityAuthorHolder extends BaseEntityHolder {
         super(parent, layoutId);
         image = (ImageView) itemView.findViewById(R.id.item_author_image);
         name = (EditText) itemView.findViewById(R.id.item_author_name);
+        nameBackground = name.getBackground();
         imageEdit = (ImageButton) itemView.findViewById(R.id.item_author_image_edit);
         valueEdit = (ImageButton) itemView.findViewById(R.id.item_author_edit);
     }
@@ -48,8 +51,17 @@ public class EntityAuthorHolder extends BaseEntityHolder {
                 R.drawable.edit_icon_orange :
                 R.drawable.edit_icon_gray);
         name.setEnabled(editable);
+        name.setFocusable(editable);
+        name.setFocusableInTouchMode(editable);
+        name.setClickable(editable);
+        name.setLongClickable(editable);
         imageEdit.setVisibility(editable ? View.VISIBLE : View.GONE);
-        if (editable) name.requestFocus();
+        if (editable) {
+            name.setBackground(nameBackground);
+            name.requestFocus();
+        } else {
+            name.setBackground(null);
+        }
     }
 
     /**

@@ -1,5 +1,6 @@
 package com.alsash.reciper.ui.adapter.holder;
 
+import android.graphics.drawable.Drawable;
 import android.support.annotation.LayoutRes;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,11 +17,13 @@ import com.alsash.reciper.mvp.model.entity.Label;
 public class EntityLabelHolder extends BaseEntityHolder {
 
     private final EditText name;
+    private final Drawable nameBackground;
     private final ImageButton valueEdit;
 
     public EntityLabelHolder(ViewGroup parent, @LayoutRes int layoutId) {
         super(parent, layoutId);
         name = (EditText) itemView.findViewById(R.id.item_label_name);
+        nameBackground = name.getBackground();
         valueEdit = (ImageButton) itemView.findViewById(R.id.item_label_edit);
     }
 
@@ -41,7 +44,16 @@ public class EntityLabelHolder extends BaseEntityHolder {
                 R.drawable.edit_icon_orange :
                 R.drawable.edit_icon_gray);
         name.setEnabled(editable);
-        if (editable) name.requestFocus();
+        name.setFocusable(editable);
+        name.setFocusableInTouchMode(editable);
+        name.setClickable(editable);
+        name.setLongClickable(editable);
+        if (editable) {
+            name.setBackground(nameBackground);
+            name.requestFocus();
+        } else {
+            name.setBackground(null);
+        }
     }
 
     /**

@@ -17,19 +17,6 @@ public class AdapterPositionSetObserver extends RecyclerView.AdapterDataObserver
     }
 
     @Override
-    public void onChanged() {
-        for (Set<Integer> set : positionSets) set.clear();
-    }
-
-    @Override
-    public void onItemRangeChanged(int positionStart, int itemCount) {
-        if (itemCount <= 0) return;
-        for (int i = positionStart; i <= itemCount + positionStart; i++) {
-            for (Set<Integer> set : positionSets) set.remove(i);
-        }
-    }
-
-    @Override
     public void onItemRangeInserted(int positionStart, int itemCount) {
         if (itemCount <= 0) return;
         for (int i = itemCount + positionStart - 1; i >= positionStart; i--) {
