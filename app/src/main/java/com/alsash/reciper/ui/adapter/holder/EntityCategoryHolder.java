@@ -50,12 +50,13 @@ public class EntityCategoryHolder extends BaseEntityHolder {
         valueEdit.setImageResource(editable ?
                 R.drawable.edit_icon_orange :
                 R.drawable.edit_icon_gray);
+        imageEdit.setVisibility(editable ? View.VISIBLE : View.GONE);
         name.setEnabled(editable);
         name.setFocusable(editable);
         name.setFocusableInTouchMode(editable);
         name.setClickable(editable);
         name.setLongClickable(editable);
-        imageEdit.setVisibility(editable ? View.VISIBLE : View.GONE);
+        name.setCursorVisible(editable);
         if (editable) name.requestFocus();
     }
 

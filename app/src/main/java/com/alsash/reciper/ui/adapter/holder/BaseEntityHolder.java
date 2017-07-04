@@ -18,9 +18,9 @@ public abstract class BaseEntityHolder extends RecyclerView.ViewHolder {
 
     public abstract void bindEntity(BaseEntity entity);
 
+    public abstract void setListeners(Object... listeners);
+
     public abstract String[] getEditable();
 
     public abstract void setEditable(boolean editable);
-
-    public abstract void setListeners(Object... listeners);
 }

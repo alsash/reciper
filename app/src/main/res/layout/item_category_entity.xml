@@ -50,6 +50,7 @@
             android:fontFamily="serif"
             android:gravity="center"
             android:hint="@string/hint_category_name"
+            android:imeOptions="actionDone"
             android:inputType="text"
             android:overScrollMode="ifContentScrolls"
             android:scrollHorizontally="true"

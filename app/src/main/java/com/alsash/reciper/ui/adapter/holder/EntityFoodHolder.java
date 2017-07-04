@@ -2,7 +2,6 @@ package com.alsash.reciper.ui.adapter.holder;
 
 import android.animation.TimeInterpolator;
 import android.content.Context;
-import android.graphics.drawable.Drawable;
 import android.support.annotation.LayoutRes;
 import android.support.constraint.ConstraintLayout;
 import android.view.View;
@@ -28,9 +27,7 @@ public class EntityFoodHolder extends BaseEntityHolder {
     private static final int EXPAND_HEIGHT_DP = 180;
 
     private final EditText name;
-    private final Drawable nameBackground;
     private final EditText ndbno;
-    private final Drawable ndbnoBackground;
     private final TextView protein;
     private final TextView fat;
     private final TextView carbs;
@@ -42,9 +39,7 @@ public class EntityFoodHolder extends BaseEntityHolder {
     public EntityFoodHolder(ViewGroup parent, @LayoutRes int layoutId) {
         super(parent, layoutId);
         name = (EditText) itemView.findViewById(R.id.item_food_name);
-        nameBackground = name.getBackground();
         ndbno = (EditText) itemView.findViewById(R.id.item_food_ndbno);
-        ndbnoBackground = ndbno.getBackground();
         protein = (TextView) itemView.findViewById(R.id.item_food_protein);
         fat = (TextView) itemView.findViewById(R.id.item_food_fat);
         carbs = (TextView) itemView.findViewById(R.id.item_food_carbs);
@@ -83,24 +78,17 @@ public class EntityFoodHolder extends BaseEntityHolder {
         valueEdit.setImageResource(editable ?
                 R.drawable.edit_icon_orange :
                 R.drawable.edit_icon_gray);
-        name.setEnabled(editable);
-        name.setFocusable(editable);
-        name.setFocusableInTouchMode(editable);
-        name.setClickable(editable);
-        name.setLongClickable(editable);
         ndbno.setEnabled(editable);
         ndbno.setFocusable(editable);
         ndbno.setFocusableInTouchMode(editable);
         ndbno.setClickable(editable);
         ndbno.setLongClickable(editable);
-        if (editable) {
-            name.setBackground(nameBackground);
-            ndbno.setBackground(ndbnoBackground);
-            name.requestFocus();
-        } else {
-            name.setBackground(null);
-            ndbno.setBackground(null);
-        }
+        name.setEnabled(editable);
+        name.setFocusable(editable);
+        name.setFocusableInTouchMode(editable);
+        name.setClickable(editable);
+        name.setLongClickable(editable);
+        if (editable) name.requestFocus();
     }
 
     public void setExpanded(boolean expanded, boolean animate) {
