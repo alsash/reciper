@@ -7,6 +7,7 @@ import com.alsash.reciper.di.component.AppComponent;
 import com.alsash.reciper.di.component.DaggerAppComponent;
 import com.alsash.reciper.di.component.UiEntityListComponent;
 import com.alsash.reciper.di.component.UiRecipeCollectionsComponent;
+import com.alsash.reciper.di.component.UiRecipeCreationComponent;
 import com.alsash.reciper.di.component.UiRecipeDetailsComponent;
 import com.alsash.reciper.di.component.UiRecipeRestrictListComponent;
 import com.alsash.reciper.di.component.UiStartComponent;
@@ -24,6 +25,7 @@ public class ReciperApp extends Application {
     private UiRecipeCollectionsComponent uiRecipeCollectionsComponent;
     private UiRecipeRestrictListComponent uiRecipeRestrictListComponent;
     private UiRecipeDetailsComponent uiRecipeDetailsComponent;
+    private UiRecipeCreationComponent uiRecipeCreationComponent;
 
     /**
      * Initializing all components while splash (StartActivity) is shown.
@@ -50,6 +52,9 @@ public class ReciperApp extends Application {
                 .build();
         uiRecipeDetailsComponent = appComponent
                 .getRecipeDetailsComponentBuilder()
+                .build();
+        uiRecipeCreationComponent = appComponent
+                .getUiRecipeCreationComponentBuilder()
                 .build();
 
         // Facebook Stetho initialization
@@ -79,5 +84,9 @@ public class ReciperApp extends Application {
 
     public UiRecipeDetailsComponent getUiRecipeDetailsComponent() {
         return uiRecipeDetailsComponent;
+    }
+
+    public UiRecipeCreationComponent getUiRecipeCreationComponent() {
+        return uiRecipeCreationComponent;
     }
 }

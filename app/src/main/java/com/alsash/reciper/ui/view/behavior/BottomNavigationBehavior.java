@@ -45,7 +45,7 @@ public class BottomNavigationBehavior extends CoordinatorLayout.Behavior<BottomN
                                   int dy,
                                   int[] consumed) {
         if (dy < 0) {
-            child.animate().translationY(0); // show BottomNavigationView
+            child.animate().translationY(0); // showEditPhotoUrl BottomNavigationView
         } else if (dy > 0) {
             child.animate().translationY(child.getHeight()); // hide BottomNavigationView
         }

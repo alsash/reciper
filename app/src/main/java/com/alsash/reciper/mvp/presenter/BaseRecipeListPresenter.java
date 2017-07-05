@@ -44,14 +44,16 @@ public abstract class BaseRecipeListPresenter<V extends RecipeListView>
                             @Override
                             public void accept(@NonNull Notification<RecipeEvent> notification)
                                     throws Exception {
-                                if (notification.getValue() == null || viewRef.get() == null)
-                                    return;
                                 RecipeEvent event = notification.getValue();
+                                if (event == null) return;
                                 switch (event.action) {
+                                    case NAME:
+                                    case PHOTO:
                                     case FAVORITE:
                                         Integer position = getPosition(event.uuid);
                                         if (position == null) return;
-                                        viewRef.get().showUpdate(position);
+                                        if (viewRef.get() != null)
+                                            viewRef.get().showUpdate(position);
                                         break;
                                 }
                             }

@@ -78,6 +78,6 @@
         app:layout_constraintTop_toBottomOf="@+id/item_category_name"
         app:layout_constraintVertical_bias="1.0"
         tools:ignore="RtlHardcoded,RtlSymmetry"
-        tools:listitem="@layout/item_category_recipe_card" />
+        tools:listitem="@layout/item_recipe_card_category" />
 
 </android.support.constraint.ConstraintLayout>

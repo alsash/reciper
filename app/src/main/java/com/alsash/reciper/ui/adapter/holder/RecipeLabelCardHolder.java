@@ -28,7 +28,7 @@ public class RecipeLabelCardHolder extends BaseRecipeGroupHolder<Label> {
 
     @Override
     protected int getRecipeCardLayout() {
-        return R.layout.item_label_recipe_card;
+        return R.layout.item_recipe_card_label;
     }
 
     @Override

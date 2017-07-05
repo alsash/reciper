@@ -4,8 +4,11 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 
 import com.alsash.reciper.R;
+import com.alsash.reciper.app.lib.MutableString;
 import com.alsash.reciper.logic.BusinessLogic;
 import com.alsash.reciper.logic.StorageLogic;
+import com.alsash.reciper.logic.action.RecipeAction;
+import com.alsash.reciper.logic.event.RecipeEvent;
 import com.alsash.reciper.logic.restriction.EntityRestriction;
 import com.alsash.reciper.mvp.model.entity.BaseEntity;
 import com.alsash.reciper.mvp.model.entity.RecipeFull;
@@ -15,6 +18,12 @@ import com.alsash.reciper.ui.fragment.RecipeDetailsDescriptionFragment;
 import com.alsash.reciper.ui.fragment.RecipeDetailsIngredientsFragment;
 import com.alsash.reciper.ui.fragment.RecipeDetailsMethodsFragment;
 import com.alsash.reciper.ui.fragment.RecipeDetailsNutritionFragment;
+
+import java.lang.ref.WeakReference;
+
+import io.reactivex.Completable;
+import io.reactivex.functions.Action;
+import io.reactivex.schedulers.Schedulers;
 
 /**
  * A Presenter that represents details of a single recipe
@@ -87,13 +96,100 @@ public class RecipeDetailsPresenter extends BaseRestrictPresenter<RecipeDetailsV
     public void visible(RecipeDetailsView view) {
         view.showDetail(shownPosition);
         if (recipeFull == null) return;
-        view.showTitle(recipeFull.getName());
+        if (recipeFull.getName() == null || recipeFull.getName().equals("")) {
+            editRecipeName(view);
+        } else {
+            view.showTitle(recipeFull.getName());
+        }
         view.showPhoto(recipeFull.getMainPhoto());
     }
 
     @Override
     public void invisible(RecipeDetailsView view) {
         shownPosition = view.shownDetail();
+    }
+
+    public void editRecipeName(RecipeDetailsView view) {
+        if (recipeFull == null) return;
+        final WeakReference<RecipeDetailsView> viewRef = new WeakReference<>(view);
+        view.showNameEditDialog(recipeFull, new MutableString() {
+            @Override
+            public synchronized MutableString set(final String value) {
+
+                storageLogic.updateSync(recipeFull, RecipeAction.NAME, value);
+
+                if (viewRef.get() != null) viewRef.get().showPhoto(recipeFull.getMainPhoto());
+
+                businessLogic.getRecipeEventSubject().onNext(new RecipeEvent(RecipeAction.NAME,
+                        recipeFull.getUuid()));
+
+                getComposite().add(Completable
+                        .fromAction(new Action() {
+                            @Override
+                            public void run() throws Exception {
+                                storageLogic.updateAsync(recipeFull, RecipeAction.NAME);
+                            }
+                        })
+                        .subscribeOn(Schedulers.io())
+                        .subscribe());
+                return super.set(value);
+            }
+        });
+    }
+
+    public void editRecipePhoto(RecipeDetailsView view) {
+        if (recipeFull == null) return;
+        final WeakReference<RecipeDetailsView> viewRef = new WeakReference<>(view);
+        view.showPhotoEditDialog(recipeFull.getMainPhoto(), new MutableString() {
+            @Override
+            public synchronized MutableString set(final String value) {
+
+                storageLogic.updateSync(recipeFull, RecipeAction.PHOTO, value);
+
+                if (viewRef.get() != null) viewRef.get().showPhoto(recipeFull.getMainPhoto());
+
+                businessLogic.getRecipeEventSubject().onNext(new RecipeEvent(RecipeAction.PHOTO,
+                        recipeFull.getUuid()));
+
+                getComposite().add(Completable
+                        .fromAction(new Action() {
+                            @Override
+                            public void run() throws Exception {
+                                storageLogic.updateAsync(recipeFull, RecipeAction.PHOTO);
+                            }
+                        })
+                        .subscribeOn(Schedulers.io())
+                        .subscribe());
+                return super.set(value);
+            }
+        });
+    }
+
+    public void deleteRecipe(RecipeDetailsView view) {
+        if (recipeFull == null) return;
+        final WeakReference<RecipeDetailsView> viewRef = new WeakReference<>(view);
+        view.showPhotoEditDialog(recipeFull.getMainPhoto(), new MutableString() {
+            @Override
+            public synchronized MutableString set(final String value) {
+
+                storageLogic.updateSync(recipeFull, RecipeAction.PHOTO, value);
+
+                businessLogic.getRecipeEventSubject().onNext(new RecipeEvent(RecipeAction.DELETE,
+                        recipeFull.getUuid()));
+
+                getComposite().add(Completable
+                        .fromAction(new Action() {
+                            @Override
+                            public void run() throws Exception {
+                                storageLogic.updateAsync(recipeFull, RecipeAction.PHOTO);
+                            }
+                        })
+                        .subscribeOn(Schedulers.io())
+                        .subscribe());
+                if (viewRef.get() != null) viewRef.get().finishView();
+                return super.set(value);
+            }
+        });
     }
 
     @Nullable
@@ -106,4 +202,6 @@ public class RecipeDetailsPresenter extends BaseRestrictPresenter<RecipeDetailsV
     protected void setEntity(@Nullable BaseEntity entity) {
         recipeFull = (RecipeFull) entity;
     }
+
+
 }

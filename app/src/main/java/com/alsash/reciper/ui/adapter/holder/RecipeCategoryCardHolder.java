@@ -31,7 +31,7 @@ public class RecipeCategoryCardHolder extends BaseRecipeGroupHolder<Category> {
 
     @Override
     protected int getRecipeCardLayout() {
-        return R.layout.item_category_recipe_card;
+        return R.layout.item_recipe_card_category;
     }
 
     @Override

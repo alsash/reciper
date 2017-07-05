@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/appbar_edit_name"
+        android:icon="@drawable/appbar_edit_icon"
+        android:title="@string/appbar_edit_name"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/appbar_edit_photo"
+        android:icon="@drawable/appbar_photo_icon"
+        android:title="@string/appbar_edit_photo"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/appbar_delete"
+        android:icon="@drawable/appbar_delete_icon"
+        android:title="@string/appbar_delete"
+        app:showAsAction="never" />
+</menu>

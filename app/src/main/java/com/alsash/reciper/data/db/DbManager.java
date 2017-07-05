@@ -337,6 +337,57 @@ public class DbManager {
                 || recipes == null);
     }
 
+    public void deleteDeep(final AuthorTable authorTable) {
+        daoSession.runInTx(new Runnable() {
+            @Override
+            public void run() {
+                daoSession.getPhotoTableDao().deleteInTx(authorTable.getPhotoTables());
+                daoSession.getAuthorTableDao().deleteInTx(authorTable);
+            }
+        });
+    }
+
+    public void deleteDeep(final LabelTable labelTable) {
+        daoSession.getLabelTableDao().deleteInTx(labelTable);
+    }
+
+    public void deleteDeep(final CategoryTable categoryTable) {
+        daoSession.runInTx(new Runnable() {
+            @Override
+            public void run() {
+                daoSession.getPhotoTableDao().deleteInTx(categoryTable.getPhotoTables());
+                daoSession.getCategoryTableDao().deleteInTx(categoryTable);
+            }
+        });
+    }
+
+    public void deleteDeep(final FoodTable foodTable) {
+        daoSession.runInTx(new Runnable() {
+            @Override
+            public void run() {
+                daoSession.getFoodUsdaTableDao().deleteInTx(foodTable.getFoodUsdaTables());
+                daoSession.getFoodMeasureTableDao().deleteInTx(foodTable.getFoodMeasureTables());
+                daoSession.getFoodTableDao().deleteInTx(foodTable);
+            }
+        });
+    }
+
+    public void deleteDeep(final RecipeTable recipeTable) {
+        daoSession.runInTx(new Runnable() {
+            @Override
+            public void run() {
+                daoSession.getRecipeLabelTableDao().deleteInTx(recipeTable.getRecipeLabelTables());
+                daoSession.getRecipeMethodTableDao().deleteInTx(recipeTable.getRecipeMethodTables());
+                List<PhotoTable> photoTables = new ArrayList<>();
+                for (RecipePhotoTable recipePhotoTable : recipeTable.getRecipePhotoTables())
+                    photoTables.addAll(recipePhotoTable.getPhotoTables());
+                daoSession.getRecipePhotoTableDao().deleteInTx(recipeTable.getRecipePhotoTables());
+                daoSession.getPhotoTableDao().deleteInTx(photoTables);
+                daoSession.getRecipeTableDao().deleteInTx(recipeTable);
+            }
+        });
+    }
+
     /**
      * Delete all entities, that changed at {@link #changeDate}
      */

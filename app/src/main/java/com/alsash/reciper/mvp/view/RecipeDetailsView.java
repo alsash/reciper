@@ -1,6 +1,9 @@
 package com.alsash.reciper.mvp.view;
 
+import com.alsash.reciper.app.lib.MutableBoolean;
+import com.alsash.reciper.app.lib.MutableString;
 import com.alsash.reciper.mvp.model.entity.Photo;
+import com.alsash.reciper.mvp.model.entity.Recipe;
 import com.alsash.reciper.mvp.model.tab.SwipeTab;
 
 /**
@@ -16,5 +19,13 @@ public interface RecipeDetailsView extends BaseView {
 
     void showTitle(String title);
 
+    void showNameEditDialog(Recipe recipe, MutableString listener);
+
     void showPhoto(Photo photo);
+
+    void showPhotoEditDialog(Photo photo, MutableString listener);
+
+    void showConfirmDeleteDialog(MutableBoolean listener);
+
+    void finishView();
 }

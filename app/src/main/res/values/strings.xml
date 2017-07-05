@@ -133,17 +133,19 @@
     <string name="navigation_recipe_grid">Grid</string>
     <string name="navigation_recipe_labels">Labels</string>
 
-    <string name="activity_recipe_collections_appbar_add">Add recipe</string>
-    <string name="fragment_recipe_restrict_list_subtitle_category">Category</string>
-    <string name="fragment_recipe_restrict_list_subtitle_label">Label</string>
+    <!-- Appbar menu -->
+    <string name="appbar_add">Add</string>
+    <string name="appbar_search">Search</string>
+    <string name="appbar_edit_name">Edit name</string>
+    <string name="appbar_edit_photo">Edit photo</string>
+    <string name="appbar_delete">Delete</string>
+
     <string name="fragment_recipe_details_description_title">Description</string>
     <string name="fragment_recipe_details_nutrition_title">Nutrition</string>
     <string name="fragment_recipe_details_ingredients_title">Ingredients</string>
     <string name="fragment_recipe_details_methods_title">Methods</string>
     <string name="fragment_recipe_details_methods_delete_action">Method %d has been removed</string>
     <string name="fragment_recipe_details_methods_delete_reject">UNDO</string>
-    <string name="fragment_entity_list_appbar_add">Add</string>
-    <string name="fragment_entity_list_appbar_search">Search</string>
     <string name="fragment_entity_list_delete_success">%s has been removed</string>
     <string name="fragment_entity_list_delete_reject">UNDO</string>
     <string name="fragment_entity_list_delete_fail">%1$s has %2$s. Remove related recipes first.</string>
@@ -156,5 +158,7 @@
     <string name="hint_food_nutrition_quantity">per 100 grams</string>
     <string name="hint_food_name">Food name</string>
     <string name="photo_dialog_title">Photo url</string>
+    <string name="recipe_name_dialog_title">Recipe name</string>
+    <string name="hint_recipe_name">Recipe name</string>
 
 </resources>

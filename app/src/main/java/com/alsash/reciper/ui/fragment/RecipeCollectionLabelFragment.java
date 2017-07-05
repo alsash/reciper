@@ -1,9 +1,15 @@
 package com.alsash.reciper.ui.fragment;
 
 import android.content.Context;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 
+import com.alsash.reciper.R;
 import com.alsash.reciper.app.ReciperApp;
 import com.alsash.reciper.logic.NavigationLogic;
 import com.alsash.reciper.mvp.model.entity.Label;
@@ -14,6 +20,7 @@ import com.alsash.reciper.mvp.view.RecipeCollectionLabelView;
 import com.alsash.reciper.mvp.view.RecipeListView;
 import com.alsash.reciper.ui.adapter.RecipeLabelCardListAdapter;
 import com.alsash.reciper.ui.adapter.interaction.RecipeGroupInteraction;
+import com.alsash.reciper.ui.fragment.dialog.RecipeCreationDialogFragment;
 
 import java.util.List;
 
@@ -48,6 +55,27 @@ public class RecipeCollectionLabelFragment
     @Override
     public void onOpen(Recipe recipe) {
         navigator.fromActivity(getActivity()).toRecipeDetailsView(recipe);
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.appbar_add, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.appbar_add) {
+            RecipeCreationDialogFragment.start(getActivity().getSupportFragmentManager());
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override

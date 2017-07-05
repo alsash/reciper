@@ -4,5 +4,5 @@ package com.alsash.reciper.logic.action;
  * Recipe actions definition
  */
 public enum RecipeAction {
-    FAVORITE
+    NAME, PHOTO, FAVORITE, DELETE
 }

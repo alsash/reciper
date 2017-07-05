@@ -80,16 +80,12 @@ public abstract class BaseRecipeGroupPresenter<G extends BaseEntity, V extends B
         return presenter;
     }
 
-    protected Map<G, RecipeGroupInnerPresenter<G>> getPresenters() {
-        return presenters;
-    }
-
     /**
      * An inner presenter, that helps to represent inner list of Recipes
      *
      * @param <G> - Entity, that represents group of recipes
      */
-    protected static class RecipeGroupInnerPresenter<G extends BaseEntity>
+    private static class RecipeGroupInnerPresenter<G extends BaseEntity>
             extends BaseRecipeListPresenter<RecipeListView> {
 
         private final BaseRecipeGroupPresenter<G, ?> outerPresenter;

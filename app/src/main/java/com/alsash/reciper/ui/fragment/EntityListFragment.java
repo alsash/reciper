@@ -31,14 +31,14 @@ import com.alsash.reciper.mvp.presenter.EntityListPresenter;
 import com.alsash.reciper.mvp.view.EntityListView;
 import com.alsash.reciper.ui.adapter.EntityListAdapter;
 import com.alsash.reciper.ui.adapter.interaction.EntityListInteraction;
-import com.alsash.reciper.ui.view.helper.PhotoDialogHelper;
+import com.alsash.reciper.ui.fragment.dialog.SimpleDialog;
 
 import java.util.List;
 
 import javax.inject.Inject;
 
 /**
- * A fragment that represent list of recipe cards
+ * A fragment that represent list of entities
  */
 public class EntityListFragment extends BaseListFragment<BaseEntity, EntityListView>
         implements EntityListView, EntityListInteraction {
@@ -144,7 +144,7 @@ public class EntityListFragment extends BaseListFragment<BaseEntity, EntityListV
 
     @Override
     public void showPhotoEditDialog(Photo photo, MutableString listener) {
-        PhotoDialogHelper.show(getActivity(), photo, listener);
+        SimpleDialog.showEditPhotoUrl(getActivity(), photo, listener);
     }
 
     @Override
@@ -156,9 +156,10 @@ public class EntityListFragment extends BaseListFragment<BaseEntity, EntityListV
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
-        inflater.inflate(R.menu.fragment_entity_list_appbar, menu);
-        menu.getItem(0).setVisible(entityClass.equals(Food.class));
-        menu.getItem(0).setEnabled(entityClass.equals(Food.class));
+        inflater.inflate(entityClass.equals(Food.class) ?
+                        R.menu.appbar_add_search :
+                        R.menu.appbar_add,
+                menu);
     }
 
     @Override

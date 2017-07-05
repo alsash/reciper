@@ -1,5 +1,7 @@
 package com.alsash.reciper.data.db.table;
 
+import com.alsash.reciper.mvp.model.entity.BaseEntity;
+
 import org.greenrobot.greendao.DaoException;
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Generated;
@@ -21,7 +23,7 @@ import java.util.List;
         nameInDb = "RECIPE_LABEL",
         active = true
 )
-public final class RecipeLabelTable implements Table {
+public final class RecipeLabelTable implements Table, BaseEntity {
     @Id
     Long id;
     @Unique

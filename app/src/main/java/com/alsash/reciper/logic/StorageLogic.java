@@ -14,6 +14,7 @@ import com.alsash.reciper.data.db.table.FoodUsdaTable;
 import com.alsash.reciper.data.db.table.LabelTable;
 import com.alsash.reciper.data.db.table.PhotoTable;
 import com.alsash.reciper.data.db.table.RecipeFoodTable;
+import com.alsash.reciper.data.db.table.RecipeLabelTable;
 import com.alsash.reciper.data.db.table.RecipeMethodTable;
 import com.alsash.reciper.data.db.table.RecipePhotoTable;
 import com.alsash.reciper.data.db.table.RecipeTable;
@@ -276,6 +277,16 @@ public class StorageLogic {
         RecipeTable recipeTable = (RecipeTable) recipe;
         recipeTable.setChangedAt(new Date());
         switch (action) {
+            case NAME:
+                recipeTable.setName((String) values[0]);
+                break;
+            case PHOTO:
+                PhotoTable photoTable = (PhotoTable) recipe.getMainPhoto();
+                if (photoTable != null) {
+                    photoTable.setChangedAt(new Date());
+                    photoTable.setUrl((String) values[0]);
+                }
+                break;
             case FAVORITE:
                 recipeTable.setFavorite((Boolean) values[0]);
                 break;
@@ -287,8 +298,19 @@ public class StorageLogic {
         RecipeTable recipeTable = (RecipeTable) recipe;
 
         switch (action) {
+            case NAME:
+                recipeTable.update();
+                break;
+            case PHOTO:
+                PhotoTable photoTable = (PhotoTable) recipe.getMainPhoto();
+                if (photoTable != null) photoTable.update();
+                break;
             case FAVORITE:
                 recipeTable.update();
+                break;
+            case DELETE:
+                dbManager.deleteDeep(recipeTable);
+                dbManager.deleteDeep(recipeTable);
                 break;
         }
     }
@@ -415,28 +437,44 @@ public class StorageLogic {
 
         if (entity instanceof AuthorTable) {
             if (getRelatedRecipesSize(entity) > 0) return;
-            ((AuthorTable) entity).delete();
+            dbManager.deleteDeep((AuthorTable) entity);
 
         } else if (entity instanceof CategoryTable) {
 
             if (getRelatedRecipesSize(entity) > 0) return;
-            ((CategoryTable) entity).delete();
+            dbManager.deleteDeep((CategoryTable) entity);
 
         } else if (entity instanceof LabelTable) {
 
             if (getRelatedRecipesSize(entity) > 0) return;
-            ((LabelTable) entity).delete();
+            dbManager.deleteDeep((LabelTable) entity);
 
         } else if (entity instanceof FoodTable) {
 
             if (getRelatedRecipesSize(entity) > 0) return;
-            ((FoodTable) entity).delete();
+            dbManager.deleteDeep((FoodTable) entity);
 
         } else if (entity instanceof RecipeMethodTable) {
             RecipeMethodTable recipeMethodTable = (RecipeMethodTable) entity;
             RecipeTable recipeTable = dbManager.getRecipeTable(recipeMethodTable.getRecipeUuid());
             if (recipeTable != null) recipeTable.getRecipeMethodTables().remove(recipeMethodTable);
             recipeMethodTable.delete();
+
+        } else if (entity instanceof RecipeLabelTable) {
+            RecipeLabelTable recipeLabelTable = (RecipeLabelTable) entity;
+            RecipeTable recipeTable = dbManager.getRecipeTable(recipeLabelTable.getRecipeUuid());
+            if (recipeTable != null) recipeTable.getRecipeLabelTables().remove(recipeLabelTable);
+            recipeLabelTable.delete();
+
+        } else if (entity instanceof RecipeFoodTable) {
+
+            RecipeFoodTable recipeFoodTable = (RecipeFoodTable) entity;
+            RecipeTable recipeTable = dbManager.getRecipeTable(recipeFoodTable.getRecipeUuid());
+            if (recipeTable != null) recipeTable.getRecipeFoodTables().remove(recipeFoodTable);
+            recipeFoodTable.delete();
+
+        } else if (entity instanceof RecipeTable) {
+            dbManager.deleteDeep((RecipeTable) entity);
         }
     }
 

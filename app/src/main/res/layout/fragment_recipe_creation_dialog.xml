@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/recipe_creation_dialog_constraint"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <EditText
+        android:id="@+id/recipe_creation_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="16dp"
+        android:ems="10"
+        android:fontFamily="serif"
+        android:hint="@string/hint_recipe_name"
+        android:imeOptions="actionDone"
+        android:inputType="textCapSentences"
+        android:overScrollMode="ifContentScrolls"
+        android:scrollHorizontally="true"
+        android:scrollbars="none"
+        android:selectAllOnFocus="false"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textColor="?android:attr/textColorPrimaryNoDisable"
+        android:textSize="18sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="LabelFor" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recipe_creation_category_list"
+        android:layout_width="0dp"
+        android:layout_height="108dp"
+        android:clipToPadding="false"
+        android:orientation="horizontal"
+        android:scrollbars="none"
+        app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/recipe_creation_name"
+        tools:listitem="@layout/item_category_selection" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recipe_creation_author_list"
+        android:layout_width="0dp"
+        android:layout_height="148dp"
+        android:layout_marginLeft="0dp"
+        android:layout_marginRight="0dp"
+        android:layout_marginTop="0dp"
+        android:clipToPadding="false"
+        android:orientation="horizontal"
+        android:scrollbars="none"
+        app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/recipe_creation_category_list"
+        tools:listitem="@layout/item_author_selection" />
+
+</android.support.constraint.ConstraintLayout>

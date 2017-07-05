@@ -38,7 +38,7 @@
     <style name="TextAppearance.NavigationView" parent="@style/TextAppearance.AppCompat.Title">
         <item name="android:fontFamily">serif</item>
         <item name="android:textSize">18sp</item>
-        <item name="android:textColor">@color/text_def_primary_check_orange</item>
+        <item name="android:textColor">@color/cs_def_text_primary_check_orange</item>
     </style>
 
     <style name="RippleButton" parent="@style/Widget.AppCompat.Button.Borderless">
@@ -61,25 +61,6 @@
     <style name="TextAppearance.RecipeTitle.Tab" parent="TextAppearance.Design.Tab">
         <item name="android:fontFamily">sans-serif</item>
         <item name="android:textSize">12sp</item>
-    </style>
-
-    <style name="LightIconView">
-        <item name="android:tint">@color/gray_400</item>
-        <item name="android:scaleType">center</item>
-    </style>
-
-    <style name="LightIconText">
-        <item name="android:textColor">@color/gray_600</item>
-        <item name="android:textAppearance">@style/TextAppearance.AppCompat.Small</item>
-    </style>
-
-    <style name="LabelButton" parent="Widget.AppCompat.Button.Small">
-        <item name="android:paddingTop">8dp</item>
-        <item name="android:paddingBottom">8dp</item>
-        <item name="android:drawablePadding">16dp</item>
-        <item name="android:minHeight">24dp</item>
-        <item name="android:textAppearance">@style/TextAppearance.AppCompat.Body1</item>
-        <item name="android:gravity">left|center_vertical</item>
     </style>
 
 </resources>

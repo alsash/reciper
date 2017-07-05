@@ -38,4 +38,6 @@ public interface AppComponent {
     UiRecipeRestrictListComponent.Builder getRecipeRestrictListComponentBuilder();
 
     UiRecipeDetailsComponent.Builder getRecipeDetailsComponentBuilder();
+
+    UiRecipeCreationComponent.Builder getUiRecipeCreationComponentBuilder();
 }

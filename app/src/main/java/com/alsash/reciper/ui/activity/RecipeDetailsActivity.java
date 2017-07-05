@@ -9,18 +9,23 @@ import android.support.design.widget.TabLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.content.res.AppCompatResources;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
 
 import com.alsash.reciper.R;
 import com.alsash.reciper.app.ReciperApp;
+import com.alsash.reciper.app.lib.MutableBoolean;
+import com.alsash.reciper.app.lib.MutableString;
 import com.alsash.reciper.logic.NavigationLogic;
 import com.alsash.reciper.mvp.model.entity.Photo;
+import com.alsash.reciper.mvp.model.entity.Recipe;
 import com.alsash.reciper.mvp.model.tab.SwipeTab;
 import com.alsash.reciper.mvp.presenter.RecipeDetailsPresenter;
 import com.alsash.reciper.mvp.view.RecipeDetailsView;
 import com.alsash.reciper.ui.adapter.SwipePagerAdapter;
 import com.alsash.reciper.ui.animator.DepthPageTransformer;
+import com.alsash.reciper.ui.fragment.dialog.SimpleDialog;
 import com.alsash.reciper.ui.loader.ImageLoader;
 import com.alsash.reciper.ui.view.SwipeViewPager;
 
@@ -70,8 +75,28 @@ public class RecipeDetailsActivity extends BaseActivity<RecipeDetailsView>
     }
 
     @Override
+    public void showNameEditDialog(Recipe recipe, MutableString listener) {
+        SimpleDialog.showEditRecipeName(getThisContext(), recipe, listener);
+    }
+
+    @Override
     public void showPhoto(Photo photo) {
         ImageLoader.get().source(photo).load(image);
+    }
+
+    @Override
+    public void showPhotoEditDialog(Photo photo, MutableString listener) {
+        SimpleDialog.showEditPhotoUrl(getThisContext(), photo, listener);
+    }
+
+    @Override
+    public void showConfirmDeleteDialog(MutableBoolean listener) {
+
+    }
+
+    @Override
+    public void finishView() {
+        finish();
     }
 
     @Override
@@ -90,15 +115,33 @@ public class RecipeDetailsActivity extends BaseActivity<RecipeDetailsView>
         presenter.setRestriction(navigator.getRestriction(intent))
                 .setFragments(navigator.getFragmentCollection(intent))
                 .attach(getThisView());
+        if (isViewVisible()) presenter.visible(getThisView());
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.appbar_name_photo_delete, menu);
+        return super.onCreateOptionsMenu(menu);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == android.R.id.home) {
-            finish();
-            return true;
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                return true;
+            case R.id.appbar_edit_name:
+                presenter.editRecipeName(getThisView());
+                return true;
+            case R.id.appbar_edit_photo:
+                presenter.editRecipePhoto(getThisView());
+                return true;
+            case R.id.appbar_delete:
+                presenter.deleteRecipe(getThisView());
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
-        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -141,9 +184,9 @@ public class RecipeDetailsActivity extends BaseActivity<RecipeDetailsView>
         public TabsColorChanger(Context context, TabLayout tabs) {
             tabsRef = new WeakReference<>(tabs);
             colorDark = AppCompatResources.getColorStateList(context,
-                    R.color.gray_def_600_sel_800);
+                    R.color.cs_gray_def_600_sel_800);
             colorLight = AppCompatResources.getColorStateList(context,
-                    R.color.white_def_a080_sel_a100);
+                    R.color.cs_white_def_a080_sel_a100);
         }
 
         private static boolean isCollapse(int verticalOffset) {
