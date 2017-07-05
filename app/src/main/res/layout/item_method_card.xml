@@ -59,6 +59,7 @@
             android:background="@null"
             android:fontFamily="serif"
             android:gravity="top|start"
+            android:imeOptions="actionDone"
             android:inputType="textMultiLine"
             android:overScrollMode="always"
             android:scrollHorizontally="false"

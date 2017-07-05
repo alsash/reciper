@@ -64,7 +64,8 @@ public class EntityListPresenter extends BaseListPresenter<BaseEntity, EntityLis
                     public BaseEntity call() throws Exception {
                         return storageLogic.createAsync(restriction.entityClass);
                     }
-                }).subscribeOn(Schedulers.io())
+                })
+                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Consumer<BaseEntity>() {
                     @Override

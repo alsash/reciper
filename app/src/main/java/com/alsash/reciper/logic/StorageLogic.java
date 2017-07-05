@@ -278,9 +278,6 @@ public class StorageLogic {
         RecipeTable recipeTable = (RecipeTable) recipe;
         recipeTable.setChangedAt(new Date());
         switch (action) {
-            case EDIT_NAME:
-                recipeTable.setName((String) values[0]);
-                break;
             case EDIT_PHOTO:
                 PhotoTable photoTable = (PhotoTable) recipe.getMainPhoto();
                 if (photoTable != null) {
@@ -288,8 +285,15 @@ public class StorageLogic {
                     photoTable.setUrl((String) values[0]);
                 }
                 break;
+            case EDIT_NAME:
+                recipeTable.setName((String) values[0]);
+                break;
             case EDIT_FAVORITE:
                 recipeTable.setFavorite((Boolean) values[0]);
+                break;
+            case EDIT_DESCRIPTION:
+                recipeTable.setDescription((String) values[0]);
+                recipeTable.setSource((String) values[1]);
                 break;
         }
     }
@@ -299,19 +303,15 @@ public class StorageLogic {
         RecipeTable recipeTable = (RecipeTable) recipe;
 
         switch (action) {
-            case EDIT_NAME:
-                recipeTable.update();
-                break;
             case EDIT_PHOTO:
                 PhotoTable photoTable = (PhotoTable) recipe.getMainPhoto();
                 if (photoTable != null) photoTable.update();
                 break;
+            case EDIT:
+            case EDIT_NAME:
             case EDIT_FAVORITE:
+            case EDIT_DESCRIPTION:
                 recipeTable.update();
-                break;
-            case DELETE:
-                dbManager.deleteDeep(recipeTable);
-                dbManager.deleteDeep(recipeTable);
                 break;
         }
     }

@@ -71,31 +71,44 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/recipe_description_author_image" />
 
-    <TextView
+    <EditText
         android:id="@+id/recipe_description_body"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
+        android:background="@null"
         android:fontFamily="serif"
+        android:gravity="top|start"
+        android:imeOptions="actionDone"
+        android:inputType="textMultiLine"
+        android:overScrollMode="always"
+        android:scrollHorizontally="false"
+        android:scrollbarStyle="insideInset"
+        android:scrollbars="vertical"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:textColor="?android:attr/textColorPrimaryNoDisable"
         android:textSize="16sp"
         android:textStyle="italic"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/recipe_description_horizontal_divider"
+        tools:ignore="LabelFor"
         tools:text="Recipe description" />
 
-    <TextView
+    <EditText
         android:id="@+id/recipe_description_source"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:layout_marginTop="8dp"
+        android:background="@null"
         android:fontFamily="serif"
-        android:gravity="right"
-        android:textAlignment="center"
+        android:gravity="end"
+        android:imeOptions="actionDone"
+        android:inputType="text|textCapSentences"
         android:textAppearance="@style/TextAppearance.AppCompat.Small"
+        android:textColor="?android:attr/textColorSecondaryNoDisable"
         android:textSize="14sp"
         android:textStyle="italic"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -103,7 +116,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/recipe_description_body"
-        tools:ignore="RtlHardcoded"
+        tools:ignore="LabelFor,RtlHardcoded"
         tools:text="Recipe source" />
 
 </android.support.constraint.ConstraintLayout>

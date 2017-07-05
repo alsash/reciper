@@ -8,6 +8,7 @@ import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -15,6 +16,7 @@ import android.widget.TextView;
 import com.alsash.reciper.R;
 import com.alsash.reciper.app.ReciperApp;
 import com.alsash.reciper.logic.NavigationLogic;
+import com.alsash.reciper.mvp.model.entity.Author;
 import com.alsash.reciper.mvp.model.entity.Category;
 import com.alsash.reciper.mvp.model.entity.Label;
 import com.alsash.reciper.mvp.model.entity.Recipe;
@@ -43,11 +45,24 @@ public class RecipeDetailsDescriptionFragment extends BaseFragment<RecipeDetails
     NavigationLogic navigator;
 
     // Description card
+    private View.OnClickListener descriptionEditListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            presenter.requestDescriptionEdit(getThisView());
+        }
+    };
+    private View.OnClickListener authorEditListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            presenter.requestAuthorEdit(getThisView());
+        }
+    };
+    private ImageButton descriptionEditButton;
     private ImageView authorImage;
     private TextView authorName;
-    private TextView recipeSource;
+    private EditText recipeSource;
     private TextView recipeDate;
-    private TextView recipeDescription;
+    private EditText recipeDescription;
     // Category card
     private ImageView categoryImage;
     private TextView categoryName;
@@ -80,12 +95,28 @@ public class RecipeDetailsDescriptionFragment extends BaseFragment<RecipeDetails
     }
 
     @Override
+    public void showAuthor(Author author) {
+        ImageLoader.get().source(author).load(authorImage);
+        authorName.setText(author.getName());
+    }
+
+    @Override
     public void showDescription(Recipe recipe) {
-        ImageLoader.get().source(recipe.getAuthor()).load(authorImage);
-        authorName.setText(recipe.getAuthor().getName());
-        recipeSource.setText(recipe.getSource());
         recipeDate.setText(recipeDateFormat.format(recipe.getCreatedAt()));
         recipeDescription.setText(recipe.getDescription());
+        recipeSource.setText(recipe.getSource());
+    }
+
+    @Override
+    public String[] getDescriptionEditable() {
+        return new String[]{
+                recipeDescription.getText().toString(),
+                recipeSource.getText().toString()};
+    }
+
+    @Override
+    public void setDescriptionEditable(boolean editable) {
+        setEditable(editable, descriptionEditButton, recipeDescription, recipeSource);
     }
 
     @Override
@@ -136,11 +167,14 @@ public class RecipeDetailsDescriptionFragment extends BaseFragment<RecipeDetails
                              @Nullable Bundle savedInstanceState) {
         View layout = inflater.inflate(R.layout.fragment_recipe_details_description, group, false);
         // Description card
+        descriptionEditButton = (ImageButton) layout.findViewById(R.id.recipe_description_edit);
+        descriptionEditButton.setOnClickListener(descriptionEditListener);
         authorImage = (ImageView) layout.findViewById(R.id.recipe_description_author_image);
+        authorImage.setOnClickListener(authorEditListener);
         authorName = (TextView) layout.findViewById(R.id.recipe_description_author_name);
-        recipeSource = (TextView) layout.findViewById(R.id.recipe_description_source);
+        recipeSource = (EditText) layout.findViewById(R.id.recipe_description_source);
         recipeDate = (TextView) layout.findViewById(R.id.recipe_description_date);
-        recipeDescription = (TextView) layout.findViewById(R.id.recipe_description_body);
+        recipeDescription = (EditText) layout.findViewById(R.id.recipe_description_body);
         // Category card
         categoryImage = (ImageView) layout.findViewById(R.id.recipe_category_image);
         categoryName = (TextView) layout.findViewById(R.id.recipe_category_name);
@@ -163,5 +197,20 @@ public class RecipeDetailsDescriptionFragment extends BaseFragment<RecipeDetails
                 .inject(this);
         // Presenter will be embedded in the activity lifecycle
         return presenter.setRestriction(navigator.getRestriction(getThisIntent(this)));
+    }
+
+    private void setEditable(boolean editable, ImageButton button, EditText... editTexts) {
+        button.setImageResource(editable ?
+                R.drawable.edit_icon_orange :
+                R.drawable.edit_icon_gray);
+        for (EditText editText : editTexts) {
+            editText.setEnabled(editable);
+            editText.setFocusable(editable);
+            editText.setFocusableInTouchMode(editable);
+            editText.setClickable(editable);
+            editText.setLongClickable(editable);
+            editText.setCursorVisible(editable);
+        }
+        if (editable && editTexts.length > 0) editTexts[0].requestFocus();
     }
 }
