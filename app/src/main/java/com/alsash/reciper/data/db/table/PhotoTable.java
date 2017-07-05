@@ -17,7 +17,7 @@ import java.util.Date;
  * and serialized from JSON by Gson framework
  */
 @Entity(
-        nameInDb = "PHOTO",
+        nameInDb = "EDIT_PHOTO",
         generateGettersSetters = false,
         active = true
 )

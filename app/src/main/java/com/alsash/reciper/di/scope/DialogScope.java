@@ -9,5 +9,5 @@ import javax.inject.Scope;
 @Scope
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
-public @interface RecipeCreationScope {
+public @interface DialogScope {
 }

@@ -4,6 +4,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 
 import com.alsash.reciper.R;
+import com.alsash.reciper.app.lib.MutableBoolean;
 import com.alsash.reciper.app.lib.MutableString;
 import com.alsash.reciper.logic.BusinessLogic;
 import com.alsash.reciper.logic.StorageLogic;
@@ -96,11 +97,7 @@ public class RecipeDetailsPresenter extends BaseRestrictPresenter<RecipeDetailsV
     public void visible(RecipeDetailsView view) {
         view.showDetail(shownPosition);
         if (recipeFull == null) return;
-        if (recipeFull.getName() == null || recipeFull.getName().equals("")) {
-            editRecipeName(view);
-        } else {
-            view.showTitle(recipeFull.getName());
-        }
+        view.showTitle(recipeFull.getName());
         view.showPhoto(recipeFull.getMainPhoto());
     }
 
@@ -116,18 +113,18 @@ public class RecipeDetailsPresenter extends BaseRestrictPresenter<RecipeDetailsV
             @Override
             public synchronized MutableString set(final String value) {
 
-                storageLogic.updateSync(recipeFull, RecipeAction.NAME, value);
+                storageLogic.updateSync(recipeFull, RecipeAction.EDIT_NAME, value);
 
-                if (viewRef.get() != null) viewRef.get().showPhoto(recipeFull.getMainPhoto());
+                if (viewRef.get() != null) viewRef.get().showTitle(value);
 
-                businessLogic.getRecipeEventSubject().onNext(new RecipeEvent(RecipeAction.NAME,
+                businessLogic.getRecipeEventSubject().onNext(new RecipeEvent(RecipeAction.EDIT_NAME,
                         recipeFull.getUuid()));
 
                 getComposite().add(Completable
                         .fromAction(new Action() {
                             @Override
                             public void run() throws Exception {
-                                storageLogic.updateAsync(recipeFull, RecipeAction.NAME);
+                                storageLogic.updateAsync(recipeFull, RecipeAction.EDIT_NAME);
                             }
                         })
                         .subscribeOn(Schedulers.io())
@@ -144,22 +141,22 @@ public class RecipeDetailsPresenter extends BaseRestrictPresenter<RecipeDetailsV
             @Override
             public synchronized MutableString set(final String value) {
 
-                storageLogic.updateSync(recipeFull, RecipeAction.PHOTO, value);
+                storageLogic.updateSync(recipeFull, RecipeAction.EDIT_PHOTO, value);
 
-                if (viewRef.get() != null) viewRef.get().showPhoto(recipeFull.getMainPhoto());
-
-                businessLogic.getRecipeEventSubject().onNext(new RecipeEvent(RecipeAction.PHOTO,
-                        recipeFull.getUuid()));
+                businessLogic.getRecipeEventSubject().onNext(
+                        new RecipeEvent(RecipeAction.EDIT_PHOTO, recipeFull.getUuid()));
 
                 getComposite().add(Completable
                         .fromAction(new Action() {
                             @Override
                             public void run() throws Exception {
-                                storageLogic.updateAsync(recipeFull, RecipeAction.PHOTO);
+                                storageLogic.updateAsync(recipeFull, RecipeAction.EDIT_PHOTO);
                             }
                         })
                         .subscribeOn(Schedulers.io())
                         .subscribe());
+
+                if (viewRef.get() != null) viewRef.get().showPhoto(recipeFull.getMainPhoto());
                 return super.set(value);
             }
         });
@@ -168,11 +165,10 @@ public class RecipeDetailsPresenter extends BaseRestrictPresenter<RecipeDetailsV
     public void deleteRecipe(RecipeDetailsView view) {
         if (recipeFull == null) return;
         final WeakReference<RecipeDetailsView> viewRef = new WeakReference<>(view);
-        view.showPhotoEditDialog(recipeFull.getMainPhoto(), new MutableString() {
+        view.showConfirmDeleteDialog(businessLogic.getEntityName(recipeFull), new MutableBoolean() {
             @Override
-            public synchronized MutableString set(final String value) {
-
-                storageLogic.updateSync(recipeFull, RecipeAction.PHOTO, value);
+            public synchronized MutableBoolean set(final boolean delete) {
+                if (!delete) return this;
 
                 businessLogic.getRecipeEventSubject().onNext(new RecipeEvent(RecipeAction.DELETE,
                         recipeFull.getUuid()));
@@ -181,15 +177,23 @@ public class RecipeDetailsPresenter extends BaseRestrictPresenter<RecipeDetailsV
                         .fromAction(new Action() {
                             @Override
                             public void run() throws Exception {
-                                storageLogic.updateAsync(recipeFull, RecipeAction.PHOTO);
+                                storageLogic.deleteAsync(recipeFull);
                             }
                         })
                         .subscribeOn(Schedulers.io())
                         .subscribe());
+
                 if (viewRef.get() != null) viewRef.get().finishView();
-                return super.set(value);
+                return this;
             }
         });
+    }
+
+    public void finish(RecipeDetailsView view) {
+        if (recipeFull != null)
+            businessLogic.getRecipeEventSubject().onNext(
+                    new RecipeEvent(RecipeAction.EDIT, recipeFull.getUuid()));
+        view.finishView();
     }
 
     @Nullable

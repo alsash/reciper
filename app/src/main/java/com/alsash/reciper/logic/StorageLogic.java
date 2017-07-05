@@ -1,6 +1,7 @@
 package com.alsash.reciper.logic;
 
 
+import android.support.annotation.NonNull;
 import android.support.annotation.UiThread;
 
 import com.alsash.reciper.BuildConfig;
@@ -277,17 +278,17 @@ public class StorageLogic {
         RecipeTable recipeTable = (RecipeTable) recipe;
         recipeTable.setChangedAt(new Date());
         switch (action) {
-            case NAME:
+            case EDIT_NAME:
                 recipeTable.setName((String) values[0]);
                 break;
-            case PHOTO:
+            case EDIT_PHOTO:
                 PhotoTable photoTable = (PhotoTable) recipe.getMainPhoto();
                 if (photoTable != null) {
                     photoTable.setChangedAt(new Date());
                     photoTable.setUrl((String) values[0]);
                 }
                 break;
-            case FAVORITE:
+            case EDIT_FAVORITE:
                 recipeTable.setFavorite((Boolean) values[0]);
                 break;
         }
@@ -298,14 +299,14 @@ public class StorageLogic {
         RecipeTable recipeTable = (RecipeTable) recipe;
 
         switch (action) {
-            case NAME:
+            case EDIT_NAME:
                 recipeTable.update();
                 break;
-            case PHOTO:
+            case EDIT_PHOTO:
                 PhotoTable photoTable = (PhotoTable) recipe.getMainPhoto();
                 if (photoTable != null) photoTable.update();
                 break;
-            case FAVORITE:
+            case EDIT_FAVORITE:
                 recipeTable.update();
                 break;
             case DELETE:
@@ -561,6 +562,31 @@ public class StorageLogic {
         } else {
             return null;
         }
+    }
+
+    public Recipe createRecipeAsync(@NonNull String name,
+                                    @NonNull Author author,
+                                    @NonNull Category category) {
+
+        RecipeTable recipeTable = new RecipeTable();
+        recipeTable.setUuid(UUID.randomUUID().toString());
+        recipeTable.setChangedAt(new Date());
+        recipeTable.setCreatedAt(new Date());
+        recipeTable.setName(name);
+        recipeTable.setDescription("");
+        recipeTable.setAuthorUuid(author.getUuid());
+        recipeTable.setCategoryUuid(category.getUuid());
+        dbManager.modify(recipeTable);
+
+        RecipePhotoTable recipePhotoTable = new RecipePhotoTable();
+        recipePhotoTable.setUuid(UUID.randomUUID().toString());
+        recipePhotoTable.setChangedAt(new Date());
+        recipePhotoTable.setMain(true);
+        recipePhotoTable.setPhotoUuid(createAsync(Photo.class).getUuid());
+        recipePhotoTable.setRecipeUuid(recipeTable.getUuid());
+        dbManager.modify(recipePhotoTable);
+
+        return prefetchRelationFull(recipeTable);
     }
 
     private boolean isDbUpToDate() {

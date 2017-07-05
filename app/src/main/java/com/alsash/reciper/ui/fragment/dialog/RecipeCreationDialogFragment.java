@@ -1,17 +1,14 @@
 package com.alsash.reciper.ui.fragment.dialog;
 
-import android.app.Dialog;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatDialogFragment;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.Toast;
 
 import com.alsash.reciper.R;
 import com.alsash.reciper.app.ReciperApp;
@@ -21,9 +18,10 @@ import com.alsash.reciper.mvp.model.entity.Author;
 import com.alsash.reciper.mvp.model.entity.BaseEntity;
 import com.alsash.reciper.mvp.model.entity.Category;
 import com.alsash.reciper.mvp.model.entity.Recipe;
-import com.alsash.reciper.mvp.presenter.RecipeCreationPresenter;
+import com.alsash.reciper.mvp.presenter.BasePresenter;
+import com.alsash.reciper.mvp.presenter.RecipeCreationDialogPresenter;
 import com.alsash.reciper.mvp.view.BaseListView;
-import com.alsash.reciper.mvp.view.RecipeCreationView;
+import com.alsash.reciper.mvp.view.RecipeCreationDialogView;
 import com.alsash.reciper.ui.adapter.EntitySelectionAdapter;
 import com.alsash.reciper.ui.adapter.interaction.EntitySelectionInteraction;
 import com.alsash.reciper.ui.view.helper.RecyclerViewHelper;
@@ -37,34 +35,29 @@ import static android.support.v7.widget.RecyclerView.SCROLL_STATE_SETTLING;
 /**
  * Complex creation dialog
  */
-public class RecipeCreationDialogFragment extends AppCompatDialogFragment
-        implements RecipeCreationView, EntitySelectionInteraction {
+public class RecipeCreationDialogFragment extends BaseDialogFragment<RecipeCreationDialogView>
+        implements RecipeCreationDialogView, EntitySelectionInteraction {
 
     @Inject
-    RecipeCreationPresenter presenter;
+    RecipeCreationDialogPresenter presenter;
     @Inject
     NavigationLogic navigator;
 
+    private EditText recipeName;
     private RecyclerView authorList;
     private RecyclerView categoryList;
 
-    private MutableBoolean visibleHelper;
     private AdapterHolder<Category> categoryAdapterHolder;
     private AdapterHolder<Author> authorAdapterHolder;
 
     public static void start(FragmentManager fragmentManager) {
         RecipeCreationDialogFragment fragment = new RecipeCreationDialogFragment();
-        fragment.show(fragmentManager, "Tag");
+        fragment.show(fragmentManager, fragment.getTag());
     }
 
     @Override
     public void onSelect(BaseEntity entity) {
         presenter.onSelect(entity);
-    }
-
-    @Override
-    public boolean isViewVisible() {
-        return visibleHelper.is();
     }
 
     @Override
@@ -82,12 +75,26 @@ public class RecipeCreationDialogFragment extends AppCompatDialogFragment
         navigator.fromActivity(getActivity()).toRecipeDetailsView(recipe);
     }
 
+    @Override
+    public void showError() {
+        Toast.makeText(getContext(),
+                getString(R.string.fragment_recipe_creation_dialog_error),
+                Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void finishView() {
+        dismiss();
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater,
                              @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         View layout = inflater.inflate(R.layout.fragment_recipe_creation_dialog, container, false);
+
+        recipeName = (EditText) layout.findViewById(R.id.recipe_creation_dialog_name);
 
         authorList = (RecyclerView) layout.findViewById(R.id.recipe_creation_author_list);
         authorList.setAdapter(authorAdapterHolder.getAdapter());
@@ -99,64 +106,24 @@ public class RecipeCreationDialogFragment extends AppCompatDialogFragment
         return layout;
     }
 
-    @Nullable
     @Override
-    public Dialog onCreateDialog(Bundle savedInstanceState) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setView(onCreateView(LayoutInflater.from(getActivity()), null, null))
-                .setPositiveButton(android.R.string.ok, null)
-                .setNegativeButton(android.R.string.cancel, null);
-        return builder.create();
-        // AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        // builder.setPositiveButton(new )
-    }
-
-    @Override
-    public void onAttach(Context context) {
+    protected BasePresenter<RecipeCreationDialogView> inject() {
         ((ReciperApp) getActivity().getApplicationContext())
-                .getUiRecipeCreationComponent()
+                .getUiDialogComponent()
                 .inject(this);
-        visibleHelper = new MutableBoolean();
-        categoryAdapterHolder = new AdapterHolder<>(Category.class, this, visibleHelper);
-        authorAdapterHolder = new AdapterHolder<>(Author.class, this, visibleHelper);
-        presenter.attach(this);
-        super.onAttach(context);
+        categoryAdapterHolder = new AdapterHolder<>(Category.class, this, visible);
+        authorAdapterHolder = new AdapterHolder<>(Author.class, this, visible);
+        categoryAdapterHolder.setPresenter(presenter);
+        authorAdapterHolder.setPresenter(presenter);
+        return presenter;
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        visibleHelper.set(true);
-        presenter.visible(this);
+    protected void clickPositive() {
+        presenter.onCreationApprove(getThisView(), recipeName.getText().toString());
     }
 
-    @Override
-    public void onStop() {
-        visibleHelper.set(false);
-        presenter.invisible(this);
-        super.onStop();
-    }
-
-    @Override
-    public void onDetach() {
-        //  presenter.detach();
-        super.onDetach();
-    }
-
-    @Override
-    public void onDismiss(DialogInterface dialog) {
-        visibleHelper.set(false);
-        presenter.invisible(this);
-        presenter.detach();
-        super.onDismiss(dialog);
-    }
-
-    @Override
-    public void onCancel(DialogInterface dialog) {
-        visibleHelper.set(false);
-        presenter.invisible(this);
-        presenter.detach();
-        super.onCancel(dialog);
+    protected void clickNegative() {
+        dismiss();
     }
 
     private static class AdapterHolder<M extends BaseEntity> implements BaseListView<M> {
@@ -166,7 +133,7 @@ public class RecipeCreationDialogFragment extends AppCompatDialogFragment
         private final MutableBoolean visibleHelper;
         private boolean needPagination;
         private RecyclerView.Adapter adapter;
-        private RecipeCreationPresenter presenter;
+        private RecipeCreationDialogPresenter presenter;
         private final RecyclerView.OnScrollListener paginationListener = new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(RecyclerView rv, int newState) {
@@ -184,7 +151,7 @@ public class RecipeCreationDialogFragment extends AppCompatDialogFragment
             this.visibleHelper = visibleHelper;
         }
 
-        public void setPresenter(RecipeCreationPresenter presenter) {
+        public void setPresenter(RecipeCreationDialogPresenter presenter) {
             this.presenter = presenter;
         }
 

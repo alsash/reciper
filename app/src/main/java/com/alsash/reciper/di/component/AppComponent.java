@@ -39,5 +39,5 @@ public interface AppComponent {
 
     UiRecipeDetailsComponent.Builder getRecipeDetailsComponentBuilder();
 
-    UiRecipeCreationComponent.Builder getUiRecipeCreationComponentBuilder();
+    UiDialogComponent.Builder getUiRecipeCreationComponentBuilder();
 }

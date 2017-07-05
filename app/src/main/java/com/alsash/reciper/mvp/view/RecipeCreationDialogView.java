@@ -7,11 +7,15 @@ import com.alsash.reciper.mvp.model.entity.Recipe;
 /**
  * Composite list view
  */
-public interface RecipeCreationView extends BaseView {
+public interface RecipeCreationDialogView extends BaseView {
 
     BaseListView<Category> getCategoriesView();
 
     BaseListView<Author> getAuthorsView();
 
     void openRecipe(Recipe recipe);
+
+    void showError();
+
+    void finishView();
 }

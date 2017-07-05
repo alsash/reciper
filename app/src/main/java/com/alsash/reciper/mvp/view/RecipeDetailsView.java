@@ -25,7 +25,7 @@ public interface RecipeDetailsView extends BaseView {
 
     void showPhotoEditDialog(Photo photo, MutableString listener);
 
-    void showConfirmDeleteDialog(MutableBoolean listener);
+    void showConfirmDeleteDialog(String recipeName, MutableBoolean listener);
 
     void finishView();
 }

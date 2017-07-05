@@ -5,9 +5,9 @@ import android.app.Application;
 import com.alsash.reciper.BuildConfig;
 import com.alsash.reciper.di.component.AppComponent;
 import com.alsash.reciper.di.component.DaggerAppComponent;
+import com.alsash.reciper.di.component.UiDialogComponent;
 import com.alsash.reciper.di.component.UiEntityListComponent;
 import com.alsash.reciper.di.component.UiRecipeCollectionsComponent;
-import com.alsash.reciper.di.component.UiRecipeCreationComponent;
 import com.alsash.reciper.di.component.UiRecipeDetailsComponent;
 import com.alsash.reciper.di.component.UiRecipeRestrictListComponent;
 import com.alsash.reciper.di.component.UiStartComponent;
@@ -25,7 +25,7 @@ public class ReciperApp extends Application {
     private UiRecipeCollectionsComponent uiRecipeCollectionsComponent;
     private UiRecipeRestrictListComponent uiRecipeRestrictListComponent;
     private UiRecipeDetailsComponent uiRecipeDetailsComponent;
-    private UiRecipeCreationComponent uiRecipeCreationComponent;
+    private UiDialogComponent uiDialogComponent;
 
     /**
      * Initializing all components while splash (StartActivity) is shown.
@@ -53,7 +53,7 @@ public class ReciperApp extends Application {
         uiRecipeDetailsComponent = appComponent
                 .getRecipeDetailsComponentBuilder()
                 .build();
-        uiRecipeCreationComponent = appComponent
+        uiDialogComponent = appComponent
                 .getUiRecipeCreationComponentBuilder()
                 .build();
 
@@ -86,7 +86,7 @@ public class ReciperApp extends Application {
         return uiRecipeDetailsComponent;
     }
 
-    public UiRecipeCreationComponent getUiRecipeCreationComponent() {
-        return uiRecipeCreationComponent;
+    public UiDialogComponent getUiDialogComponent() {
+        return uiDialogComponent;
     }
 }

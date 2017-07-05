@@ -28,6 +28,7 @@
             app:expandedTitleTextAppearance="@style/TextAppearance.RecipeTitle.Expanded"
             app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
             app:statusBarScrim="?attr/colorPrimaryDark"
+            app:titleEnabled="true"
             app:toolbarId="@+id/activity_recipe_details_toolbar">
 
             <ImageView

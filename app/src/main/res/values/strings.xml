@@ -136,8 +136,8 @@
     <!-- Appbar menu -->
     <string name="appbar_add">Add</string>
     <string name="appbar_search">Search</string>
-    <string name="appbar_edit_name">Edit name</string>
-    <string name="appbar_edit_photo">Edit photo</string>
+    <string name="appbar_edit_name">Rename</string>
+    <string name="appbar_edit_photo">Change photo</string>
     <string name="appbar_delete">Delete</string>
 
     <string name="fragment_recipe_details_description_title">Description</string>
@@ -146,10 +146,14 @@
     <string name="fragment_recipe_details_methods_title">Methods</string>
     <string name="fragment_recipe_details_methods_delete_action">Method %d has been removed</string>
     <string name="fragment_recipe_details_methods_delete_reject">UNDO</string>
+
     <string name="fragment_entity_list_delete_success">%s has been removed</string>
     <string name="fragment_entity_list_delete_reject">UNDO</string>
     <string name="fragment_entity_list_delete_fail">%1$s has %2$s. Remove related recipes first.</string>
     <string name="fragment_entity_list_food_search">Copy the food ID and paste it into any food</string>
+
+    <string name="fragment_recipe_creation_dialog_error">Please, choose Author and Category</string>
+
     <string name="hint_label_name">Label name</string>
     <string name="hint_category_name">Category name</string>
     <string name="hint_author_name">Author name</string>
@@ -157,8 +161,9 @@
     <string name="hint_food_nutrition_value">Nutrition value</string>
     <string name="hint_food_nutrition_quantity">per 100 grams</string>
     <string name="hint_food_name">Food name</string>
-    <string name="photo_dialog_title">Photo url</string>
-    <string name="recipe_name_dialog_title">Recipe name</string>
     <string name="hint_recipe_name">Recipe name</string>
+    <string name="dialog_title_photo_url">Photo url</string>
+    <string name="dialog_title_recipe_name">Recipe name</string>
+    <string name="dialog_message_confirm_delete">Delete %s?</string>
 
 </resources>

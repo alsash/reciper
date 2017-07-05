@@ -47,14 +47,32 @@ public abstract class BaseRecipeListPresenter<V extends RecipeListView>
                                 RecipeEvent event = notification.getValue();
                                 if (event == null) return;
                                 switch (event.action) {
-                                    case NAME:
-                                    case PHOTO:
-                                    case FAVORITE:
-                                        Integer position = getPosition(event.uuid);
-                                        if (position == null) return;
-                                        if (viewRef.get() != null)
-                                            viewRef.get().showUpdate(position);
+                                    case CREATE:
+                                        getModels().clear();
+                                        resetPreviousPosition();
+                                        setFetched(false);
+                                        setLoading(false);
+                                        if (viewRef.get() != null) {
+                                            viewRef.get().setContainer(getModels());
+                                            viewRef.get().setPagination(!isFetched());
+                                            fetch(viewRef);
+                                        }
                                         break;
+                                    case EDIT:
+                                    case EDIT_NAME:
+                                    case EDIT_PHOTO:
+                                    case EDIT_FAVORITE:
+                                        Integer editPosition = getPosition(event.uuid);
+                                        if (editPosition == null) return;
+                                        if (viewRef.get() != null)
+                                            viewRef.get().showUpdate(editPosition);
+                                        break;
+                                    case DELETE:
+                                        Integer deletePosition = getPosition(event.uuid);
+                                        if (deletePosition == null) return;
+                                        getModels().remove((int) deletePosition);
+                                        if (viewRef.get() != null)
+                                            viewRef.get().showDelete(deletePosition);
                                 }
                             }
                         })
@@ -62,7 +80,7 @@ public abstract class BaseRecipeListPresenter<V extends RecipeListView>
     }
 
     public void changeFavorite(final Recipe recipe) {
-        final RecipeEvent event = new RecipeEvent(RecipeAction.FAVORITE, recipe.getUuid());
+        final RecipeEvent event = new RecipeEvent(RecipeAction.EDIT_FAVORITE, recipe.getUuid());
         storageLogic.updateSync(recipe, event.action, !recipe.isFavorite());
         getComposite().add(Completable
                 .fromAction(new Action() {

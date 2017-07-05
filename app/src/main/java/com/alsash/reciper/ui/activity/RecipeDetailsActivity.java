@@ -5,8 +5,8 @@ import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.TabLayout;
-import android.support.v7.app.ActionBar;
 import android.support.v7.content.res.AppCompatResources;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -43,6 +43,7 @@ public class RecipeDetailsActivity extends BaseActivity<RecipeDetailsView>
 
     private AppBarLayout appbar;
     private Toolbar toolbar;
+    private CollapsingToolbarLayout toolbarLayout;
     private TabLayout tabs;
     private SwipeViewPager pager;
     private SwipePagerAdapter adapter;
@@ -71,7 +72,8 @@ public class RecipeDetailsActivity extends BaseActivity<RecipeDetailsView>
 
     @Override
     public void showTitle(String title) {
-        if (getSupportActionBar() != null) getSupportActionBar().setTitle(title);
+        if (toolbarLayout != null)
+            toolbarLayout.setTitle((title == null || title.equals("")) ? " " : title);
     }
 
     @Override
@@ -90,8 +92,8 @@ public class RecipeDetailsActivity extends BaseActivity<RecipeDetailsView>
     }
 
     @Override
-    public void showConfirmDeleteDialog(MutableBoolean listener) {
-
+    public void showConfirmDeleteDialog(String recipeName, MutableBoolean listener) {
+        SimpleDialog.showConfirmDelete(getThisContext(), recipeName, listener);
     }
 
     @Override
@@ -120,15 +122,15 @@ public class RecipeDetailsActivity extends BaseActivity<RecipeDetailsView>
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.appbar_name_photo_delete, menu);
-        return super.onCreateOptionsMenu(menu);
+        getMenuInflater().inflate(R.menu.appbar_recipe, menu);
+        return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                finish();
+                presenter.finish(getThisView());
                 return true;
             case R.id.appbar_edit_name:
                 presenter.editRecipeName(getThisView());
@@ -157,6 +159,8 @@ public class RecipeDetailsActivity extends BaseActivity<RecipeDetailsView>
     private void bindViews() {
         appbar = (AppBarLayout) findViewById(R.id.activity_recipe_details_appbar);
         toolbar = (Toolbar) findViewById(R.id.activity_recipe_details_toolbar);
+        toolbarLayout = (CollapsingToolbarLayout)
+                findViewById(R.id.activity_recipe_details_toolbar_layout);
         tabs = (TabLayout) findViewById(R.id.activity_recipe_details_tabs);
         pager = (SwipeViewPager) findViewById(R.id.activity_recipe_details_pager);
         image = (ImageView) findViewById(R.id.activity_recipe_details_toolbar_image);
@@ -165,8 +169,8 @@ public class RecipeDetailsActivity extends BaseActivity<RecipeDetailsView>
     private void setupToolbar() {
         appbar.addOnOffsetChangedListener(new TabsColorChanger(this, tabs));
         setSupportActionBar(toolbar);
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null) actionBar.setDisplayHomeAsUpEnabled(true);
+        if (getSupportActionBar() != null)
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     private void setupPager() {

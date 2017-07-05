@@ -68,7 +68,7 @@ public abstract class BaseListPresenter<M extends BaseEntity, V extends BaseList
 
     @Override
     public void invisible(V view) {
-        previousPosition = -2;
+        resetPreviousPosition();
     }
 
     @Override
