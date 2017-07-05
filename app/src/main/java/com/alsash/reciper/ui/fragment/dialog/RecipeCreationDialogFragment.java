@@ -198,6 +198,11 @@ public class RecipeCreationDialogFragment extends BaseDialogFragment<RecipeCreat
         }
 
         @Override
+        public void showUpdate() {
+            adapter.notifyDataSetChanged();
+        }
+
+        @Override
         public void showDelete(int position) {
             adapter.notifyItemRemoved(position);
         }

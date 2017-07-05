@@ -63,6 +63,7 @@ public abstract class BaseListPresenter<M extends BaseEntity, V extends BaseList
 
     @Override
     public void visible(V view) {
+        view.showUpdate();
         view.showLoading(isLoading());
     }
 

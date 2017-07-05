@@ -28,31 +28,31 @@ public class RecipeCreationDialogPresenter implements BasePresenter<RecipeCreati
 
     private static final int PAGINATION_LIMIT = 10;
 
-    private BusinessLogic businessLogic;
-    private StorageLogic storageLogic;
+    private final BusinessLogic businessLogic;
+    private final StorageLogic storageLogic;
+
+    private final BaseListPresenter<Author, BaseListView<Author>> authorsPresenter;
+    private final BaseListPresenter<Category, BaseListView<Category>> categoriesPresenter;
 
     private Author selectedAuthor;
     private Category selectedCategory;
 
-    private BaseListPresenter<Author, BaseListView<Author>> authorListPresenter
-            = new BaseListPresenter<Author, BaseListView<Author>>(PAGINATION_LIMIT) {
-        @Override
-        protected List<Author> loadNext(int offset, int limit) {
-            return storageLogic.getAuthors(offset, limit);
-        }
-    };
-
-    private BaseListPresenter<Category, BaseListView<Category>> categoryListPresenter
-            = new BaseListPresenter<Category, BaseListView<Category>>(PAGINATION_LIMIT) {
-        @Override
-        protected List<Category> loadNext(int offset, int limit) {
-            return storageLogic.getCategories(offset, limit);
-        }
-    };
-
-    public RecipeCreationDialogPresenter(StorageLogic storageLogic, BusinessLogic businessLogic) {
-        this.businessLogic = businessLogic;
-        this.storageLogic = storageLogic;
+    public RecipeCreationDialogPresenter(StorageLogic sLogic, BusinessLogic bLogic) {
+        businessLogic = bLogic;
+        storageLogic = sLogic;
+        authorsPresenter = new BaseListPresenter<Author, BaseListView<Author>>(PAGINATION_LIMIT) {
+            @Override
+            protected List<Author> loadNext(int offset, int limit) {
+                return storageLogic.getAuthors(offset, limit);
+            }
+        };
+        categoriesPresenter
+                = new BaseListPresenter<Category, BaseListView<Category>>(PAGINATION_LIMIT) {
+            @Override
+            protected List<Category> loadNext(int offset, int limit) {
+                return storageLogic.getCategories(offset, limit);
+            }
+        };
     }
 
     public void onSelect(BaseEntity entity) {
@@ -69,7 +69,7 @@ public class RecipeCreationDialogPresenter implements BasePresenter<RecipeCreati
             return;
         }
         final WeakReference<RecipeCreationDialogView> viewRef = new WeakReference<>(view);
-        authorListPresenter.getComposite().add(Maybe
+        authorsPresenter.getComposite().add(Maybe
                 .fromCallable(new Callable<Recipe>() {
                     @Override
                     public Recipe call() throws Exception {
@@ -97,39 +97,39 @@ public class RecipeCreationDialogPresenter implements BasePresenter<RecipeCreati
 
     public void nextPagination(Class<?> entityClass, int lastPosition) {
         if (entityClass.equals(Author.class)) {
-            authorListPresenter.nextPagination(lastPosition);
+            authorsPresenter.nextPagination(lastPosition);
         } else if (entityClass.equals(Category.class)) {
-            categoryListPresenter.nextPagination(lastPosition);
+            categoriesPresenter.nextPagination(lastPosition);
         }
     }
 
     @Override
     public void attach(RecipeCreationDialogView view) {
-        authorListPresenter.attach(view.getAuthorsView());
-        categoryListPresenter.attach(view.getCategoriesView());
+        authorsPresenter.attach(view.getAuthorsView());
+        categoriesPresenter.attach(view.getCategoriesView());
     }
 
     @Override
     public void visible(RecipeCreationDialogView view) {
-        authorListPresenter.visible(view.getAuthorsView());
-        categoryListPresenter.visible(view.getCategoriesView());
+        authorsPresenter.visible(view.getAuthorsView());
+        categoriesPresenter.visible(view.getCategoriesView());
     }
 
     @Override
     public void invisible(RecipeCreationDialogView view) {
-        authorListPresenter.invisible(view.getAuthorsView());
-        categoryListPresenter.invisible(view.getCategoriesView());
+        authorsPresenter.invisible(view.getAuthorsView());
+        categoriesPresenter.invisible(view.getCategoriesView());
     }
 
     @Override
     public void refresh(RecipeCreationDialogView view) {
-        authorListPresenter.refresh(view.getAuthorsView());
-        categoryListPresenter.refresh(view.getCategoriesView());
+        authorsPresenter.refresh(view.getAuthorsView());
+        categoriesPresenter.refresh(view.getCategoriesView());
     }
 
     @Override
     public void detach() {
-        authorListPresenter.detach();
-        categoryListPresenter.detach();
+        authorsPresenter.detach();
+        categoriesPresenter.detach();
     }
 }

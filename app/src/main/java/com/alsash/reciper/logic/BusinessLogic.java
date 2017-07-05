@@ -1,10 +1,11 @@
 package com.alsash.reciper.logic;
 
 import android.content.Context;
-import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.alsash.reciper.R;
+import com.alsash.reciper.logic.event.CategoryEvent;
+import com.alsash.reciper.logic.event.LabelEvent;
 import com.alsash.reciper.logic.event.RecipeEvent;
 import com.alsash.reciper.logic.exception.UnitException;
 import com.alsash.reciper.logic.unit.EnergyUnit;
@@ -26,7 +27,6 @@ import java.util.Calendar;
 import java.util.Comparator;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -41,6 +41,8 @@ public class BusinessLogic {
     private static final String TAG = "BusinessLogic";
 
     private final Subject<RecipeEvent> recipeEventSubject;
+    private final Subject<CategoryEvent> categoryEventSubject;
+    private final Subject<LabelEvent> labelEventSubject;
     private final Comparator<Recipe> recipeComparator;
     private final Map<Class<?>, String> defaultNames;
 
@@ -48,6 +50,10 @@ public class BusinessLogic {
         defaultNames = getDefaultNames(context);
         recipeEventSubject = BehaviorSubject.create();
         recipeEventSubject.subscribeOn(AndroidSchedulers.mainThread());
+        categoryEventSubject = BehaviorSubject.create();
+        categoryEventSubject.subscribeOn(AndroidSchedulers.mainThread());
+        labelEventSubject = BehaviorSubject.create();
+        labelEventSubject.subscribeOn(AndroidSchedulers.mainThread());
         recipeComparator = new Comparator<Recipe>() {
             @Override
             public int compare(Recipe r1, Recipe r2) {
@@ -267,27 +273,11 @@ public class BusinessLogic {
         return recipeEventSubject;
     }
 
-    /**
-     * Move a Recipe from one position to another
-     *
-     * @param recipes      - list of recipes
-     * @param fromPosition - position of a recipe before moving
-     * @return - position of a recipe after moving or null
-     */
-    @Nullable
-    public Integer moveToStart(List<Recipe> recipes, int fromPosition) {
-        if (recipes == null || recipes.size() <= fromPosition) return null;
-        for (int i = 0; i < fromPosition; i++) {
-            if (recipeComparator.compare(recipes.get(i), recipes.get(fromPosition)) <= 0) {
-                Recipe recipe = recipes.set(i, recipes.remove(fromPosition));
-                for (int j = i + 1; j < recipes.size(); j++) {
-                    recipe = recipes.set(j, recipe);
-                }
-                recipes.add(recipe);
-                return i;
-            }
-        }
-        return null;
+    public Subject<CategoryEvent> getCategoryEventSubject() {
+        return categoryEventSubject;
     }
 
+    public Subject<LabelEvent> getLabelEventSubject() {
+        return labelEventSubject;
+    }
 }

@@ -4,6 +4,10 @@ import com.alsash.reciper.app.lib.MutableBoolean;
 import com.alsash.reciper.app.lib.MutableString;
 import com.alsash.reciper.logic.BusinessLogic;
 import com.alsash.reciper.logic.StorageLogic;
+import com.alsash.reciper.logic.action.CategoryAction;
+import com.alsash.reciper.logic.action.LabelAction;
+import com.alsash.reciper.logic.event.CategoryEvent;
+import com.alsash.reciper.logic.event.LabelEvent;
 import com.alsash.reciper.logic.restriction.EntityRestriction;
 import com.alsash.reciper.mvp.model.entity.Author;
 import com.alsash.reciper.mvp.model.entity.BaseEntity;
@@ -72,6 +76,16 @@ public class EntityListPresenter extends BaseListPresenter<BaseEntity, EntityLis
                     public void accept(@NonNull BaseEntity entity) throws Exception {
                         getModels().add(0, entity);
                         if (viewRef.get() != null) viewRef.get().showInsert(0);
+                        if (entity instanceof Category)
+                            businessLogic
+                                    .getCategoryEventSubject()
+                                    .onNext(new CategoryEvent(
+                                            CategoryAction.CREATE, entity.getUuid()));
+                        if (entity instanceof Label)
+                            businessLogic
+                                    .getLabelEventSubject()
+                                    .onNext(new LabelEvent(
+                                            LabelAction.CREATE, entity.getUuid()));
                     }
                 })
         );
@@ -256,6 +270,16 @@ public class EntityListPresenter extends BaseListPresenter<BaseEntity, EntityLis
                     getModels().add(position, entity);
                     if (viewRef.get() != null) viewRef.get().showInsert(position);
                 } else {
+                    if (entity instanceof Category)
+                        businessLogic
+                                .getCategoryEventSubject()
+                                .onNext(new CategoryEvent(
+                                        CategoryAction.DELETE, entity.getUuid()));
+                    if (entity instanceof Label)
+                        businessLogic
+                                .getLabelEventSubject()
+                                .onNext(new LabelEvent(
+                                        LabelAction.DELETE, entity.getUuid()));
                     getComposite().add(Completable
                             .fromAction(new Action() {
                                 @Override

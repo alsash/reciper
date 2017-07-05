@@ -1,5 +1,6 @@
 package com.alsash.reciper.ui.loader;
 
+import android.support.annotation.ColorRes;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -26,6 +27,9 @@ public class ImageLoader {
     private String source;
     private MutableBoolean completer;
     private WeakReference<ProgressBar> barRef;
+    private
+    @ColorRes
+    int errorColor;
 
     private ImageLoader() {
     }
@@ -40,7 +44,7 @@ public class ImageLoader {
                     .load(source)
                     .listener(new GlideRequestListener(barRef, completer))
                     .diskCacheStrategy(AppContract.Glide.DEFAULT_CACHE_STRATEGY)
-                    .error(R.color.gray_500)
+                    .error(errorColor)
                     .crossFade(AppContract.Glide.DEFAULT_CROSS_FADE_DURATION_MS)
                     .into(imageView);
         }
@@ -68,10 +72,16 @@ public class ImageLoader {
         return this;
     }
 
+    public ImageLoader defCol(int errorColor) {
+        this.errorColor = errorColor;
+        return this;
+    }
+
     private ImageLoader clear() {
         source = null;
         completer = null;
         barRef = null;
+        errorColor = R.color.gray_200;
         return this;
     }
 

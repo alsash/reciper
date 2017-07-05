@@ -209,6 +209,9 @@ public class StorageLogic {
 
     public BaseEntity getRestrictEntity(EntityRestriction restriction) {
 
+        if (BuildConfig.DEBUG)
+            MainThreadException.throwOnMainThread(TAG, "getRestrictEntity(EntityRestriction)");
+
         if (restriction.entityClass.equals(Category.class)) {
 
             return prefetchRelation(dbManager.getCategoryTable(restriction.entityUuid));
@@ -275,15 +278,21 @@ public class StorageLogic {
 
     @UiThread
     public void updateSync(Recipe recipe, RecipeAction action, Object... values) {
+        if (values == null || values.length == 0) return;
         RecipeTable recipeTable = (RecipeTable) recipe;
         recipeTable.setChangedAt(new Date());
         switch (action) {
             case EDIT_PHOTO:
                 PhotoTable photoTable = (PhotoTable) recipe.getMainPhoto();
-                if (photoTable != null) {
-                    photoTable.setChangedAt(new Date());
-                    photoTable.setUrl((String) values[0]);
-                }
+                if (photoTable == null) return;
+                photoTable.setChangedAt(new Date());
+                photoTable.setUrl((String) values[0]);
+                break;
+            case EDIT_AUTHOR:
+                recipeTable.setAuthorUuid((String) values[0]);
+                break;
+            case EDIT_CATEGORY:
+                recipeTable.setCategoryUuid((String) values[0]);
                 break;
             case EDIT_NAME:
                 recipeTable.setName((String) values[0]);
@@ -307,13 +316,21 @@ public class StorageLogic {
                 PhotoTable photoTable = (PhotoTable) recipe.getMainPhoto();
                 if (photoTable != null) photoTable.update();
                 break;
+            case EDIT_CATEGORY:
+                recipeTable.resetCategoryTables();
+                break;
+            case EDIT_AUTHOR:
+                recipeTable.resetAuthorTables();
+                break;
             case EDIT:
             case EDIT_NAME:
             case EDIT_FAVORITE:
             case EDIT_DESCRIPTION:
-                recipeTable.update();
                 break;
         }
+
+        recipeTable.update();
+        prefetchRelation(recipeTable);
     }
 
     @UiThread

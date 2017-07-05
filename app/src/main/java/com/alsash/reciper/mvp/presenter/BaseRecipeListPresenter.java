@@ -61,7 +61,10 @@ public abstract class BaseRecipeListPresenter<V extends RecipeListView>
                                     case EDIT:
                                     case EDIT_NAME:
                                     case EDIT_PHOTO:
+                                    case EDIT_AUTHOR:
+                                    case EDIT_CATEGORY:
                                     case EDIT_FAVORITE:
+                                    case EDIT_DESCRIPTION:
                                         Integer editPosition = getPosition(event.uuid);
                                         if (editPosition == null) return;
                                         if (viewRef.get() != null)

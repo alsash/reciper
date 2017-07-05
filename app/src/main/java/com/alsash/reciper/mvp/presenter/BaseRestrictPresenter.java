@@ -11,9 +11,11 @@ import java.lang.ref.WeakReference;
 import java.util.concurrent.Callable;
 
 import io.reactivex.Maybe;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.functions.Consumer;
+import io.reactivex.schedulers.Schedulers;
 
 /**
  * A Presenter that represents details of a single recipe
@@ -37,7 +39,7 @@ public abstract class BaseRestrictPresenter<V extends BaseView> implements BaseP
     }
 
     @Override
-    public void attach(final V view) {
+    public void attach(V view) {
         if (getEntity() != null) return;
         final WeakReference<V> viewRef = new WeakReference<>(view);
         composite.add(Maybe
@@ -46,7 +48,10 @@ public abstract class BaseRestrictPresenter<V extends BaseView> implements BaseP
                     public BaseEntity call() throws Exception {
                         return storageLogic.getRestrictEntity(restriction);
                     }
-                }).subscribe(new Consumer<BaseEntity>() {
+                })
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<BaseEntity>() {
                     @Override
                     public void accept(@NonNull BaseEntity loadedEntity) throws Exception {
                         setEntity(loadedEntity);

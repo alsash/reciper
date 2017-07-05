@@ -20,5 +20,7 @@ public interface BaseListView<M> extends BaseView {
 
     void showUpdate(int position);
 
+    void showUpdate();
+
     void showDelete(int position);
 }

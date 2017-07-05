@@ -36,7 +36,8 @@ public class EntityCategoryHolder extends BaseEntityHolder {
     @Override
     public void bindEntity(BaseEntity entity) {
         Category category = (Category) entity;
-        ImageLoader.get().source(category.getPhoto()).bar(imageBar).load(image);
+        ImageLoader.get().source(category.getPhoto()).bar(imageBar).defCol(R.color.amber_300)
+                .load(image);
         name.setText(category.getName());
     }
 

@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 import com.alsash.reciper.R;
 import com.alsash.reciper.mvp.model.entity.Label;
 import com.alsash.reciper.ui.adapter.holder.RecipeLabelHolder;
-import com.alsash.reciper.ui.adapter.interaction.LabelInteraction;
+import com.alsash.reciper.ui.adapter.interaction.RecipeLabelInteraction;
 
 import java.util.List;
 
@@ -17,9 +17,9 @@ import java.util.List;
 public class RecipeLabelListAdapter extends RecyclerView.Adapter<RecipeLabelHolder> {
 
     private final List<Label> labels;
-    private final LabelInteraction interaction;
+    private final RecipeLabelInteraction interaction;
 
-    public RecipeLabelListAdapter(List<Label> labels, LabelInteraction interaction) {
+    public RecipeLabelListAdapter(List<Label> labels, RecipeLabelInteraction interaction) {
         this.labels = labels;
         this.interaction = interaction;
     }
@@ -35,7 +35,8 @@ public class RecipeLabelListAdapter extends RecyclerView.Adapter<RecipeLabelHold
         holder.labelName.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                interaction.onPress(labels.get(holder.getAdapterPosition()));
+                int position = holder.getAdapterPosition();
+                interaction.onPress(labels.get(position), position);
                 return false;
             }
         });

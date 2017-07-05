@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatDialogFragment;
 import android.view.LayoutInflater;
@@ -35,10 +36,17 @@ public abstract class BaseDialogFragment<V extends BaseView> extends AppCompatDi
 
     protected abstract void clickNegative();
 
+    @Nullable
+    protected String getTitle() {
+        return null;
+    }
+
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        String title = getTitle();
+        if (title != null) builder.setTitle(title);
         builder.setView(onCreateView(LayoutInflater.from(getActivity()), null, null))
                 .setPositiveButton(android.R.string.ok, null) // prevent dismiss
                 .setNegativeButton(android.R.string.cancel, null); // prevent dismiss
@@ -121,6 +129,12 @@ public abstract class BaseDialogFragment<V extends BaseView> extends AppCompatDi
             presenter.detach();
         }
         super.onCancel(dialog);
+    }
+
+
+    @SuppressWarnings("unchecked")
+    protected <P> P getThisPresenter() {
+        return (P) presenter;
     }
 
     @SuppressWarnings("unchecked")

@@ -1,4 +1,4 @@
-package com.alsash.reciper.ui.fragment;
+package com.alsash.reciper.ui.fragment.dialog;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -9,7 +9,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.alsash.reciper.R;
 import com.alsash.reciper.mvp.model.entity.BaseEntity;
 import com.alsash.reciper.mvp.presenter.BaseListPresenter;
 import com.alsash.reciper.mvp.view.BaseListView;
@@ -25,9 +24,8 @@ import static android.support.v7.widget.RecyclerView.SCROLL_STATE_SETTLING;
  * @param <M> - Model of an entity
  * @param <V> - View interface
  */
-public abstract class BaseListFragment<M extends BaseEntity, V extends BaseListView<M>>
-        extends BaseFragment<V>
-        implements BaseListView<M> {
+public abstract class BaseDialogListFragment<M extends BaseEntity, V extends BaseListView<M>>
+        extends BaseDialogFragment<V> implements BaseListView<M> {
 
     protected BaseListPresenter<M, V> presenter;
     protected SwipeRefreshLayout refreshIndicator;
@@ -47,8 +45,6 @@ public abstract class BaseListFragment<M extends BaseEntity, V extends BaseListV
     protected abstract BaseListPresenter<M, V> inject();
 
     protected abstract RecyclerView.Adapter getAdapter(List<M> container);
-
-    protected abstract RecyclerView.LayoutManager getLayoutManager(Context context);
 
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -100,38 +96,15 @@ public abstract class BaseListFragment<M extends BaseEntity, V extends BaseListV
         if (adapter != null) adapter.notifyItemRemoved(position);
     }
 
+    @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater,
                              @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        View layout = inflater.inflate(R.layout.fragment_list_refresh, container, false);
-        bindViews(layout);
-        setupList();
-        setupRefresh();
-        return layout;
-    }
-
-    protected void bindViews(View layout) {
-        refreshIndicator = (SwipeRefreshLayout) layout.findViewById(R.id.list_refresh_indicator);
-        list = (RecyclerView) layout.findViewById(R.id.list_refresh_rv);
-    }
-
-    protected void setupList() {
-        list.setLayoutManager(getLayoutManager(list.getContext()));
-        list.setAdapter(adapter);
-        list.addOnScrollListener(paginationListener);
-    }
-
-    protected void setupRefresh() {
-        refreshIndicator.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                presenter.refresh(getThisView());
-            }
-        });
-        refreshIndicator.setColorSchemeResources(
-                R.color.green_500,
-                R.color.amber_500,
-                R.color.red_500);
+        if (list != null) {
+            list.setAdapter(adapter);
+            list.addOnScrollListener(paginationListener);
+        }
+        return super.onCreateView(inflater, container, savedInstanceState);
     }
 }

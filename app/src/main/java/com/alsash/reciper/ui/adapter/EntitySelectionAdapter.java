@@ -32,6 +32,8 @@ public class EntitySelectionAdapter extends RecyclerView.Adapter<BaseEntitySelec
     private final boolean multiSelect;
     private final int viewType;
 
+    private String selectedEntityUuid;
+
     public EntitySelectionAdapter(EntitySelectionInteraction interaction,
                                   List<? extends BaseEntity> entities,
                                   Class<?> entityClass,
@@ -56,6 +58,16 @@ public class EntitySelectionAdapter extends RecyclerView.Adapter<BaseEntitySelec
         this(interaction, entities, entityClass, false);
     }
 
+    public void setSelectedEntity(String entityUuid) {
+        selectedEntityUuid = entityUuid;
+        for (BaseEntity entity : entities) {
+            if (entity.getUuid().equals(selectedEntityUuid)) {
+                notifyDataSetChanged();
+                return;
+            }
+        }
+    }
+
     @Override
     public BaseEntitySelectionHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         switch (viewType) {
@@ -75,6 +87,7 @@ public class EntitySelectionAdapter extends RecyclerView.Adapter<BaseEntitySelec
 
     @Override
     public void onBindViewHolder(final BaseEntitySelectionHolder holder, int position) {
+        checkSelectionSet(position);
         holder.bindEntity(entities.get(position));
         holder.setChecked(selectedPositions.contains(position));
         holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -94,5 +107,14 @@ public class EntitySelectionAdapter extends RecyclerView.Adapter<BaseEntitySelec
     @Override
     public int getItemCount() {
         return entities.size();
+    }
+
+    private void checkSelectionSet(int position) {
+        if (selectedEntityUuid == null) return;
+        if (entities.get(position).getUuid().equals(selectedEntityUuid)) {
+            if (!multiSelect) selectedPositions.clear();
+            selectedPositions.add(position);
+            selectedEntityUuid = null;
+        }
     }
 }

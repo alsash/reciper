@@ -10,7 +10,6 @@ import com.alsash.reciper.mvp.model.entity.Recipe;
 import com.alsash.reciper.mvp.view.BaseListView;
 import com.alsash.reciper.mvp.view.RecipeListView;
 
-import java.lang.ref.WeakReference;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -90,7 +89,6 @@ public abstract class BaseRecipeGroupPresenter<G extends BaseEntity, V extends B
 
         private final BaseRecipeGroupPresenter<G, ?> outerPresenter;
         private final G group;
-        private WeakReference<RecipeListView> viewRef;
 
         public RecipeGroupInnerPresenter(int limit,
                                          G group,
@@ -98,25 +96,6 @@ public abstract class BaseRecipeGroupPresenter<G extends BaseEntity, V extends B
             super(limit, outerPresenter.getStorageLogic(), outerPresenter.getBusinessLogic());
             this.group = group;
             this.outerPresenter = outerPresenter;
-        }
-
-        @Override
-        public void attach(RecipeListView view) {
-            super.attach(view);
-            viewRef = new WeakReference<>(view);
-        }
-
-        protected void updateView(Recipe recipe, G group) {
-            if (this.group.getId().equals(group.getId())) return; // updated at adapter
-            if (viewRef == null || viewRef.get() == null || !viewRef.get().isViewVisible()) return;
-            int position = -1;
-            for (int i = 0; i < getModels().size(); i++) {
-                if (getModels().get(i).getId().equals(recipe.getId())) {
-                    position = i;
-                    break;
-                }
-            }
-            viewRef.get().showUpdate(position);
         }
 
         @Override

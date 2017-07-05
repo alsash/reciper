@@ -88,8 +88,12 @@ public abstract class BaseRecipeGroupHolder<G extends BaseEntity> extends Recycl
 
     @Override
     public void showUpdate(int position) {
-        if (adapter == null) return;
-        adapter.notifyItemChanged(position);
+        if (adapter != null) adapter.notifyItemChanged(position);
+    }
+
+    @Override
+    public void showUpdate() {
+        if (adapter != null) adapter.notifyDataSetChanged();
     }
 
     @Override

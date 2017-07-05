@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.alsash.reciper.R;
 import com.alsash.reciper.app.ReciperApp;
+import com.alsash.reciper.app.lib.MutableString;
 import com.alsash.reciper.logic.NavigationLogic;
 import com.alsash.reciper.mvp.model.entity.Author;
 import com.alsash.reciper.mvp.model.entity.Category;
@@ -23,7 +24,9 @@ import com.alsash.reciper.mvp.model.entity.Recipe;
 import com.alsash.reciper.mvp.presenter.RecipeDetailsDescriptionPresenter;
 import com.alsash.reciper.mvp.view.RecipeDetailsDescriptionView;
 import com.alsash.reciper.ui.adapter.RecipeLabelListAdapter;
-import com.alsash.reciper.ui.adapter.interaction.LabelInteraction;
+import com.alsash.reciper.ui.adapter.interaction.RecipeLabelInteraction;
+import com.alsash.reciper.ui.fragment.dialog.RecipeAuthorDialogFragment;
+import com.alsash.reciper.ui.fragment.dialog.RecipeCategoryDialogFragment;
 import com.alsash.reciper.ui.loader.ImageLoader;
 
 import java.text.SimpleDateFormat;
@@ -63,25 +66,33 @@ public class RecipeDetailsDescriptionFragment extends BaseFragment<RecipeDetails
     private EditText recipeSource;
     private TextView recipeDate;
     private EditText recipeDescription;
+
     // Category card
+    private View.OnClickListener categoryEditListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            presenter.requestCategoryEdit(getThisView());
+        }
+    };
     private ImageView categoryImage;
     private TextView categoryName;
-    private ImageButton categoryEdit;
+    private ImageButton categoryEditButton;
     // Labels card
-    private ImageButton labelsAdd;
-    private TextView labelsTitle;
     private View.OnClickListener labelsAddListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            presenter.addLabel();
+            presenter.requestLabelAdd();
         }
     };
+    private ImageButton labelsAdd;
+    private TextView labelsTitle;
     private RecyclerView labelsList;
     private RecipeLabelListAdapter labelsListAdapter;
-    private LabelInteraction labelsListInteraction = new LabelInteraction() {
+    private RecipeLabelInteraction labelsListInteraction = new RecipeLabelInteraction() {
         @Override
-        public void onPress(Label label) {
-            presenter.deleteLabel(label);
+        public void onPress(Label label, int position) {
+            presenter.requestLabelDelete(label);
+            labelsListAdapter.notifyItemRemoved(position);
         }
     };
     // Time card
@@ -92,12 +103,6 @@ public class RecipeDetailsDescriptionFragment extends BaseFragment<RecipeDetails
 
     public static RecipeDetailsDescriptionFragment newInstance(Intent intent) {
         return getThisFragment(new RecipeDetailsDescriptionFragment(), intent);
-    }
-
-    @Override
-    public void showAuthor(Author author) {
-        ImageLoader.get().source(author).load(authorImage);
-        authorName.setText(author.getName());
     }
 
     @Override
@@ -120,9 +125,30 @@ public class RecipeDetailsDescriptionFragment extends BaseFragment<RecipeDetails
     }
 
     @Override
+    public void showAuthor(Author author) {
+        ImageLoader.get().source(author).load(authorImage);
+        authorName.setText(author.getName());
+    }
+
+    @Override
     public void showCategory(Category category) {
         ImageLoader.get().source(category.getPhoto()).load(categoryImage);
         categoryName.setText(category.getName());
+    }
+
+    @Override
+    public void showCategoryEditDialog(Recipe recipe) {
+        RecipeCategoryDialogFragment.start(getActivity().getSupportFragmentManager(), recipe);
+    }
+
+    @Override
+    public void showAuthorEditDialog(Recipe recipe) {
+        RecipeAuthorDialogFragment.start(getActivity().getSupportFragmentManager(), recipe);
+    }
+
+    @Override
+    public void showLabelAddDialog(List<String> labelNames, MutableString listener) {
+
     }
 
     @Override
@@ -175,10 +201,12 @@ public class RecipeDetailsDescriptionFragment extends BaseFragment<RecipeDetails
         recipeSource = (EditText) layout.findViewById(R.id.recipe_description_source);
         recipeDate = (TextView) layout.findViewById(R.id.recipe_description_date);
         recipeDescription = (EditText) layout.findViewById(R.id.recipe_description_body);
+
         // Category card
         categoryImage = (ImageView) layout.findViewById(R.id.recipe_category_image);
         categoryName = (TextView) layout.findViewById(R.id.recipe_category_name);
-        categoryEdit = (ImageButton) layout.findViewById(R.id.recipe_category_edit);
+        categoryEditButton = (ImageButton) layout.findViewById(R.id.recipe_category_edit);
+        categoryEditButton.setOnClickListener(categoryEditListener);
         // Labels card
         labelsAdd = (ImageButton) layout.findViewById(R.id.recipe_labels_add);
         labelsAdd.setOnClickListener(labelsAddListener);

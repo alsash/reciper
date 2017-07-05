@@ -5,18 +5,24 @@ import android.support.annotation.Nullable;
 import com.alsash.reciper.logic.BusinessLogic;
 import com.alsash.reciper.logic.StorageLogic;
 import com.alsash.reciper.logic.action.RecipeAction;
+import com.alsash.reciper.logic.event.RecipeEvent;
 import com.alsash.reciper.logic.restriction.EntityRestriction;
 import com.alsash.reciper.mvp.model.entity.BaseEntity;
 import com.alsash.reciper.mvp.model.entity.Label;
 import com.alsash.reciper.mvp.model.entity.RecipeFull;
 import com.alsash.reciper.mvp.view.RecipeDetailsDescriptionView;
 
+import java.lang.ref.WeakReference;
+
 import io.reactivex.Completable;
+import io.reactivex.Notification;
+import io.reactivex.annotations.NonNull;
 import io.reactivex.functions.Action;
+import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
 /**
- * Simple presenter for its view
+ * A Presenter for its view
  */
 public class RecipeDetailsDescriptionPresenter
         extends BaseRestrictPresenter<RecipeDetailsDescriptionView> {
@@ -42,12 +48,44 @@ public class RecipeDetailsDescriptionPresenter
         return (RecipeDetailsDescriptionPresenter) super.setRestriction(restriction);
     }
 
-    public void deleteLabel(Label label) {
+    public void requestLabelDelete(Label label) {
 
     }
 
-    public void addLabel() {
+    public void requestLabelAdd() {
 
+    }
+
+    @Override
+    public void attach(RecipeDetailsDescriptionView view) {
+        super.attach(view);
+        final WeakReference<RecipeDetailsDescriptionView> viewRef = new WeakReference<>(view);
+        getComposite().add(
+                businessLogic
+                        .getRecipeEventSubject()
+                        .doOnEach(new Consumer<Notification<RecipeEvent>>() {
+                            @Override
+                            public void accept(@NonNull Notification<RecipeEvent> notification)
+                                    throws Exception {
+                                RecipeEvent event = notification.getValue();
+                                if (event == null) return;
+                                // Updates from dialog...
+                                switch (event.action) {
+                                    case EDIT_CATEGORY:
+                                        if (viewRef.get() != null
+                                                && viewRef.get().isViewVisible()
+                                                && recipeFull != null)
+                                            viewRef.get().showCategory(recipeFull.getCategory());
+                                        break;
+                                    case EDIT_AUTHOR:
+                                        if (viewRef.get() != null
+                                                && viewRef.get().isViewVisible()
+                                                && recipeFull != null)
+                                            viewRef.get().showAuthor(recipeFull.getAuthor());
+                                        break;
+                                }
+                            }
+                        }).subscribe());
     }
 
     @Override
@@ -77,10 +115,6 @@ public class RecipeDetailsDescriptionPresenter
         recipeFull = (RecipeFull) entity;
     }
 
-    public void requestAuthorEdit(RecipeDetailsDescriptionView view) {
-
-    }
-
     public void requestDescriptionEdit(RecipeDetailsDescriptionView view) {
         descriptionEditable = !descriptionEditable;
         view.setDescriptionEditable(descriptionEditable);
@@ -98,5 +132,15 @@ public class RecipeDetailsDescriptionPresenter
                     .subscribeOn(Schedulers.io())
                     .subscribe());
         }
+    }
+
+    public void requestAuthorEdit(RecipeDetailsDescriptionView view) {
+        if (recipeFull != null)
+            view.showAuthorEditDialog(recipeFull);
+    }
+
+    public void requestCategoryEdit(RecipeDetailsDescriptionView view) {
+        if (recipeFull != null)
+            view.showCategoryEditDialog(recipeFull);
     }
 }

@@ -24,6 +24,7 @@
     <color name="red_050">#ffebee</color>
     <color name="red_500">#f44336</color>
     <color name="amber_050">#fff8e1</color>
+    <color name="amber_300">#ffd54f</color>
     <color name="amber_500">#ffc107</color>
     <color name="teal_accent_400">#1de9b6</color>
     <color name="teal_accent_700">#00bfa5</color>

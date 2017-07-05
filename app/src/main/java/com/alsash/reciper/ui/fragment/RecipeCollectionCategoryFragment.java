@@ -72,6 +72,7 @@ public class RecipeCollectionCategoryFragment
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.appbar_add) {
+            // MVP is so slow... :)
             RecipeCreationDialogFragment.start(getActivity().getSupportFragmentManager());
             return true;
         }
