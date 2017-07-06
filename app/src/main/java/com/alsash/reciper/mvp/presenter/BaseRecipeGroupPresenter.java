@@ -47,6 +47,10 @@ public abstract class BaseRecipeGroupPresenter<G extends BaseEntity, V extends B
     @WorkerThread
     protected abstract List<Recipe> loadNextRecipes(G group, int offset, int limit);
 
+    public boolean canOpenGroup(G group) {
+        return presenters.get(group).getModels().size() > 0;
+    }
+
     @Override
     public void refresh(V view) {
         prefetchedRecipes.clear();

@@ -1,5 +1,6 @@
 package com.alsash.reciper.mvp.view;
 
+import com.alsash.reciper.app.lib.MutableDate;
 import com.alsash.reciper.app.lib.MutableString;
 import com.alsash.reciper.mvp.model.entity.Author;
 import com.alsash.reciper.mvp.model.entity.Category;
@@ -33,5 +34,7 @@ public interface RecipeDetailsDescriptionView extends BaseView {
     void showLabelAddDialog(List<String> labelNames, MutableString listener);
 
     void showCookTime(Calendar calendar);
+
+    void showCookTimeEditDialog(Calendar calendar, MutableDate listener);
 
 }

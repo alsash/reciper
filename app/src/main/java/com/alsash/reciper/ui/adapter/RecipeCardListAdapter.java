@@ -32,18 +32,12 @@ public class RecipeCardListAdapter extends RecyclerView.Adapter<RecipeCardHolder
         this.recipeList = recipeList;
         this.backCardPositions = new HashSet<>();
         this.recipeCardLayoutId = recipeCardLayoutId;
-        setHasStableIds(true);
         registerAdapterDataObserver(new AdapterPositionSetObserver(backCardPositions));
     }
 
     @Override
     public RecipeCardHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         return new RecipeCardHolder(parent, recipeCardLayoutId);
-    }
-
-    @Override
-    public long getItemId(int position) {
-        return recipeList.get(position).getId();
     }
 
     @Override

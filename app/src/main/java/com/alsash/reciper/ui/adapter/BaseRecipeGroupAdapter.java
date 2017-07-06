@@ -25,12 +25,6 @@ public abstract class BaseRecipeGroupAdapter<G extends BaseEntity,
                                   RecipeGroupInteraction<G> groupInteraction) {
         this.groupList = groupList;
         this.groupInteraction = groupInteraction;
-        setHasStableIds(true);
-    }
-
-    @Override
-    public long getItemId(int position) {
-        return groupList.get(position).getId();
     }
 
     @Override

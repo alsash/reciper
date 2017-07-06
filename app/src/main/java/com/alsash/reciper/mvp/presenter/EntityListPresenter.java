@@ -39,12 +39,15 @@ public class EntityListPresenter extends BaseListPresenter<BaseEntity, EntityLis
     private final StorageLogic storageLogic;
     private final BusinessLogic businessLogic;
     private EntityRestriction restriction;
+    @SuppressWarnings("MismatchedQueryAndUpdateOfCollection")
+    private List<MutableBoolean> deleteListeners;
 
     public EntityListPresenter(StorageLogic storageLogic,
                                BusinessLogic businessLogic) {
         super(PAGINATION_LIMIT);
         this.storageLogic = storageLogic;
         this.businessLogic = businessLogic;
+        this.deleteListeners = new ArrayList<>();
     }
 
     public EntityListPresenter setEntityRestriction(EntityRestriction restriction) {
@@ -59,7 +62,36 @@ public class EntityListPresenter extends BaseListPresenter<BaseEntity, EntityLis
         super.attach(view);
     }
 
-    public void addEntity(final EntityListView view) {
+    public void onOpenEntity(EntityListView view, final BaseEntity entity) {
+
+        final WeakReference<EntityListView> viewRef = new WeakReference<>(view);
+
+        getComposite().add(Maybe.fromCallable(new Callable<Boolean>() {
+                    @Override
+                    public Boolean call() throws Exception {
+                        return storageLogic.hasRelatedRecipes(entity);
+                    }
+                })
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new Consumer<Boolean>() {
+                            @Override
+                            public void accept(@NonNull Boolean has) throws Exception {
+                                if (has) viewRef.get().showRelation(entity);
+                            }
+                        })
+
+        );
+    }
+
+    @Override
+    public void detach() {
+        super.detach();
+        deleteListeners.clear();
+        deleteListeners = new ArrayList<>();
+    }
+
+    public void addEntity(EntityListView view) {
         final WeakReference<EntityListView> viewRef = new WeakReference<>(view);
 
         getComposite().add(Maybe
@@ -263,7 +295,7 @@ public class EntityListPresenter extends BaseListPresenter<BaseEntity, EntityLis
 
     private MutableBoolean getDeleteRejectCallback(final WeakReference<EntityListView> viewRef,
                                                    final BaseEntity entity, final int position) {
-        return new MutableBoolean() {
+        MutableBoolean callback = new MutableBoolean() {
             @Override
             public synchronized MutableBoolean set(boolean rejected) {
                 if (rejected) {
@@ -288,10 +320,22 @@ public class EntityListPresenter extends BaseListPresenter<BaseEntity, EntityLis
                                 }
                             })
                             .subscribeOn(Schedulers.io())
-                            .subscribe());
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe(new Action() {
+                                @Override
+                                public void run() throws Exception {
+                                    Integer position = getPosition(entity.getUuid());
+                                    if (position != null) {
+                                        getModels().remove((int) position);
+                                        viewRef.get().showDelete(position);
+                                    }
+                                }
+                            }));
                 }
                 return super.set(rejected);
             }
         };
+        deleteListeners.add(callback);
+        return callback;
     }
 }

@@ -17,4 +17,6 @@ public interface EntityListView extends BaseListView<BaseEntity> {
     void showDeleteFailMessage(String entityName, int recipesCount);
 
     void showPhotoEditDialog(Photo photo, MutableString listener);
+
+    void showRelation(BaseEntity entity);
 }

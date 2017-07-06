@@ -2,6 +2,7 @@ package com.alsash.reciper.mvp.presenter;
 
 import android.support.annotation.Nullable;
 
+import com.alsash.reciper.app.lib.MutableDate;
 import com.alsash.reciper.logic.BusinessLogic;
 import com.alsash.reciper.logic.StorageLogic;
 import com.alsash.reciper.logic.action.RecipeAction;
@@ -13,6 +14,7 @@ import com.alsash.reciper.mvp.model.entity.RecipeFull;
 import com.alsash.reciper.mvp.view.RecipeDetailsDescriptionView;
 
 import java.lang.ref.WeakReference;
+import java.util.Date;
 
 import io.reactivex.Completable;
 import io.reactivex.Notification;
@@ -143,4 +145,35 @@ public class RecipeDetailsDescriptionPresenter
         if (recipeFull != null)
             view.showCategoryEditDialog(recipeFull);
     }
+
+    public void requestRecipeTime(RecipeDetailsDescriptionView view) {
+        if (recipeFull == null) return;
+
+        final WeakReference<RecipeDetailsDescriptionView> viewRef = new WeakReference<>(view);
+
+        view.showCookTimeEditDialog(businessLogic.getCookTime(recipeFull), new MutableDate() {
+            @Override
+            public synchronized MutableDate set(Date value) {
+                storageLogic.updateSync(
+                        recipeFull,
+                        RecipeAction.EDIT_TIME,
+                        businessLogic.getMassFlowRate(recipeFull, value.getTime())
+                );
+                if (viewRef.get() != null)
+                    viewRef.get().showCookTime(businessLogic.getCookTime(recipeFull));
+                getComposite().add(Completable
+                        .fromAction(new Action() {
+                            @Override
+                            public void run() throws Exception {
+                                storageLogic.updateAsync(recipeFull, RecipeAction.EDIT_TIME);
+                            }
+                        })
+                        .subscribeOn(Schedulers.io())
+                        .subscribe());
+
+                return super.set(value);
+            }
+        });
+    }
+
 }

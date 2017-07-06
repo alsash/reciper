@@ -78,6 +78,11 @@ public class EntityListFragment extends BaseListFragment<BaseEntity, EntityListV
 
     @Override
     public void onOpen(BaseEntity entity) {
+        presenter.onOpenEntity(getThisView(), entity);
+    }
+
+    @Override
+    public void showRelation(BaseEntity entity) {
         if (entity instanceof Category)
             navigator.fromActivity(getActivity()).toRecipeListView((Category) entity);
         if (entity instanceof Label)
@@ -122,8 +127,7 @@ public class EntityListFragment extends BaseListFragment<BaseEntity, EntityListV
                 .addCallback(new BaseTransientBottomBar.BaseCallback<Snackbar>() {
                     @Override
                     public void onDismissed(Snackbar transientBottomBar, int event) {
-                        if (event != BaseTransientBottomBar.BaseCallback.DISMISS_EVENT_ACTION)
-                            reject.set(false);
+                        if (!reject.is()) reject.set(false);
                     }
                 })
                 .setActionTextColor(ResourcesCompat.getColor(getResources(),

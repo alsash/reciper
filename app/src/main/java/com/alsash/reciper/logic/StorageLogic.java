@@ -19,6 +19,7 @@ import com.alsash.reciper.data.db.table.RecipeLabelTable;
 import com.alsash.reciper.data.db.table.RecipeMethodTable;
 import com.alsash.reciper.data.db.table.RecipePhotoTable;
 import com.alsash.reciper.data.db.table.RecipeTable;
+import com.alsash.reciper.data.db.table.Table;
 import com.alsash.reciper.logic.action.RecipeAction;
 import com.alsash.reciper.logic.exception.MainThreadException;
 import com.alsash.reciper.logic.restriction.EntityRestriction;
@@ -93,6 +94,7 @@ public class StorageLogic {
     }
 
     public int getRelatedRecipesSize(BaseEntity entity) {
+        if (!hasRelatedRecipes(entity)) return 0;
         if (entity instanceof CategoryTable) {
             CategoryTable categoryTable = (CategoryTable) entity;
             return dbManager.getRecipeTable(categoryTable).size(); // Distinct count.
@@ -107,6 +109,23 @@ public class StorageLogic {
             return dbManager.getRecipeTable(authorTable).size();
         }
         return 0;
+    }
+
+    public boolean hasRelatedRecipes(BaseEntity entity) {
+        if (entity instanceof CategoryTable) {
+            CategoryTable categoryTable = (CategoryTable) entity;
+            return dbManager.restrictWith(0, 1).getRecipeTable(categoryTable).size() > 0;
+        } else if (entity instanceof LabelTable) {
+            LabelTable labelTable = (LabelTable) entity;
+            return dbManager.restrictWith(0, 1).getRecipeTable(labelTable).size() > 0;
+        } else if (entity instanceof FoodTable) {
+            FoodTable foodTable = (FoodTable) entity;
+            return dbManager.restrictWith(0, 1).getRecipeTable(foodTable).size() > 0;
+        } else if (entity instanceof AuthorTable) {
+            AuthorTable authorTable = (AuthorTable) entity;
+            return dbManager.restrictWith(0, 1).getRecipeTable(authorTable).size() > 0;
+        }
+        return false;
     }
 
     public List<Category> getCategories(int offset, int limit) {
@@ -294,6 +313,9 @@ public class StorageLogic {
             case EDIT_CATEGORY:
                 recipeTable.setCategoryUuid((String) values[0]);
                 break;
+            case EDIT_TIME:
+                recipeTable.setMassFlowRateGps((double) values[0]);
+                break;
             case EDIT_NAME:
                 recipeTable.setName((String) values[0]);
                 break;
@@ -324,6 +346,7 @@ public class StorageLogic {
                 break;
             case EDIT:
             case EDIT_NAME:
+            case EDIT_TIME:
             case EDIT_FAVORITE:
             case EDIT_DESCRIPTION:
                 break;
@@ -453,6 +476,8 @@ public class StorageLogic {
     public void deleteAsync(BaseEntity entity) {
         if (BuildConfig.DEBUG) MainThreadException.throwOnMainThread(TAG, "deleteAsync()");
 
+        if (entity.getId() == null) return;
+
         if (entity instanceof AuthorTable) {
             if (getRelatedRecipesSize(entity) > 0) return;
             dbManager.deleteDeep((AuthorTable) entity);
@@ -493,6 +518,10 @@ public class StorageLogic {
 
         } else if (entity instanceof RecipeTable) {
             dbManager.deleteDeep((RecipeTable) entity);
+        }
+
+        if (entity instanceof Table) {
+            ((Table) entity).setId(null);
         }
     }
 

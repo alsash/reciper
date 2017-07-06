@@ -6,4 +6,6 @@ package com.alsash.reciper.mvp.view;
 public interface RecipeRestrictListView extends RecipeListView {
 
     void setTitle(String title);
+
+    void finishView();
 }

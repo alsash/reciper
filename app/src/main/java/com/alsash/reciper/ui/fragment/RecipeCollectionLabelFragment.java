@@ -49,7 +49,8 @@ public class RecipeCollectionLabelFragment
 
     @Override
     public void onOpen(Label label) {
-        navigator.fromActivity(getActivity()).toRecipeListView(label);
+        if (presenter.canOpenGroup(label))
+            navigator.fromActivity(getActivity()).toRecipeListView(label);
     }
 
     @Override

@@ -114,6 +114,16 @@ public class BusinessLogic {
         return calendar;
     }
 
+    public double getMassFlowRate(RecipeFull recipe, long milliseconds) {
+
+        if (milliseconds <= 0) return 0;
+
+        double recipeWeightInGrams = getRecipeWeight(recipe, WeightUnit.GRAM);
+
+        return (recipeWeightInGrams * 1000) / milliseconds;
+
+    }
+
     public Nutrient getNutrient(RecipeFull recipe, RecipeUnit recipeUnit) {
         double protein = 0.0D;
         double carbs = 0.0D;

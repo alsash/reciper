@@ -49,7 +49,8 @@ public class RecipeCollectionCategoryFragment
 
     @Override
     public void onOpen(Category category) {
-        navigator.fromActivity(getActivity()).toRecipeListView(category);
+        if (presenter.canOpenGroup(category))
+            navigator.fromActivity(getActivity()).toRecipeListView(category);
     }
 
     @Override

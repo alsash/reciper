@@ -89,7 +89,7 @@ public class DbManager {
         List<CategoryTable> categoryTables = daoSession.getCategoryTableDao().queryBuilder()
                 .where(CategoryTableDao.Properties.Uuid.eq(uuid))
                 .list();
-        return categoryTables.get(0);
+        return categoryTables.size() > 0 ? categoryTables.get(0) : null;
     }
 
     public List<LabelTable> getLabelTable() {
@@ -103,7 +103,7 @@ public class DbManager {
         List<LabelTable> labelTables = daoSession.getLabelTableDao().queryBuilder()
                 .where(LabelTableDao.Properties.Uuid.eq(uuid))
                 .list();
-        return labelTables.get(0);
+        return labelTables.size() > 0 ? labelTables.get(0) : null;
     }
 
     public List<RecipeTable> getRecipeTable() {
@@ -118,7 +118,7 @@ public class DbManager {
         List<RecipeTable> recipeTables = daoSession.getRecipeTableDao().queryBuilder()
                 .where(RecipeTableDao.Properties.Uuid.eq(uuid))
                 .list();
-        return recipeTables.get(0);
+        return recipeTables.size() > 0 ? recipeTables.get(0) : null;
     }
 
     public List<RecipeTable> getRecipeTable(CategoryTable categoryTable) {

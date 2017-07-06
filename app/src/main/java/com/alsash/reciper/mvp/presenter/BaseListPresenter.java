@@ -210,15 +210,6 @@ public abstract class BaseListPresenter<M extends BaseEntity, V extends BaseList
     }
 
     @Nullable
-    protected M getModel(String uuid) {
-        if (uuid == null) return null;
-        for (M model : models) {
-            if (model.getUuid().equals(uuid)) return model;
-        }
-        return null;
-    }
-
-    @Nullable
     protected Integer getPosition(String uuid) {
         for (int i = 0; i < models.size(); i++) {
             if (models.get(i).getUuid().equals(uuid)) return i;

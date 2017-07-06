@@ -1,6 +1,7 @@
 package com.alsash.reciper.ui.fragment.dialog;
 
 import android.annotation.SuppressLint;
+import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.support.annotation.NonNull;
@@ -8,12 +9,18 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.widget.EditText;
+import android.widget.TimePicker;
 
 import com.alsash.reciper.R;
 import com.alsash.reciper.app.lib.MutableBoolean;
+import com.alsash.reciper.app.lib.MutableDate;
 import com.alsash.reciper.app.lib.MutableString;
 import com.alsash.reciper.mvp.model.entity.Photo;
 import com.alsash.reciper.mvp.model.entity.Recipe;
+
+import java.util.Calendar;
+import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 /**
  * A photo dialog helper
@@ -76,6 +83,24 @@ public class SimpleDialog {
                         })
                 .setNegativeButton(context.getString(android.R.string.cancel), null)
                 .show();
+    }
+
+    public static void showEditTime(Context context,
+                                    Calendar calendar,
+                                    final MutableDate listener) {
+
+        TimePickerDialog dialog = new TimePickerDialog(context,
+                new TimePickerDialog.OnTimeSetListener() {
+                    @Override
+                    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                        long milliseconds = TimeUnit.MILLISECONDS.convert(hourOfDay, TimeUnit.HOURS)
+                                + TimeUnit.MILLISECONDS.convert(minute, TimeUnit.MINUTES);
+                        listener.set(new Date(milliseconds));
+                    }
+                },
+                calendar.get(Calendar.HOUR),
+                calendar.get(Calendar.MINUTE), true);
+        dialog.show();
     }
 
     public static void showConfirmDelete(Context context,

@@ -8,7 +8,7 @@ import com.alsash.reciper.mvp.model.entity.BaseEntity;
 public class UnitException extends RuntimeException {
     public UnitException(BaseEntity entity, String requiredUnit, String unknownValue) {
         super(entity.getClass().getName()
-                + " " + entity.getId()
+                + " " + entity.getUuid()
                 + ": has unknown " + requiredUnit + ": "
                 + ((unknownValue == null) ? "null" : unknownValue));
     }

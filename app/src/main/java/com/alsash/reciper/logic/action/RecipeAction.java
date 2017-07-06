@@ -8,6 +8,7 @@ public enum RecipeAction {
     EDIT,
     EDIT_NAME,
     EDIT_CATEGORY,
+    EDIT_TIME,
     EDIT_AUTHOR,
     EDIT_PHOTO,
     EDIT_FAVORITE,

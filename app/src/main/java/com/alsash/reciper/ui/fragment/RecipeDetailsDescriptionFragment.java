@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.alsash.reciper.R;
 import com.alsash.reciper.app.ReciperApp;
+import com.alsash.reciper.app.lib.MutableDate;
 import com.alsash.reciper.app.lib.MutableString;
 import com.alsash.reciper.logic.NavigationLogic;
 import com.alsash.reciper.mvp.model.entity.Author;
@@ -27,6 +28,7 @@ import com.alsash.reciper.ui.adapter.RecipeLabelListAdapter;
 import com.alsash.reciper.ui.adapter.interaction.RecipeLabelInteraction;
 import com.alsash.reciper.ui.fragment.dialog.RecipeAuthorDialogFragment;
 import com.alsash.reciper.ui.fragment.dialog.RecipeCategoryDialogFragment;
+import com.alsash.reciper.ui.fragment.dialog.SimpleDialog;
 import com.alsash.reciper.ui.loader.ImageLoader;
 
 import java.text.SimpleDateFormat;
@@ -96,6 +98,12 @@ public class RecipeDetailsDescriptionFragment extends BaseFragment<RecipeDetails
         }
     };
     // Time card
+    private View.OnClickListener recipeTimeListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            presenter.requestRecipeTime(getThisView());
+        }
+    };
     private TextView recipeTime;
     private ImageButton recipeTimeEdit;
 
@@ -148,7 +156,11 @@ public class RecipeDetailsDescriptionFragment extends BaseFragment<RecipeDetails
 
     @Override
     public void showLabelAddDialog(List<String> labelNames, MutableString listener) {
+    }
 
+    @Override
+    public void showCookTimeEditDialog(Calendar calendar, MutableDate listener) {
+        SimpleDialog.showEditTime(getActivity(), calendar, listener);
     }
 
     @Override
@@ -172,6 +184,7 @@ public class RecipeDetailsDescriptionFragment extends BaseFragment<RecipeDetails
 
     @Override
     public void showCookTime(Calendar calendar) {
+        long millis = calendar.getTimeInMillis();
         int h = calendar.get(Calendar.HOUR);
         int m = calendar.get(Calendar.MINUTE);
         String hours = getResources().getQuantityString(R.plurals.time_format_hours, h, h);
@@ -214,6 +227,7 @@ public class RecipeDetailsDescriptionFragment extends BaseFragment<RecipeDetails
         labelsList = (RecyclerView) layout.findViewById(R.id.recipe_labels_list);
         // Time card
         recipeTimeEdit = (ImageButton) layout.findViewById(R.id.recipe_time_edit);
+        recipeTimeEdit.setOnClickListener(recipeTimeListener);
         recipeTime = (TextView) layout.findViewById(R.id.recipe_time_value);
         return layout;
     }

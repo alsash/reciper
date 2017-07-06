@@ -48,6 +48,7 @@ public class RecipeCollectionLabelPresenter
                                 if (event == null) return;
                                 switch (event.action) {
                                     case CREATE:
+                                    case DELETE:
                                         getModels().clear();
                                         resetPreviousPosition();
                                         setFetched(false);
@@ -64,12 +65,6 @@ public class RecipeCollectionLabelPresenter
                                         if (viewRef.get() != null)
                                             viewRef.get().showUpdate(editPosition);
                                         break;
-                                    case DELETE:
-                                        Integer deletePosition = getPosition(event.uuid);
-                                        if (deletePosition == null) return;
-                                        getModels().remove((int) deletePosition);
-                                        if (viewRef.get() != null)
-                                            viewRef.get().showDelete(deletePosition);
                                 }
                             }
                         })

@@ -54,6 +54,11 @@ public class RecipeRestrictListFragment extends BaseListFragment<Recipe, RecipeR
     }
 
     @Override
+    public void finishView() {
+        getActivity().finish();
+    }
+
+    @Override
     protected RecipeRestrictListPresenter inject() {
         ((ReciperApp) getContext().getApplicationContext())
                 .getUiRecipeRestrictListComponent()
