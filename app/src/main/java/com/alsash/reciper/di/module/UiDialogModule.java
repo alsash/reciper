@@ -2,9 +2,10 @@ package com.alsash.reciper.di.module;
 
 import com.alsash.reciper.logic.BusinessLogic;
 import com.alsash.reciper.logic.StorageLogic;
-import com.alsash.reciper.mvp.presenter.RecipeAuthorDialogPresenter;
-import com.alsash.reciper.mvp.presenter.RecipeCategoryDialogPresenter;
-import com.alsash.reciper.mvp.presenter.RecipeCreationDialogPresenter;
+import com.alsash.reciper.mvp.presenter.RecipeDialogAuthorPresenter;
+import com.alsash.reciper.mvp.presenter.RecipeDialogCategoryPresenter;
+import com.alsash.reciper.mvp.presenter.RecipeDialogCreationPresenter;
+import com.alsash.reciper.mvp.presenter.RecipeDialogLabelPresenter;
 
 import dagger.Module;
 import dagger.Provides;
@@ -17,21 +18,27 @@ import dagger.Provides;
 public abstract class UiDialogModule {
 
     @Provides
-    static RecipeCreationDialogPresenter provideCreationDialogPresenter(StorageLogic sLogic,
+    static RecipeDialogCreationPresenter provideCreationDialogPresenter(StorageLogic sLogic,
                                                                         BusinessLogic bLogic) {
-        return new RecipeCreationDialogPresenter(sLogic, bLogic);
+        return new RecipeDialogCreationPresenter(sLogic, bLogic);
     }
 
     @Provides
-    static RecipeCategoryDialogPresenter provideCategoryDialogPresenter(StorageLogic sLogic,
+    static RecipeDialogCategoryPresenter provideCategoryDialogPresenter(StorageLogic sLogic,
                                                                         BusinessLogic bLogic) {
-        return new RecipeCategoryDialogPresenter(sLogic, bLogic);
+        return new RecipeDialogCategoryPresenter(sLogic, bLogic);
     }
 
     @Provides
-    static RecipeAuthorDialogPresenter provideAuthorDialogPresenter(StorageLogic sLogic,
+    static RecipeDialogAuthorPresenter provideAuthorDialogPresenter(StorageLogic sLogic,
                                                                     BusinessLogic bLogic) {
-        return new RecipeAuthorDialogPresenter(sLogic, bLogic);
+        return new RecipeDialogAuthorPresenter(sLogic, bLogic);
+    }
+
+    @Provides
+    static RecipeDialogLabelPresenter provideLabelDialogPresenter(StorageLogic sLogic,
+                                                                  BusinessLogic bLogic) {
+        return new RecipeDialogLabelPresenter(sLogic, bLogic);
     }
 
 }

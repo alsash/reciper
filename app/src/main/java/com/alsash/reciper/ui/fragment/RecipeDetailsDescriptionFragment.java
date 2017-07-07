@@ -1,6 +1,7 @@
 package com.alsash.reciper.ui.fragment;
 
 import android.content.Intent;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
@@ -15,8 +16,8 @@ import android.widget.TextView;
 
 import com.alsash.reciper.R;
 import com.alsash.reciper.app.ReciperApp;
-import com.alsash.reciper.app.lib.MutableDate;
-import com.alsash.reciper.app.lib.MutableString;
+import com.alsash.reciper.app.lib.MutableLong;
+import com.alsash.reciper.app.lib.TimeLong;
 import com.alsash.reciper.logic.NavigationLogic;
 import com.alsash.reciper.mvp.model.entity.Author;
 import com.alsash.reciper.mvp.model.entity.Category;
@@ -25,14 +26,10 @@ import com.alsash.reciper.mvp.model.entity.Recipe;
 import com.alsash.reciper.mvp.presenter.RecipeDetailsDescriptionPresenter;
 import com.alsash.reciper.mvp.view.RecipeDetailsDescriptionView;
 import com.alsash.reciper.ui.adapter.RecipeLabelListAdapter;
-import com.alsash.reciper.ui.adapter.interaction.RecipeLabelInteraction;
-import com.alsash.reciper.ui.fragment.dialog.RecipeAuthorDialogFragment;
-import com.alsash.reciper.ui.fragment.dialog.RecipeCategoryDialogFragment;
 import com.alsash.reciper.ui.fragment.dialog.SimpleDialog;
 import com.alsash.reciper.ui.loader.ImageLoader;
 
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
@@ -80,23 +77,15 @@ public class RecipeDetailsDescriptionFragment extends BaseFragment<RecipeDetails
     private TextView categoryName;
     private ImageButton categoryEditButton;
     // Labels card
-    private View.OnClickListener labelsAddListener = new View.OnClickListener() {
+    private View.OnClickListener labelsEditListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            presenter.requestLabelAdd();
+            presenter.requestLabelsEdit(getThisView());
         }
     };
-    private ImageButton labelsAdd;
+    private ImageButton labelsEdit;
     private TextView labelsTitle;
     private RecyclerView labelsList;
-    private RecipeLabelListAdapter labelsListAdapter;
-    private RecipeLabelInteraction labelsListInteraction = new RecipeLabelInteraction() {
-        @Override
-        public void onPress(Label label, int position) {
-            presenter.requestLabelDelete(label);
-            labelsListAdapter.notifyItemRemoved(position);
-        }
-    };
     // Time card
     private View.OnClickListener recipeTimeListener = new View.OnClickListener() {
         @Override
@@ -145,31 +134,13 @@ public class RecipeDetailsDescriptionFragment extends BaseFragment<RecipeDetails
     }
 
     @Override
-    public void showCategoryEditDialog(Recipe recipe) {
-        RecipeCategoryDialogFragment.start(getActivity().getSupportFragmentManager(), recipe);
-    }
-
-    @Override
-    public void showAuthorEditDialog(Recipe recipe) {
-        RecipeAuthorDialogFragment.start(getActivity().getSupportFragmentManager(), recipe);
-    }
-
-    @Override
-    public void showLabelAddDialog(List<String> labelNames, MutableString listener) {
-    }
-
-    @Override
-    public void showCookTimeEditDialog(Calendar calendar, MutableDate listener) {
-        SimpleDialog.showEditTime(getActivity(), calendar, listener);
-    }
-
-    @Override
     public void showLabels(List<Label> labels) {
-        labelsTitle.setText(getResources().getQuantityString(R.plurals.quantity_label,
-                labels.size(), labels.size()));
+        if (labelsTitle != null)
+            labelsTitle.setText(getResources().getQuantityString(R.plurals.quantity_label,
+                    labels.size(), labels.size()));
+
         if (labelsList == null) return;
-        labelsListAdapter = new RecipeLabelListAdapter(labels, labelsListInteraction);
-        labelsList.setAdapter(labelsListAdapter);
+        labelsList.setAdapter(new RecipeLabelListAdapter(labels));
         labelsList.setNestedScrollingEnabled(false);
         StaggeredGridLayoutManager lm = (StaggeredGridLayoutManager) labelsList.getLayoutManager();
         lm.setGapStrategy(StaggeredGridLayoutManager.GAP_HANDLING_MOVE_ITEMS_BETWEEN_SPANS);
@@ -183,13 +154,33 @@ public class RecipeDetailsDescriptionFragment extends BaseFragment<RecipeDetails
     }
 
     @Override
-    public void showCookTime(Calendar calendar) {
-        long millis = calendar.getTimeInMillis();
-        int h = calendar.get(Calendar.HOUR);
-        int m = calendar.get(Calendar.MINUTE);
-        String hours = getResources().getQuantityString(R.plurals.time_format_hours, h, h);
-        String minutes = getResources().getQuantityString(R.plurals.time_format_minutes, m, m);
-        recipeTime.setText((hours + " " + minutes).trim());
+    public void showCookTime(long millis) {
+        if (recipeTime == null) return;
+        Resources r = getResources();
+        int[] hm = TimeLong.getHoursAndMinutes(millis);
+        String h = (hm[0] > 0) ? r.getQuantityString(R.plurals.time_format_hour, hm[0], hm[0]) : "";
+        String m = r.getQuantityString(R.plurals.time_format_minute, hm[1], hm[1]);
+        recipeTime.setText((h + " " + m).trim());
+    }
+
+    @Override
+    public void showCategoryEditDialog(Recipe recipe) {
+        navigator.fromActivity(getActivity()).toRecipeDialogCategoryView(recipe);
+    }
+
+    @Override
+    public void showAuthorEditDialog(Recipe recipe) {
+        navigator.fromActivity(getActivity()).toRecipeDialogAuthorView(recipe);
+    }
+
+    @Override
+    public void showLabelEditDialog(Recipe recipe) {
+        navigator.fromActivity(getActivity()).toRecipeDialogLabelView(recipe);
+    }
+
+    @Override
+    public void showCookTimeEditDialog(MutableLong listener) {
+        SimpleDialog.showEditTime(getActivity(), listener);
     }
 
     @Override
@@ -221,8 +212,8 @@ public class RecipeDetailsDescriptionFragment extends BaseFragment<RecipeDetails
         categoryEditButton = (ImageButton) layout.findViewById(R.id.recipe_category_edit);
         categoryEditButton.setOnClickListener(categoryEditListener);
         // Labels card
-        labelsAdd = (ImageButton) layout.findViewById(R.id.recipe_labels_add);
-        labelsAdd.setOnClickListener(labelsAddListener);
+        labelsEdit = (ImageButton) layout.findViewById(R.id.recipe_labels_add);
+        labelsEdit.setOnClickListener(labelsEditListener);
         labelsTitle = (TextView) layout.findViewById(R.id.recipe_labels_title);
         labelsList = (RecyclerView) layout.findViewById(R.id.recipe_labels_list);
         // Time card

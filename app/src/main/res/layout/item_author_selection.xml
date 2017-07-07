@@ -5,8 +5,7 @@
     android:id="@+id/item_author_constraint"
     android:layout_width="160dp"
     android:layout_height="140dp"
-    android:layout_margin="4dp"
-    android:background="@android:color/transparent">
+    android:layout_margin="4dp">
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/item_author_image"
@@ -24,7 +23,7 @@
 
     <TextView
         android:id="@+id/item_author_name"
-        android:layout_width="120dp"
+        android:layout_width="128dp"
         android:layout_height="wrap_content"
         android:fontFamily="serif"
         android:gravity="center"
@@ -39,7 +38,7 @@
         app:layout_constraintVertical_bias="0.0"
         tools:text="Author name and surname" />
 
-    <CheckBox
+    <android.support.v7.widget.AppCompatCheckBox
         android:id="@+id/item_author_checkbox"
         style="@style/Widget.AppCompat.CompoundButton.CheckBox"
         android:layout_width="wrap_content"
@@ -50,9 +49,10 @@
         android:focusable="false"
         app:buttonTint="@color/orange_500"
         app:layout_constraintBottom_toBottomOf="@+id/item_author_name"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintLeft_toRightOf="@+id/item_author_name"
+        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="@+id/item_author_name"
         app:layout_constraintVertical_bias="0.5" />
-
 
 </android.support.constraint.ConstraintLayout>

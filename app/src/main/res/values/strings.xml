@@ -1,12 +1,11 @@
 <resources>
     <string name="app_name">Recipes</string>
     <string name="date_format_recipe">MMMM yyyy</string>
-    <plurals name="time_format_hours">
-        <item quantity="zero"> </item>
+    <plurals name="time_format_hour">
         <item quantity="one">%d hour</item>
         <item quantity="other">%d hours</item>
     </plurals>
-    <plurals name="time_format_minutes">
+    <plurals name="time_format_minute">
         <item quantity="one">%d minute</item>
         <item quantity="other">%d minutes</item>
     </plurals>
@@ -152,7 +151,15 @@
     <string name="fragment_entity_list_delete_fail">%1$s has %2$s. Remove related recipes first.</string>
     <string name="fragment_entity_list_food_search">Copy the food ID and paste it into any food</string>
 
-    <string name="fragment_recipe_creation_dialog_error">Please, choose Author and Category</string>
+    <string name="fragment_recipe_dialog_creation_error">Please, choose Author and Category</string>
+
+    <string name="fragment_recipe_dialog_author_title">Author</string>
+    <string name="fragment_recipe_dialog_category_title">Category</string>
+    <string name="fragment_recipe_dialog_label_title">Labels</string>
+
+    <string name="simple_dialog_title_photo_url">Photo url</string>
+    <string name="simple_dialog_title_recipe_name">Recipe name</string>
+    <string name="simple_dialog_message_confirm_delete">Delete %s?</string>
 
     <string name="hint_label_name">Label name</string>
     <string name="hint_category_name">Category name</string>
@@ -162,8 +169,5 @@
     <string name="hint_food_nutrition_quantity">per 100 grams</string>
     <string name="hint_food_name">Food name</string>
     <string name="hint_recipe_name">Recipe name</string>
-    <string name="dialog_title_photo_url">Photo url</string>
-    <string name="dialog_title_recipe_name">Recipe name</string>
-    <string name="dialog_message_confirm_delete">Delete %s?</string>
 
 </resources>

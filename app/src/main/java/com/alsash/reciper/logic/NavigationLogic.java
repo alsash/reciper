@@ -7,6 +7,7 @@ import android.support.annotation.IdRes;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 
 import com.alsash.reciper.R;
@@ -30,6 +31,9 @@ import com.alsash.reciper.ui.fragment.RecipeDetailsIngredientsFragment;
 import com.alsash.reciper.ui.fragment.RecipeDetailsMethodsFragment;
 import com.alsash.reciper.ui.fragment.RecipeDetailsNutritionFragment;
 import com.alsash.reciper.ui.fragment.RecipeRestrictListFragment;
+import com.alsash.reciper.ui.fragment.dialog.RecipeDialogAuthorFragment;
+import com.alsash.reciper.ui.fragment.dialog.RecipeDialogCategoryFragment;
+import com.alsash.reciper.ui.fragment.dialog.RecipeDialogLabelFragment;
 
 import java.lang.ref.WeakReference;
 
@@ -201,6 +205,49 @@ public class NavigationLogic {
                 Uri.parse(AppContract.Cloud.Usda.SEARCH_URL)));
     }
 
+    public void toRecipeDialogCategoryView(Recipe recipe) {
+        Context context = getContext();
+        FragmentManager fm = getAvailableFragmentManager(context);
+        if (fm == null) return;
+        RecipeDialogCategoryFragment
+                .newInstance(
+                        obtainRestriction(
+                                AppContract.Key.RECIPE_ID,
+                                recipe.getUuid(),
+                                new Intent())) // intent is used as bundle
+                .show(fm, AppContract.Key.CATEGORY_ID);
+    }
+
+    public void toRecipeDialogAuthorView(Recipe recipe) {
+        Context context = getContext();
+        FragmentManager fm = getAvailableFragmentManager(context);
+        if (fm == null) return;
+        RecipeDialogAuthorFragment
+                .newInstance(
+                        obtainRestriction(
+                                AppContract.Key.RECIPE_ID,
+                                recipe.getUuid(),
+                                new Intent())) // intent is used as bundle
+                .show(fm, AppContract.Key.AUTHOR_ID);
+    }
+
+    public void toRecipeDialogLabelView(Recipe recipe) {
+        Context context = getContext();
+        FragmentManager fm = getAvailableFragmentManager(context);
+        if (fm == null) return;
+        RecipeDialogLabelFragment
+                .newInstance(
+                        obtainRestriction(
+                                AppContract.Key.RECIPE_ID,
+                                recipe.getUuid(),
+                                new Intent())) // intent is used as bundle
+                .show(fm, AppContract.Key.AUTHOR_ID);
+    }
+
+    public void toRecipeDialogIngredientView(Recipe recipe) {
+
+    }
+
     public Fragment[] getFragmentCollection(Intent intent) {
 
         EntityRestriction restriction = getRestriction(intent);
@@ -296,6 +343,13 @@ public class NavigationLogic {
             if (context != null) return context;
         }
         return this.contextRef.get();
+    }
+
+    @Nullable
+    private FragmentManager getAvailableFragmentManager(Context context) {
+        if (context != null && context instanceof AppCompatActivity)
+            return ((AppCompatActivity) context).getSupportFragmentManager();
+        return null;
     }
 
     private Intent obtainRestriction(String restrictionName,

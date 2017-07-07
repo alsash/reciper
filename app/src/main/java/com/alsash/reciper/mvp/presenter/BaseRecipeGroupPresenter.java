@@ -10,6 +10,7 @@ import com.alsash.reciper.mvp.model.entity.Recipe;
 import com.alsash.reciper.mvp.view.BaseListView;
 import com.alsash.reciper.mvp.view.RecipeListView;
 
+import java.lang.ref.WeakReference;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -56,6 +57,20 @@ public abstract class BaseRecipeGroupPresenter<G extends BaseEntity, V extends B
         prefetchedRecipes.clear();
         presenters.clear();
         super.refresh(view);
+    }
+
+    @Override
+    protected void refresh() {
+        prefetchedRecipes.clear();
+        presenters.clear();
+        super.refresh();
+    }
+
+    @Override
+    protected void clear(WeakReference<V> viewRef) {
+        prefetchedRecipes.clear();
+        presenters.clear();
+        super.clear(viewRef);
     }
 
     @WorkerThread

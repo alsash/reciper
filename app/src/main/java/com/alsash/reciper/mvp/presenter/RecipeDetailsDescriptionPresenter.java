@@ -2,19 +2,19 @@ package com.alsash.reciper.mvp.presenter;
 
 import android.support.annotation.Nullable;
 
-import com.alsash.reciper.app.lib.MutableDate;
+import com.alsash.reciper.app.lib.MutableLong;
 import com.alsash.reciper.logic.BusinessLogic;
 import com.alsash.reciper.logic.StorageLogic;
 import com.alsash.reciper.logic.action.RecipeAction;
 import com.alsash.reciper.logic.event.RecipeEvent;
 import com.alsash.reciper.logic.restriction.EntityRestriction;
 import com.alsash.reciper.mvp.model.entity.BaseEntity;
-import com.alsash.reciper.mvp.model.entity.Label;
 import com.alsash.reciper.mvp.model.entity.RecipeFull;
 import com.alsash.reciper.mvp.view.RecipeDetailsDescriptionView;
 
 import java.lang.ref.WeakReference;
-import java.util.Date;
+import java.util.ArrayList;
+import java.util.List;
 
 import io.reactivex.Completable;
 import io.reactivex.Notification;
@@ -32,6 +32,8 @@ public class RecipeDetailsDescriptionPresenter
     private final StorageLogic storageLogic;
     private final BusinessLogic businessLogic;
     private RecipeFull recipeFull;
+    @SuppressWarnings("MismatchedQueryAndUpdateOfCollection")
+    private List<Object> listeners = new ArrayList<>();
 
     private boolean descriptionEditable;
 
@@ -48,14 +50,6 @@ public class RecipeDetailsDescriptionPresenter
             descriptionEditable = false;
         }
         return (RecipeDetailsDescriptionPresenter) super.setRestriction(restriction);
-    }
-
-    public void requestLabelDelete(Label label) {
-
-    }
-
-    public void requestLabelAdd() {
-
     }
 
     @Override
@@ -85,6 +79,12 @@ public class RecipeDetailsDescriptionPresenter
                                                 && recipeFull != null)
                                             viewRef.get().showAuthor(recipeFull.getAuthor());
                                         break;
+                                    case EDIT_LABELS:
+                                        if (viewRef.get() != null
+                                                && viewRef.get().isViewVisible()
+                                                && recipeFull != null)
+                                            viewRef.get().showLabels(recipeFull.getLabels());
+                                        break;
                                 }
                             }
                         }).subscribe());
@@ -92,9 +92,9 @@ public class RecipeDetailsDescriptionPresenter
 
     @Override
     public void visible(RecipeDetailsDescriptionView view) {
+        view.setDescriptionEditable(descriptionEditable);
         if (recipeFull == null) return;
         view.showDescription(recipeFull);
-        view.setDescriptionEditable(descriptionEditable);
         view.showAuthor(recipeFull.getAuthor());
         view.showCategory(recipeFull.getCategory());
         view.showLabels(recipeFull.getLabels());
@@ -104,6 +104,13 @@ public class RecipeDetailsDescriptionPresenter
     @Override
     public void invisible(RecipeDetailsDescriptionView view) {
         // do nothing
+    }
+
+    @Override
+    public void detach() {
+        super.detach();
+        listeners.clear();
+        listeners = new ArrayList<>();
     }
 
     @Nullable
@@ -146,18 +153,24 @@ public class RecipeDetailsDescriptionPresenter
             view.showCategoryEditDialog(recipeFull);
     }
 
+    public void requestLabelsEdit(RecipeDetailsDescriptionView view) {
+        if (recipeFull != null)
+            view.showLabelEditDialog(recipeFull);
+    }
+
     public void requestRecipeTime(RecipeDetailsDescriptionView view) {
         if (recipeFull == null) return;
 
         final WeakReference<RecipeDetailsDescriptionView> viewRef = new WeakReference<>(view);
 
-        view.showCookTimeEditDialog(businessLogic.getCookTime(recipeFull), new MutableDate() {
+        long cookTime = businessLogic.getCookTime(recipeFull);
+        final MutableLong listener = new MutableLong(cookTime) {
             @Override
-            public synchronized MutableDate set(Date value) {
+            public synchronized MutableLong set(long value) {
                 storageLogic.updateSync(
                         recipeFull,
                         RecipeAction.EDIT_TIME,
-                        businessLogic.getMassFlowRate(recipeFull, value.getTime())
+                        businessLogic.getMassFlowRate(recipeFull, value)
                 );
                 if (viewRef.get() != null)
                     viewRef.get().showCookTime(businessLogic.getCookTime(recipeFull));
@@ -170,10 +183,11 @@ public class RecipeDetailsDescriptionPresenter
                         })
                         .subscribeOn(Schedulers.io())
                         .subscribe());
-
                 return super.set(value);
             }
-        });
+        };
+        listeners.add(listener);
+        view.showCookTimeEditDialog(listener);
     }
 
 }

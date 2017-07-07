@@ -18,7 +18,7 @@ import com.alsash.reciper.mvp.view.RecipeCollectionGridView;
 import com.alsash.reciper.ui.adapter.RecipeCardListAdapter;
 import com.alsash.reciper.ui.adapter.interaction.RecipeListInteraction;
 import com.alsash.reciper.ui.animator.FlipCardListAnimator;
-import com.alsash.reciper.ui.fragment.dialog.RecipeCreationDialogFragment;
+import com.alsash.reciper.ui.fragment.dialog.RecipeDialogCreationFragment;
 
 import java.util.List;
 
@@ -65,7 +65,7 @@ public class RecipeCollectionGridFragment
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.appbar_add) {
-            RecipeCreationDialogFragment.start(getActivity().getSupportFragmentManager());
+            RecipeDialogCreationFragment.start(getActivity().getSupportFragmentManager());
             return true;
         }
         return super.onOptionsItemSelected(item);

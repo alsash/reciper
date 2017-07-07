@@ -20,7 +20,7 @@ import com.alsash.reciper.mvp.view.RecipeCollectionCategoryView;
 import com.alsash.reciper.mvp.view.RecipeListView;
 import com.alsash.reciper.ui.adapter.RecipeCategoryCardListAdapter;
 import com.alsash.reciper.ui.adapter.interaction.RecipeGroupInteraction;
-import com.alsash.reciper.ui.fragment.dialog.RecipeCreationDialogFragment;
+import com.alsash.reciper.ui.fragment.dialog.RecipeDialogCreationFragment;
 
 import java.util.List;
 
@@ -74,7 +74,7 @@ public class RecipeCollectionCategoryFragment
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.appbar_add) {
             // MVP is so slow... :)
-            RecipeCreationDialogFragment.start(getActivity().getSupportFragmentManager());
+            RecipeDialogCreationFragment.start(getActivity().getSupportFragmentManager());
             return true;
         }
         return super.onOptionsItemSelected(item);

@@ -5,7 +5,7 @@
     android:layout_height="wrap_content"
     android:fontFamily="serif"
     android:gravity="top|start"
-    android:hint="@string/dialog_title_photo_url"
+    android:hint="@string/simple_dialog_title_photo_url"
     android:imeOptions="actionDone"
     android:inputType="textMultiLine|textUri"
     android:lines="4"

@@ -3,6 +3,7 @@ package com.alsash.reciper.mvp.presenter;
 import com.alsash.reciper.logic.BusinessLogic;
 import com.alsash.reciper.logic.StorageLogic;
 import com.alsash.reciper.logic.event.CategoryEvent;
+import com.alsash.reciper.logic.event.RecipeEvent;
 import com.alsash.reciper.mvp.model.entity.Category;
 import com.alsash.reciper.mvp.model.entity.Recipe;
 import com.alsash.reciper.mvp.view.RecipeCollectionCategoryView;
@@ -49,21 +50,30 @@ public class RecipeCollectionCategoryPresenter
                                 switch (event.action) {
                                     case CREATE:
                                     case DELETE:
-                                        getModels().clear();
-                                        resetPreviousPosition();
-                                        setFetched(false);
-                                        setLoading(false);
-                                        if (viewRef.get() != null) {
-                                            viewRef.get().setContainer(getModels());
-                                            viewRef.get().setPagination(!isFetched());
-                                            fetch(viewRef);
-                                        }
+                                        clear(viewRef);
                                         break;
                                     case EDIT:
                                         Integer editPosition = getPosition(event.uuid);
                                         if (editPosition == null) return;
                                         if (viewRef.get() != null)
                                             viewRef.get().showUpdate(editPosition);
+                                        break;
+                                }
+                            }
+                        })
+                        .subscribe());
+        getComposite().add(
+                businessLogic
+                        .getRecipeEventSubject()
+                        .doOnEach(new Consumer<Notification<RecipeEvent>>() {
+                            @Override
+                            public void accept(@NonNull Notification<RecipeEvent> notification)
+                                    throws Exception {
+                                RecipeEvent event = notification.getValue();
+                                if (event == null) return;
+                                switch (event.action) {
+                                    case EDIT_CATEGORY:
+                                        clear(viewRef);
                                         break;
                                 }
                             }

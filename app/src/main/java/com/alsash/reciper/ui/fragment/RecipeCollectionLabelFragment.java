@@ -20,7 +20,7 @@ import com.alsash.reciper.mvp.view.RecipeCollectionLabelView;
 import com.alsash.reciper.mvp.view.RecipeListView;
 import com.alsash.reciper.ui.adapter.RecipeLabelCardListAdapter;
 import com.alsash.reciper.ui.adapter.interaction.RecipeGroupInteraction;
-import com.alsash.reciper.ui.fragment.dialog.RecipeCreationDialogFragment;
+import com.alsash.reciper.ui.fragment.dialog.RecipeDialogCreationFragment;
 
 import java.util.List;
 
@@ -73,7 +73,7 @@ public class RecipeCollectionLabelFragment
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.appbar_add) {
-            RecipeCreationDialogFragment.start(getActivity().getSupportFragmentManager());
+            RecipeDialogCreationFragment.start(getActivity().getSupportFragmentManager());
             return true;
         }
         return super.onOptionsItemSelected(item);

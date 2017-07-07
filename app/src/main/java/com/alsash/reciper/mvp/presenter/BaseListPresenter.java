@@ -11,6 +11,7 @@ import org.reactivestreams.Publisher;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import io.reactivex.BackpressureStrategy;
@@ -37,7 +38,7 @@ public abstract class BaseListPresenter<M extends BaseEntity, V extends BaseList
     private static final int DEFAULT_LIMIT = 10;
 
     private final PublishSubject<Integer> scrollSubject = PublishSubject.create();
-    private final List<M> models = new ArrayList<>();
+    private final List<M> models = Collections.synchronizedList(new ArrayList<M>());
     private final int limit;
 
     private CompositeDisposable composite = new CompositeDisposable();
@@ -83,7 +84,7 @@ public abstract class BaseListPresenter<M extends BaseEntity, V extends BaseList
     @Override
     public void refresh(V view) {
         detach();
-        models.clear();
+        getModels().clear();
         resetPreviousPosition();
         WeakReference<V> viewRef = new WeakReference<>(view);
         setFetched(false, viewRef);
@@ -93,10 +94,22 @@ public abstract class BaseListPresenter<M extends BaseEntity, V extends BaseList
 
     protected void refresh() {
         detach();
-        models.clear();
+        getModels().clear();
         resetPreviousPosition();
         setFetched(false);
         setLoading(false);
+    }
+
+    protected void clear(WeakReference<V> viewRef) {
+        getModels().clear();
+        resetPreviousPosition();
+        setFetched(false);
+        setLoading(false);
+        if (viewRef.get() != null) {
+            viewRef.get().setContainer(getModels());
+            viewRef.get().setPagination(!isFetched());
+            fetch(viewRef);
+        }
     }
 
     /**

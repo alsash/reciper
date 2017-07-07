@@ -19,9 +19,9 @@ import com.alsash.reciper.mvp.model.entity.BaseEntity;
 import com.alsash.reciper.mvp.model.entity.Category;
 import com.alsash.reciper.mvp.model.entity.Recipe;
 import com.alsash.reciper.mvp.presenter.BasePresenter;
-import com.alsash.reciper.mvp.presenter.RecipeCreationDialogPresenter;
+import com.alsash.reciper.mvp.presenter.RecipeDialogCreationPresenter;
 import com.alsash.reciper.mvp.view.BaseListView;
-import com.alsash.reciper.mvp.view.RecipeCreationDialogView;
+import com.alsash.reciper.mvp.view.RecipeDialogCreationView;
 import com.alsash.reciper.ui.adapter.EntitySelectionAdapter;
 import com.alsash.reciper.ui.adapter.interaction.EntitySelectionInteraction;
 import com.alsash.reciper.ui.view.helper.RecyclerViewHelper;
@@ -35,11 +35,11 @@ import static android.support.v7.widget.RecyclerView.SCROLL_STATE_SETTLING;
 /**
  * Complex creation dialog
  */
-public class RecipeCreationDialogFragment extends BaseDialogFragment<RecipeCreationDialogView>
-        implements RecipeCreationDialogView, EntitySelectionInteraction {
+public class RecipeDialogCreationFragment extends BaseDialogFragment<RecipeDialogCreationView>
+        implements RecipeDialogCreationView, EntitySelectionInteraction {
 
     @Inject
-    RecipeCreationDialogPresenter presenter;
+    RecipeDialogCreationPresenter presenter;
     @Inject
     NavigationLogic navigator;
 
@@ -51,7 +51,7 @@ public class RecipeCreationDialogFragment extends BaseDialogFragment<RecipeCreat
     private AdapterHolder<Author> authorAdapterHolder;
 
     public static void start(FragmentManager fragmentManager) {
-        RecipeCreationDialogFragment fragment = new RecipeCreationDialogFragment();
+        RecipeDialogCreationFragment fragment = new RecipeDialogCreationFragment();
         fragment.show(fragmentManager, fragment.getTag());
     }
 
@@ -78,7 +78,7 @@ public class RecipeCreationDialogFragment extends BaseDialogFragment<RecipeCreat
     @Override
     public void showError() {
         Toast.makeText(getContext(),
-                getString(R.string.fragment_recipe_creation_dialog_error),
+                getString(R.string.fragment_recipe_dialog_creation_error),
                 Toast.LENGTH_SHORT).show();
     }
 
@@ -92,7 +92,7 @@ public class RecipeCreationDialogFragment extends BaseDialogFragment<RecipeCreat
     public View onCreateView(LayoutInflater inflater,
                              @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        View layout = inflater.inflate(R.layout.fragment_recipe_creation_dialog, container, false);
+        View layout = inflater.inflate(R.layout.fragment_recipe_dialog_creation, container, false);
 
         recipeName = (EditText) layout.findViewById(R.id.recipe_creation_dialog_name);
 
@@ -107,7 +107,7 @@ public class RecipeCreationDialogFragment extends BaseDialogFragment<RecipeCreat
     }
 
     @Override
-    protected BasePresenter<RecipeCreationDialogView> inject() {
+    protected BasePresenter<RecipeDialogCreationView> inject() {
         ((ReciperApp) getActivity().getApplicationContext())
                 .getUiDialogComponent()
                 .inject(this);
@@ -133,7 +133,7 @@ public class RecipeCreationDialogFragment extends BaseDialogFragment<RecipeCreat
         private final MutableBoolean visibleHelper;
         private boolean needPagination;
         private RecyclerView.Adapter adapter;
-        private RecipeCreationDialogPresenter presenter;
+        private RecipeDialogCreationPresenter presenter;
         private final RecyclerView.OnScrollListener paginationListener = new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(RecyclerView rv, int newState) {
@@ -151,7 +151,7 @@ public class RecipeCreationDialogFragment extends BaseDialogFragment<RecipeCreat
             this.visibleHelper = visibleHelper;
         }
 
-        public void setPresenter(RecipeCreationDialogPresenter presenter) {
+        public void setPresenter(RecipeDialogCreationPresenter presenter) {
             this.presenter = presenter;
         }
 

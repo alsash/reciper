@@ -9,7 +9,7 @@ import com.alsash.reciper.mvp.model.entity.BaseEntity;
 import com.alsash.reciper.mvp.model.entity.Category;
 import com.alsash.reciper.mvp.model.entity.Recipe;
 import com.alsash.reciper.mvp.view.BaseListView;
-import com.alsash.reciper.mvp.view.RecipeCreationDialogView;
+import com.alsash.reciper.mvp.view.RecipeDialogCreationView;
 
 import java.lang.ref.WeakReference;
 import java.util.List;
@@ -24,7 +24,7 @@ import io.reactivex.schedulers.Schedulers;
 /**
  * Composite presenter
  */
-public class RecipeCreationDialogPresenter implements BasePresenter<RecipeCreationDialogView> {
+public class RecipeDialogCreationPresenter implements BasePresenter<RecipeDialogCreationView> {
 
     private static final int PAGINATION_LIMIT = 10;
 
@@ -37,7 +37,7 @@ public class RecipeCreationDialogPresenter implements BasePresenter<RecipeCreati
     private Author selectedAuthor;
     private Category selectedCategory;
 
-    public RecipeCreationDialogPresenter(StorageLogic sLogic, BusinessLogic bLogic) {
+    public RecipeDialogCreationPresenter(StorageLogic sLogic, BusinessLogic bLogic) {
         businessLogic = bLogic;
         storageLogic = sLogic;
         authorsPresenter = new BaseListPresenter<Author, BaseListView<Author>>(PAGINATION_LIMIT) {
@@ -62,13 +62,13 @@ public class RecipeCreationDialogPresenter implements BasePresenter<RecipeCreati
             selectedAuthor = (Author) entity;
     }
 
-    public void onCreationApprove(RecipeCreationDialogView view, final String recipeName) {
+    public void onCreationApprove(RecipeDialogCreationView view, final String recipeName) {
         if (selectedAuthor == null || selectedCategory == null) {
             view.showError();
             view.finishView();
             return;
         }
-        final WeakReference<RecipeCreationDialogView> viewRef = new WeakReference<>(view);
+        final WeakReference<RecipeDialogCreationView> viewRef = new WeakReference<>(view);
         authorsPresenter.getComposite().add(Maybe
                 .fromCallable(new Callable<Recipe>() {
                     @Override
@@ -104,25 +104,25 @@ public class RecipeCreationDialogPresenter implements BasePresenter<RecipeCreati
     }
 
     @Override
-    public void attach(RecipeCreationDialogView view) {
+    public void attach(RecipeDialogCreationView view) {
         authorsPresenter.attach(view.getAuthorsView());
         categoriesPresenter.attach(view.getCategoriesView());
     }
 
     @Override
-    public void visible(RecipeCreationDialogView view) {
+    public void visible(RecipeDialogCreationView view) {
         authorsPresenter.visible(view.getAuthorsView());
         categoriesPresenter.visible(view.getCategoriesView());
     }
 
     @Override
-    public void invisible(RecipeCreationDialogView view) {
+    public void invisible(RecipeDialogCreationView view) {
         authorsPresenter.invisible(view.getAuthorsView());
         categoriesPresenter.invisible(view.getCategoriesView());
     }
 
     @Override
-    public void refresh(RecipeCreationDialogView view) {
+    public void refresh(RecipeDialogCreationView view) {
         authorsPresenter.refresh(view.getAuthorsView());
         categoriesPresenter.refresh(view.getCategoriesView());
     }

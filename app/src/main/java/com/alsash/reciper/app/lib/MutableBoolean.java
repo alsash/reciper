@@ -4,7 +4,14 @@ package com.alsash.reciper.app.lib;
  * Simple mutable boolean class
  */
 public class MutableBoolean {
-    protected boolean value;
+    protected boolean value = false;
+
+    public MutableBoolean() {
+    }
+
+    public MutableBoolean(boolean value) {
+        this.value = value;
+    }
 
     public synchronized boolean is() {
         return value;

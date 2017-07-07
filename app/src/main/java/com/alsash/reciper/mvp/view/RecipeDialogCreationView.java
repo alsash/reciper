@@ -5,9 +5,9 @@ import com.alsash.reciper.mvp.model.entity.Category;
 import com.alsash.reciper.mvp.model.entity.Recipe;
 
 /**
- * Composite list view
+ * MultiSelection dialog with list view
  */
-public interface RecipeCreationDialogView extends BaseView {
+public interface RecipeDialogCreationView extends BaseView {
 
     BaseListView<Category> getCategoriesView();
 

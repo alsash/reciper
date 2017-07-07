@@ -13,14 +13,11 @@ import android.widget.TimePicker;
 
 import com.alsash.reciper.R;
 import com.alsash.reciper.app.lib.MutableBoolean;
-import com.alsash.reciper.app.lib.MutableDate;
+import com.alsash.reciper.app.lib.MutableLong;
 import com.alsash.reciper.app.lib.MutableString;
+import com.alsash.reciper.app.lib.TimeLong;
 import com.alsash.reciper.mvp.model.entity.Photo;
 import com.alsash.reciper.mvp.model.entity.Recipe;
-
-import java.util.Calendar;
-import java.util.Date;
-import java.util.concurrent.TimeUnit;
 
 /**
  * A photo dialog helper
@@ -39,7 +36,7 @@ public class SimpleDialog {
         if (url != null) editText.setText(url);
 
         new AlertDialog.Builder(context)
-                .setTitle(R.string.dialog_title_photo_url)
+                .setTitle(R.string.simple_dialog_title_photo_url)
                 .setView(editText)
                 .setPositiveButton(context.getString(android.R.string.ok),
                         new DialogInterface.OnClickListener() {
@@ -70,7 +67,7 @@ public class SimpleDialog {
         if (name != null) editText.setText(name);
 
         new AlertDialog.Builder(context)
-                .setTitle(R.string.dialog_title_recipe_name)
+                .setTitle(R.string.simple_dialog_title_recipe_name)
                 .setView(editText)
                 .setPositiveButton(context.getString(android.R.string.ok),
                         new DialogInterface.OnClickListener() {
@@ -85,21 +82,18 @@ public class SimpleDialog {
                 .show();
     }
 
-    public static void showEditTime(Context context,
-                                    Calendar calendar,
-                                    final MutableDate listener) {
-
+    public static void showEditTime(Context context, final MutableLong listener) {
+        final long milliseconds = listener.get();
+        int[] hm = TimeLong.getHoursAndMinutes(milliseconds);
         TimePickerDialog dialog = new TimePickerDialog(context,
                 new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                        long milliseconds = TimeUnit.MILLISECONDS.convert(hourOfDay, TimeUnit.HOURS)
-                                + TimeUnit.MILLISECONDS.convert(minute, TimeUnit.MINUTES);
-                        listener.set(new Date(milliseconds));
+                        long millis = TimeLong.getTimeFromHoursAndMinutes(hourOfDay, minute);
+                        if (millis != milliseconds) listener.set(millis);
                     }
                 },
-                calendar.get(Calendar.HOUR),
-                calendar.get(Calendar.MINUTE), true);
+                hm[0], hm[1], true);
         dialog.show();
     }
 
@@ -108,7 +102,7 @@ public class SimpleDialog {
                                          final MutableBoolean listener) {
 
         new AlertDialog.Builder(context)
-                .setMessage(context.getString(R.string.dialog_message_confirm_delete, entityName))
+                .setMessage(context.getString(R.string.simple_dialog_message_confirm_delete, entityName))
                 .setPositiveButton(context.getString(android.R.string.yes),
                         new DialogInterface.OnClickListener() {
                             @Override

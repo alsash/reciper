@@ -32,7 +32,6 @@
             app:srcCompat="@color/gray_400"
             tools:ignore="ContentDescription" />
 
-
         <TextView
             android:id="@+id/item_category_name"
             android:layout_width="wrap_content"
@@ -64,7 +63,7 @@
             tools:ignore="RtlHardcoded"
             tools:targetApi="lollipop" />
 
-        <CheckBox
+        <android.support.v7.widget.AppCompatCheckBox
             android:id="@+id/item_category_checkbox"
             style="@style/Widget.AppCompat.CompoundButton.CheckBox"
             android:layout_width="wrap_content"

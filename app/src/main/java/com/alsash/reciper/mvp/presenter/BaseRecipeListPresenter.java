@@ -48,21 +48,12 @@ public abstract class BaseRecipeListPresenter<V extends RecipeListView>
                                 if (event == null) return;
                                 switch (event.action) {
                                     case CREATE:
-                                        getModels().clear();
-                                        resetPreviousPosition();
-                                        setFetched(false);
-                                        setLoading(false);
-                                        if (viewRef.get() != null) {
-                                            viewRef.get().setContainer(getModels());
-                                            viewRef.get().setPagination(!isFetched());
-                                            fetch(viewRef);
-                                        }
+                                        clear(viewRef);
                                         break;
                                     case EDIT:
                                     case EDIT_NAME:
                                     case EDIT_PHOTO:
                                     case EDIT_AUTHOR:
-                                    case EDIT_CATEGORY:
                                     case EDIT_FAVORITE:
                                     case EDIT_DESCRIPTION:
                                         Integer editPosition = getPosition(event.uuid);

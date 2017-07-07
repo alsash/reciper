@@ -2,6 +2,7 @@ package com.alsash.reciper.ui.fragment.dialog;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
@@ -9,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.alsash.reciper.R;
 import com.alsash.reciper.mvp.model.entity.BaseEntity;
 import com.alsash.reciper.mvp.presenter.BaseListPresenter;
 import com.alsash.reciper.mvp.view.BaseListView;
@@ -45,6 +47,10 @@ public abstract class BaseDialogListFragment<M extends BaseEntity, V extends Bas
     protected abstract BaseListPresenter<M, V> inject();
 
     protected abstract RecyclerView.Adapter getAdapter(List<M> container);
+
+    @Nullable
+    @LayoutRes
+    protected abstract Integer getLayoutRes();
 
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -99,12 +105,17 @@ public abstract class BaseDialogListFragment<M extends BaseEntity, V extends Bas
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater,
-                             @Nullable ViewGroup container,
-                             @Nullable Bundle savedInstanceState) {
+                             @Nullable ViewGroup group,
+                             @Nullable Bundle state) {
+        Integer layoutRes = getLayoutRes();
+        if (layoutRes == null) return super.onCreateView(inflater, group, state);
+
+        View layout = inflater.inflate(layoutRes, group, false);
+        list = (RecyclerView) layout.findViewById(R.id.recipe_dialog_list);
         if (list != null) {
             list.setAdapter(adapter);
             list.addOnScrollListener(paginationListener);
         }
-        return super.onCreateView(inflater, container, savedInstanceState);
+        return layout;
     }
 }

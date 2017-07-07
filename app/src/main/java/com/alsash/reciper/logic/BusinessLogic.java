@@ -23,9 +23,7 @@ import com.alsash.reciper.mvp.model.entity.Photo;
 import com.alsash.reciper.mvp.model.entity.Recipe;
 import com.alsash.reciper.mvp.model.entity.RecipeFull;
 
-import java.util.Calendar;
 import java.util.Comparator;
-import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -101,27 +99,18 @@ public class BusinessLogic {
         return (result == null) ? "" : result;
     }
 
-    public Calendar getCookTime(RecipeFull recipe) {
-        Calendar calendar = new GregorianCalendar(0, 0, 0);
-
+    public long getCookTime(RecipeFull recipe) {
         double gramPerSecond = recipe.getMassFlowRateGps();
-        if (gramPerSecond == 0) return calendar;
-
+        if (gramPerSecond == 0) return 0;
         double recipeWeightInGrams = getRecipeWeight(recipe, WeightUnit.GRAM);
-
         int seconds = (int) Math.round(recipeWeightInGrams / gramPerSecond);
-        calendar.setTimeInMillis(seconds * 1000);
-        return calendar;
+        return seconds * 1000;
     }
 
-    public double getMassFlowRate(RecipeFull recipe, long milliseconds) {
-
-        if (milliseconds <= 0) return 0;
-
+    public double getMassFlowRate(RecipeFull recipe, long millis) {
+        if (millis <= 0) return 0;
         double recipeWeightInGrams = getRecipeWeight(recipe, WeightUnit.GRAM);
-
-        return (recipeWeightInGrams * 1000) / milliseconds;
-
+        return (recipeWeightInGrams * 1000) / millis;
     }
 
     public Nutrient getNutrient(RecipeFull recipe, RecipeUnit recipeUnit) {

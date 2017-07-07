@@ -40,14 +40,15 @@ public class EntityListPresenter extends BaseListPresenter<BaseEntity, EntityLis
     private final BusinessLogic businessLogic;
     private EntityRestriction restriction;
     @SuppressWarnings("MismatchedQueryAndUpdateOfCollection")
-    private List<MutableBoolean> deleteListeners;
+    private List<MutableBoolean> deleteListeners = new ArrayList<>();
+    @SuppressWarnings("MismatchedQueryAndUpdateOfCollection")
+    private List<MutableString> editListeners = new ArrayList<>();
 
     public EntityListPresenter(StorageLogic storageLogic,
                                BusinessLogic businessLogic) {
         super(PAGINATION_LIMIT);
         this.storageLogic = storageLogic;
         this.businessLogic = businessLogic;
-        this.deleteListeners = new ArrayList<>();
     }
 
     public EntityListPresenter setEntityRestriction(EntityRestriction restriction) {
@@ -89,6 +90,8 @@ public class EntityListPresenter extends BaseListPresenter<BaseEntity, EntityLis
         super.detach();
         deleteListeners.clear();
         deleteListeners = new ArrayList<>();
+        editListeners.clear();
+        editListeners = new ArrayList<>();
     }
 
     public void addEntity(EntityListView view) {
@@ -226,7 +229,7 @@ public class EntityListPresenter extends BaseListPresenter<BaseEntity, EntityLis
 
         if (entity instanceof Author) {
             final Author author = (Author) entity;
-            view.showPhotoEditDialog(author.getPhoto(), new MutableString() {
+            final MutableString listener = new MutableString() {
                 @Override
                 public synchronized MutableString set(final String value) {
                     storageLogic.updateSync(author, value, true);
@@ -244,13 +247,15 @@ public class EntityListPresenter extends BaseListPresenter<BaseEntity, EntityLis
                             .subscribe());
                     return super.set(value);
                 }
-            });
+            };
+            editListeners.add(listener);
+            view.showPhotoEditDialog(author.getPhoto(), listener);
             return;
         }
 
         if (entity instanceof Category) {
             final Category category = (Category) entity;
-            view.showPhotoEditDialog(category.getPhoto(), new MutableString() {
+            final MutableString listener = new MutableString() {
                 @Override
                 public synchronized MutableString set(final String value) {
                     storageLogic.updateSync(category, value, true);
@@ -268,7 +273,9 @@ public class EntityListPresenter extends BaseListPresenter<BaseEntity, EntityLis
                             .subscribe());
                     return super.set(value);
                 }
-            });
+            };
+            editListeners.add(listener);
+            view.showPhotoEditDialog(category.getPhoto(), listener);
             return;
         }
     }
@@ -295,7 +302,7 @@ public class EntityListPresenter extends BaseListPresenter<BaseEntity, EntityLis
 
     private MutableBoolean getDeleteRejectCallback(final WeakReference<EntityListView> viewRef,
                                                    final BaseEntity entity, final int position) {
-        MutableBoolean callback = new MutableBoolean() {
+        final MutableBoolean callback = new MutableBoolean() {
             @Override
             public synchronized MutableBoolean set(boolean rejected) {
                 if (rejected) {

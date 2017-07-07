@@ -1,13 +1,11 @@
 package com.alsash.reciper.mvp.view;
 
-import com.alsash.reciper.app.lib.MutableDate;
-import com.alsash.reciper.app.lib.MutableString;
+import com.alsash.reciper.app.lib.MutableLong;
 import com.alsash.reciper.mvp.model.entity.Author;
 import com.alsash.reciper.mvp.model.entity.Category;
 import com.alsash.reciper.mvp.model.entity.Label;
 import com.alsash.reciper.mvp.model.entity.Recipe;
 
-import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -31,10 +29,10 @@ public interface RecipeDetailsDescriptionView extends BaseView {
 
     void showLabels(List<Label> labels);
 
-    void showLabelAddDialog(List<String> labelNames, MutableString listener);
+    void showLabelEditDialog(Recipe recipe);
 
-    void showCookTime(Calendar calendar);
+    void showCookTime(long millis);
 
-    void showCookTimeEditDialog(Calendar calendar, MutableDate listener);
+    void showCookTimeEditDialog(MutableLong listener);
 
 }

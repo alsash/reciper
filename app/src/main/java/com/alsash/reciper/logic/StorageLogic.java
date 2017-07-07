@@ -44,6 +44,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 import java.util.UUID;
 
 /**
@@ -298,6 +299,7 @@ public class StorageLogic {
     @UiThread
     public void updateSync(Recipe recipe, RecipeAction action, Object... values) {
         if (values == null || values.length == 0) return;
+        if (recipe.getId() == null) return;
         RecipeTable recipeTable = (RecipeTable) recipe;
         recipeTable.setChangedAt(new Date());
         switch (action) {
@@ -332,6 +334,7 @@ public class StorageLogic {
     public void updateAsync(Recipe recipe, RecipeAction action) {
         if (BuildConfig.DEBUG) MainThreadException.throwOnMainThread(TAG, "updateAsync()");
         RecipeTable recipeTable = (RecipeTable) recipe;
+        if (recipeTable.getId() == null) return;
 
         switch (action) {
             case EDIT_PHOTO:
@@ -354,6 +357,35 @@ public class StorageLogic {
 
         recipeTable.update();
         prefetchRelation(recipeTable);
+    }
+
+    public void updateAsync(Recipe recipe, RecipeAction action, Set<String> relationUuid) {
+        if (BuildConfig.DEBUG) MainThreadException.throwOnMainThread(TAG, "updateAsync(rel)");
+        RecipeTable recipeTable = (RecipeTable) recipe;
+        if (recipeTable.getId() == null) return;
+
+        switch (action) {
+            case EDIT_LABELS:
+                List<RecipeLabelTable> recipeLabelTables = recipeTable.getRecipeLabelTables();
+
+                dbManager.deleteAll(recipeLabelTables);
+                recipeLabelTables.clear();
+
+                for (String labelUuid : relationUuid) {
+                    RecipeLabelTable recipeLabelTable = new RecipeLabelTable();
+                    recipeLabelTable.setUuid(UUID.randomUUID().toString());
+                    recipeLabelTable.setChangedAt(new Date());
+                    recipeLabelTable.setRecipeUuid(recipeTable.getUuid());
+                    recipeLabelTable.setLabelUuid(labelUuid);
+
+                    recipeLabelTables.add(recipeLabelTable);
+                }
+                dbManager.modify(recipeLabelTables);
+
+                recipeTable.resetRecipeLabelTables();
+                prefetchRelationFull(recipeTable);
+                break;
+        }
     }
 
     @UiThread
@@ -392,6 +424,7 @@ public class StorageLogic {
     public void updateAsync(Category category) {
         if (BuildConfig.DEBUG) MainThreadException.throwOnMainThread(TAG, "updateAsync()");
         CategoryTable categoryTable = (CategoryTable) category;
+        if (categoryTable.getId() == null) return;
         for (PhotoTable photoTable : categoryTable.getPhotoTables()) photoTable.update();
         categoryTable.update();
     }
@@ -412,6 +445,7 @@ public class StorageLogic {
     public void updateAsync(Author author) {
         if (BuildConfig.DEBUG) MainThreadException.throwOnMainThread(TAG, "updateAsync()");
         AuthorTable authorTable = (AuthorTable) author;
+        if (authorTable.getId() == null) return;
         for (PhotoTable photoTable : authorTable.getPhotoTables()) photoTable.update();
         authorTable.update();
     }
@@ -423,7 +457,7 @@ public class StorageLogic {
 
     public boolean updateAsync(Food food, String ndbNo) {
         FoodTable foodTable = (FoodTable) food;
-
+        if (foodTable.getId() == null) return false;
         boolean cloudUpdate = (ndbNo != null &&
                 (food.getNdbNo() == null || !food.getNdbNo().equals(ndbNo)));
         if (cloudUpdate) {
@@ -469,6 +503,7 @@ public class StorageLogic {
 
     public void updateAsync(Label label) {
         LabelTable labelTable = (LabelTable) label;
+        if (labelTable.getId() == null) return;
         labelTable.setChangedAt(new Date());
         labelTable.update();
     }
@@ -563,7 +598,8 @@ public class StorageLogic {
             return prefetchRelation(foodTable);
 
         } else if (entityClass.equals(Ingredient.class)) {
-            return null; // goto...
+            return null; // goto updateAsync(Recipe, RecipeAction, String...)
+
         } else if (entityClass.equals(Label.class)) {
 
             LabelTable labelTable = new LabelTable();
@@ -575,9 +611,11 @@ public class StorageLogic {
             return labelTable;
 
         } else if (entityClass.equals(Measure.class)) {
-            return null; // goto...
+            return null; // not implemented
+
         } else if (entityClass.equals(Method.class)) {
-            return null; // goto...
+            return null; // goto updateAsync(Recipe, RecipeAction, String...)
+
         } else if (entityClass.equals(Photo.class)) {
 
             PhotoTable photoTable = new PhotoTable();
@@ -679,47 +717,47 @@ public class StorageLogic {
                 );
     }
 
-    public boolean updateFoodUsda() {
-        return updateFoodUsda(new Date());
-    }
-
     private boolean updateFoodUsda(Date updateDate) {
         List<FoodTable> dbFoods;
         if (!cloudManager.isOnline()) return false; // not updated
         do {
-            // Loading foods, up to 20 items, without updated nutrition values
-            dbFoods = dbManager.restrictWith(0, 20).getFoodTable(false);
-            if (dbFoods.size() == 0) break;
+            try {
+                // Loading foods, up to 20 items, without updated nutrition values
+                dbFoods = dbManager.restrictWith(0, 20).getFoodTable(false);
+                if (dbFoods.size() == 0) break;
 
-            // Fetching nutrition values
-            String[] ndbNos = new String[dbFoods.size()];
-            for (int i = 0; i < dbFoods.size(); i++) {
-                ndbNos[i] = dbFoods.get(i).getFoodUsdaTables().get(0).getNdbNo();
-            }
-            Map<String, FoodTable> usdaResult = cloudManager.getUsdaFoodTable(ndbNos);
-            if (usdaResult.size() == 0) return false; // not updated
-
-            // Updating nutrition values
-            for (Map.Entry<String, FoodTable> entry : usdaResult.entrySet()) {
-                boolean found = false;
-                for (FoodTable dbFood : dbFoods) {
-                    if (dbFood.getFoodUsdaTables().get(0).getNdbNo().equals(entry.getKey())) {
-                        FoodTable usdaFood = entry.getValue();
-                        if (dbFood.getName() == null) dbFood.setName(usdaFood.getName());
-                        dbFood.setProtein(usdaFood.getProtein());
-                        dbFood.setFat(usdaFood.getFat());
-                        dbFood.setCarbs(usdaFood.getCarbs());
-                        dbFood.setWeightUnit(usdaFood.getWeightUnit());
-                        dbFood.setEnergy(usdaFood.getEnergy());
-                        dbFood.setEnergyUnit(usdaFood.getEnergyUnit());
-                        dbFood.getFoodUsdaTables().get(0).setFetched(true);
-                        found = true;
-                        break;
-                    }
+                // Fetching nutrition values
+                String[] ndbNos = new String[dbFoods.size()];
+                for (int i = 0; i < dbFoods.size(); i++) {
+                    ndbNos[i] = dbFoods.get(i).getFoodUsdaTables().get(0).getNdbNo();
                 }
-                if (!found) return false; // not updated
+                Map<String, FoodTable> usdaResult = cloudManager.getUsdaFoodTable(ndbNos);
+                if (usdaResult.size() == 0) return false; // not updated
+
+                // Updating nutrition values
+                for (Map.Entry<String, FoodTable> entry : usdaResult.entrySet()) {
+                    boolean found = false;
+                    for (FoodTable dbFood : dbFoods) {
+                        if (dbFood.getFoodUsdaTables().get(0).getNdbNo().equals(entry.getKey())) {
+                            FoodTable usdaFood = entry.getValue();
+                            if (dbFood.getName() == null) dbFood.setName(usdaFood.getName());
+                            dbFood.setProtein(usdaFood.getProtein());
+                            dbFood.setFat(usdaFood.getFat());
+                            dbFood.setCarbs(usdaFood.getCarbs());
+                            dbFood.setWeightUnit(usdaFood.getWeightUnit());
+                            dbFood.setEnergy(usdaFood.getEnergy());
+                            dbFood.setEnergyUnit(usdaFood.getEnergyUnit());
+                            dbFood.getFoodUsdaTables().get(0).setFetched(true);
+                            found = true;
+                            break;
+                        }
+                    }
+                    if (!found) return false; // not updated
+                }
+                dbManager.changeWith(updateDate).modifyDeepFoodTable(dbFoods);
+            } catch (Throwable e) {
+                return false;
             }
-            dbManager.changeWith(updateDate).modifyDeepFoodTable(dbFoods);
         } while (dbFoods.size() > 0);
         return true;
     }
@@ -758,12 +796,6 @@ public class StorageLogic {
         return authorTables;
     }
 
-    /**
-     * Prefetch to-many relations
-     *
-     * @param recipeTable - recipe
-     * @return recipeTable
-     */
     private RecipeTable prefetchRelation(RecipeTable recipeTable) {
         if (recipeTable == null) return null;
         prefetchAuthorRelations(recipeTable.getAuthorTables());
@@ -781,7 +813,9 @@ public class StorageLogic {
     private RecipeTable prefetchRelationFull(RecipeTable recipeTable) {
         if (recipeTable == null) return null;
         prefetchRelation(recipeTable);
-        recipeTable.getRecipeLabelTables();
+        for (RecipeLabelTable recipeLabelTable : recipeTable.getRecipeLabelTables()) {
+            recipeLabelTable.getLabelTables();
+        }
         for (RecipeFoodTable recipeFoodTable : recipeTable.getRecipeFoodTables()) {
             prefetchFoodRelations(recipeFoodTable.getFoodTables());
         }

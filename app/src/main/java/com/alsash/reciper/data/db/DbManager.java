@@ -265,6 +265,19 @@ public class DbManager {
             daoSession.getRecipeTableDao().saveInTx((RecipeTable) table);
     }
 
+    public void modify(List<? extends Table> tables) {
+        if (tables == null || tables.size() == 0) return;
+        obtainChangeDate(tables);
+
+        Table checkTable = tables.get(0);
+
+        if (checkTable instanceof RecipeLabelTable) {
+            List<RecipeLabelTable> recipeLabelTables = new ArrayList<>();
+            for (Table table : tables) recipeLabelTables.add((RecipeLabelTable) table);
+            daoSession.getRecipeLabelTableDao().insertOrReplaceInTx(recipeLabelTables);
+        }
+    }
+
     /**
      * Update all entities in database, set {@link #changeDate} to all entities
      *
@@ -386,6 +399,18 @@ public class DbManager {
                 daoSession.getRecipeTableDao().deleteInTx(recipeTable);
             }
         });
+    }
+
+    public void deleteAll(List<? extends Table> tables) {
+        if (tables == null || tables.size() == 0) return;
+
+        Table checkTable = tables.get(0);
+
+        if (checkTable instanceof RecipeLabelTable) {
+            List<RecipeLabelTable> recipeLabelTables = new ArrayList<>();
+            for (Table table : tables) recipeLabelTables.add((RecipeLabelTable) table);
+            daoSession.getRecipeLabelTableDao().deleteInTx(recipeLabelTables);
+        }
     }
 
     /**

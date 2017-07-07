@@ -6,6 +6,13 @@ package com.alsash.reciper.app.lib;
 public class MutableString {
     protected String value = "";
 
+    public MutableString() {
+    }
+
+    public MutableString(String value) {
+        if (value != null) this.value = value;
+    }
+
     public synchronized String get() {
         return value;
     }
