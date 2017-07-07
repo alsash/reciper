@@ -62,12 +62,13 @@ public class RecipeDialogCreationPresenter implements BasePresenter<RecipeDialog
             selectedAuthor = (Author) entity;
     }
 
-    public void onCreationApprove(RecipeDialogCreationView view, final String recipeName) {
+    public void onCreationApprove(RecipeDialogCreationView view, String name) {
         if (selectedAuthor == null || selectedCategory == null) {
             view.showError();
             view.finishView();
             return;
         }
+        final String recipeName = name;
         final WeakReference<RecipeDialogCreationView> viewRef = new WeakReference<>(view);
         authorsPresenter.getComposite().add(Maybe
                 .fromCallable(new Callable<Recipe>() {
