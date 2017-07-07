@@ -40,8 +40,6 @@
         style="@style/RippleButton"
         android:layout_width="48dp"
         android:layout_height="48dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginTop="8dp"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/edit_icon_white"

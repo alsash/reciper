@@ -2,7 +2,7 @@
 <resources>
     <integer name="recipe_list_span">2</integer>
     <integer name="recipe_labels_list_span">3</integer>
-    <integer name="dialog_labels_list_span">5</integer>
+    <integer name="dialog_labels_list_span">3</integer>
     <integer name="flip_full_time_ms">500</integer>
     <integer name="flip_half_time_ms">250</integer>
     <integer name="nutrition_chart_anim_ms">500</integer>

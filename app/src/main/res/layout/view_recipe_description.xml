@@ -10,10 +10,12 @@
         android:id="@+id/recipe_description_author_image"
         android:layout_width="52dp"
         android:layout_height="52dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
         android:src="@color/gray_200"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="ContentDescription" />
+        tools:ignore="ContentDescription,RtlHardcoded" />
 
     <ImageButton
         android:id="@+id/recipe_description_edit"
@@ -65,6 +67,8 @@
         android:id="@+id/recipe_description_horizontal_divider"
         android:layout_width="0dp"
         android:layout_height="1dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
         android:layout_marginTop="4dp"
         android:background="@color/gray_100"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -75,6 +79,8 @@
         android:id="@+id/recipe_description_body"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
         android:layout_marginTop="8dp"
         android:background="@null"
         android:fontFamily="serif"
@@ -101,6 +107,8 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
         android:layout_marginTop="8dp"
         android:background="@null"
         android:fontFamily="serif"

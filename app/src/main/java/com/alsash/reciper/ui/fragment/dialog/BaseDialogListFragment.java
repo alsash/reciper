@@ -102,7 +102,6 @@ public abstract class BaseDialogListFragment<M extends BaseEntity, V extends Bas
         if (adapter != null) adapter.notifyItemRemoved(position);
     }
 
-    @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater,
                              @Nullable ViewGroup group,

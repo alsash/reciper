@@ -8,15 +8,14 @@
 
     <ImageView
         android:id="@+id/recipe_time_icon"
-        android:layout_width="52dp"
-        android:layout_height="52dp"
-        android:padding="4dp"
-        android:tint="@color/gray_400"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginLeft="4dp"
+        android:padding="8dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0"
-        app:srcCompat="@drawable/recipe_time_icon"
-        tools:ignore="ContentDescription" />
+        app:srcCompat="@drawable/time_icon_gray"
+        tools:ignore="ContentDescription,RtlHardcoded" />
 
     <ImageButton
         android:id="@+id/recipe_time_edit"

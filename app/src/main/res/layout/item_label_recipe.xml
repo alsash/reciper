@@ -5,7 +5,7 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_margin="4dp"
-    android:background="@drawable/label_recipe_shape"
+    android:background="@drawable/label_recipe_shape_gray"
     android:fontFamily="serif"
     android:paddingBottom="4dp"
     android:paddingEnd="8dp"

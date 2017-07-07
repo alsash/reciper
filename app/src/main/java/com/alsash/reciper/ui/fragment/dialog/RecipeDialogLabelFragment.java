@@ -1,6 +1,12 @@
 package com.alsash.reciper.ui.fragment.dialog;
 
 import android.content.Intent;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import com.alsash.reciper.R;
 import com.alsash.reciper.app.ReciperApp;
@@ -39,6 +45,18 @@ public class RecipeDialogLabelFragment
     @Override
     protected Integer getLayoutRes() {
         return R.layout.fragment_recipe_dialog_label;
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater,
+                             @Nullable ViewGroup group,
+                             @Nullable Bundle state) {
+        View layout = super.onCreateView(inflater, group, state);
+        list.setNestedScrollingEnabled(false);
+        StaggeredGridLayoutManager lm = (StaggeredGridLayoutManager) list.getLayoutManager();
+        lm.setGapStrategy(StaggeredGridLayoutManager.GAP_HANDLING_MOVE_ITEMS_BETWEEN_SPANS);
+        list.setLayoutManager(lm);
+        return layout;
     }
 
     @Override

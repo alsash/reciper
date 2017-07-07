@@ -84,6 +84,7 @@ public class RecipeDetailsDescriptionFragment extends BaseFragment<RecipeDetails
         }
     };
     private ImageButton labelsEdit;
+    private View labelsDivider;
     private TextView labelsTitle;
     private RecyclerView labelsList;
     // Time card
@@ -138,8 +139,16 @@ public class RecipeDetailsDescriptionFragment extends BaseFragment<RecipeDetails
         if (labelsTitle != null)
             labelsTitle.setText(getResources().getQuantityString(R.plurals.quantity_label,
                     labels.size(), labels.size()));
+        if (labelsDivider != null)
 
-        if (labelsList == null) return;
+            if (labelsList == null) return;
+        if (labels.size() == 0) {
+            labelsList.setVisibility(View.GONE);
+            if (labelsDivider != null) labelsDivider.setVisibility(View.GONE);
+            return;
+        }
+        if (labelsDivider != null) labelsDivider.setVisibility(View.VISIBLE);
+        labelsList.setVisibility(View.VISIBLE);
         labelsList.setAdapter(new RecipeLabelListAdapter(labels));
         labelsList.setNestedScrollingEnabled(false);
         StaggeredGridLayoutManager lm = (StaggeredGridLayoutManager) labelsList.getLayoutManager();
@@ -212,10 +221,11 @@ public class RecipeDetailsDescriptionFragment extends BaseFragment<RecipeDetails
         categoryEditButton = (ImageButton) layout.findViewById(R.id.recipe_category_edit);
         categoryEditButton.setOnClickListener(categoryEditListener);
         // Labels card
-        labelsEdit = (ImageButton) layout.findViewById(R.id.recipe_labels_add);
+        labelsEdit = (ImageButton) layout.findViewById(R.id.recipe_labels_edit);
         labelsEdit.setOnClickListener(labelsEditListener);
         labelsTitle = (TextView) layout.findViewById(R.id.recipe_labels_title);
         labelsList = (RecyclerView) layout.findViewById(R.id.recipe_labels_list);
+        labelsDivider = layout.findViewById(R.id.recipe_labels_horizontal_divider);
         // Time card
         recipeTimeEdit = (ImageButton) layout.findViewById(R.id.recipe_time_edit);
         recipeTimeEdit.setOnClickListener(recipeTimeListener);
