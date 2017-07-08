@@ -1,5 +1,10 @@
 <resources>
+    <!-- App -->
     <string name="app_name">Recipes</string>
+    <string name="drawer_open">Open navigation drawer</string>
+    <string name="drawer_close">Close navigation drawer</string>
+
+    <!-- Formats -->
     <string name="date_format_recipe">MMMM yyyy</string>
     <plurals name="time_format_hour">
         <item quantity="one">%d hour</item>
@@ -9,58 +14,8 @@
         <item quantity="one">%d minute</item>
         <item quantity="other">%d minutes</item>
     </plurals>
-    <!--Recipe tabs-->
-    <string name="tab_recipe_category">Categories</string>
-    <string name="tab_recipe_grid">Grid</string>
-    <string name="tab_recipe_label">Labels</string>
-    <string name="tab_recipe_bookmark">Bookmarks</string>
 
-    <!--Navigation-->
-    <string name="drawer_open">Open navigation drawer</string>
-    <string name="drawer_close">Close navigation drawer</string>
-
-
-    <string name="drawer_account_image_description">Your account\'s image</string>
-    <string name="drawer_account_details_description">Account details</string>
-    <string name="drawer_account_add">Add an account</string>
-    <string name="drawer_date_top_description">Creation changedAt</string>
-    <string name="drawer_date_end_description">Change changedAt</string>
-    <string name="drawer_recipe_num_description">Recipes</string>
-    <string name="drawer_menu_foods">Ingredients</string>
-    <string name="drawer_menu_cart">Cart</string>
-    <string name="drawer_menu_labels">Labels</string>
-    <string name="drawer_menu_categories">Categories</string>
-    <string name="drawer_menu_settings">Settings</string>
-    <string name="action_search">Search</string>
-    <string name="action_search_clear">Clear search</string>
-    <string name="action_clear">Clear</string>
-    <string name="action_reset">Reset to default</string>
-    <string name="action_spinner">Choose</string>
-    <string name="action_overflow">More</string>
-    <string name="list_group">Group by</string>
-    <string name="recipe_group_category">Categories</string>
-    <string name="recipe_group_label">Labels</string>
-    <string name="recipe_group_bookmark">Bookmarks</string>
-    <string name="recipe_group_list">List</string>
-    <string name="list_group_energy">Energy</string>
-    <string name="list_group_nutrition">Nutrition</string>
-    <string name="list_group_time">Time</string>
-    <string name="recipe_group_food">Ingredient</string>
-    <string name="list_sort">Sort by</string>
-    <string name="list_sort_name">Name</string>
-    <string name="list_sort_account">Account</string>
-    <string name="list_sort_date_top">Creation changedAt</string>
-    <string name="list_sort_date_end">Change changedAt</string>
-    <string name="list_sort_rating">Rating</string>
-    <string name="list_filter">Filter</string>
-    <string name="recipe_image_description">Recipe image</string>
-    <string name="action_collapse">Collapse</string>
-    <string name="action_add_to_cart">Add to cart</string>
-    <string name="action_add_to_bookmark">Add to bookmark</string>
-    <string name="action_settings">Settings</string>
-    <string name="action_edit">Edit</string>
-    <string name="action_delete">Delete</string>
-
+    <!-- Quantities -->
     <plurals name="quantity_recipe">
         <item quantity="one">%d Recipe</item>
         <item quantity="other">%d Recipes</item>
@@ -78,20 +33,23 @@
         <item quantity="other">%d Methods</item>
     </plurals>
     <plurals name="quantity_serving">
-        <item quantity="zero">%d serving</item>
         <item quantity="one">%d serving</item>
-        <item quantity="two">%d servings</item>
-        <item quantity="few">%d servings</item>
-        <item quantity="many">%d servings</item>
         <item quantity="other">%d servings</item>
     </plurals>
+    <plurals name="quantity_serving_unit">
+        <item quantity="one">serving</item>
+        <item quantity="other">servings</item>
+    </plurals>
     <plurals name="quantity_weight_gram">
-        <item quantity="zero">%d gram</item>
         <item quantity="one">%d gram</item>
-        <item quantity="two">%d grams</item>
-        <item quantity="few">%d grams</item>
-        <item quantity="many">%d grams</item>
         <item quantity="other">%d grams</item>
+    </plurals>
+    <plurals name="quantity_weight_gram_unit">
+        <item quantity="one">gram</item>
+        <item quantity="other">grams</item>
+    </plurals>
+    <plurals name="quantity_weight_kilogram_unit">
+        <item quantity="other">kg</item>
     </plurals>
     <string name="quantity_weight_exact_gram">%.2f g</string>
     <string name="quantity_weight_exact_kilogram">%.2f kg</string>
@@ -103,13 +61,7 @@
     <string name="quantity_food_fat_gram">Fat %.2f g</string>
     <string name="quantity_food_energy_calorie">Energy %d Cal</string>
 
-    <string name="nutrition_value">Nutrition value</string>
-    <string name="nutrition_quantity_switch">Per %s</string>
-    <string name="nutrition_carbohydrate">Carbs</string>
-    <string name="nutrition_protein">Protein</string>
-    <string name="nutrition_fat">Fat</string>
-
-    <!--App entities -->
+    <!-- Entities -->
     <string name="entity_author">Author</string>
     <string name="entity_category">Category</string>
     <string name="entity_food">Food</string>
@@ -139,28 +91,36 @@
     <string name="appbar_edit_photo">Change photo</string>
     <string name="appbar_delete">Delete</string>
 
+    <!-- Fragments -->
     <string name="fragment_recipe_details_description_title">Description</string>
     <string name="fragment_recipe_details_nutrition_title">Nutrition</string>
     <string name="fragment_recipe_details_ingredients_title">Ingredients</string>
     <string name="fragment_recipe_details_methods_title">Methods</string>
     <string name="fragment_recipe_details_methods_delete_action">Method %d has been removed</string>
     <string name="fragment_recipe_details_methods_delete_reject">UNDO</string>
-
     <string name="fragment_entity_list_delete_success">%s has been removed</string>
     <string name="fragment_entity_list_delete_reject">UNDO</string>
     <string name="fragment_entity_list_delete_fail">%1$s has %2$s. Remove related recipes first.</string>
     <string name="fragment_entity_list_food_search">Copy the food ID and paste it into any food</string>
 
+    <!-- Dialogs -->
     <string name="fragment_recipe_dialog_creation_error">Please, choose Author and Category</string>
-
     <string name="fragment_recipe_dialog_author_title">Author</string>
     <string name="fragment_recipe_dialog_category_title">Category</string>
     <string name="fragment_recipe_dialog_label_title">Labels</string>
-
+    <string name="fragment_recipe_dialog_food_title">Choose food</string>
     <string name="simple_dialog_title_photo_url">Photo url</string>
     <string name="simple_dialog_title_recipe_name">Recipe name</string>
     <string name="simple_dialog_message_confirm_delete">Delete %s?</string>
 
+    <!-- Nutrition view -->
+    <string name="nutrition_value">Nutrition value</string>
+    <string name="nutrition_quantity_switch">Per %s</string>
+    <string name="nutrition_carbohydrate">Carbs</string>
+    <string name="nutrition_protein">Protein</string>
+    <string name="nutrition_fat">Fat</string>
+
+    <!-- Hints -->
     <string name="hint_label_name">Label name</string>
     <string name="hint_category_name">Category name</string>
     <string name="hint_author_name">Author name</string>
@@ -169,5 +129,6 @@
     <string name="hint_food_nutrition_quantity">per 100 grams</string>
     <string name="hint_food_name">Food name</string>
     <string name="hint_recipe_name">Recipe name</string>
+    <string name="hint_ingredient_name">Ingredient name</string>
 
 </resources>

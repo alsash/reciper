@@ -28,7 +28,7 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:ignore="ContentDescription,RtlHardcoded" />
 
-        <EditText
+        <android.support.v7.widget.AppCompatEditText
             android:id="@+id/item_author_name"
             android:layout_width="0dp"
             android:layout_height="wrap_content"

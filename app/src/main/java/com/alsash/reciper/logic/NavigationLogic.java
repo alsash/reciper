@@ -33,6 +33,7 @@ import com.alsash.reciper.ui.fragment.RecipeDetailsNutritionFragment;
 import com.alsash.reciper.ui.fragment.RecipeRestrictListFragment;
 import com.alsash.reciper.ui.fragment.dialog.RecipeDialogAuthorFragment;
 import com.alsash.reciper.ui.fragment.dialog.RecipeDialogCategoryFragment;
+import com.alsash.reciper.ui.fragment.dialog.RecipeDialogIngredientFragment;
 import com.alsash.reciper.ui.fragment.dialog.RecipeDialogLabelFragment;
 
 import java.lang.ref.WeakReference;
@@ -245,7 +246,16 @@ public class NavigationLogic {
     }
 
     public void toRecipeDialogIngredientView(Recipe recipe) {
-
+        Context context = getContext();
+        FragmentManager fm = getAvailableFragmentManager(context);
+        if (fm == null) return;
+        RecipeDialogIngredientFragment
+                .newInstance(
+                        obtainRestriction(
+                                AppContract.Key.RECIPE_ID,
+                                recipe.getUuid(),
+                                new Intent())) // intent is used as bundle
+                .show(fm, AppContract.Key.FOOD_ID);
     }
 
     public Fragment[] getFragmentCollection(Intent intent) {

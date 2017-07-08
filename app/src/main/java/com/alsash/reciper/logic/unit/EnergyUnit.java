@@ -17,6 +17,7 @@ public enum EnergyUnit {
 
     @Nullable
     public static EnergyUnit getValueOf(String name) {
+        if (name == null) return null;
         if (name.toLowerCase().equals("cal")) return CALORIE;
         if (name.toLowerCase().equals("kcal")) return KILOCALORIE;
         return null;

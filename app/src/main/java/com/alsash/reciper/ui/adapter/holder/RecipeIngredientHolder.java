@@ -1,116 +1,140 @@
 package com.alsash.reciper.ui.adapter.holder;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
-import android.animation.AnimatorSet;
-import android.animation.ObjectAnimator;
-import android.animation.ValueAnimator;
+import android.animation.TimeInterpolator;
+import android.content.Context;
 import android.support.annotation.LayoutRes;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.alsash.reciper.R;
+import com.alsash.reciper.mvp.model.entity.Food;
 import com.alsash.reciper.mvp.model.entity.Ingredient;
+import com.alsash.reciper.ui.animator.ExpandAnimatorHelper;
 
 /**
  * A view that holds ingredient representation views
  */
 public class RecipeIngredientHolder extends RecyclerView.ViewHolder {
+    private static final TimeInterpolator EXPAND_INTERPOLATOR
+            = new AccelerateDecelerateInterpolator();
+    private static final int EXPAND_DURATION_MS = 400;
+    private static final int EXPAND_HEIGHT_DP = 180;
 
-    private final TextView name;
-    private final TextView weight;
-    private final TextView quantity;
-    private final ImageButton expand;
+    private final EditText name;
+    private final EditText weightValue;
+    private final TextView weightUnit;
+    private final ImageButton editButton;
+    private final ImageButton expandButton;
     private final ConstraintLayout expandLayout;
-    private final SeekBar weightBar;
-    private final EditText weightEdit;
-    private final ImageButton menu;
+    private final TextView foodName;
+    private final TextView proteinValue;
+    private final TextView fatValue;
+    private final TextView carbsValue;
+    private final TextView energyValue;
 
     public RecipeIngredientHolder(ViewGroup parent, @LayoutRes int layoutId) {
         super(LayoutInflater.from(parent.getContext()).inflate(layoutId, parent, false));
-        name = (TextView) itemView.findViewById(R.id.ingredient_name);
-        weight = (TextView) itemView.findViewById(R.id.ingredient_weight);
-        quantity = (TextView) itemView.findViewById(R.id.ingredient_quantity);
-        expand = (ImageButton) itemView.findViewById(R.id.ingredient_expand);
-        expandLayout = (ConstraintLayout) itemView.findViewById(R.id.ingredient_expand_constraint);
-        weightBar = (SeekBar) itemView.findViewById(R.id.ingredient_expand_weight_bar);
-        weightEdit = (EditText) itemView.findViewById(R.id.ingredient_expand_weight_edit);
-        menu = (ImageButton) itemView.findViewById(R.id.ingredient_expand_menu);
+        name = (EditText) itemView.findViewById(R.id.item_ingredient_name);
+        weightValue = (EditText) itemView.findViewById(R.id.item_ingredient_weight_value);
+        weightUnit = (TextView) itemView.findViewById(R.id.item_ingredient_weight_unit);
+        editButton = (ImageButton) itemView.findViewById(R.id.item_ingredient_edit);
+        expandButton = (ImageButton) itemView.findViewById(R.id.item_ingredient_expand);
+        foodName = (TextView) itemView.findViewById(R.id.item_food_name);
+        proteinValue = (TextView) itemView.findViewById(R.id.item_food_protein);
+        fatValue = (TextView) itemView.findViewById(R.id.item_food_fat);
+        carbsValue = (TextView) itemView.findViewById(R.id.item_food_carbs);
+        energyValue = (TextView) itemView.findViewById(R.id.item_food_energy);
+        expandLayout = (ConstraintLayout) itemView.findViewById(R.id.item_food_expand_constraint);
     }
 
-    public void bindIngredient(Ingredient ingredient) {
-        name.setText(ingredient.getName());
-        String weightFull = String.valueOf((int) ingredient.getWeight()) + " "
-                + ingredient.getWeightUnit();
-        weight.setText(weightFull);
-        quantity.setVisibility(View.GONE);
-        weightBar.setProgress((int) ingredient.getWeight());
-        weightBar.setMax((int) (ingredient.getWeight() * 2) + 1);
-        weightEdit.setText(String.valueOf((int) ingredient.getWeight()));
+    public void bindEntity(Ingredient ingredient) {
+        if (ingredient == null) {
+            name.setText("");
+            weightValue.setText("0");
+            weightUnit.setText("");
+        } else {
+            name.setText(ingredient.getName());
+            weightValue.setText(String.valueOf((int) Math.round(ingredient.getWeight())));
+            weightUnit.setText(ingredient.getWeightUnit());
+        }
+
+        Food food = ingredient != null ? ingredient.getFood() : null;
+        foodName.setText(food != null ? food.getName() : "");
+
+        float p = food != null ? (float) food.getProtein() * 100 : 0;
+        float f = food != null ? (float) food.getFat() * 100 : 0;
+        float c = food != null ? (float) food.getCarbs() * 100 : 0;
+        int e = food != null ? (int) Math.round(food.getEnergy() * 100) : 0;
+
+        Context context = name.getContext();
+        proteinValue.setText(context.getString(R.string.quantity_food_protein_gram, p));
+        fatValue.setText(context.getString(R.string.quantity_food_fat_gram, f));
+        carbsValue.setText(context.getString(R.string.quantity_food_carbs_gram, c));
+        energyValue.setText(context.getString(R.string.quantity_food_energy_calorie, e));
     }
 
-    public void setExpanded(final boolean expanded, boolean animate) {
-        expand.clearAnimation();
-        expandLayout.clearAnimation();
-        float density = expandLayout.getContext().getResources().getDisplayMetrics().density;
-        float[] rotate = new float[]{0f, -180f};
-        float[] translateY = new float[]{-48 * density, 0f};
+    public String getEditName() {
+        return name.getText().toString();
+    }
 
-        ObjectAnimator rotationAnim = ObjectAnimator.ofFloat(expand, "rotation",
-                rotate[expanded ? 0 : 1], rotate[expanded ? 1 : 0]);
-        ObjectAnimator collapseAnim = ObjectAnimator.ofFloat(expandLayout, "translationY",
-                translateY[expanded ? 0 : 1], translateY[expanded ? 1 : 0]);
+    public int getEditWeight() {
+        try {
+            return Integer.parseInt(weightValue.getText().toString());
+        } catch (NumberFormatException e) {
+            weightValue.setText("0");
+            return 0;
+        }
+    }
 
-        collapseAnim.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-            @Override
-            public void onAnimationUpdate(ValueAnimator animation) {
-                float translation = (float) animation.getAnimatedValue("translationY");
-                expandLayout.getLayoutParams().height += translation;
-                expandLayout.requestLayout();
-            }
-        });
+    public void setEditable(boolean editable) {
+        editButton.setImageResource(editable ?
+                R.drawable.edit_icon_orange :
+                R.drawable.edit_icon_gray);
+        weightValue.setEnabled(editable);
+        weightValue.setFocusable(editable);
+        weightValue.setFocusableInTouchMode(editable);
+        weightValue.setClickable(editable);
+        weightValue.setLongClickable(editable);
+        name.setEnabled(editable);
+        name.setFocusable(editable);
+        name.setFocusableInTouchMode(editable);
+        name.setClickable(editable);
+        name.setLongClickable(editable);
+        if (editable) weightValue.requestFocus();
+    }
 
-        AnimatorSet animatorSet = new AnimatorSet();
-        animatorSet.setDuration(animate ? 300 : 0);
-        animatorSet.addListener(new AnimatorListenerAdapter() {
-            @Override
-            public void onAnimationStart(Animator animation) {
-                if (!expanded) return;
-                expandLayout.setVisibility(View.VISIBLE);
-                weightEdit.setVisibility(View.VISIBLE);
-            }
-
-            @Override
-            public void onAnimationEnd(Animator animation) {
-                if (expanded) return;
-                expandLayout.setVisibility(View.GONE);
-                weightEdit.setVisibility(View.GONE);
-            }
-        });
-        animatorSet.playTogether(rotationAnim, collapseAnim);
-        animatorSet.start();
+    public void setExpanded(boolean expanded, boolean animate) {
+        ExpandAnimatorHelper.get()
+                .expand(expanded)
+                .interpolator(animate ? EXPAND_INTERPOLATOR : null)
+                .durationMillis(animate ? EXPAND_DURATION_MS : 0)
+                .translationDp(EXPAND_HEIGHT_DP)
+                .button(expandButton)
+                .layout(expandLayout)
+                .start();
     }
 
     /**
      * Set the listeners in the following sequence:
      *
-     * @param listeners 0. expandListener
-     *                  1. menuListener
+     * @param listeners 0. editValuesListener - must implement View.OnClickListener
+     *                  1. expandListener     - must implement View.OnClickListener
      */
     public void setListeners(View.OnClickListener... listeners) {
         for (int i = 0; i < listeners.length; i++) {
             switch (i) {
                 case 0:
-                    expand.setOnClickListener(listeners[i]);
+                    editButton.setOnClickListener(listeners[i]);
                     break;
-                default:
+                case 1:
+                    expandButton.setOnClickListener(listeners[i]);
                     break;
             }
         }

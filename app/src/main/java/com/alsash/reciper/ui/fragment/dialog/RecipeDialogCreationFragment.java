@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,6 +45,7 @@ public class RecipeDialogCreationFragment extends BaseDialogFragment<RecipeDialo
     @Inject
     NavigationLogic navigator;
 
+    private NameWatcher recipeNameWatcher = new NameWatcher();
     private EditText recipeName;
     private RecyclerView authorList;
     private RecyclerView categoryList;
@@ -95,6 +98,7 @@ public class RecipeDialogCreationFragment extends BaseDialogFragment<RecipeDialo
         View layout = inflater.inflate(R.layout.fragment_recipe_dialog_creation, container, false);
 
         recipeName = (EditText) layout.findViewById(R.id.recipe_creation_dialog_name);
+        recipeName.addTextChangedListener(recipeNameWatcher);
 
         authorList = (RecyclerView) layout.findViewById(R.id.recipe_creation_author_list);
         authorList.setAdapter(authorAdapterHolder.getAdapter());
@@ -119,7 +123,7 @@ public class RecipeDialogCreationFragment extends BaseDialogFragment<RecipeDialo
     }
 
     protected void clickPositive() {
-        presenter.onCreationApprove(getThisView(), recipeName.getText().toString());
+        presenter.onCreationApprove(getThisView(), recipeNameWatcher.name);
     }
 
     protected void clickNegative() {
@@ -205,6 +209,25 @@ public class RecipeDialogCreationFragment extends BaseDialogFragment<RecipeDialo
         @Override
         public void showDelete(int position) {
             adapter.notifyItemRemoved(position);
+        }
+    }
+
+    private static class NameWatcher implements TextWatcher {
+        public String name = "";
+
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            // do nothing
+        }
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+            name = s.toString();
         }
     }
 }

@@ -36,7 +36,6 @@ public class EntitySelectionAdapter extends RecyclerView.Adapter<BaseEntitySelec
     private final int viewType;
     private boolean multiSelect;
     private Set<String> selectedUuid;
-    private Set<String> expandedUuid;
 
     public EntitySelectionAdapter(EntitySelectionInteraction interaction,
                                   List<? extends BaseEntity> entities,
@@ -45,7 +44,6 @@ public class EntitySelectionAdapter extends RecyclerView.Adapter<BaseEntitySelec
         this.entities = entities;
         this.multiSelect = false;
         this.selectedUuid = new HashSet<>();
-        this.expandedUuid = new HashSet<>();
         if (entityClass.equals(Category.class)) {
             viewType = VIEW_TYPE_CATEGORY;
         } else if (entityClass.equals(Author.class)) {
@@ -76,7 +74,7 @@ public class EntitySelectionAdapter extends RecyclerView.Adapter<BaseEntitySelec
             case VIEW_TYPE_LABEL:
                 return new EntityLabelSelectionHolder(parent, R.layout.item_label_selection);
             case VIEW_TYPE_FOOD:
-                return new EntityFoodSelectionHolder(parent, R.layout.item_food_entity);
+                return new EntityFoodSelectionHolder(parent, R.layout.item_food_selection);
             default:
                 return null;
         }
@@ -107,19 +105,6 @@ public class EntitySelectionAdapter extends RecyclerView.Adapter<BaseEntitySelec
                 interaction.onSelect(entity);
             }
         });
-        if (holder.getItemViewType() == VIEW_TYPE_FOOD) {
-            final EntityFoodSelectionHolder foodHolder = (EntityFoodSelectionHolder) holder;
-            foodHolder.setExpanded(expandedUuid.contains(entity.getUuid()), false);
-            foodHolder.setExpandListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    String uuid = entities.get(foodHolder.getAdapterPosition()).getUuid();
-                    boolean expanded = !expandedUuid.remove(uuid)
-                            && expandedUuid.add(uuid);
-                    foodHolder.setExpanded(expanded, true);
-                }
-            });
-        }
     }
 
     @Override

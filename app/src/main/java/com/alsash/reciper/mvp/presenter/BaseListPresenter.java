@@ -65,6 +65,17 @@ public abstract class BaseListPresenter<M extends BaseEntity, V extends BaseList
     @Override
     public void visible(V view) {
         view.showUpdate();
+        List<M> deleted = new ArrayList<>();
+        for (M model : getModels()) {
+            if (model.getId() == null) deleted.add(model);
+        }
+        for (M model : deleted) {
+            Integer position = getPosition(model.getUuid());
+            if (position != null) {
+                getModels().remove(model);
+                view.showDelete(position);
+            }
+        }
         view.showLoading(isLoading());
     }
 

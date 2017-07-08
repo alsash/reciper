@@ -21,13 +21,17 @@ public class IngredientListAdapter extends RecyclerView.Adapter<RecipeIngredient
 
     private final IngredientInteraction interaction;
     private final List<Ingredient> ingredients;
-    private final Set<Integer> expandPositions;
+    private final Set<Integer> editablePositions;
+    private final Set<Integer> expandedPositions;
 
     public IngredientListAdapter(IngredientInteraction interaction, List<Ingredient> ingredients) {
         this.interaction = interaction;
         this.ingredients = ingredients;
-        this.expandPositions = new HashSet<>();
-        registerAdapterDataObserver(new AdapterPositionSetObserver(expandPositions));
+        this.editablePositions = new HashSet<>();
+        this.expandedPositions = new HashSet<>();
+        registerAdapterDataObserver(new AdapterPositionSetObserver(
+                editablePositions,
+                expandedPositions));
     }
 
     @Override
@@ -37,16 +41,32 @@ public class IngredientListAdapter extends RecyclerView.Adapter<RecipeIngredient
 
     @Override
     public void onBindViewHolder(final RecipeIngredientHolder holder, int position) {
-        holder.bindIngredient(ingredients.get(position));
-        holder.setExpanded(expandPositions.contains(position), false);
+        holder.bindEntity(ingredients.get(position));
+        holder.setEditable(editablePositions.contains(position));
+        holder.setExpanded(expandedPositions.contains(position), false);
         holder.setListeners(
+                // Edit listener
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        int position = holder.getAdapterPosition();
+                        boolean editable = !editablePositions.remove(position)
+                                && editablePositions.add(position);
+                        holder.setEditable(editable);
+                        if (!editable) {
+                            interaction.onEditValues(ingredients.get(position),
+                                    holder.getEditName(),
+                                    holder.getEditWeight());
+                        }
+                    }
+                },
                 // Expand listener
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         int position = holder.getAdapterPosition();
-                        boolean expanded = !expandPositions.remove(position)
-                                && expandPositions.add(position);
+                        boolean expanded = !expandedPositions.remove(position)
+                                && expandedPositions.add(position);
                         holder.setExpanded(expanded, true);
                     }
                 });

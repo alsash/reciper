@@ -6,7 +6,7 @@
     </style>
 
     <style name="RippleButton" parent="@style/Widget.AppCompat.Button.Borderless">
-        <item name="android:background">?attr/selectableItemBackground</item>
+        <item name="android:background">?attr/selectableItemBackgroundBorderless</item>
     </style>
 
 </resources>

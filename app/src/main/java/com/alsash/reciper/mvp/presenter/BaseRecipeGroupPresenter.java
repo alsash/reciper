@@ -49,7 +49,7 @@ public abstract class BaseRecipeGroupPresenter<G extends BaseEntity, V extends B
     protected abstract List<Recipe> loadNextRecipes(G group, int offset, int limit);
 
     public boolean canOpenGroup(G group) {
-        return presenters.get(group).getModels().size() > 0;
+        return group.getId() == null || presenters.get(group).getModels().size() > 0;
     }
 
     @Override

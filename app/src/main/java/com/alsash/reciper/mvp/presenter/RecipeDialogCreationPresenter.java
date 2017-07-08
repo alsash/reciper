@@ -36,6 +36,7 @@ public class RecipeDialogCreationPresenter implements BasePresenter<RecipeDialog
 
     private Author selectedAuthor;
     private Category selectedCategory;
+    private String recipeName;
 
     public RecipeDialogCreationPresenter(StorageLogic sLogic, BusinessLogic bLogic) {
         businessLogic = bLogic;
@@ -68,7 +69,7 @@ public class RecipeDialogCreationPresenter implements BasePresenter<RecipeDialog
             view.finishView();
             return;
         }
-        final String recipeName = name;
+        recipeName = name;
         final WeakReference<RecipeDialogCreationView> viewRef = new WeakReference<>(view);
         authorsPresenter.getComposite().add(Maybe
                 .fromCallable(new Callable<Recipe>() {

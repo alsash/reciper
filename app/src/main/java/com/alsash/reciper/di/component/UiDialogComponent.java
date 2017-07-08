@@ -4,6 +4,7 @@ import com.alsash.reciper.di.module.UiDialogModule;
 import com.alsash.reciper.ui.fragment.dialog.RecipeDialogAuthorFragment;
 import com.alsash.reciper.ui.fragment.dialog.RecipeDialogCategoryFragment;
 import com.alsash.reciper.ui.fragment.dialog.RecipeDialogCreationFragment;
+import com.alsash.reciper.ui.fragment.dialog.RecipeDialogIngredientFragment;
 import com.alsash.reciper.ui.fragment.dialog.RecipeDialogLabelFragment;
 
 import dagger.Subcomponent;
@@ -26,6 +27,8 @@ public interface UiDialogComponent {
     void inject(RecipeDialogAuthorFragment recipeAuthorDialogFragment);
 
     void inject(RecipeDialogLabelFragment recipeDialogLabelFragment);
+
+    void inject(RecipeDialogIngredientFragment recipeDialogIngredientFragment);
 
     @Subcomponent.Builder
     interface Builder {

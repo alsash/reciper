@@ -65,6 +65,8 @@ public class EntityListPresenter extends BaseListPresenter<BaseEntity, EntityLis
 
     public void onOpenEntity(EntityListView view, final BaseEntity entity) {
 
+        if (entity.getId() == null) return;
+
         final WeakReference<EntityListView> viewRef = new WeakReference<>(view);
 
         getComposite().add(Maybe.fromCallable(new Callable<Boolean>() {
@@ -214,8 +216,10 @@ public class EntityListPresenter extends BaseListPresenter<BaseEntity, EntityLis
                         .subscribe(new Consumer<Boolean>() {
                             @Override
                             public void accept(@NonNull Boolean cloudUpdate) throws Exception {
-                                if (cloudUpdate && viewRef.get() != null)
-                                    viewRef.get().showUpdate(getModels().indexOf(entity));
+                                if (cloudUpdate && viewRef.get() != null) {
+                                    int position = getModels().indexOf(entity);
+                                    if (position >= 0) viewRef.get().showUpdate(position);
+                                }
                             }
                         })
                 );

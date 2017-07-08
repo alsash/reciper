@@ -42,6 +42,12 @@ public class RecipeDetailsMethodsFragment extends BaseFragment<RecipeDetailsMeth
 
     private TextView methodsTitle;
     private ImageButton methodsAdd;
+    private View.OnClickListener methodAddListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            presenter.onMethodAdd(getThisView());
+        }
+    };
     private RecyclerView methodsList;
     private MethodListAdapter methodsAdapter;
     private ItemTouchHelper.Callback methodsTouchCallback = new ItemTouchHelper.SimpleCallback(
@@ -54,12 +60,10 @@ public class RecipeDetailsMethodsFragment extends BaseFragment<RecipeDetailsMeth
             presenter.onMethodsMove(getThisView(),
                     source.getAdapterPosition(),
                     target.getAdapterPosition());
-            try {
+            if (source instanceof DragAndDropHolder)
                 ((DragAndDropHolder) source).onMoveAtDragAndDrop();
+            if (target instanceof DragAndDropHolder)
                 ((DragAndDropHolder) target).onMoveAtDragAndDrop();
-            } catch (ClassCastException e) {
-                // it's okay
-            }
             return true;
         }
 
@@ -86,25 +90,40 @@ public class RecipeDetailsMethodsFragment extends BaseFragment<RecipeDetailsMeth
 
     @Override
     public void showMethods(List<Method> methods) {
-        methodsAdapter = new MethodListAdapter(this, methods);
-        methodsList.setAdapter(methodsAdapter);
-        methodsList.setNestedScrollingEnabled(false);
+        if (methodsAdapter != null && methodsList != null) {
+            methodsAdapter.notifyDataSetChanged();
+        } else {
+            methodsAdapter = new MethodListAdapter(this, methods);
+            if (methodsList != null) methodsList.setAdapter(methodsAdapter);
+        }
+        showMethodsTitle();
     }
 
     @Override
-    public void showMethodsTitle(int methodsSize) {
-        methodsTitle.setText(getResources().getQuantityString(R.plurals.quantity_method,
-                methodsSize, methodsSize));
+    public void showMethodInsert(int position) {
+        if (methodsAdapter != null) {
+            methodsAdapter.notifyItemInserted(position);
+            if (methodsAdapter.getItemCount() > 1) {
+                methodsAdapter.notifyItemRangeChanged(position + 1, methodsAdapter.getItemCount());
+                if (position > 0) methodsAdapter.notifyItemRangeChanged(0, position);
+            }
+            showMethodsTitle();
+        }
     }
 
     @Override
-    public void showMethodAdd(int position) {
-        methodsAdapter.notifyItemInserted(position);
-    }
-
-    @Override
-    public void showMethodDelete(int position, final MutableBoolean reject) {
+    public void showMethodDelete(int position) {
+        if (methodsAdapter == null) return;
         methodsAdapter.notifyItemRemoved(position);
+        if (methodsAdapter.getItemCount() > 1) {
+            methodsAdapter.notifyItemRangeChanged(position, methodsAdapter.getItemCount());
+            if (position > 1) methodsAdapter.notifyItemRangeChanged(0, position - 1);
+        }
+        showMethodsTitle();
+    }
+
+    @Override
+    public void showMethodDeleteMessage(int position, final MutableBoolean reject) {
         if (getView() == null) {
             reject.set(false);
             return;
@@ -124,8 +143,9 @@ public class RecipeDetailsMethodsFragment extends BaseFragment<RecipeDetailsMeth
                 .addCallback(new BaseTransientBottomBar.BaseCallback<Snackbar>() {
                     @Override
                     public void onDismissed(Snackbar transientBottomBar, int event) {
-                        if (event != BaseTransientBottomBar.BaseCallback.DISMISS_EVENT_ACTION)
+                        if (!reject.is()) {
                             reject.set(false);
+                        }
                     }
                 })
                 .setActionTextColor(ResourcesCompat.getColor(getResources(),
@@ -135,7 +155,8 @@ public class RecipeDetailsMethodsFragment extends BaseFragment<RecipeDetailsMeth
 
     @Override
     public void showMethodMove(int fromPosition, int toPosition) {
-        methodsAdapter.notifyItemMoved(fromPosition, toPosition);
+        if (methodsAdapter != null)
+            methodsAdapter.notifyItemMoved(fromPosition, toPosition);
     }
 
     @Nullable
@@ -146,7 +167,13 @@ public class RecipeDetailsMethodsFragment extends BaseFragment<RecipeDetailsMeth
         View layout = inflater.inflate(R.layout.fragment_recipe_details_methods, container, false);
         methodsTitle = (TextView) layout.findViewById(R.id.recipe_methods_title);
         methodsAdd = (ImageButton) layout.findViewById(R.id.recipe_methods_add);
+        methodsAdd.setOnClickListener(methodAddListener);
         methodsList = (RecyclerView) layout.findViewById(R.id.recipe_methods_list);
+        if (methodsAdapter != null) {
+            methodsList.setAdapter(methodsAdapter);
+            showMethodsTitle();
+        }
+        methodsList.setNestedScrollingEnabled(false);
         methodsTouchHelper.attachToRecyclerView(methodsList);
         return layout;
     }
@@ -158,5 +185,13 @@ public class RecipeDetailsMethodsFragment extends BaseFragment<RecipeDetailsMeth
                 .inject(this);
         // Presenter will be embedded in the activity lifecycle
         return presenter.setRestriction(navigator.getRestriction(getThisIntent(this)));
+    }
+
+    private void showMethodsTitle() {
+        if (methodsTitle != null && methodsAdapter != null) {
+            int size = methodsAdapter.getItemCount();
+            methodsTitle.setText(getResources().getQuantityString(R.plurals.quantity_method,
+                    size, size));
+        }
     }
 }

@@ -23,7 +23,6 @@ import com.alsash.reciper.mvp.model.entity.Photo;
 import com.alsash.reciper.mvp.model.entity.Recipe;
 import com.alsash.reciper.mvp.model.entity.RecipeFull;
 
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -41,7 +40,6 @@ public class BusinessLogic {
     private final Subject<RecipeEvent> recipeEventSubject;
     private final Subject<CategoryEvent> categoryEventSubject;
     private final Subject<LabelEvent> labelEventSubject;
-    private final Comparator<Recipe> recipeComparator;
     private final Map<Class<?>, String> defaultNames;
 
     public BusinessLogic(Context context) {
@@ -52,14 +50,6 @@ public class BusinessLogic {
         categoryEventSubject.subscribeOn(AndroidSchedulers.mainThread());
         labelEventSubject = BehaviorSubject.create();
         labelEventSubject.subscribeOn(AndroidSchedulers.mainThread());
-        recipeComparator = new Comparator<Recipe>() {
-            @Override
-            public int compare(Recipe r1, Recipe r2) {
-                if (r1.isFavorite() != r2.isFavorite())
-                    return (r1.isFavorite() ? 1 : -1);
-                return r1.getName().compareTo(r2.getName());
-            }
-        };
     }
 
     private Map<Class<?>, String> getDefaultNames(Context context) {
@@ -112,6 +102,27 @@ public class BusinessLogic {
         double recipeWeightInGrams = getRecipeWeight(recipe, WeightUnit.GRAM);
         return (recipeWeightInGrams * 1000) / millis;
     }
+
+    public Map<String, Double> getIngredientsWeight(RecipeFull recipe, int newWeight) {
+        Map<String, Double> result = new HashMap<>();
+        if (recipe == null) return result;
+        double currentWeight = getRecipeWeight(recipe, WeightUnit.GRAM);
+        if (currentWeight > 0) {
+            double factor = (newWeight > 0) ? newWeight / currentWeight : 0;
+            for (Ingredient ingredient : recipe.getIngredients()) {
+                result.put(ingredient.getUuid(), ingredient.getWeight() * factor);
+            }
+        } else if (newWeight > 0) {
+            int ingredientSize = recipe.getIngredients().size();
+            double ingredientWeight = ingredientSize > 0 ? newWeight / ingredientSize : 0;
+            for (Ingredient ingredient : recipe.getIngredients()) {
+                result.put(ingredient.getUuid(), ingredientWeight);
+            }
+        }
+        return result;
+    }
+
+
 
     public Nutrient getNutrient(RecipeFull recipe, RecipeUnit recipeUnit) {
         double protein = 0.0D;
@@ -196,7 +207,7 @@ public class BusinessLogic {
                 .build();
     }
 
-    private double getRecipeWeight(RecipeFull recipe, WeightUnit weightUnit) throws UnitException {
+    public double getRecipeWeight(RecipeFull recipe, WeightUnit weightUnit) {
         double recipeWeight = 0.0D;
         try {
             for (Ingredient ingredient : recipe.getIngredients()) {

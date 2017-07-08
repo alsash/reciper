@@ -26,6 +26,9 @@ public abstract class BaseSelectionDialogPresenter<M extends BaseEntity,
         V extends BaseSelectionDialogView<M>>
         extends BaseListPresenter<M, V> {
 
+    protected static final boolean SELECTION_SINGLE = false;
+    protected static final boolean SELECTION_MULTI = true;
+
     private final StorageLogic storageLogic;
     private final Set<String> selectionUuid;
     private final boolean multiSelection;

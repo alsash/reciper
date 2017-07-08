@@ -4,14 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/fragment_recipe_details_methods_nsv"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
     <android.support.constraint.ConstraintLayout
         android:id="@+id/fragment_recipe_details_methods_constraint"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp">
+        android:layout_height="match_parent">
 
         <TextView
             android:id="@+id/recipe_methods_title"
@@ -32,11 +31,12 @@
             style="@style/RippleButton"
             android:layout_width="48dp"
             android:layout_height="48dp"
-            android:tint="@color/gray_400"
+            android:layout_marginTop="8dp"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/add_icon"
+            app:srcCompat="@drawable/add_icon_gray"
             tools:ignore="ContentDescription" />
+
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recipe_methods_list"

@@ -5,8 +5,11 @@ package com.alsash.reciper.logic.action;
  */
 public enum RecipeAction {
     CREATE,
+    CREATE_INGREDIENT,
+    CREATE_METHOD,
     EDIT,
     EDIT_NAME,
+    EDIT_SERVINGS,
     EDIT_CATEGORY,
     EDIT_LABELS,
     EDIT_TIME,
@@ -14,5 +17,7 @@ public enum RecipeAction {
     EDIT_PHOTO,
     EDIT_FAVORITE,
     EDIT_DESCRIPTION,
-    DELETE
+    DELETE,
+    DELETE_INGREDIENT,
+    DELETE_METHOD
 }

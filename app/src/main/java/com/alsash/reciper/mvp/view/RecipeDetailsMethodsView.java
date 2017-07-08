@@ -12,11 +12,11 @@ public interface RecipeDetailsMethodsView extends BaseView {
 
     void showMethods(List<Method> methods);
 
-    void showMethodsTitle(int methodsSize);
+    void showMethodInsert(int position);
 
-    void showMethodAdd(int position);
+    void showMethodDelete(int position);
 
-    void showMethodDelete(int position, MutableBoolean reject);
+    void showMethodDeleteMessage(int position, MutableBoolean reject);
 
     void showMethodMove(int fromPosition, int toPosition);
 

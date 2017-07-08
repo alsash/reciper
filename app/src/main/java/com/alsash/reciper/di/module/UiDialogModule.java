@@ -5,6 +5,7 @@ import com.alsash.reciper.logic.StorageLogic;
 import com.alsash.reciper.mvp.presenter.RecipeDialogAuthorPresenter;
 import com.alsash.reciper.mvp.presenter.RecipeDialogCategoryPresenter;
 import com.alsash.reciper.mvp.presenter.RecipeDialogCreationPresenter;
+import com.alsash.reciper.mvp.presenter.RecipeDialogIngredientPresenter;
 import com.alsash.reciper.mvp.presenter.RecipeDialogLabelPresenter;
 
 import dagger.Module;
@@ -39,6 +40,12 @@ public abstract class UiDialogModule {
     static RecipeDialogLabelPresenter provideLabelDialogPresenter(StorageLogic sLogic,
                                                                   BusinessLogic bLogic) {
         return new RecipeDialogLabelPresenter(sLogic, bLogic);
+    }
+
+    @Provides
+    static RecipeDialogIngredientPresenter provideFoodDialogPresenter(StorageLogic sLogic,
+                                                                      BusinessLogic bLogic) {
+        return new RecipeDialogIngredientPresenter(sLogic, bLogic);
     }
 
 }

@@ -21,7 +21,6 @@ public class RecipeDialogLabelPresenter
         extends BaseSelectionDialogPresenter<Label, RecipeDialogLabelView> {
 
     private static final int PAGINATION_LIMIT = 20;
-    private static final boolean SELECTION_MULTI = true;
 
     private final BusinessLogic businessLogic;
     private final StorageLogic storageLogic;

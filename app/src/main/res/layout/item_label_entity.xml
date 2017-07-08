@@ -28,7 +28,7 @@
             app:srcCompat="@drawable/label_icon_gray"
             tools:ignore="ContentDescription,RtlHardcoded" />
 
-        <EditText
+        <android.support.v7.widget.AppCompatEditText
             android:id="@+id/item_label_name"
             android:layout_width="0dp"
             android:layout_height="wrap_content"

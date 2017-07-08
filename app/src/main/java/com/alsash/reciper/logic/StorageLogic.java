@@ -113,6 +113,7 @@ public class StorageLogic {
     }
 
     public boolean hasRelatedRecipes(BaseEntity entity) {
+        if (entity == null || entity.getId() == null) return false;
         if (entity instanceof CategoryTable) {
             CategoryTable categoryTable = (CategoryTable) entity;
             return dbManager.restrictWith(0, 1).getRecipeTable(categoryTable).size() > 0;
@@ -187,6 +188,7 @@ public class StorageLogic {
         if (BuildConfig.DEBUG)
             MainThreadException.throwOnMainThread(TAG, "getRecipes(Category, int, int)");
         List<Recipe> recipes = new ArrayList<>();
+        if (category == null || category.getId() == null) return recipes;
         List<RecipeTable> recipeTables = dbManager
                 .restrictWith(offset, limit)
                 .getRecipeTable((CategoryTable) category);
@@ -198,6 +200,7 @@ public class StorageLogic {
         if (BuildConfig.DEBUG)
             MainThreadException.throwOnMainThread(TAG, "getRecipes(Label, int, int)");
         List<Recipe> recipes = new ArrayList<>();
+        if (label == null || label.getId() == null) return recipes;
         List<RecipeTable> recipeTables = dbManager
                 .restrictWith(offset, limit)
                 .getRecipeTable((LabelTable) label);
@@ -209,6 +212,7 @@ public class StorageLogic {
         if (BuildConfig.DEBUG)
             MainThreadException.throwOnMainThread(TAG, "getRecipes(Food, int, int)");
         List<Recipe> recipes = new ArrayList<>();
+        if (food == null || food.getId() == null) return recipes;
         List<RecipeTable> recipeTables = dbManager
                 .restrictWith(offset, limit)
                 .getRecipeTable((FoodTable) food);
@@ -220,6 +224,7 @@ public class StorageLogic {
         if (BuildConfig.DEBUG)
             MainThreadException.throwOnMainThread(TAG, "getRecipes(Author, int, int)");
         List<Recipe> recipes = new ArrayList<>();
+        if (author == null || author.getId() == null) return recipes;
         List<RecipeTable> recipeTables = dbManager
                 .restrictWith(offset, limit)
                 .getRecipeTable((AuthorTable) author);
@@ -228,7 +233,7 @@ public class StorageLogic {
     }
 
     public BaseEntity getRestrictEntity(EntityRestriction restriction) {
-
+        if (restriction == null) return null;
         if (BuildConfig.DEBUG)
             MainThreadException.throwOnMainThread(TAG, "getRestrictEntity(EntityRestriction)");
 
@@ -299,7 +304,7 @@ public class StorageLogic {
     @UiThread
     public void updateSync(Recipe recipe, RecipeAction action, Object... values) {
         if (values == null || values.length == 0) return;
-        if (recipe.getId() == null) return;
+        if (recipe == null || recipe.getId() == null) return;
         RecipeTable recipeTable = (RecipeTable) recipe;
         recipeTable.setChangedAt(new Date());
         switch (action) {
@@ -328,11 +333,14 @@ public class StorageLogic {
                 recipeTable.setDescription((String) values[0]);
                 recipeTable.setSource((String) values[1]);
                 break;
+            case EDIT_SERVINGS:
+                recipeTable.setServings((int) values[0]);
         }
     }
 
     public void updateAsync(Recipe recipe, RecipeAction action) {
         if (BuildConfig.DEBUG) MainThreadException.throwOnMainThread(TAG, "updateAsync()");
+        if (recipe == null || recipe.getId() == null) return;
         RecipeTable recipeTable = (RecipeTable) recipe;
         if (recipeTable.getId() == null) return;
 
@@ -352,6 +360,7 @@ public class StorageLogic {
             case EDIT_TIME:
             case EDIT_FAVORITE:
             case EDIT_DESCRIPTION:
+            case EDIT_SERVINGS:
                 break;
         }
 
@@ -361,35 +370,147 @@ public class StorageLogic {
 
     public void updateAsync(Recipe recipe, RecipeAction action, Set<String> relationUuid) {
         if (BuildConfig.DEBUG) MainThreadException.throwOnMainThread(TAG, "updateAsync(rel)");
+        if (recipe == null || recipe.getId() == null) return;
         RecipeTable recipeTable = (RecipeTable) recipe;
-        if (recipeTable.getId() == null) return;
 
         switch (action) {
             case EDIT_LABELS:
                 List<RecipeLabelTable> recipeLabelTables = recipeTable.getRecipeLabelTables();
-
                 dbManager.deleteAll(recipeLabelTables);
+                for (RecipeLabelTable recipeLabelTable : recipeLabelTables) {
+                    recipeLabelTable.setId(null);
+                }
                 recipeLabelTables.clear();
 
                 for (String labelUuid : relationUuid) {
+                    LabelTable labelTable = dbManager.getLabelTable(labelUuid);
+                    if (labelTable == null) continue;
                     RecipeLabelTable recipeLabelTable = new RecipeLabelTable();
                     recipeLabelTable.setUuid(UUID.randomUUID().toString());
                     recipeLabelTable.setChangedAt(new Date());
                     recipeLabelTable.setRecipeUuid(recipeTable.getUuid());
-                    recipeLabelTable.setLabelUuid(labelUuid);
+                    recipeLabelTable.setLabelUuid(labelTable.getUuid());
 
                     recipeLabelTables.add(recipeLabelTable);
                 }
-                dbManager.modify(recipeLabelTables);
+                dbManager.modifyList(recipeLabelTables);
 
                 recipeTable.resetRecipeLabelTables();
-                prefetchRelationFull(recipeTable);
+                recipeTable.getRecipeLabelTables();
+                break;
+            case CREATE_INGREDIENT:
+                for (String foodUuid : relationUuid) {
+                    FoodTable foodTable = dbManager.getFoodTable(foodUuid);
+                    if (foodTable == null) continue;
+                    RecipeFoodTable recipeFoodTable = new RecipeFoodTable();
+                    recipeFoodTable.setUuid(UUID.randomUUID().toString());
+                    recipeFoodTable.setChangedAt(new Date());
+                    recipeFoodTable.setName(foodTable.getName());
+                    recipeFoodTable.setFoodUuid(foodTable.getUuid());
+                    recipeFoodTable.setRecipeUuid(recipeTable.getUuid());
+                    recipeFoodTable.setWeight(100);
+                    recipeFoodTable.setWeightUnit(WeightUnit.GRAM.toString());
+                    dbManager.modify(recipeFoodTable);
+                    recipeTable.getRecipeFoodTables().add(recipeFoodTable);
+                    break; // Add only 1 ingredient
+                }
+                break;
+
+            case DELETE_INGREDIENT:
+                for (String ingredientUuid : relationUuid) {
+                    List<RecipeFoodTable> recipeFoodTableDelete = new ArrayList<>();
+                    for (RecipeFoodTable recipeFoodTable : recipeTable.getRecipeFoodTables()) {
+                        if (recipeFoodTable.getUuid().equals(ingredientUuid)) {
+                            recipeFoodTableDelete.add(recipeFoodTable);
+                        }
+                    }
+                    recipeTable.getRecipeFoodTables().removeAll(recipeFoodTableDelete);
+                    dbManager.deleteAll(recipeFoodTableDelete);
+                    for (RecipeFoodTable deleted : recipeFoodTableDelete) {
+                        deleted.setId(null);
+                    }
+                }
+                break;
+            case CREATE_METHOD:
+                List<RecipeMethodTable> recipeMethodTables = recipeTable.getRecipeMethodTables();
+
+                RecipeMethodTable recipeMethodTable = new RecipeMethodTable();
+                recipeMethodTable.setUuid(UUID.randomUUID().toString());
+                recipeMethodTable.setChangedAt(new Date());
+                recipeMethodTable.setIndex(0);
+                recipeMethodTable.setBody("");
+                recipeMethodTable.setRecipeUuid(recipeTable.getUuid());
+
+                recipeMethodTables.add(0, recipeMethodTable);
+                for (int i = 0; i < recipeMethodTables.size(); i++) {
+                    recipeMethodTables.get(i).setIndex(i);
+                }
+                dbManager.modifyList(recipeMethodTables);
+                break;
+            case DELETE_METHOD:
+                for (String methodUuid : relationUuid) {
+                    List<RecipeMethodTable> recipeMethodTableDelete = new ArrayList<>();
+                    for (RecipeMethodTable rmt : recipeTable.getRecipeMethodTables()) {
+                        if (rmt.getUuid().equals(methodUuid)) {
+                            recipeMethodTableDelete.add(rmt);
+                        }
+                    }
+                    recipeTable.getRecipeMethodTables().removeAll(recipeMethodTableDelete);
+                    dbManager.deleteAll(recipeMethodTableDelete);
+                    for (RecipeMethodTable deleted : recipeMethodTableDelete) {
+                        deleted.setId(null);
+                    }
+                }
                 break;
         }
     }
 
     @UiThread
+    public void updateSync(List<Ingredient> ingredients, Map<String, Double> weight) {
+        if (ingredients == null || weight == null) return;
+        for (Ingredient ingredient : ingredients) {
+            if (ingredient.getId() == null) continue;
+            RecipeFoodTable recipeFoodTable = (RecipeFoodTable) ingredient;
+            for (Map.Entry<String, Double> entry : weight.entrySet()) {
+                if (entry.getKey().equals(recipeFoodTable.getUuid())
+                        && entry.getValue() != null) {
+                    recipeFoodTable.setChangedAt(new Date());
+                    recipeFoodTable.setWeight(entry.getValue());
+                }
+            }
+        }
+    }
+
+    public void updateAsync(List<Ingredient> ingredients) {
+        if (BuildConfig.DEBUG) MainThreadException.throwOnMainThread(TAG, "updateAsync(ing)");
+        if (ingredients == null) return;
+        List<RecipeFoodTable> recipeFoodTables = new ArrayList<>();
+        for (Ingredient ingredient : ingredients) {
+            if (ingredient.getId() == null) continue;
+            RecipeFoodTable recipeFoodTable = (RecipeFoodTable) ingredient;
+            recipeFoodTables.add(recipeFoodTable);
+        }
+        dbManager.modifyList(recipeFoodTables);
+    }
+
+    public void updateSync(Ingredient ingredient, String name, int weight) {
+        if (ingredient == null || ingredient.getId() == null) return;
+        RecipeFoodTable recipeFoodTable = (RecipeFoodTable) ingredient;
+        if (name != null) recipeFoodTable.setName(name);
+        recipeFoodTable.setWeight(weight);
+        recipeFoodTable.setChangedAt(new Date());
+    }
+
+    public void updateAsync(Ingredient ingredient) {
+        if (BuildConfig.DEBUG) MainThreadException.throwOnMainThread(TAG, "updateAsync(ing)");
+        if (ingredient == null || ingredient.getId() == null) return;
+        RecipeFoodTable recipeFoodTable = (RecipeFoodTable) ingredient;
+        recipeFoodTable.update();
+    }
+
+    @UiThread
     public void updateSync(Method method, String body) {
+        if (method == null || method.getId() == null) return;
         RecipeMethodTable recipeMethodTable = (RecipeMethodTable) method;
         recipeMethodTable.setChangedAt(new Date());
         recipeMethodTable.setBody(body);
@@ -397,6 +518,7 @@ public class StorageLogic {
 
     @UiThread
     public void updateSync(Method method, int index) {
+        if (method == null || method.getId() == null) return;
         RecipeMethodTable recipeMethodTable = (RecipeMethodTable) method;
         recipeMethodTable.setChangedAt(new Date());
         recipeMethodTable.setIndex(index);
@@ -404,12 +526,14 @@ public class StorageLogic {
 
     public void updateAsync(Method method) {
         if (BuildConfig.DEBUG) MainThreadException.throwOnMainThread(TAG, "updateAsync()");
+        if (method == null || method.getId() == null) return;
         RecipeMethodTable recipeMethodTable = (RecipeMethodTable) method;
         recipeMethodTable.update();
     }
 
     @UiThread
     public void updateSync(Category category, String value, boolean isPhoto) {
+        if (category == null || category.getId() == null) return;
         if (value == null) return;
         CategoryTable categoryTable = (CategoryTable) category;
         categoryTable.setChangedAt(new Date());
@@ -423,14 +547,15 @@ public class StorageLogic {
 
     public void updateAsync(Category category) {
         if (BuildConfig.DEBUG) MainThreadException.throwOnMainThread(TAG, "updateAsync()");
+        if (category == null || category.getId() == null) return;
         CategoryTable categoryTable = (CategoryTable) category;
-        if (categoryTable.getId() == null) return;
         for (PhotoTable photoTable : categoryTable.getPhotoTables()) photoTable.update();
         categoryTable.update();
     }
 
     @UiThread
     public void updateSync(Author author, String value, boolean isPhoto) {
+        if (author == null || author.getId() == null) return;
         if (value == null) return;
         AuthorTable authorTable = (AuthorTable) author;
         authorTable.setChangedAt(new Date());
@@ -444,20 +569,22 @@ public class StorageLogic {
 
     public void updateAsync(Author author) {
         if (BuildConfig.DEBUG) MainThreadException.throwOnMainThread(TAG, "updateAsync()");
+        if (author == null || author.getId() == null) return;
         AuthorTable authorTable = (AuthorTable) author;
-        if (authorTable.getId() == null) return;
         for (PhotoTable photoTable : authorTable.getPhotoTables()) photoTable.update();
         authorTable.update();
     }
 
     public void updateSync(Food food, String name) {
+        if (food == null || food.getId() == null) return;
         FoodTable foodTable = (FoodTable) food;
         foodTable.setName(name);
     }
 
     public boolean updateAsync(Food food, String ndbNo) {
+        if (BuildConfig.DEBUG) MainThreadException.throwOnMainThread(TAG, "updateAsync(food)");
+        if (food == null || food.getId() == null) return false;
         FoodTable foodTable = (FoodTable) food;
-        if (foodTable.getId() == null) return false;
         boolean cloudUpdate = (ndbNo != null &&
                 (food.getNdbNo() == null || !food.getNdbNo().equals(ndbNo)));
         if (cloudUpdate) {
@@ -496,14 +623,16 @@ public class StorageLogic {
 
     @UiThread
     public void updateSync(Label label, String name) {
+        if (label == null || label.getId() == null) return;
         LabelTable labelTable = (LabelTable) label;
         labelTable.setChangedAt(new Date());
         labelTable.setName(name);
     }
 
     public void updateAsync(Label label) {
+        if (BuildConfig.DEBUG) MainThreadException.throwOnMainThread(TAG, "updateAsync(label)");
+        if (label == null || label.getId() == null) return;
         LabelTable labelTable = (LabelTable) label;
-        if (labelTable.getId() == null) return;
         labelTable.setChangedAt(new Date());
         labelTable.update();
     }
@@ -511,7 +640,7 @@ public class StorageLogic {
     public void deleteAsync(BaseEntity entity) {
         if (BuildConfig.DEBUG) MainThreadException.throwOnMainThread(TAG, "deleteAsync()");
 
-        if (entity.getId() == null) return;
+        if (entity == null || entity.getId() == null) return;
 
         if (entity instanceof AuthorTable) {
             if (getRelatedRecipesSize(entity) > 0) return;
@@ -532,25 +661,6 @@ public class StorageLogic {
             if (getRelatedRecipesSize(entity) > 0) return;
             dbManager.deleteDeep((FoodTable) entity);
 
-        } else if (entity instanceof RecipeMethodTable) {
-            RecipeMethodTable recipeMethodTable = (RecipeMethodTable) entity;
-            RecipeTable recipeTable = dbManager.getRecipeTable(recipeMethodTable.getRecipeUuid());
-            if (recipeTable != null) recipeTable.getRecipeMethodTables().remove(recipeMethodTable);
-            recipeMethodTable.delete();
-
-        } else if (entity instanceof RecipeLabelTable) {
-            RecipeLabelTable recipeLabelTable = (RecipeLabelTable) entity;
-            RecipeTable recipeTable = dbManager.getRecipeTable(recipeLabelTable.getRecipeUuid());
-            if (recipeTable != null) recipeTable.getRecipeLabelTables().remove(recipeLabelTable);
-            recipeLabelTable.delete();
-
-        } else if (entity instanceof RecipeFoodTable) {
-
-            RecipeFoodTable recipeFoodTable = (RecipeFoodTable) entity;
-            RecipeTable recipeTable = dbManager.getRecipeTable(recipeFoodTable.getRecipeUuid());
-            if (recipeTable != null) recipeTable.getRecipeFoodTables().remove(recipeFoodTable);
-            recipeFoodTable.delete();
-
         } else if (entity instanceof RecipeTable) {
             dbManager.deleteDeep((RecipeTable) entity);
         }
@@ -563,6 +673,7 @@ public class StorageLogic {
     public BaseEntity createAsync(Class<?> entityClass) {
 
         if (BuildConfig.DEBUG) MainThreadException.throwOnMainThread(TAG, "createAsync()");
+        if (entityClass == null) return null;
 
         if (entityClass.equals(Author.class)) {
             AuthorTable authorTable = new AuthorTable();
@@ -624,25 +735,6 @@ public class StorageLogic {
             dbManager.modify(photoTable);
             return photoTable;
 
-        } else if (entityClass.equals(Recipe.class) || entityClass.equals(RecipeFull.class)) {
-
-            RecipeTable recipeTable = new RecipeTable();
-            recipeTable.setUuid(UUID.randomUUID().toString());
-            recipeTable.setChangedAt(new Date());
-            recipeTable.setCreatedAt(new Date());
-            recipeTable.setName("");
-            recipeTable.setDescription("");
-            dbManager.modify(recipeTable);
-
-            RecipePhotoTable recipePhotoTable = new RecipePhotoTable();
-            recipePhotoTable.setUuid(UUID.randomUUID().toString());
-            recipePhotoTable.setChangedAt(new Date());
-            recipePhotoTable.setMain(true);
-            recipePhotoTable.setPhotoUuid(createAsync(Photo.class).getUuid());
-            recipePhotoTable.setRecipeUuid(recipeTable.getUuid());
-            dbManager.modify(recipePhotoTable);
-
-            return prefetchRelation(recipeTable);
         } else {
             return null;
         }
@@ -651,7 +743,7 @@ public class StorageLogic {
     public Recipe createRecipeAsync(@NonNull String name,
                                     @NonNull Author author,
                                     @NonNull Category category) {
-
+        if (BuildConfig.DEBUG) MainThreadException.throwOnMainThread(TAG, "createRecipeAsync()");
         RecipeTable recipeTable = new RecipeTable();
         recipeTable.setUuid(UUID.randomUUID().toString());
         recipeTable.setChangedAt(new Date());

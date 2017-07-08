@@ -39,7 +39,7 @@
 
         </android.support.percent.PercentFrameLayout>
 
-        <EditText
+        <android.support.v7.widget.AppCompatEditText
             android:id="@+id/item_category_name"
             android:layout_width="0dp"
             android:layout_height="wrap_content"

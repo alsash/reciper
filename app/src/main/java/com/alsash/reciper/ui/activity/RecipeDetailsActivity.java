@@ -83,7 +83,7 @@ public class RecipeDetailsActivity extends BaseActivity<RecipeDetailsView>
 
     @Override
     public void showPhoto(Photo photo) {
-        ImageLoader.get().source(photo).load(image);
+        ImageLoader.get().source(photo).defCol(R.color.gray_300).load(image);
     }
 
     @Override

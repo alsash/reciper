@@ -71,8 +71,17 @@ public class RecipeMethodHolder extends RecyclerView.ViewHolder implements DragA
     }
 
     public void setEditable(boolean editable) {
-        edit.setImageResource(editable ? R.drawable.edit_icon_orange : R.drawable.edit_icon_gray);
+        edit.setImageResource(editable ?
+                R.drawable.edit_icon_orange :
+                R.drawable.edit_icon_gray);
         body.setEnabled(editable);
+        body.setEnabled(editable);
+        body.setFocusable(editable);
+        body.setFocusableInTouchMode(editable);
+        body.setClickable(editable);
+        body.setLongClickable(editable);
+        body.setCursorVisible(editable);
+        if (editable) body.requestFocus();
     }
 
     /**

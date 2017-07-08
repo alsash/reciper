@@ -17,6 +17,7 @@ public enum WeightUnit {
 
     @Nullable
     public static WeightUnit getValueOf(String name) {
+        if (name == null) return null;
         if (name.toLowerCase().equals("g")) return GRAM;
         if (name.toLowerCase().equals("kg")) return KILOGRAM;
         return null;

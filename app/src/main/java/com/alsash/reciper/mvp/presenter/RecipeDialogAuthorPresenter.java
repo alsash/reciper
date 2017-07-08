@@ -21,7 +21,6 @@ public class RecipeDialogAuthorPresenter
         extends BaseSelectionDialogPresenter<Author, RecipeDialogAuthorView> {
 
     private static final int PAGINATION_LIMIT = 10;
-    private static final boolean SELECTION_SINGLE = false;
 
     private final BusinessLogic businessLogic;
     private final StorageLogic storageLogic;

@@ -1,0 +1,149 @@
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/item_food_expand_constraint"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/item_food_image"
+        android:layout_width="48dp"
+        android:layout_height="36dp"
+        android:scaleType="center"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/food_icon_gray"
+        tools:ignore="ContentDescription,RtlHardcoded" />
+
+    <TextView
+        android:id="@+id/item_food_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="2dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="8dp"
+        android:fontFamily="serif"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="@+id/item_food_image"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toRightOf="@+id/item_food_image"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/item_food_image"
+        app:layout_constraintVertical_bias="0.52"
+        tools:ignore="RtlHardcoded"
+        tools:text="Food name" />
+
+    <ImageView
+        android:id="@+id/item_food_nutrition_image"
+        android:layout_width="48dp"
+        android:layout_height="36dp"
+        android:layout_marginLeft="0dp"
+        android:layout_marginTop="0dp"
+        android:scaleType="center"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/item_food_image"
+        app:srcCompat="@drawable/nutrition_value_icon_gray"
+        tools:ignore="ContentDescription,RtlHardcoded" />
+
+    <TextView
+        android:id="@+id/item_food_nutrition_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="0dp"
+        android:layout_marginLeft="2dp"
+        android:layout_marginTop="0dp"
+        android:fontFamily="serif"
+        android:text="@string/hint_food_nutrition_value"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textSize="13sp"
+        app:layout_constraintBottom_toBottomOf="@+id/item_food_nutrition_image"
+        app:layout_constraintLeft_toRightOf="@+id/item_food_nutrition_image"
+        app:layout_constraintTop_toTopOf="@+id/item_food_nutrition_image"
+        app:layout_constraintVertical_bias="0.0"
+        app:layout_constraintVertical_chainStyle="packed"
+        tools:ignore="RtlHardcoded" />
+
+    <TextView
+        android:id="@+id/item_food_nutrition_quantity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="0dp"
+        android:layout_marginTop="0dp"
+        android:fontFamily="serif"
+        android:text="@string/hint_food_nutrition_quantity"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+        android:textSize="12sp"
+        app:layout_constraintLeft_toLeftOf="@+id/item_food_nutrition_value"
+        app:layout_constraintTop_toBottomOf="@+id/item_food_nutrition_value"
+        tools:ignore="RtlHardcoded" />
+
+    <TextView
+        android:id="@+id/item_food_carbs"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="24dp"
+        android:layout_marginStart="8dp"
+        android:fontFamily="serif"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="@color/green_500"
+        android:textSize="14sp"
+        android:textStyle="italic"
+        app:layout_constraintBaseline_toBaselineOf="@+id/item_food_nutrition_value"
+        app:layout_constraintLeft_toRightOf="@+id/item_food_nutrition_value"
+        tools:ignore="RtlHardcoded"
+        tools:text="Carbs 16 g" />
+
+    <TextView
+        android:id="@+id/item_food_protein"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="0dp"
+        android:layout_marginTop="0dp"
+        android:fontFamily="serif"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="@color/red_500"
+        android:textSize="14sp"
+        android:textStyle="italic"
+        app:layout_constraintLeft_toLeftOf="@+id/item_food_carbs"
+        app:layout_constraintTop_toBottomOf="@+id/item_food_carbs"
+        tools:ignore="RtlHardcoded"
+        tools:text="Protein 20 g" />
+
+    <TextView
+        android:id="@+id/item_food_fat"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="0dp"
+        android:layout_marginTop="0dp"
+        android:fontFamily="serif"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="@color/amber_500"
+        android:textSize="14sp"
+        android:textStyle="italic"
+        app:layout_constraintLeft_toLeftOf="@+id/item_food_protein"
+        app:layout_constraintTop_toBottomOf="@+id/item_food_protein"
+        tools:ignore="RtlHardcoded"
+        tools:text="Fat 8 g" />
+
+    <TextView
+        android:id="@+id/item_food_energy"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="0dp"
+        android:layout_marginTop="0dp"
+        android:fontFamily="serif"
+        android:gravity="center"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="@color/teal_accent_700"
+        android:textSize="14sp"
+        android:textStyle="italic"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="@+id/item_food_fat"
+        app:layout_constraintTop_toBottomOf="@+id/item_food_fat"
+        app:layout_constraintVertical_bias="0.0"
+        tools:ignore="RtlHardcoded"
+        tools:text="Energy 270 cal" />
+
+</android.support.constraint.ConstraintLayout>

@@ -1,6 +1,9 @@
 package com.alsash.reciper.mvp.view;
 
+import com.alsash.reciper.app.lib.MutableBoolean;
+import com.alsash.reciper.logic.unit.WeightUnit;
 import com.alsash.reciper.mvp.model.entity.Ingredient;
+import com.alsash.reciper.mvp.model.entity.Recipe;
 
 import java.util.List;
 
@@ -9,6 +12,19 @@ import java.util.List;
  */
 public interface RecipeDetailsIngredientsView extends BaseView {
 
+    void showWeight(int weight, WeightUnit unit);
+
+    void showServings(int servings);
+
     void showIngredients(List<Ingredient> ingredients);
 
+    void showIngredientsAddDialog(Recipe recipe);
+
+    void showIngredientInsert(int position);
+
+    void showIngredientsMove(int from, int to);
+
+    void showIngredientDelete(int position);
+
+    void showIngredientDeleteMessage(String ingredientName, final MutableBoolean rejectCallback);
 }

@@ -188,7 +188,7 @@ public class DbManager {
         List<FoodTable> foodTables = daoSession.getFoodTableDao().queryBuilder()
                 .where(FoodTableDao.Properties.Uuid.eq(uuid))
                 .list();
-        return foodTables.get(0);
+        return foodTables.size() > 0 ? foodTables.get(0) : null;
     }
 
     public List<FoodTable> getFoodTable(boolean usdaFetched) {
@@ -234,7 +234,7 @@ public class DbManager {
         List<AuthorTable> authorTables = daoSession.getAuthorTableDao().queryBuilder()
                 .where(AuthorTableDao.Properties.Uuid.eq(uuid))
                 .list();
-        return authorTables.get(0);
+        return authorTables.size() > 0 ? authorTables.get(0) : null;
     }
 
     public void modify(Table table) {
@@ -265,7 +265,7 @@ public class DbManager {
             daoSession.getRecipeTableDao().saveInTx((RecipeTable) table);
     }
 
-    public void modify(List<? extends Table> tables) {
+    public void modifyList(List<? extends Table> tables) {
         if (tables == null || tables.size() == 0) return;
         obtainChangeDate(tables);
 
@@ -275,6 +275,16 @@ public class DbManager {
             List<RecipeLabelTable> recipeLabelTables = new ArrayList<>();
             for (Table table : tables) recipeLabelTables.add((RecipeLabelTable) table);
             daoSession.getRecipeLabelTableDao().insertOrReplaceInTx(recipeLabelTables);
+        }
+        if (checkTable instanceof RecipeFoodTable) {
+            List<RecipeFoodTable> recipeFoodTables = new ArrayList<>();
+            for (Table table : tables) recipeFoodTables.add((RecipeFoodTable) table);
+            daoSession.getRecipeFoodTableDao().saveInTx(recipeFoodTables);
+        }
+        if (checkTable instanceof RecipeMethodTable) {
+            List<RecipeMethodTable> recipeMethodTables = new ArrayList<>();
+            for (Table table : tables) recipeMethodTables.add((RecipeMethodTable) table);
+            daoSession.getRecipeMethodTableDao().saveInTx(recipeMethodTables);
         }
     }
 
@@ -410,6 +420,18 @@ public class DbManager {
             List<RecipeLabelTable> recipeLabelTables = new ArrayList<>();
             for (Table table : tables) recipeLabelTables.add((RecipeLabelTable) table);
             daoSession.getRecipeLabelTableDao().deleteInTx(recipeLabelTables);
+        }
+
+        if (checkTable instanceof RecipeFoodTable) {
+            List<RecipeFoodTable> recipeFoodTables = new ArrayList<>();
+            for (Table table : tables) recipeFoodTables.add((RecipeFoodTable) table);
+            daoSession.getRecipeFoodTableDao().deleteInTx(recipeFoodTables);
+        }
+
+        if (checkTable instanceof RecipeMethodTable) {
+            List<RecipeMethodTable> recipeMethodTables = new ArrayList<>();
+            for (Table table : tables) recipeMethodTables.add((RecipeMethodTable) table);
+            daoSession.getRecipeMethodTableDao().deleteInTx(recipeMethodTables);
         }
     }
 

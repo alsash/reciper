@@ -7,9 +7,5 @@ import com.alsash.reciper.mvp.model.entity.Ingredient;
  */
 public interface IngredientInteraction {
 
-    void onRequestName(Ingredient ingredient);
-
-    void onRequestFood(Ingredient ingredient);
-
-    void onEditWeight(Ingredient ingredient, int weight);
+    void onEditValues(Ingredient ingredient, String name, int weight);
 }
