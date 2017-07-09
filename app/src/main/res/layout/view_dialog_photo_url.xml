@@ -6,7 +6,7 @@
     android:fontFamily="serif"
     android:hint="@string/simple_dialog_title_photo_url"
     android:imeOptions="actionDone"
-    android:inputType="text"
+    android:inputType="text|textNoSuggestions"
     android:overScrollMode="always"
     android:paddingEnd="24dp"
     android:paddingStart="24dp"

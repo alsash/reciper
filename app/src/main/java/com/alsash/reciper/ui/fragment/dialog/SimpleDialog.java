@@ -45,9 +45,9 @@ public class SimpleDialog {
                                 String newUrl = editText.getText().toString().trim();
                                 if (!newUrl.startsWith("https://")
                                         && !newUrl.startsWith("http://")) {
-                                    newUrl = "https://" + newUrl;
+                                    if (newUrl.length() > 0) newUrl = "https://" + newUrl;
                                 }
-                                if (!newUrl.equals(url)) listener.set(newUrl);
+                                if (!newUrl.equals(url)) listener.set(newUrl.trim());
                                 dialog.dismiss();
                             }
                         })
