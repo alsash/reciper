@@ -31,8 +31,10 @@ public class RecipeDetailsMethodsPresenter extends BaseRestrictPresenter<RecipeD
 
     private final StorageLogic storageLogic;
     private final BusinessLogic businessLogic;
-
     private final List<Method> methods;
+    @SuppressWarnings("MismatchedQueryAndUpdateOfCollection")
+    private final List<MutableBoolean> deleteListeners = new ArrayList<>();
+
     private RecipeFull recipeFull;
 
     public RecipeDetailsMethodsPresenter(StorageLogic storageLogic, BusinessLogic businessLogic) {
@@ -59,6 +61,12 @@ public class RecipeDetailsMethodsPresenter extends BaseRestrictPresenter<RecipeD
     @Override
     public void invisible(RecipeDetailsMethodsView view) {
         // Do nothing
+    }
+
+    @Override
+    public void detach() {
+        super.detach();
+        deleteListeners.clear();
     }
 
     public void onMethodEdit(final Method method, String body) {
@@ -148,6 +156,7 @@ public class RecipeDetailsMethodsPresenter extends BaseRestrictPresenter<RecipeD
                 return super.set(rejected);
             }
         };
+        deleteListeners.add(reject);
         view.showMethodDeleteMessage(position, reject);
     }
 
@@ -188,11 +197,16 @@ public class RecipeDetailsMethodsPresenter extends BaseRestrictPresenter<RecipeD
             }
             if (!found && method.getId() != null) inserted.add(method);
         }
-        int insPos = (position < 0 || position >= methods.size()) ? methods.size() - 1 : position;
         for (Method mInserted : inserted) {
-            methods.add(insPos, mInserted);
-            if (viewRef != null && viewRef.get() != null)
-                viewRef.get().showMethodInsert(position);
+            if (position >= 0 && position < methods.size()) {
+                methods.add(position, mInserted);
+                if (viewRef != null && viewRef.get() != null)
+                    viewRef.get().showMethodInsert(position);
+            } else {
+                methods.add(mInserted);
+                if (viewRef != null && viewRef.get() != null)
+                    viewRef.get().showMethodInsert(methods.size() - 1);
+            }
         }
     }
 

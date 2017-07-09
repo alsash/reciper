@@ -21,6 +21,8 @@ import com.alsash.reciper.ui.fragment.RecipeDetailsMethodsFragment;
 import com.alsash.reciper.ui.fragment.RecipeDetailsNutritionFragment;
 
 import java.lang.ref.WeakReference;
+import java.util.ArrayList;
+import java.util.List;
 
 import io.reactivex.Completable;
 import io.reactivex.functions.Action;
@@ -33,6 +35,8 @@ public class RecipeDetailsPresenter extends BaseRestrictPresenter<RecipeDetailsV
 
     private final StorageLogic storageLogic;
     private final BusinessLogic businessLogic;
+    @SuppressWarnings("MismatchedQueryAndUpdateOfCollection")
+    private final List<Object> listeners = new ArrayList<>();
 
     private RecipeFull recipeFull;
     private SwipeTab[] swipeTabs;
@@ -106,10 +110,16 @@ public class RecipeDetailsPresenter extends BaseRestrictPresenter<RecipeDetailsV
         shownPosition = view.shownDetail();
     }
 
+    @Override
+    public void detach() {
+        super.detach();
+        listeners.clear();
+    }
+
     public void editRecipeName(RecipeDetailsView view) {
         if (recipeFull == null) return;
         final WeakReference<RecipeDetailsView> viewRef = new WeakReference<>(view);
-        view.showNameEditDialog(recipeFull, new MutableString() {
+        final MutableString listener = new MutableString() {
             @Override
             public synchronized MutableString set(final String value) {
 
@@ -131,13 +141,15 @@ public class RecipeDetailsPresenter extends BaseRestrictPresenter<RecipeDetailsV
                         .subscribe());
                 return super.set(value);
             }
-        });
+        };
+        listeners.add(listener);
+        view.showNameEditDialog(recipeFull, listener);
     }
 
     public void editRecipePhoto(RecipeDetailsView view) {
         if (recipeFull == null) return;
         final WeakReference<RecipeDetailsView> viewRef = new WeakReference<>(view);
-        view.showPhotoEditDialog(recipeFull.getMainPhoto(), new MutableString() {
+        final MutableString listener = new MutableString() {
             @Override
             public synchronized MutableString set(final String value) {
 
@@ -159,13 +171,15 @@ public class RecipeDetailsPresenter extends BaseRestrictPresenter<RecipeDetailsV
                 if (viewRef.get() != null) viewRef.get().showPhoto(recipeFull.getMainPhoto());
                 return super.set(value);
             }
-        });
+        };
+        listeners.add(listener);
+        view.showPhotoEditDialog(recipeFull.getMainPhoto(), listener);
     }
 
     public void deleteRecipe(RecipeDetailsView view) {
         if (recipeFull == null) return;
         final WeakReference<RecipeDetailsView> viewRef = new WeakReference<>(view);
-        view.showConfirmDeleteDialog(businessLogic.getEntityName(recipeFull), new MutableBoolean() {
+        final MutableBoolean listener = new MutableBoolean() {
             @Override
             public synchronized MutableBoolean set(final boolean delete) {
                 if (!delete) return this;
@@ -186,7 +200,9 @@ public class RecipeDetailsPresenter extends BaseRestrictPresenter<RecipeDetailsV
                 if (viewRef.get() != null) viewRef.get().finishView();
                 return this;
             }
-        });
+        };
+        listeners.add(listener);
+        view.showConfirmDeleteDialog(businessLogic.getEntityName(recipeFull), listener);
     }
 
     public void finish(RecipeDetailsView view) {

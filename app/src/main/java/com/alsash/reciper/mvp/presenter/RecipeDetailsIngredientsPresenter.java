@@ -39,10 +39,10 @@ public class RecipeDetailsIngredientsPresenter
     private final StorageLogic storageLogic;
     private final BusinessLogic businessLogic;
     private final List<Ingredient> ingredients;
+    @SuppressWarnings("MismatchedQueryAndUpdateOfCollection")
+    private final List<MutableBoolean> deleteListeners = new ArrayList<>();
 
     private RecipeFull recipeFull;
-    @SuppressWarnings("MismatchedQueryAndUpdateOfCollection")
-    private List<MutableBoolean> deleteListeners = new ArrayList<>();
 
     public RecipeDetailsIngredientsPresenter(StorageLogic storageLogic, BusinessLogic businessLogic) {
         super(storageLogic);
@@ -97,8 +97,7 @@ public class RecipeDetailsIngredientsPresenter
     @Override
     public void detach() {
         super.detach();
-        if (deleteListeners != null) deleteListeners.clear();
-        deleteListeners = new ArrayList<>();
+        deleteListeners.clear();
     }
 
 

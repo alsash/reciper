@@ -31,9 +31,10 @@ public class RecipeDetailsDescriptionPresenter
 
     private final StorageLogic storageLogic;
     private final BusinessLogic businessLogic;
-    private RecipeFull recipeFull;
     @SuppressWarnings("MismatchedQueryAndUpdateOfCollection")
-    private List<Object> listeners = new ArrayList<>();
+    private final List<Object> listeners = new ArrayList<>();
+
+    private RecipeFull recipeFull;
 
     private boolean descriptionEditable;
 
@@ -111,7 +112,6 @@ public class RecipeDetailsDescriptionPresenter
     public void detach() {
         super.detach();
         listeners.clear();
-        listeners = new ArrayList<>();
     }
 
     @Nullable
