@@ -141,7 +141,7 @@ public class RecipeDetailsIngredientsFragment extends BaseFragment<RecipeDetails
         }
         Snackbar.make(getView(),
                 getString(R.string.fragment_entity_list_delete_success, ingredientName),
-                Snackbar.LENGTH_LONG)
+                Snackbar.LENGTH_SHORT)
                 .setAction(R.string.fragment_entity_list_delete_reject,
                         new View.OnClickListener() {
                             @Override

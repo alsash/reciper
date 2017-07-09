@@ -52,7 +52,7 @@ public class ImageUriEditText extends AppCompatEditText {
                         // read and display inputContentInfo asynchronously.
                         // call inputContentInfo.releasePermission() as needed.
 
-                        return false;  // return true if succeeded
+                        return true;  // return true if succeeded
                     }
                 };
         return InputConnectionCompat.createWrapper(ic, editorInfo, callback);

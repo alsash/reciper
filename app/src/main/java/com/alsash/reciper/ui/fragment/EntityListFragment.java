@@ -116,7 +116,7 @@ public class EntityListFragment extends BaseListFragment<BaseEntity, EntityListV
         }
         Snackbar.make(getView(),
                 getString(R.string.fragment_entity_list_delete_success, entityName),
-                Snackbar.LENGTH_LONG)
+                Snackbar.LENGTH_SHORT)
                 .setAction(R.string.fragment_entity_list_delete_reject,
                         new View.OnClickListener() {
                             @Override

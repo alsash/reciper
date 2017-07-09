@@ -135,7 +135,7 @@ public class RecipeDetailsMethodsFragment extends BaseFragment<RecipeDetailsMeth
                 .make(getView(),
                         getString(R.string.fragment_recipe_details_methods_delete_action,
                                 position + 1),
-                        Snackbar.LENGTH_LONG)
+                        Snackbar.LENGTH_SHORT)
                 .setAction(R.string.fragment_recipe_details_methods_delete_reject,
                         new View.OnClickListener() {
                             @Override
