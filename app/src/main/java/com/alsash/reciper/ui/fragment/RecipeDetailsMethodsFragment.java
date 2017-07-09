@@ -103,8 +103,9 @@ public class RecipeDetailsMethodsFragment extends BaseFragment<RecipeDetailsMeth
     public void showMethodInsert(int position) {
         if (methodsAdapter != null) {
             methodsAdapter.notifyItemInserted(position);
-            if (methodsAdapter.getItemCount() > 1) {
-                methodsAdapter.notifyItemRangeChanged(position + 1, methodsAdapter.getItemCount());
+            int size = methodsAdapter.getItemCount();
+            if (size > 1 && position < size) {
+                if (position + 1 < size) methodsAdapter.notifyItemRangeChanged(position + 1, size);
                 if (position > 0) methodsAdapter.notifyItemRangeChanged(0, position);
             }
             showMethodsTitle();
@@ -113,13 +114,15 @@ public class RecipeDetailsMethodsFragment extends BaseFragment<RecipeDetailsMeth
 
     @Override
     public void showMethodDelete(int position) {
-        if (methodsAdapter == null) return;
-        methodsAdapter.notifyItemRemoved(position);
-        if (methodsAdapter.getItemCount() > 1) {
-            methodsAdapter.notifyItemRangeChanged(position, methodsAdapter.getItemCount());
-            if (position > 1) methodsAdapter.notifyItemRangeChanged(0, position - 1);
+        if (methodsAdapter != null) {
+            methodsAdapter.notifyItemRemoved(position);
+            int size = methodsAdapter.getItemCount();
+            if (size > 1 && position < size) {
+                methodsAdapter.notifyItemRangeChanged(position, size);
+                if (position > 1) methodsAdapter.notifyItemRangeChanged(0, position - 1);
+            }
+            showMethodsTitle();
         }
-        showMethodsTitle();
     }
 
     @Override

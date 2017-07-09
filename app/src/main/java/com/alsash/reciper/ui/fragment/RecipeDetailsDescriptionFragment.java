@@ -88,14 +88,28 @@ public class RecipeDetailsDescriptionFragment extends BaseFragment<RecipeDetails
     private TextView labelsTitle;
     private RecyclerView labelsList;
     // Time card
+    private TextView recipeTime;
+    private ImageButton recipeTimeEdit;
     private View.OnClickListener recipeTimeListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             presenter.requestRecipeTime(getThisView());
         }
     };
-    private TextView recipeTime;
-    private ImageButton recipeTimeEdit;
+    // Servings card
+    private EditText servingsValue;
+    private TextView servingsUnit;
+    private ImageButton servingsEdit;
+    private boolean servingsEditable = false;
+    private View.OnClickListener servingsEditListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            servingsEditable = !servingsEditable;
+            setEditable(servingsEditable, servingsEdit, servingsValue);
+            if (!servingsEditable)
+                presenter.requestServingsEdit(getThisView(), servingsValue.getText().toString());
+        }
+    };
 
     private SimpleDateFormat recipeDateFormat; // created at OnCreate()
 
@@ -173,6 +187,15 @@ public class RecipeDetailsDescriptionFragment extends BaseFragment<RecipeDetails
     }
 
     @Override
+    public void showServings(int servings) {
+        if (servingsValue != null)
+            servingsValue.setText(String.valueOf(servings));
+        if (servingsUnit != null)
+            servingsUnit.setText(getResources()
+                    .getQuantityString(R.plurals.quantity_serving_unit, servings));
+    }
+
+    @Override
     public void showCategoryEditDialog(Recipe recipe) {
         navigator.fromActivity(getActivity()).toRecipeDialogCategoryView(recipe);
     }
@@ -230,6 +253,13 @@ public class RecipeDetailsDescriptionFragment extends BaseFragment<RecipeDetails
         recipeTimeEdit = (ImageButton) layout.findViewById(R.id.recipe_time_edit);
         recipeTimeEdit.setOnClickListener(recipeTimeListener);
         recipeTime = (TextView) layout.findViewById(R.id.recipe_time_value);
+
+        // Servings card
+        servingsValue = (EditText) layout.findViewById(R.id.recipe_serving_value);
+        servingsUnit = (TextView) layout.findViewById(R.id.recipe_serving_unit);
+        servingsEdit = (ImageButton) layout.findViewById(R.id.recipe_serving_edit);
+        servingsEdit.setOnClickListener(servingsEditListener);
+        setEditable(servingsEditable, servingsEdit, servingsValue);
         return layout;
     }
 

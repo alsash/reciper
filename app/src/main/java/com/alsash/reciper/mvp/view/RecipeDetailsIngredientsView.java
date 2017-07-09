@@ -14,15 +14,11 @@ public interface RecipeDetailsIngredientsView extends BaseView {
 
     void showWeight(int weight, WeightUnit unit);
 
-    void showServings(int servings);
-
     void showIngredients(List<Ingredient> ingredients);
 
     void showIngredientsAddDialog(Recipe recipe);
 
     void showIngredientInsert(int position);
-
-    void showIngredientsMove(int from, int to);
 
     void showIngredientDelete(int position);
 

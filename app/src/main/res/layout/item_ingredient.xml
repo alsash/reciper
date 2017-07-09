@@ -53,7 +53,6 @@
         android:layout_height="wrap_content"
         android:layout_marginRight="4dp"
         android:fontFamily="serif"
-        android:gravity="right|center_vertical"
         android:imeOptions="actionDone"
         android:inputType="numberDecimal"
         android:overScrollMode="never"

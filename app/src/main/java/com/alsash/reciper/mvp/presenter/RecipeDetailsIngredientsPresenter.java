@@ -61,7 +61,6 @@ public class RecipeDetailsIngredientsPresenter
         if (recipeFull == null) return;
         int wgt = (int) Math.round(businessLogic.getRecipeWeight(recipeFull, WeightUnit.GRAM));
         view.showWeight(wgt, WeightUnit.GRAM);
-        view.showServings(recipeFull.getServings());
         view.showIngredients(ingredients);
         WeakReference<RecipeDetailsIngredientsView> viewRef = new WeakReference<>(view);
         searchDelete(viewRef);
@@ -103,33 +102,14 @@ public class RecipeDetailsIngredientsPresenter
     }
 
 
-    public void requestWeightEdit(RecipeDetailsIngredientsView view,
-                                  String weight, String servings) {
+    public void requestWeightEdit(RecipeDetailsIngredientsView view, String weight) {
         if (recipeFull == null) return;
         int wgt = 0; // weight
-        int srv = 0; // servings
         try {
-            wgt = Integer.parseInt(weight);
-            srv = Integer.parseInt(servings);
-        } catch (NumberFormatException e) {
-            view.showServings(wgt);
-            view.showWeight(srv, WeightUnit.GRAM);
+            wgt = Math.round(Float.parseFloat(weight));
+        } catch (Throwable e) {
+            view.showWeight(wgt, WeightUnit.GRAM);
             return;
-        }
-        // Update recipe servings
-        if (srv != recipeFull.getServings()) {
-            view.showServings(srv);
-            storageLogic.updateSync(recipeFull, RecipeAction.EDIT_SERVINGS, srv);
-            getComposite().add(Completable
-                    .fromAction(new Action() {
-                        @Override
-                        public void run() throws Exception {
-                            storageLogic.updateAsync(recipeFull, RecipeAction.EDIT_SERVINGS);
-                        }
-                    })
-                    .subscribeOn(Schedulers.io())
-                    .subscribe()
-            );
         }
         // Update weight
         if (wgt != (int) Math.round(businessLogic.getRecipeWeight(recipeFull, WeightUnit.GRAM))) {

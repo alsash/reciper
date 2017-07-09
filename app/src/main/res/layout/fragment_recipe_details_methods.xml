@@ -37,7 +37,6 @@
             app:srcCompat="@drawable/add_icon_gray"
             tools:ignore="ContentDescription" />
 
-
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recipe_methods_list"
             android:layout_width="0dp"

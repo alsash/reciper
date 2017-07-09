@@ -29,6 +29,8 @@ public interface RecipeDetailsDescriptionView extends BaseView {
 
     void showLabels(List<Label> labels);
 
+    void showServings(int servings);
+
     void showLabelEditDialog(Recipe recipe);
 
     void showCookTime(long millis);

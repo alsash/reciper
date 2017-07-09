@@ -86,8 +86,8 @@ public class RecipeIngredientHolder extends RecyclerView.ViewHolder {
 
     public int getEditWeight() {
         try {
-            return Integer.parseInt(weightValue.getText().toString());
-        } catch (NumberFormatException e) {
+            return Math.round(Float.parseFloat(weightValue.getText().toString()));
+        } catch (Throwable e) {
             weightValue.setText("0");
             return 0;
         }

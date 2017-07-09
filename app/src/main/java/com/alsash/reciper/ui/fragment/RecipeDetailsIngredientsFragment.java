@@ -43,22 +43,19 @@ public class RecipeDetailsIngredientsFragment extends BaseFragment<RecipeDetails
     @Inject
     NavigationLogic navigator;
 
-    // Weight and servingValue card
+    // Weight card
     private EditText weightValue;
     private TextView weightUnit;
-    private EditText servingValue;
-    private TextView servingUnit;
     private ImageButton weightEdit;
     private boolean weightEditable = false;
     private View.OnClickListener weightEditListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             weightEditable = !weightEditable;
-            setEditable(weightEditable, weightEdit, weightValue, servingValue);
+            setEditable(weightEditable, weightEdit, weightValue);
             if (weightEditable) return;
             presenter.requestWeightEdit(getThisView(),
-                    weightValue.getText().toString(),
-                    servingValue.getText().toString());
+                    weightValue.getText().toString());
         }
     };
     // Ingredients card
@@ -130,12 +127,6 @@ public class RecipeDetailsIngredientsFragment extends BaseFragment<RecipeDetails
     }
 
     @Override
-    public void showIngredientsMove(int from, int to) {
-        if (ingredientAdapter != null)
-            ingredientAdapter.notifyItemMoved(from, to);
-    }
-
-    @Override
     public void showIngredientDelete(int position) {
         if (ingredientAdapter != null)
             ingredientAdapter.notifyItemRemoved(position);
@@ -186,15 +177,6 @@ public class RecipeDetailsIngredientsFragment extends BaseFragment<RecipeDetails
         }
     }
 
-    @Override
-    public void showServings(int servings) {
-        if (servingValue != null)
-            servingValue.setText(String.valueOf(servings));
-        if (servingUnit != null)
-            servingUnit.setText(getResources()
-                    .getQuantityString(R.plurals.quantity_serving_unit, servings));
-    }
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater,
@@ -205,11 +187,9 @@ public class RecipeDetailsIngredientsFragment extends BaseFragment<RecipeDetails
         // Weight and serving card
         weightValue = (EditText) layout.findViewById(R.id.recipe_weight_value);
         weightUnit = (TextView) layout.findViewById(R.id.recipe_weight_unit);
-        weightEdit = (ImageButton) layout.findViewById(R.id.recipe_weight_serving_edit);
+        weightEdit = (ImageButton) layout.findViewById(R.id.recipe_weight_edit);
         weightEdit.setOnClickListener(weightEditListener);
-        servingValue = (EditText) layout.findViewById(R.id.recipe_serving_value);
-        servingUnit = (TextView) layout.findViewById(R.id.recipe_serving_unit);
-        setEditable(weightEditable, weightEdit, weightValue, servingValue);
+        setEditable(weightEditable, weightEdit, weightValue);
 
         // Ingredients card
         ingredientsTitle = (TextView) layout.findViewById(R.id.recipe_ingredients_title);

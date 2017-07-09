@@ -95,6 +95,7 @@ public class RecipeDetailsDescriptionPresenter
         view.setDescriptionEditable(descriptionEditable);
         if (recipeFull == null) return;
         view.showDescription(recipeFull);
+        view.showServings(recipeFull.getServings());
         view.showAuthor(recipeFull.getAuthor());
         view.showCategory(recipeFull.getCategory());
         view.showLabels(recipeFull.getLabels());
@@ -190,4 +191,29 @@ public class RecipeDetailsDescriptionPresenter
         view.showCookTimeEditDialog(listener);
     }
 
+    public void requestServingsEdit(RecipeDetailsDescriptionView view, String servings) {
+        if (recipeFull == null) return;
+        int srv = 0;
+        try {
+            srv = Math.round(Float.parseFloat(servings));
+        } catch (Throwable e) {
+            view.showServings(srv);
+            return;
+        }
+        // Update recipe servings
+        if (srv != recipeFull.getServings()) {
+            view.showServings(srv);
+            storageLogic.updateSync(recipeFull, RecipeAction.EDIT_SERVINGS, srv);
+            getComposite().add(Completable
+                    .fromAction(new Action() {
+                        @Override
+                        public void run() throws Exception {
+                            storageLogic.updateAsync(recipeFull, RecipeAction.EDIT_SERVINGS);
+                        }
+                    })
+                    .subscribeOn(Schedulers.io())
+                    .subscribe()
+            );
+        }
+    }
 }

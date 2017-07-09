@@ -33,7 +33,6 @@ public class RecipeDetailsMethodsPresenter extends BaseRestrictPresenter<RecipeD
     private final BusinessLogic businessLogic;
 
     private final List<Method> methods;
-    private final Set<MutableBoolean> callbacks;
     private RecipeFull recipeFull;
 
     public RecipeDetailsMethodsPresenter(StorageLogic storageLogic, BusinessLogic businessLogic) {
@@ -41,7 +40,6 @@ public class RecipeDetailsMethodsPresenter extends BaseRestrictPresenter<RecipeD
         this.storageLogic = storageLogic;
         this.businessLogic = businessLogic;
         this.methods = Collections.synchronizedList(new ArrayList<Method>());
-        this.callbacks = Collections.synchronizedSet(new HashSet<MutableBoolean>());
     }
 
     @Override
@@ -55,7 +53,7 @@ public class RecipeDetailsMethodsPresenter extends BaseRestrictPresenter<RecipeD
         view.showMethods(methods);
         WeakReference<RecipeDetailsMethodsView> viewRef = new WeakReference<>(view);
         searchDelete(viewRef);
-        searchInsert(viewRef, 0);
+        searchInsert(viewRef, -1);
     }
 
     @Override
@@ -109,7 +107,7 @@ public class RecipeDetailsMethodsPresenter extends BaseRestrictPresenter<RecipeD
                 .subscribe(new Action() {
                     @Override
                     public void run() throws Exception {
-                        searchInsert(viewRef, 0);
+                        searchInsert(viewRef, -1);
                     }
                 }));
     }
@@ -190,8 +188,9 @@ public class RecipeDetailsMethodsPresenter extends BaseRestrictPresenter<RecipeD
             }
             if (!found && method.getId() != null) inserted.add(method);
         }
-        for (Method ingInserted : inserted) {
-            methods.add(position, ingInserted);
+        int insPos = (position < 0 || position >= methods.size()) ? methods.size() - 1 : position;
+        for (Method mInserted : inserted) {
+            methods.add(insPos, mInserted);
             if (viewRef != null && viewRef.get() != null)
                 viewRef.get().showMethodInsert(position);
         }
