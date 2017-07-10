@@ -1,8 +1,6 @@
 package com.alsash.reciper.ui.adapter.holder;
 
-import android.support.annotation.ColorInt;
 import android.support.annotation.LayoutRes;
-import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -24,19 +22,10 @@ public class RecipeMethodHolder extends RecyclerView.ViewHolder implements DragA
     private final ImageButton edit;
     private final EditText body;
 
-    @ColorInt
-    private final int editColor;
-    @ColorInt
-    private final int nonEditColor;
-
-
     public RecipeMethodHolder(ViewGroup parent, @LayoutRes int layoutId) {
         super(LayoutInflater.from(parent.getContext()).inflate(layoutId, parent, false));
-
         number = (TextView) itemView.findViewById(R.id.item_method_number);
-
         edit = (ImageButton) itemView.findViewById(R.id.item_method_edit);
-
         body = (EditText) itemView.findViewById(R.id.item_method_body);
         body.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -50,9 +39,6 @@ public class RecipeMethodHolder extends RecyclerView.ViewHolder implements DragA
                 return false;
             }
         });
-
-        editColor = ResourcesCompat.getColor(edit.getResources(), R.color.orange_500, null);
-        nonEditColor = ResourcesCompat.getColor(edit.getResources(), R.color.gray_400, null);
     }
 
     @Override

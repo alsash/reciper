@@ -49,5 +49,13 @@
             app:layout_constraintTop_toBottomOf="@+id/recipe_methods_add"
             tools:listitem="@layout/item_method_card" />
 
+        <Space
+            android:id="@+id/space"
+            android:layout_width="0dp"
+            android:layout_height="120dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/recipe_methods_list" />
+
     </android.support.constraint.ConstraintLayout>
 </android.support.v4.widget.NestedScrollView>

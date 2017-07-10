@@ -180,6 +180,7 @@ public class DbManager {
 
     public List<FoodTable> getFoodTable() {
         QueryBuilder<FoodTable> builder = daoSession.getFoodTableDao().queryBuilder();
+        builder.orderAsc(FoodTableDao.Properties.Name);
         obtainRestriction(builder);
         return builder.build().list();
     }
@@ -226,6 +227,7 @@ public class DbManager {
 
     public List<AuthorTable> getAuthorTable() {
         QueryBuilder<AuthorTable> builder = daoSession.getAuthorTableDao().queryBuilder();
+        builder.orderAsc(AuthorTableDao.Properties.Name);
         obtainRestriction(builder);
         return builder.build().list();
     }
