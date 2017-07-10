@@ -114,7 +114,7 @@
     <string name="simple_dialog_message_confirm_delete">Delete %s?</string>
 
     <!-- Nutrition view -->
-    <string name="nutrition_value">Nutrition value</string>
+    <string name="nutrition_value">Nutrition facts</string>
     <string name="nutrition_quantity_switch">Per %s</string>
     <string name="nutrition_carbohydrate">Carbs</string>
     <string name="nutrition_protein">Protein</string>
@@ -125,7 +125,7 @@
     <string name="hint_category_name">Category name</string>
     <string name="hint_author_name">Author name</string>
     <string name="hint_food_ndbno">USDA ID (from search)</string>
-    <string name="hint_food_nutrition_value">Nutrition value</string>
+    <string name="hint_food_nutrition_value">Nutrition facts</string>
     <string name="hint_food_nutrition_quantity">per 100 grams</string>
     <string name="hint_food_name">Food name</string>
     <string name="hint_recipe_name">Recipe name</string>
