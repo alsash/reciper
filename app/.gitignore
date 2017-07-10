@@ -1,4 +1,5 @@
 /app-release.apk
+/
 /build/*
 !/build/outputs
 /build/outputs/*
