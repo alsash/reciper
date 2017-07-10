@@ -6,7 +6,6 @@ The home of your recipes. Android application. Version 1.0.0
 
 ![Image art](/../../raw/master/jpg/123.jpg)
 
-
-© 2016 Alsash
+© 2017 Alsash
 
 Licensed under the [Apache License Version 2.0](/../../blob/master/LICENSE)
