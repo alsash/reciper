@@ -2,86 +2,86 @@
   {
     "uuid": "AC3776B6-DD1B-439B-881B-1C2520DFCCA9",
     "name": "Desserts",
-    "url": "http://cdn.jamieoliver.com/recipe-database/xtra_med/1aVKeJYVqOHBYYbArMlUXA.jpg"
+    "url": "https://raw.githubusercontent.com/alsash/reciper/master/jpg/db/desserts.jpg"
   },
   {
     "uuid": "9A9DE829-E810-4E1B-8436-1CB23825524B",
     "name": "Jake",
-    "url": "https://image.freepik.com/free-photo/cook-with-a-pasta-dish_1154-135.jpg"
+    "url": "https://raw.githubusercontent.com/alsash/reciper/master/jpg/db/jake.jpg"
   },
   {
     "uuid": "5B03591E-A144-46F0-8C39-C5947B3E2A77",
     "name": "Julia",
-    "url": "https://image.freepik.com/free-photo/woman-cooking-veggie-lunch-with-laddle_1398-347.jpg"
+    "url": "https://raw.githubusercontent.com/alsash/reciper/master/jpg/db/julia.jpg"
   },
   {
     "uuid": "279B5B55-2DB8-4130-9FA3-F2E9E01A98B4",
     "name": "Croquembouche",
-    "url": "http://cdn.jamieoliver.com/recipe-database/xtra_med/46262198.jpg"
+    "url": "https://raw.githubusercontent.com/alsash/reciper/master/jpg/db/croquembouche.jpg"
   },
   {
     "uuid": "7B21038A-C2FF-4EA2-9704-493A7D1BD066",
     "name": "Lemon drizzle cake",
-    "url": "http://womanandhome.media.ipcdigital.co.uk/21348/000009606/fd90_orh2000w570/Lemon-drizzle-resized.jpg"
+    "url": "https://raw.githubusercontent.com/alsash/reciper/master/jpg/db/lemon_drizzle_cake.jpg"
   },
   {
     "uuid": "8B6D959F-8D4D-49C0-B96D-CB9AC4E46B77",
     "name": "Entrees",
-    "url": "http://cdn.jamieoliver.com/recipe-database/xtra_med/195xtmZjK_uAal_gBEIuL6.jpg"
+    "url": "https://raw.githubusercontent.com/alsash/reciper/master/jpg/db/entrees.jpg"
   },
   {
     "uuid": "D3CE5CD1-CD9C-41EA-B03D-A224D6BADB95",
     "name": "Mediterranean 'chicken 'n' chips'",
-    "url": "http://cdn.jamieoliver.com/recipe-database/xtra_med/51375472.jpg"
+    "url": "https://raw.githubusercontent.com/alsash/reciper/master/jpg/db/mediterranean.jpg"
   },
   {
     "uuid": "5BBEB5C4-23D4-4CF4-8BE3-BD2C1C63B9E9",
     "name": "Soups",
-    "url": "http://cdn.jamieoliver.com/recipe-database/oldImages/xtra_med/1513_40_1430904844.jpg"
+    "url": "https://raw.githubusercontent.com/alsash/reciper/master/jpg/db/soups.jpg"
   },
   {
     "uuid": "8A0825A9-AAC5-4905-BBD9-AEBF3DCDFC82",
     "name": "Roast carrot & fennel soup",
-    "url": "http://cdn.jamieoliver.com/recipe-database/oldImages/xtra_med/1234_18_1421150821.jpg"
+    "url": "https://raw.githubusercontent.com/alsash/reciper/master/jpg/db/roast_soup.jpg"
   },
   {
     "uuid": "4165AD4E-C030-447D-8F49-09377EF9BD49",
     "name": "Beef Wellington",
-    "url": "https://www.gordonramsay.com/assets/Recipes/_resampled/CroppedFocusedImage192072050-50-APPROVED-Gordons-Wellington2.jpg"
+    "url": "https://raw.githubusercontent.com/alsash/reciper/master/jpg/db/beef_wellington.jpg"
   },
   {
     "uuid": "3C81EEFB-F0BE-49CD-8CED-D93DC88B53AE",
     "name": "Alex",
-    "url": "https://image.freepik.com/free-photo/chef-making-ok-sign-over-white-background_1368-2804.jpg"
+    "url": "https://raw.githubusercontent.com/alsash/reciper/master/jpg/db/alex.jpg"
   },
   {
     "uuid": "3E3447AA-3953-4FBA-9125-CBFA2CD94A72",
     "name": "Appetizers",
-    "url": "http://cdn.jamieoliver.com/recipe-database/oldImages/xtra_med/778_36_1440761074.jpg"
+    "url": "https://raw.githubusercontent.com/alsash/reciper/master/jpg/db/appetizers.jpg"
   },
   {
     "uuid": "A7994C80-F37B-496A-AB1B-A6BBF7D0E316",
     "name": "Dips",
-    "url": "http://cdn.jamieoliver.com/recipe-database/xtra_med/46256344.jpg"
+    "url": "https://raw.githubusercontent.com/alsash/reciper/master/jpg/db/dips.jpg"
   },
   {
     "uuid": "5513DF63-9177-47DD-896F-00DD4D59BB1A",
     "name": "Classic guacamole",
-    "url": "http://cdn.jamieoliver.com/recipe-database/oldImages/xtra_med/1554_2_1441789324.jpg"
+    "url": "https://raw.githubusercontent.com/alsash/reciper/master/jpg/db/guacamole.jpg"
   },
   {
     "uuid": "E8CDE473-97A2-4C61-B4FA-F6589CFB5988",
     "name": "Beautiful bruschetta",
-    "url": "http://cdn.jamieoliver.com/recipe-database/oldImages/xtra_med/69_1_1433848856.jpg"
+    "url": "https://raw.githubusercontent.com/alsash/reciper/master/jpg/db/bruschetta.jpg"
   },
   {
     "uuid": "E15670AF-CDCD-4A84-B2A4-68FB7DE0ACEC",
     "name": "Salads",
-    "url": "http://cdn.jamieoliver.com/recipe-database/xtra_med/EAFgzvLcqz1BtNEyD5g47F.jpg"
+    "url": "https://raw.githubusercontent.com/alsash/reciper/master/jpg/db/salads.jpg"
   },
   {
     "uuid": "51E0BFB1-2CEE-4E67-B30B-EAA769816EB9",
     "name": "Beverages",
-    "url": "http://cdn.jamieoliver.com/recipe-database/oldImages/xtra_med/1375_33_1417102719.jpg"
+    "url": "https://raw.githubusercontent.com/alsash/reciper/master/jpg/db/beverages.jpg"
   }
 ]
