@@ -272,29 +272,26 @@ public class StorageLogic {
                 || restriction.entityUuid == null
                 || restriction.entityClass == null)
             return recipes;
-        if (restriction.entityClass.equals(Category.class)) {
 
-            CategoryTable categoryTable = new CategoryTable();
-            categoryTable.setUuid(restriction.entityUuid);
-            return getRecipes(categoryTable, offset, limit);
+        BaseEntity baseEntity = getRestrictEntity(restriction);
+        if (baseEntity == null || baseEntity.getId() == null) {
+            return recipes;
+        }
 
-        } else if (restriction.entityClass.equals(Label.class)) {
+        if (baseEntity instanceof Category) {
+            return getRecipes((Category) baseEntity, offset, limit);
 
-            LabelTable labelTable = new LabelTable();
-            labelTable.setUuid(restriction.entityUuid);
-            return getRecipes(labelTable, offset, limit);
+        } else if (baseEntity instanceof Label) {
 
-        } else if (restriction.entityClass.equals(Food.class)) {
+            return getRecipes((Label) baseEntity, offset, limit);
 
-            FoodTable foodTable = new FoodTable();
-            foodTable.setUuid(restriction.entityUuid);
-            return getRecipes(foodTable, offset, limit);
+        } else if (baseEntity instanceof Food) {
 
-        } else if (restriction.entityClass.equals(Author.class)) {
+            return getRecipes((Food) baseEntity, offset, limit);
 
-            AuthorTable authorTable = new AuthorTable();
-            authorTable.setUuid(restriction.entityUuid);
-            return getRecipes(authorTable, offset, limit);
+        } else if (baseEntity instanceof Author) {
+
+            return getRecipes((Author) baseEntity, offset, limit);
 
         } else {
             return recipes;
