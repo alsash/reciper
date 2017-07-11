@@ -1,9 +1,7 @@
 # Reciper
 
 The home of your recipes. Android application. Version 1.0.1
-
 [![Get it on Google play](/../../raw/master/jpg/art/v001/google-play-badge-small.png)][1]
-
 ![Image art](/../../raw/master/jpg/art/v001/123.png)
 
 ## License
