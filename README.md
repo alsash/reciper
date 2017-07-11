@@ -10,4 +10,4 @@ The home of your recipes. Android application. Version 1.0.1
 
 Google Play and the Google Play logo are trademarks of Google Inc.
 
-[1]: https://play.google.com/store/apps/details?id=com.alsash.reciper&pcampaignid=MKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1
+[1]: https://play.google.com/store/apps/details?id=com.alsash.reciper
