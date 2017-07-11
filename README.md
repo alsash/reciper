@@ -1,4 +1,4 @@
-# ![Icon](/../../raw/master/jpg/art/v001/icon.png) Reciper
+# Reciper
 
 The home of your recipes. Android application. Version 1.0.0
 
