@@ -1,10 +1,10 @@
-# RecipeR
+# ![Icon](/../../raw/master/jpg/art/v001/icon.png) Reciper
 
 The home of your recipes. Android application. Version 1.0.0
 
 [Download apk](../../raw/master/app/build/outputs/apk/app-debug.apk)
 
-![Image art](/../../raw/master/jpg/123.jpg)
+![Image art](/../../raw/master/jpg/art/v001/123.png)
 
 © 2017 Alsash
 
