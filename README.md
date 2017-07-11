@@ -6,11 +6,8 @@ The home of your recipes. Android application. Version 1.0.1
 
 ![Image art](/../../raw/master/jpg/art/v001/123.png)
 
-© 2017 Alsash
-
 ## License
-
-Licensed under the [Apache License Version 2.0](/../../blob/master/LICENSE).
+© 2017 Alsash. Licensed under the [Apache License Version 2.0](/../../blob/master/LICENSE).
 
 Google Play and the Google Play logo are trademarks of Google Inc.
 
