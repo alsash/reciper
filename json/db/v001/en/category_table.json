@@ -1,0 +1,37 @@
+[
+  {
+    "uuid": "C766AEA1-E67F-4EB1-B6F1-998614F64611",
+    "name": "Appetizers",
+    "photo_uuid": "3E3447AA-3953-4FBA-9125-CBFA2CD94A72"
+  },
+  {
+    "uuid": "84775607-034A-4D0F-B1C5-135341B921C1",
+    "name": "Soups",
+    "photo_uuid": "5BBEB5C4-23D4-4CF4-8BE3-BD2C1C63B9E9"
+  },
+  {
+    "uuid": "B17AD191-F769-4CCD-B13E-0B0BCD926B0C",
+    "name": "Salads",
+    "photo_uuid": "E15670AF-CDCD-4A84-B2A4-68FB7DE0ACEC"
+  },
+  {
+    "uuid": "06DE006C-CB33-4898-B29E-4BD574D53C2D",
+    "name": "Dips",
+    "photo_uuid": "A7994C80-F37B-496A-AB1B-A6BBF7D0E316"
+  },
+  {
+    "uuid": "8C915447-53A6-4462-9705-68D309433F88",
+    "name": "Entrees",
+    "photo_uuid": "8B6D959F-8D4D-49C0-B96D-CB9AC4E46B77"
+  },
+  {
+    "uuid": "30379D33-99BF-47B0-B22F-114A42663DA7",
+    "name": "Desserts",
+    "photo_uuid": "AC3776B6-DD1B-439B-881B-1C2520DFCCA9"
+  },
+  {
+    "uuid": "E6E04FF4-6A26-4BDB-819E-CB9BCD3464F6",
+    "name": "Beverages",
+    "photo_uuid": "51E0BFB1-2CEE-4E67-B30B-EAA769816EB9"
+  }
+]

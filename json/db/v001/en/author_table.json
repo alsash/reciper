@@ -1,0 +1,20 @@
+[
+  {
+    "uuid": "27720C62-12C0-4DBE-8CB4-55EE33DBBF34",
+    "name": "Jake",
+    "mail": "",
+    "photo_uuid": "9A9DE829-E810-4E1B-8436-1CB23825524B"
+  },
+  {
+    "uuid": "84D44489-3447-4F37-B155-4C3A90D39367",
+    "name": "Alex",
+    "mail": "",
+    "photo_uuid": "3C81EEFB-F0BE-49CD-8CED-D93DC88B53AE"
+  },
+  {
+    "uuid": "9E085299-32C8-4AC7-9659-9B04D266CE4B",
+    "name": "Julia",
+    "mail": "",
+    "photo_uuid": "5B03591E-A144-46F0-8C39-C5947B3E2A77"
+  }
+]
