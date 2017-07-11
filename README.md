@@ -1,6 +1,6 @@
 # Reciper
 
-The home of your recipes. Android application. Version 1.0.0
+The home of your recipes. Android application. Version 1.0.1
 
 [Download apk](../../raw/master/app/build/outputs/apk/app-debug.apk)
 
