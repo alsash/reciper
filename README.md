@@ -2,10 +2,7 @@
 
 The home of your recipes. Android application. Version 1.0.1
 
-<a href='https://play.google.com/store/apps/details?id=com.alsash.reciper&pcampaignid=MKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1'>
-<img alt='Get it on Google Play' src='https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png'/>
-</a>
-
+[![Get it on Google play](/../../raw/master/jpg/art/v001/google-play-badge-small.png)][1]
 ![Image art](/../../raw/master/jpg/art/v001/123.png)
 
 ## License
